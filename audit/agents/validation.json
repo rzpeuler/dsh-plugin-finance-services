@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "source_hash_and_line_checks": 618,
+  "counts": {
+    "main_manifests": 10,
+    "plugin_prompts": 10,
+    "worker_manifests": 30,
+    "steering_files": 10,
+    "steering_examples": 29,
+    "agent_skill_instances": 51,
+    "agent_skill_unique_names": 31,
+    "agent_skill_asset_files": 75,
+    "main_readonly_toolsets": 10,
+    "leaf_writers": 10,
+    "workers_without_write_tool": 20,
+    "shell_workers": 2,
+    "worker_output_schemas": 10,
+    "mcp_server_names": 9,
+    "review_checkpoints": 13,
+    "explicit_stop_checkpoints": 6,
+    "final_professional_handoffs": 7,
+    "skill_instances_with_vertical_source": 48,
+    "skill_instances_without_vertical_source": 3,
+    "vertical_full_tree_drift_instances": 0,
+    "conditional_skill_review_groups": 20,
+    "conditional_skill_stage_checkpoint_instances": 44
+  },
+  "runtime_tests_executed": 0,
+  "commercial_e2e_executed": 0,
+  "upstream_modified": false,
+  "dsh_modified": false,
+  "files": [
+    "agent-mapping.json",
+    "AGENT_MAPPING.md",
+    "WORKER_PERMISSIONS.md",
+    "generate_agent_audit.py"
+  ],
+  "findings": 10
+}

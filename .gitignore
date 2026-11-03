@@ -1,0 +1,11 @@
+node_modules/
+lib/
+dist/
+*.tgz
+coverage/
+.env
+.env.*
+!.env.example
+audit/dsh-reference/
+acceptance/tmp/
+financial-services/artifacts/

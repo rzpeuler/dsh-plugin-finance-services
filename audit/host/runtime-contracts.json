@@ -1,0 +1,4875 @@
+{
+  "schemaVersion": 1,
+  "auditMode": "READ_ONLY_SOURCE_AND_INSTALLED_ASAR",
+  "reference": {
+    "root": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\audit\\dsh-reference",
+    "tag": "dsh-v0.2.1-rc.5",
+    "commit": "b830ec950faba0a46dda564be3e2d854afed94f1",
+    "gitStatusShort": "",
+    "verifiedBy": "git rev-parse HEAD; git status --short; git describe --tags --exact-match"
+  },
+  "runtime": {
+    "asar": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar",
+    "mcpPackageNames": [
+      "dsh-mcp-client",
+      "dsh-mcp-resources"
+    ],
+    "asarHeaderSize": 4760404
+  },
+  "limitations": [
+    "No plugins installed or activated; no profile writes.",
+    "This subagent Client query timed out; parent reports earlier successful Client Service/Slots inspection, not invalidated by this timeout.",
+    "Hashes are byte hashes, exports clauses are static text not module execution.",
+    "Wildcard exports are declarations, not a claim that every wildcard target exists."
+  ],
+  "sourceFiles": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "1eea3932544766e8a4ccc2d88dcba14ad0a3bd4e28fa660f920b9183f63e7196",
+      "bytes": 18675,
+      "lines": 185
+    },
+    {
+      "path": "packages/AGENTS.md",
+      "sha256": "9954e1827bcee42e0637a1328972317476bfed6b2f12a7042b0d4c197b521c67",
+      "bytes": 6387,
+      "lines": 29
+    },
+    {
+      "path": "packages/client/AGENTS.md",
+      "sha256": "9f54aca08fbd8888c0a2081d6ab83a9e529aec76393bbf19e8a46dfa622d4b40",
+      "bytes": 29179,
+      "lines": 162
+    },
+    {
+      "path": "packages/web/AGENTS.md",
+      "sha256": "937a0037eff925df0453bc41ae38af0ca0895c3e92ed34f1c9a4a1dd3ab3959d",
+      "bytes": 581,
+      "lines": 5
+    },
+    {
+      "path": "docs/subsystems/client-resources.md",
+      "sha256": "6d2948108366d263bdbc29a5bb40286992111fd169fb9622a94ebc580f48f0a6",
+      "bytes": 8130,
+      "lines": 92
+    },
+    {
+      "path": "docs/subsystems/slots.md",
+      "sha256": "07a35aa998a7ae2431dd86d6e1fff37fa3ce4d6c600e82162daf18f282cc1cbf",
+      "bytes": 16150,
+      "lines": 203
+    },
+    {
+      "path": "packages/mcp/mcp-client/src/index.ts",
+      "sha256": "f279bd88743ca73b0d9834915d1bb31e455e21c87f4990808cfd55b273db4d1c",
+      "bytes": 9464,
+      "lines": 203
+    },
+    {
+      "path": "packages/mcp/mcp-client/src/transport.ts",
+      "sha256": "6f3fca685af3d5654c476e95db24e1245dc1fa021a0bd7f477ce4ad997e1c8f6",
+      "bytes": 1594,
+      "lines": 46
+    },
+    {
+      "path": "packages/mcp/mcp-client/README.md",
+      "sha256": "92d8f0fc08518fbfd30550be89e87490db9fb5906493fb6a86c86bf7c8e3291b",
+      "bytes": 18671,
+      "lines": 229
+    },
+    {
+      "path": "packages/mcp/mcp-resources/src/index.ts",
+      "sha256": "6b19614393d187629b7d273d8e8bca3d30f45cf0eac75b51493d0678eb809b65",
+      "bytes": 5314,
+      "lines": 129
+    },
+    {
+      "path": "packages/settings/settings/README.md",
+      "sha256": "8859387a23e3081b6653c2529153e7b48ddb9a28428bb5872321a6242230e3b8",
+      "bytes": 4114,
+      "lines": 84
+    },
+    {
+      "path": "packages/api/settings-controller/src/index.ts",
+      "sha256": "73d05b8340fbcc93a814a19aaecb53b81a777b0af08f10271f4ff6dd415d3a53",
+      "bytes": 11130,
+      "lines": 270
+    },
+    {
+      "path": "packages/storage/storage/src/index.ts",
+      "sha256": "007fd253361aba1f65b0e846a58ebf5f4ae29e5c834ccc3732b1977cc2c78c6b",
+      "bytes": 3512,
+      "lines": 98
+    },
+    {
+      "path": "packages/storage/storage-domain/README.md",
+      "sha256": "791cc1deb14c8ce0fbb1d9b10e31f644e72b05f47c85c81ea4ee2722d5758a49",
+      "bytes": 9356,
+      "lines": 158
+    },
+    {
+      "path": "packages/storage/storage-domain/src/domain.ts",
+      "sha256": "e9801b98454e45c530ea90293e6aaf3cba2d532ddf751a7e869fbe2524b12958",
+      "bytes": 12512,
+      "lines": 357
+    },
+    {
+      "path": "packages/interaction/commands/src/index.ts",
+      "sha256": "c9416db54cc48ab5b72adaa22d8534596e87bc8795d88ac5d807fdcccb4e6066",
+      "bytes": 22632,
+      "lines": 533
+    },
+    {
+      "path": "packages/interaction/commands/README.md",
+      "sha256": "6943e2e124e30a1523f2120afac88ce54cdc9973520bbfb590be655061573511",
+      "bytes": 9748,
+      "lines": 149
+    },
+    {
+      "path": "packages/interaction/user-questions/README.md",
+      "sha256": "6785ced3e589aa078e79634a18b56654478856b97a05e94f3c694091c3b34cf3",
+      "bytes": 6008,
+      "lines": 70
+    },
+    {
+      "path": "packages/interaction/user-approval/README.md",
+      "sha256": "684c9cd2dc75321cb529c8fbcb607dd3c069ba36602a7dfa516d2c9a43b815e0",
+      "bytes": 9279,
+      "lines": 166
+    },
+    {
+      "path": "packages/skill/skill-filesystem/src/index.ts",
+      "sha256": "4be3a8f4142b27e07093cff1757876a80a344dd6f664a38775069244b89f4ec4",
+      "bytes": 39571,
+      "lines": 1056
+    },
+    {
+      "path": "packages/skill/skill/src/index.ts",
+      "sha256": "af4fad67fb086c3f5c93aed4604830718b4535e7e59a60d680404b07ea08477c",
+      "bytes": 35965,
+      "lines": 868
+    },
+    {
+      "path": "packages/skill/tool-skill/src/index.ts",
+      "sha256": "29f6cf10c7247379298d9a96a53aef9cb2b21dcf7266f57ab147860b27d7cc44",
+      "bytes": 18580,
+      "lines": 433
+    },
+    {
+      "path": "packages/preset/agent-preset/src/index.ts",
+      "sha256": "5bb8843f1a8d856ad439637b43ce2105aea5cb60a68786f8280e8bfdedef8279",
+      "bytes": 1197,
+      "lines": 30
+    },
+    {
+      "path": "packages/preset/agent-preset-registry/src/index.ts",
+      "sha256": "f03d070aee4ec58eefdeab5ea128ca71e12108512997525672b0ad1c516205ec",
+      "bytes": 17622,
+      "lines": 399
+    },
+    {
+      "path": "packages/preset/agent-preset-registry/src/definition.ts",
+      "sha256": "d952da79acd930954b8d1667ffe692b1e5223f853127b5cbda6de7cf9cd76903",
+      "bytes": 1603,
+      "lines": 39
+    },
+    {
+      "path": "packages/preset/agent-preset-registry/src/mount.ts",
+      "sha256": "c008c324ca5b0e4d17dc167a440a0d30537d179905e99a8e67772968cec58917",
+      "bytes": 8931,
+      "lines": 216
+    },
+    {
+      "path": "packages/client/ui-workspace/src/client/navigation.ts",
+      "sha256": "e85db0304cc7f9fa61dc0e2b34e420dbcaea62478eefcb223af3da4af0a26076",
+      "bytes": 24027,
+      "lines": 575
+    },
+    {
+      "path": "packages/client/ui-plugin-manager/src/client/index.ts",
+      "sha256": "342ebce0d5634158e7f0978a0fb263a16387e59b6301ae5a1b13830c6f0ae763",
+      "bytes": 7536,
+      "lines": 159
+    },
+    {
+      "path": "packages/client/ui-plugin-manager/src/client/slot-contract.ts",
+      "sha256": "5a67047a6b25cd87c7e497b0963f5eec45ed8cb0ec734446b2c20418c41f22a8",
+      "bytes": 8680,
+      "lines": 178
+    },
+    {
+      "path": "packages/client/ui-sidebar-right/README.md",
+      "sha256": "a0534205cdfc8215e4c6bba39787ffb3d70a93405dac1a6e5395560a600cd413",
+      "bytes": 27150,
+      "lines": 159
+    },
+    {
+      "path": "packages/client/ui-deliverables/README.md",
+      "sha256": "72205fe2cd82f4f0b7724108e588761c3801895f7c229751fe469f71eb8a93b9",
+      "bytes": 18402,
+      "lines": 130
+    },
+    {
+      "path": "packages/api/session-controller/src/commands.ts",
+      "sha256": "b1d3f6cc7b42d850a391d988a8d5dc2bee2e5f10f35ae4e6c1ae88e836c165b1",
+      "bytes": 27808,
+      "lines": 673
+    },
+    {
+      "path": "packages/boot/plugin-manager/README.md",
+      "sha256": "d3a3693a7e93a67126781cbf15e047858a65afbac1254c2180b4dcece6dd0b03",
+      "bytes": 28631,
+      "lines": 172
+    },
+    {
+      "path": "packages/api/gateway/README.md",
+      "sha256": "3cd3977248900fc1f79359e19722a7d2a71502c33276d1a1e0a600adffed72fd",
+      "bytes": 24367,
+      "lines": 108
+    },
+    {
+      "path": "packages/api/remotes/README.md",
+      "sha256": "1e6f19d62d29b09971deec72cc1c81c073b7e8b42f7f791d145684ec230e6f99",
+      "bytes": 10298,
+      "lines": 92
+    },
+    {
+      "path": "packages/typert/generator/README.md",
+      "sha256": "976179ef4d8b5861378ebd2fc5bd240700f64543c45db66837325e91da396c70",
+      "bytes": 17877,
+      "lines": 172
+    },
+    {
+      "path": "packages/typert/registry/README.md",
+      "sha256": "8463c2535f726feff1c1a99c49efbefdc646a12777778ea1df0c623e594545f3",
+      "bytes": 9555,
+      "lines": 137
+    },
+    {
+      "path": "packages/bundle/web-app/presets/standard.patch.yml",
+      "sha256": "0d398d2a6872a73a106cb3bd19303ecccf1637e1fcad4d0bf9d8a72d2c2c68f5",
+      "bytes": 6799,
+      "lines": 128
+    },
+    {
+      "path": "packages/client/modules/README.md",
+      "sha256": "2ad555f181caa617730f19d7e8e963756f9bb3ab5223b6c467c30c51ddcf4098",
+      "bytes": 17324,
+      "lines": 150
+    },
+    {
+      "path": "packages/client/web/src/platform.ts",
+      "sha256": "5d76ea268c94a98d5938623a1928211862861700db177ec088dc66110871a079",
+      "bytes": 876,
+      "lines": 22
+    },
+    {
+      "path": "packages/workspace/workspace/src/index.ts",
+      "sha256": "9985d242e1151672e2fb374e469a6eda97fe9eabd9118d258cdf9a93dd70c20d",
+      "bytes": 37313,
+      "lines": 909
+    },
+    {
+      "path": "packages/typert/protocol/src/index.ts",
+      "sha256": "68a759fada0b0f6414d9ebaf1a3d24480acb3197953ce84d0eb4f741eaa3e297",
+      "bytes": 19538,
+      "lines": 484
+    },
+    {
+      "path": "packages/typert/protocol/src/remote-info.ts",
+      "sha256": "e89fc959e61271aa57366b8c64a56278099e58e7d82936a2fc305398e507f79d",
+      "bytes": 7291,
+      "lines": 161
+    },
+    {
+      "path": "packages/typert/protocol/src/types.ts",
+      "sha256": "7d9f75e0807ee4e4b3a997a1f28966314404a45c254ef135312144682611c107",
+      "bytes": 40350,
+      "lines": 939
+    },
+    {
+      "path": "packages/typert/registry/src/types.ts",
+      "sha256": "462f577ca91f8b4807107b89ec3d58935f10053634e4dfe890dce762d8349c41",
+      "bytes": 3696,
+      "lines": 118
+    },
+    {
+      "path": "packages/typert/registry/tests/typert.spec.ts",
+      "sha256": "773c422f7c85d5d77198136180ee45ef4de6f2136cfc4f8d82c5977d17d9c524",
+      "bytes": 30593,
+      "lines": 740
+    },
+    {
+      "path": "packages/api/gateway/src/index.ts",
+      "sha256": "0a1234ae8400dbadebab5c53c8dfb352e24fa271b767645d5f0275fd620b36eb",
+      "bytes": 67473,
+      "lines": 1732
+    },
+    {
+      "path": "packages/mcp/mcp-client/src/tools.ts",
+      "sha256": "59203150bda479a990afcdaf60483a35a836887926892e1074e02d0294c01af9",
+      "bytes": 20892,
+      "lines": 511
+    },
+    {
+      "path": "packages/mcp/mcp-client/src/connection.ts",
+      "sha256": "827303c343936818914ccfae6b5d5eafc7e55bb9a1e100c831c8c40df44306af",
+      "bytes": 19139,
+      "lines": 416
+    },
+    {
+      "path": "packages/api/gateway/tests/strict-source.host.spec.ts",
+      "sha256": "4b307cad3c49b93e4d146cd1af4322a615e47555b7d126bb2b71c52f2f6a2231",
+      "bytes": 3434,
+      "lines": 80
+    },
+    {
+      "path": "scripts/verify-package-dependencies.spec.ts",
+      "sha256": "d0d3087a156e4073061a02cbb0c7ac49bcae8d7bd0307442c8dcb837bd5ca818",
+      "bytes": 58763,
+      "lines": 1246
+    }
+  ],
+  "packages": [
+    {
+      "package": "@deepseek-ai/dsh-mcp-client",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/mcp/mcp-client/package.json",
+      "sourceManifestHash": "a5efb8e19777f602d4e96cd547a09ee7170347c665a32c8295846ffcbfbc0826",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-mcp-client/package.json",
+      "installedManifestMetadata": {
+        "sha256": "9c7941df0740beffeffae4f95e59007d3cefae27d34289ffbbaed4ff3b073524",
+        "bytes": 2272,
+        "lines": 71
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "64dfc9127a47d9d453d72022b47d3b8d8a5c82cad756ac1114b09faf1a956120",
+          "bytes": 35189,
+          "lines": 836,
+          "runtimeExportClause": "Config, apply, createMcpToolDefinition, inject, name",
+          "symbolLines": [
+            {
+              "line": 810,
+              "marker": "async function apply("
+            },
+            {
+              "line": 810,
+              "marker": "function apply("
+            },
+            {
+              "line": 836,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "9c7941df0740beffeffae4f95e59007d3cefae27d34289ffbbaed4ff3b073524",
+          "bytes": 2272,
+          "lines": 71
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-mcp-resources",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/mcp/mcp-resources/package.json",
+      "sourceManifestHash": "f1d8bf04f68f4f8b9fcdd29b8c58a3e7e18792be5c7980a162cdeadb6654ea87",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-mcp-resources/package.json",
+      "installedManifestMetadata": {
+        "sha256": "52088f530f712e62d3455572d372f877d9294801c1a3a98f08d4ff77aa90119a",
+        "bytes": 1538,
+        "lines": 55
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "7fa2e6049494b502ae756bf557c1f744a07835b850e6e0e0ddb555a488f3a094",
+          "bytes": 6196,
+          "lines": 181,
+          "runtimeExportClause": "McpResourceRuntime, McpResourceRuntime as default",
+          "symbolLines": [
+            {
+              "line": 109,
+              "marker": "class extends"
+            },
+            {
+              "line": 181,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "52088f530f712e62d3455572d372f877d9294801c1a3a98f08d4ff77aa90119a",
+          "bytes": 1538,
+          "lines": 55
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-settings",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/settings/settings/package.json",
+      "sourceManifestHash": "e5c8a4ff4bb175008e3f7b2c8c00858cc58929fa7f0f7796350dc23ffc203e75",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-settings/package.json",
+      "installedManifestMetadata": {
+        "sha256": "4ad7b33480ee08189669afef9f1a17e77a4182d58eb5aa3740b0badff51f5e42",
+        "bytes": 1751,
+        "lines": 60
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "9432b872597b7a31473072eb38a55979ab23375c76bd1d86d751388a692a0136",
+          "bytes": 22636,
+          "lines": 544,
+          "runtimeExportClause": "SettingsConflictError, SettingsForms, SettingsForms as default, redactSecrets",
+          "symbolLines": [
+            {
+              "line": 163,
+              "marker": "class extends"
+            },
+            {
+              "line": 322,
+              "marker": "class extends"
+            },
+            {
+              "line": 470,
+              "marker": "async update("
+            },
+            {
+              "line": 488,
+              "marker": "async mutate("
+            },
+            {
+              "line": 544,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "c9019b02dd4ba45fc8daac9e6316f9d241989c248f19a3f737262c4608694bd2",
+          "bytes": 114,
+          "lines": 3,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 2,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "4ad7b33480ee08189669afef9f1a17e77a4182d58eb5aa3740b0badff51f5e42",
+          "bytes": 1751,
+          "lines": 60
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-settings-controller",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/settings-controller/package.json",
+      "sourceManifestHash": "d1f4be73e1dc0cb2e3bf7d555005533fba06e2761d190278bb8189e2a9fb010e",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-settings-controller/package.json",
+      "installedManifestMetadata": {
+        "sha256": "b9755fdb65a1bd9524e72434c64f359f52db01e6a579e377b62061a9d6452f02",
+        "bytes": 2119,
+        "lines": 70
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "9c92e35d80b2b59d08e38cafe8ff9896d96f6e82cc3be4b0e7ead21432e94e1a",
+          "bytes": 21775,
+          "lines": 511,
+          "runtimeExportClause": "CredentialsController, SettingsController, SettingsController as default",
+          "symbolLines": [
+            {
+              "line": 433,
+              "marker": "async mutate("
+            },
+            {
+              "line": 511,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "5cb67a8257de97bba3dd3cd475263eb3a6f7a1c60b17809c5594db7f84af96ca",
+          "bytes": 389,
+          "lines": 10,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 9,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "f0f7c84c15d4caa66c1485533217acf39984aa405158a5b6f8046d44d9a9fce2",
+          "bytes": 49566,
+          "lines": 620,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 577,
+              "marker": "async mutate("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "98f6539ad34de5680260c352da04c72bcbc3ad7d1e2aaf23c22cb8015a7b059d",
+          "bytes": 39810,
+          "lines": 500,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "b9755fdb65a1bd9524e72434c64f359f52db01e6a579e377b62061a9d6452f02",
+          "bytes": 2119,
+          "lines": 70
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-storage-domain",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/storage/storage-domain/package.json",
+      "sourceManifestHash": "722983dcbe96209ef2560ed87520789f20c32d76014e95918f0c9ec6e7e98096",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-storage-domain/package.json",
+      "installedManifestMetadata": {
+        "sha256": "0eecd9366f6694378b78b384cc63350759d9b3baabde2fc200ca4c05291b4aa5",
+        "bytes": 1150,
+        "lines": 43
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "a54f7664d2f64fe04a08c7058ca5bff4fc69ed6a0d30c2bc11561b620698ef16",
+          "bytes": 17247,
+          "lines": 454,
+          "runtimeExportClause": "Config, DomainError, DomainFacility, apply, defineDomain, descriptorOf, domainTable, inject, name",
+          "symbolLines": [
+            {
+              "line": 14,
+              "marker": "class extends"
+            },
+            {
+              "line": 61,
+              "marker": "defineDomain("
+            },
+            {
+              "line": 438,
+              "marker": "function apply("
+            },
+            {
+              "line": 454,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "0eecd9366f6694378b78b384cc63350759d9b3baabde2fc200ca4c05291b4aa5",
+          "bytes": 1150,
+          "lines": 43
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-storage",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/storage/storage/package.json",
+      "sourceManifestHash": "3c048c4491e8c71087f1c6a35f4d2d4b75d768873553806459a3da0073a854f6",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-storage/package.json",
+      "installedManifestMetadata": {
+        "sha256": "88373a6f9f919d40a47fdb6050da676f216e3d645011ea2c40d596b98634bdda",
+        "bytes": 936,
+        "lines": 37
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "1289574c24ecfa5b134e2750d578c00ae59654de7d00133e117c4cc34095f3a3",
+          "bytes": 5033,
+          "lines": 140,
+          "runtimeExportClause": "BackendRegistry, Storage, Storage as default, StorageError, UNIT_NAME_RE, storageBackendServiceKey",
+          "symbolLines": [
+            {
+              "line": 11,
+              "marker": "class extends"
+            },
+            {
+              "line": 104,
+              "marker": "class extends"
+            },
+            {
+              "line": 140,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "88373a6f9f919d40a47fdb6050da676f216e3d645011ea2c40d596b98634bdda",
+          "bytes": 936,
+          "lines": 37
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-commands",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/interaction/commands/package.json",
+      "sourceManifestHash": "996e644b3587f4ad4c25c833d752311f3b67fcf82a635deed1f7bb227c9dcd54",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-commands/package.json",
+      "installedManifestMetadata": {
+        "sha256": "aa4cf37f15a13a1aa28ded98dc202b6d50105bd4f52749f969d430790ffb0235",
+        "bytes": 2225,
+        "lines": 76
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./brand": {
+          "types": "./lib/types/brand.d.ts",
+          "default": "./lib/types/brand.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "88909a0915e4e3b2148c72a912987c3e29ba025b5dea589a0f4543040dc34750",
+          "bytes": 20129,
+          "lines": 478,
+          "runtimeExportClause": "CommandDefinitionId, CommandId, CommandRuntime, CommandRuntime as default, name, parseCommand",
+          "symbolLines": [
+            {
+              "line": 478,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "06f43511aa44249a435d74bf2b168bc767460930d874764c69add444510579b3",
+          "bytes": 363,
+          "lines": 10,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 9,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./brand",
+            "types"
+          ],
+          "target": "./lib/types/brand.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./brand",
+            "default"
+          ],
+          "target": "./lib/types/brand.js",
+          "exists": true,
+          "sha256": "50808fed83c5cfe09b80df4165108abba0188645b9b9d39d0426b293e8f188dd",
+          "bytes": 937,
+          "lines": 27,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "c8359570bb029548e574fa398eb9caad00b80da29f92987cafb1de075c0e10ac",
+          "bytes": 65411,
+          "lines": 937,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "f317056b4e54dcaea1f20f125bb091a60dbf2fb5aa46274bda0d646473d810d6",
+          "bytes": 13213,
+          "lines": 178,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "aa4cf37f15a13a1aa28ded98dc202b6d50105bd4f52749f969d430790ffb0235",
+          "bytes": 2225,
+          "lines": 76
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-user-questions",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/interaction/user-questions/package.json",
+      "sourceManifestHash": "404473df8986546c6a195322b0a48eb2d213c00e4fa7199b7f0cc4da61987b5d",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-user-questions/package.json",
+      "installedManifestMetadata": {
+        "sha256": "bf2f10585e1daeb40b5995fd274d4a996245dbd5182dc1c76f317a523a871c84",
+        "bytes": 2188,
+        "lines": 72
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "e1c51afac2e31be8593c6426976e5f31dbe2a709b85ae1ea43ed406146f54265",
+          "bytes": 28131,
+          "lines": 695,
+          "runtimeExportClause": "TIMED_WAIT_PARAMETER, UserQuestionError, UserQuestionService, UserQuestionService as default, isTimedAskUserQuestionSchema",
+          "symbolLines": [
+            {
+              "line": 429,
+              "marker": "class extends"
+            },
+            {
+              "line": 695,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "4b255ef99714560dc5d3f025adc9e5261de73fa0a9c629b5adc3b92a6053aaed",
+          "bytes": 144,
+          "lines": 3,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 2,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "bf2f10585e1daeb40b5995fd274d4a996245dbd5182dc1c76f317a523a871c84",
+          "bytes": 2188,
+          "lines": 72
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "041f0620dc0fe93e1c7fdd65fc40ec518b4516a41cc78cb6edc6b73ec92feacd",
+          "bytes": 62682,
+          "lines": 930,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "b5d47b53ee81728ec9ab074b11f82c026ad6f04c5231d7832221100b246dd6b3",
+          "bytes": 10934,
+          "lines": 180,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-user-approval",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/interaction/user-approval/package.json",
+      "sourceManifestHash": "584058ab1709edb55ba3cbf8f5eb3db09f28deed073e4e970ddd9ec3b3e18f2c",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-user-approval/package.json",
+      "installedManifestMetadata": {
+        "sha256": "79d75523b9927644869bb4c92c291417ef9a60c9825ce7c6836f26669a8f0af8",
+        "bytes": 1767,
+        "lines": 57
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "6a5ad1ba3c3dc3abbbae52e6c8c4463970ee0c1c8988cebb0d5cf2acd17ee90b",
+          "bytes": 8478,
+          "lines": 192,
+          "runtimeExportClause": "APPROVAL_POLICIES, ApprovalRequestId, ApprovalService, ApprovalService as default, setApprovalPolicy",
+          "symbolLines": [
+            {
+              "line": 72,
+              "marker": "class extends"
+            },
+            {
+              "line": 192,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "525e6f38c039c0b20c6d071bfe06799e8fbc41b2af2ce8db7b1feb3faebad75f",
+          "bytes": 484,
+          "lines": 15,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "79d75523b9927644869bb4c92c291417ef9a60c9825ce7c6836f26669a8f0af8",
+          "bytes": 1767,
+          "lines": 57
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-agent-preset",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/preset/agent-preset/package.json",
+      "sourceManifestHash": "eafa1607a2dafd2eaaf55261d2d7474f0cf26f7c4fb412a14aef3bde52539ee7",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-agent-preset/package.json",
+      "installedManifestMetadata": {
+        "sha256": "97af0ba73ac21cc62d22ae6e775764206429b2ccb9d12d7be240d2d0e2259a19",
+        "bytes": 1514,
+        "lines": 52
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "23cd2dd62ac3b27522a2d377e14b5a93f80c2189e733937dcdd02b73a6d3d1da",
+          "bytes": 898,
+          "lines": 29,
+          "runtimeExportClause": "AgentPreset as default",
+          "symbolLines": [
+            {
+              "line": 29,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "97af0ba73ac21cc62d22ae6e775764206429b2ccb9d12d7be240d2d0e2259a19",
+          "bytes": 1514,
+          "lines": 52
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-agent-preset-registry",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/preset/agent-preset-registry/package.json",
+      "sourceManifestHash": "ab7952f2793eb388f48978e560576bf49fe2445b822079f577f038904b8fc0a9",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-agent-preset-registry/package.json",
+      "installedManifestMetadata": {
+        "sha256": "3321eb0e876e9cdc9124fccee5bd4d769a0844c6729d1665fa5c16af91f328df",
+        "bytes": 3123,
+        "lines": 94
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./display": {
+          "types": "./lib/types/display.d.ts",
+          "default": "./lib/types/display.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "95edcc66175a87091ba90fe0809246821df470bf960e1cfd725b5ca6baaf4f07",
+          "bytes": 31736,
+          "lines": 811,
+          "runtimeExportClause": "AgentPresetRegistry, AgentPresetRegistry as default, agentPresetProjectionDefinition, auditRows, entryListProblem, leakedServices",
+          "symbolLines": [
+            {
+              "line": 63,
+              "marker": "class extends"
+            },
+            {
+              "line": 811,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "01ae2a5b120382f9a648ced7ee8507493a134f216d100fc61600c6c9738235d2",
+          "bytes": 44,
+          "lines": 2,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 1,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./display",
+            "types"
+          ],
+          "target": "./lib/types/display.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./display",
+            "default"
+          ],
+          "target": "./lib/types/display.js",
+          "exists": true,
+          "sha256": "dc221ce4ece41d04666c483d5f14c7ef4d1e21c51dfc99ae70371af24c00e80b",
+          "bytes": 1926,
+          "lines": 39,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "5dcd6d59496abcaf5eace4c55b4f29494aaa80c660acc508b1b041e8f04e0a59",
+          "bytes": 65377,
+          "lines": 989,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "264f378d0df0c6a93c29bf2d64e041076a2f1c2ce12d11888741725be99cbb30",
+          "bytes": 9530,
+          "lines": 148,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "3321eb0e876e9cdc9124fccee5bd4d769a0844c6729d1665fa5c16af91f328df",
+          "bytes": 3123,
+          "lines": 94
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-skill",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/skill/skill/package.json",
+      "sourceManifestHash": "ed8b74fb698b339a38095665f3af8b45d281193fa55b3d9c8e5f543ff39976c4",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-skill/package.json",
+      "installedManifestMetadata": {
+        "sha256": "78036dc8a6d287ae6480eb0828e552f5b031f5d8bb1d43befb98fd10f60b7b08",
+        "bytes": 1165,
+        "lines": 45
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "4b88621be4e7ff09b05c175fc6dcb67e77a22e5c5570e3aa603338b2937ea791",
+          "bytes": 23721,
+          "lines": 566,
+          "runtimeExportClause": "BUNDLED_SKILL_RANK, SkillRegistry, SkillRegistry as default, escapeText, isModelInvocable, isSkillName, isUserInvocable, renderSkillContent",
+          "symbolLines": [
+            {
+              "line": 119,
+              "marker": "class extends"
+            },
+            {
+              "line": 147,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 178,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 566,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "78036dc8a6d287ae6480eb0828e552f5b031f5d8bb1d43befb98fd10f60b7b08",
+          "bytes": 1165,
+          "lines": 45
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-skill-filesystem",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/skill/skill-filesystem/package.json",
+      "sourceManifestHash": "2c4f3906fe9cd98c7d456e8bb5c7cfe7bdcef7c880b1dcc86db760b4e6274278",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-skill-filesystem/package.json",
+      "installedManifestMetadata": {
+        "sha256": "2860be4659318e01b25e7333632395b33f0d76be5f292610df3bbb549fcb45d2",
+        "bytes": 1282,
+        "lines": 48
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "783214a95cc531c82567925ed0afabfdee5c091a56c4b1c1e1bce523b948ee02",
+          "bytes": 29788,
+          "lines": 891,
+          "runtimeExportClause": "Config, FileSystemSkillProvider, apply, inject, name",
+          "symbolLines": [
+            {
+              "line": 45,
+              "marker": "function apply("
+            },
+            {
+              "line": 47,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 891,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "2860be4659318e01b25e7333632395b33f0d76be5f292610df3bbb549fcb45d2",
+          "bytes": 1282,
+          "lines": 48
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-tool-skill",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/skill/tool-skill/package.json",
+      "sourceManifestHash": "2fd8830e5e9bc2ad3119985e2e33b700642b9135297cf82b21b782849b29eef3",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-tool-skill/package.json",
+      "installedManifestMetadata": {
+        "sha256": "9371fcad06014252678fb439477387d2f0469dbec2e954793ce07bd6bbde5207",
+        "bytes": 1617,
+        "lines": 54
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "3d0aecda4e4b10ffc0404f0e1b99e31d0271018031f553c2d600e4c8e9db0ba2",
+          "bytes": 36627,
+          "lines": 1124,
+          "runtimeExportClause": "Config, apply, inject, name",
+          "symbolLines": [
+            {
+              "line": 784,
+              "marker": "function apply("
+            },
+            {
+              "line": 1124,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "9371fcad06014252678fb439477387d2f0469dbec2e954793ce07bd6bbde5207",
+          "bytes": 1617,
+          "lines": 54
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-resources",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/resources/package.json",
+      "sourceManifestHash": "ffb3bd06819d62e01c3aca42116036afdf0b2e976d21583ddbdb9a93c220b5e0",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-resources/package.json",
+      "installedManifestMetadata": {
+        "sha256": "14ed1811b1cfaa4befd03e08b380a5a53782d4e0b59d01a6a7fa4945229c392e",
+        "bytes": 1527,
+        "lines": 55
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-client-ui-renderer"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "55c76f3ce864429a4c0e8a8b61b17b802df5b62a9bde284f5f6b478cb14aa1f5",
+          "bytes": 233,
+          "lines": 6,
+          "runtimeExportClause": "apply",
+          "symbolLines": [
+            {
+              "line": 4,
+              "marker": "function apply("
+            },
+            {
+              "line": 6,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "16c6da29e338582fffa6c378dcccd543f7ad0272ea1c457c3e7d6722a9897765",
+          "bytes": 5812,
+          "lines": 185,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 170,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "14ed1811b1cfaa4befd03e08b380a5a53782d4e0b59d01a6a7fa4945229c392e",
+          "bytes": 1527,
+          "lines": 55
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "dsh-client-ui-slots",
+      "installed": false
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-ui-plugin-manager",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/ui-plugin-manager/package.json",
+      "sourceManifestHash": "c54477579b0c30dde1be793d011a57914cddc766593b4cbfe6bddce7ac3b94a7",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-ui-plugin-manager/package.json",
+      "installedManifestMetadata": {
+        "sha256": "fcc590cf91775d4aaa60cb02e7625916e5a89c08784c1291e7652f2599368e7a",
+        "bytes": 2816,
+        "lines": 89
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-remotes",
+            "@deepseek-ai/dsh-client-locale",
+            "@deepseek-ai/dsh-client-ui-layout",
+            "@deepseek-ai/dsh-client-ui-sidebar"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "421deeb3f647bbbb0e5778e97fef508b226cb31dd67a3631b3aa9dbcdb498a2d",
+          "bytes": 5535,
+          "lines": 142,
+          "runtimeExportClause": "PluginRegistryProbe as default",
+          "symbolLines": [
+            {
+              "line": 142,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "4b6caa02c9336e3a118e56635164697d4793c29eb259f4a3eddde39ad1bcaa78",
+          "bytes": 626646,
+          "lines": 4501,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 32,
+              "marker": "plugins.bundle.config"
+            },
+            {
+              "line": 62,
+              "marker": "plugins.bundle.config"
+            },
+            {
+              "line": 803,
+              "marker": "class extends"
+            },
+            {
+              "line": 2964,
+              "marker": "plugins.bundle.config"
+            },
+            {
+              "line": 4224,
+              "marker": "plugins.bundle.activation"
+            },
+            {
+              "line": 4372,
+              "marker": "function apply("
+            },
+            {
+              "line": 4436,
+              "marker": "plugins.bundle.activation"
+            },
+            {
+              "line": 4440,
+              "marker": "plugins.bundle.config"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "fcc590cf91775d4aaa60cb02e7625916e5a89c08784c1291e7652f2599368e7a",
+          "bytes": 2816,
+          "lines": 89
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "28b50cea0439441d063221e7f66d73c3a9bdafc9cb9af019edae620081f2ad54",
+          "bytes": 2947,
+          "lines": 60,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "015c51371fb5cadfc7ff1f5cf3b2a64a1efe9a79c0e5838a34f9bc9f1e13cc1f",
+          "bytes": 1606,
+          "lines": 30,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-ui-workspace",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/ui-workspace/package.json",
+      "sourceManifestHash": "8c0d22dc600074cf78ccb5b27144647511ee28eb959e7ef94f416f3d51a00175",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-ui-workspace/package.json",
+      "installedManifestMetadata": {
+        "sha256": "1d09b4b95dfbe6b1be7cf60d9ebc12d9c36f00f38323f1832054448f97b91075",
+        "bytes": 3181,
+        "lines": 89
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-remote-access",
+            "@deepseek-ai/dsh-api-remotes",
+            "@deepseek-ai/dsh-api-session-controller",
+            "@deepseek-ai/dsh-api-workspace-controller",
+            "@deepseek-ai/dsh-client-connection",
+            "@deepseek-ai/dsh-client-locale",
+            "@deepseek-ai/dsh-client-shortcuts",
+            "@deepseek-ai/dsh-client-ui-conversation",
+            "@deepseek-ai/dsh-client-ui-layout",
+            "@deepseek-ai/dsh-client-ui-renderer",
+            "@deepseek-ai/dsh-client-ui-session",
+            "@deepseek-ai/dsh-client-ui-sidebar"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "e6cdc4b725585354102a5c4598c9d8c79d6abac62d7979c09919821716370438",
+          "bytes": 453,
+          "lines": 11,
+          "runtimeExportClause": "apply",
+          "symbolLines": [
+            {
+              "line": 9,
+              "marker": "function apply("
+            },
+            {
+              "line": 11,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "bafd2d6eea2f82674cc0606bec13fc891e44b42fb2ac973f01cb32c735d4062f",
+          "bytes": 232860,
+          "lines": 5356,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 126,
+              "marker": "startSession("
+            },
+            {
+              "line": 1350,
+              "marker": "class extends"
+            },
+            {
+              "line": 1360,
+              "marker": "class extends"
+            },
+            {
+              "line": 1500,
+              "marker": "startSession("
+            },
+            {
+              "line": 2398,
+              "marker": "class extends"
+            },
+            {
+              "line": 3237,
+              "marker": "startSession("
+            },
+            {
+              "line": 3939,
+              "marker": "startSession("
+            },
+            {
+              "line": 5022,
+              "marker": "function apply("
+            },
+            {
+              "line": 5184,
+              "marker": "startSession("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "1d09b4b95dfbe6b1be7cf60d9ebc12d9c36f00f38323f1832054448f97b91075",
+          "bytes": 3181,
+          "lines": 89
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-ui-sidebar-right",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/ui-sidebar-right/package.json",
+      "sourceManifestHash": "6554b560b75978b49f7f31ac19e4ff5f67488883acf801c7ab1e60b0c477db47",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-ui-sidebar-right/package.json",
+      "installedManifestMetadata": {
+        "sha256": "4341bdb186e3e6ec43c996e5fbbb8d986c1d0a7e8645add928c154d98a4ab1d2",
+        "bytes": 2547,
+        "lines": 78
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-session-controller",
+            "@deepseek-ai/dsh-client-resources",
+            "@deepseek-ai/dsh-client-ui-conversation",
+            "@deepseek-ai/dsh-client-ui-layout",
+            "@deepseek-ai/dsh-client-ui-session",
+            "@deepseek-ai/dsh-client-shortcuts"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "c6edb0b0d3fd64404d353b7ac6502e82ed54919e2a2f5d59fd0f5fedd287bfce",
+          "bytes": 225,
+          "lines": 6,
+          "runtimeExportClause": "apply",
+          "symbolLines": [
+            {
+              "line": 4,
+              "marker": "function apply("
+            },
+            {
+              "line": 6,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "87e13d16e47b9eb00f8f25096d2c674ebe71a31026161a10d7c89ad6e6dfe379",
+          "bytes": 196014,
+          "lines": 5145,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 2234,
+              "marker": "openResource("
+            },
+            {
+              "line": 4922,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "4341bdb186e3e6ec43c996e5fbbb8d986c1d0a7e8645add928c154d98a4ab1d2",
+          "bytes": 2547,
+          "lines": 78
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-ui-deliverables",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/ui-deliverables/package.json",
+      "sourceManifestHash": "54e517f66ef51679430897677e839876162cdebc7fcddb55f7dda8ae497c4547",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-ui-deliverables/package.json",
+      "installedManifestMetadata": {
+        "sha256": "b6f9990261022a2c7ce41f3801b00732a752ac261e03db5870c1a37186064773",
+        "bytes": 3188,
+        "lines": 90
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-remotes",
+            "@deepseek-ai/dsh-client-connection",
+            "@deepseek-ai/dsh-client-locale",
+            "@deepseek-ai/dsh-client-ui-chat",
+            "@deepseek-ai/dsh-client-ui-conversation",
+            "@deepseek-ai/dsh-client-ui-renderer",
+            "@deepseek-ai/dsh-client-ui-sidebar-right",
+            "@deepseek-ai/dsh-client-ui-tool",
+            "@deepseek-ai/dsh-client-ui-settings"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "5cb1f07a7691e08510f890cc21afec836b4e5c6a9372b1c346a96092f9169b0d",
+          "bytes": 12644,
+          "lines": 271,
+          "runtimeExportClause": "apply, inject",
+          "symbolLines": [
+            {
+              "line": 262,
+              "marker": "function apply("
+            },
+            {
+              "line": 271,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "7920d4d9247989df960962137b8113fb0b083c33577fa222c8cfce997493fbe4",
+          "bytes": 111074,
+          "lines": 2342,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 220,
+              "marker": "class extends"
+            },
+            {
+              "line": 248,
+              "marker": "class extends"
+            },
+            {
+              "line": 1966,
+              "marker": "openResource("
+            },
+            {
+              "line": 2254,
+              "marker": "function apply("
+            },
+            {
+              "line": 2295,
+              "marker": "openResource("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "b6f9990261022a2c7ce41f3801b00732a752ac261e03db5870c1a37186064773",
+          "bytes": 3188,
+          "lines": 90
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-client-modules",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/client/modules/package.json",
+      "sourceManifestHash": "a1f1ecd6bdaf78b483768dcc1834f7303a2c465e864a7772b0400ae7bf617459",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-client-modules/package.json",
+      "installedManifestMetadata": {
+        "sha256": "24018a218ca53766f7a0a3bec8f55b467ac0694ae73f76b6cc15d4e04a3eaf3e",
+        "bytes": 1537,
+        "lines": 53
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "platform": "web",
+          "inject": [],
+          "immediately": true
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "a2a33e32f13fdc9598b4751c4c22fb72789190bf5ba7337cd5a3d0cb4b4417ec",
+          "bytes": 42376,
+          "lines": 1000,
+          "runtimeExportClause": "ClientModuleRegistry, ClientModuleRegistry as default, bootInjections, orderByModuleGraph, stripClientSuffix",
+          "symbolLines": [
+            {
+              "line": 131,
+              "marker": "class extends"
+            },
+            {
+              "line": 145,
+              "marker": "class extends"
+            },
+            {
+              "line": 513,
+              "marker": "class extends"
+            },
+            {
+              "line": 1000,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "426084f8672c26a469566a3f43c91a9b0d1dd73d0834028e553a6d0fa9cffa44",
+          "bytes": 46292,
+          "lines": 1019,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 1000,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "24018a218ca53766f7a0a3bec8f55b467ac0694ae73f76b6cc15d4e04a3eaf3e",
+          "bytes": 1537,
+          "lines": 53
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-gateway",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/gateway/package.json",
+      "sourceManifestHash": "2af44356a88e6cf925fe6e8cbbefebfd4aadbc23c69b0f6919b05583e67b3749",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-gateway/package.json",
+      "installedManifestMetadata": {
+        "sha256": "6b229a67c0a77abb56f9e1988c91fd5a5ccf77224e133c8681431ffd8b08aac0",
+        "bytes": 2293,
+        "lines": 81
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "node": "./lib/client.node.js",
+          "browser": "./lib/client.browser.js",
+          "default": "./lib/client.browser.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./stream-protocol": {
+          "types": "./lib/types/stream-protocol.d.ts",
+          "default": "./lib/types/stream-protocol.js"
+        },
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-typert-registry",
+            "@deepseek-ai/dsh-client-connection"
+          ],
+          "platform": "web",
+          "immediately": true
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "4fbe460fec585ebc2cf2887261f6c33f024081a539d9fb5d6557a9002324b23f",
+          "bytes": 74266,
+          "lines": 1830,
+          "runtimeExportClause": "TypertGatewayError, TypertGatewayService, TypertGatewayService as default",
+          "symbolLines": [
+            {
+              "line": 717,
+              "marker": "class extends"
+            },
+            {
+              "line": 744,
+              "marker": "class extends"
+            },
+            {
+              "line": 1830,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "node"
+          ],
+          "target": "./lib/client.node.js",
+          "exists": true,
+          "sha256": "aca973689c3ee34524c8bd7de9c901f5a839e29bc15d4816a6dc5e2fb0e64e9f",
+          "bytes": 72821,
+          "lines": 1992,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 122,
+              "marker": "class extends"
+            },
+            {
+              "line": 1430,
+              "marker": "function apply("
+            },
+            {
+              "line": 1433,
+              "marker": "class extends"
+            },
+            {
+              "line": 1485,
+              "marker": "$mount("
+            },
+            {
+              "line": 1490,
+              "marker": "$mount("
+            },
+            {
+              "line": 1990,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "browser"
+          ],
+          "target": "./lib/client.browser.js",
+          "exists": true,
+          "sha256": "3043de82334846a3a5654b7317830c5403f90e9aeca692d3c15e30e01d16505d",
+          "bytes": 84127,
+          "lines": 2187,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 17,
+              "marker": "class extends"
+            },
+            {
+              "line": 306,
+              "marker": "class extends"
+            },
+            {
+              "line": 1614,
+              "marker": "function apply("
+            },
+            {
+              "line": 1617,
+              "marker": "class extends"
+            },
+            {
+              "line": 1669,
+              "marker": "$mount("
+            },
+            {
+              "line": 1674,
+              "marker": "$mount("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.browser.js",
+          "exists": true,
+          "sha256": "3043de82334846a3a5654b7317830c5403f90e9aeca692d3c15e30e01d16505d",
+          "bytes": 84127,
+          "lines": 2187,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 17,
+              "marker": "class extends"
+            },
+            {
+              "line": 306,
+              "marker": "class extends"
+            },
+            {
+              "line": 1614,
+              "marker": "function apply("
+            },
+            {
+              "line": 1617,
+              "marker": "class extends"
+            },
+            {
+              "line": 1669,
+              "marker": "$mount("
+            },
+            {
+              "line": 1674,
+              "marker": "$mount("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "08e0cee093e668f6b7c727a2b2416807d0c51a672c8f8d0d58c0a547cfaea47c",
+          "bytes": 175,
+          "lines": 6,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 5,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "6b229a67c0a77abb56f9e1988c91fd5a5ccf77224e133c8681431ffd8b08aac0",
+          "bytes": 2293,
+          "lines": 81
+        },
+        {
+          "conditions": [
+            "./stream-protocol",
+            "types"
+          ],
+          "target": "./lib/types/stream-protocol.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./stream-protocol",
+            "default"
+          ],
+          "target": "./lib/types/stream-protocol.js",
+          "exists": true,
+          "sha256": "ab4d8d638062a3f0e2330229550342eafe517ae0bbc47d433df4f7618b5bf5ac",
+          "bytes": 10542,
+          "lines": 257,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-remotes",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/remotes/package.json",
+      "sourceManifestHash": "3df41419d47bf16741843a2e7f725053559cbc5d6cee029f5bac48b1240b4ec9",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-remotes/package.json",
+      "installedManifestMetadata": {
+        "sha256": "82f70e01778152f227870d7037c26ae95015af2ede9c2418e9ea52ff07923e05",
+        "bytes": 3480,
+        "lines": 99
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-gateway"
+          ],
+          "platform": "web",
+          "immediately": true
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "2e7068e388541ca63648727a6659bdf24f3a0d1d90f5ef54959787285370a218",
+          "bytes": 6991,
+          "lines": 257,
+          "runtimeExportClause": "API_REMOTE_FORWARDED_EVENTS, apply, inject",
+          "symbolLines": [
+            {
+              "line": 146,
+              "marker": "function apply("
+            },
+            {
+              "line": 257,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "f149235a96b9366b17f29dd466caff6fc5c299c136658b31855ff17c1bf112b6",
+          "bytes": 1087482,
+          "lines": 23805,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 23759,
+              "marker": "async function apply("
+            },
+            {
+              "line": 23759,
+              "marker": "function apply("
+            },
+            {
+              "line": 23789,
+              "marker": "$mount("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "7cf83ec39be43ae8312f590fc0b4aedb1833ea4c6fe6fcb3202320d792b41412",
+          "bytes": 507,
+          "lines": 12,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 11,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "82f70e01778152f227870d7037c26ae95015af2ede9c2418e9ea52ff07923e05",
+          "bytes": 3480,
+          "lines": 99
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-plugin-manager",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/boot/plugin-manager/package.json",
+      "sourceManifestHash": "7c8c98a1b9c7b4f46403795c3643a1f17b953674cd0e3177bd16ddbb580901c2",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-plugin-manager/package.json",
+      "installedManifestMetadata": {
+        "sha256": "b652cb265453970de1f2e09b89e1f719a2d8c7309ae26a0c2a5d893ed456220e",
+        "bytes": 3591,
+        "lines": 112
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./registry": {
+          "types": "./lib/types/registry.d.ts",
+          "default": "./lib/types/registry.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./operations": {
+          "types": "./lib/types/operations.d.ts",
+          "default": "./lib/types/operations.js"
+        },
+        "./tools": {
+          "types": "./lib/types/tools.d.ts",
+          "default": "./lib/types/tools.js"
+        },
+        "./tools/locale/*.json": "./locale/tools/*.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "1b8bf9eb266d7b3b7f899175e3f435c89ed8baa8aabc677212759f8c6cd23132",
+          "bytes": 102561,
+          "lines": 2420,
+          "runtimeExportClause": "InvalidInstallSpecError, PluginManager, PluginManager as default, classifyInstallFailure, parseInstallSpec",
+          "symbolLines": [
+            {
+              "line": 39,
+              "marker": "class extends"
+            },
+            {
+              "line": 206,
+              "marker": "class extends"
+            },
+            {
+              "line": 1312,
+              "marker": "class extends"
+            },
+            {
+              "line": 2420,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "01ae2a5b120382f9a648ced7ee8507493a134f216d100fc61600c6c9738235d2",
+          "bytes": 44,
+          "lines": 2,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 1,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./registry",
+            "types"
+          ],
+          "target": "./lib/types/registry.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./registry",
+            "default"
+          ],
+          "target": "./lib/types/registry.js",
+          "exists": true,
+          "sha256": "9b8e2a742c989c4741dc4e5a2ba25a00b305d71b5eea90213d24a38ebb53ae5d",
+          "bytes": 5237,
+          "lines": 97,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "4d52452212ba28f6121adb4cceab5d4a64b0f9c09f3216edeffbf81e7717a238",
+          "bytes": 92797,
+          "lines": 1161,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "9254a2e61de2ac50c89d286c27ad4f7d52e74491eed4c019d4c7e99af678484a",
+          "bytes": 73676,
+          "lines": 889,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "b652cb265453970de1f2e09b89e1f719a2d8c7309ae26a0c2a5d893ed456220e",
+          "bytes": 3591,
+          "lines": 112
+        },
+        {
+          "conditions": [
+            "./operations",
+            "types"
+          ],
+          "target": "./lib/types/operations.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./operations",
+            "default"
+          ],
+          "target": "./lib/types/operations.js",
+          "exists": true,
+          "sha256": "a9f2c4bbcfcad95eaac8878358e5aecb2532cfa4a7a9c6f981ff507fe3403f94",
+          "bytes": 34646,
+          "lines": 653,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 65,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./tools",
+            "types"
+          ],
+          "target": "./lib/types/tools.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./tools",
+            "default"
+          ],
+          "target": "./lib/types/tools.js",
+          "exists": true,
+          "sha256": "07438d86ae290c0add52f2dd3863ee128be8739d35dc4599208e1387028431bd",
+          "bytes": 12206,
+          "lines": 150,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 73,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./tools/locale/*.json"
+          ],
+          "target": "./locale/tools/*.json",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-typert-protocol",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/typert/protocol/package.json",
+      "sourceManifestHash": "d05de1ae780bc160a3233d7c668301b165cc21e5e03e294644c44d4f3ebe5e80",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-typert-protocol/package.json",
+      "installedManifestMetadata": {
+        "sha256": "34d910e35b8a5ed524974d0d7312b39a04c3f052585a3873d666ba076ca1cb9e",
+        "bytes": 1181,
+        "lines": 48
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./remote-info": {
+          "types": "./lib/types/remote-info.d.ts",
+          "default": "./lib/types/remote-info.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "8d48ddbb4bbc62585ce5a4d3a7f53b39f55581b5320c1cae681766edd15ff8af",
+          "bytes": 19373,
+          "lines": 480,
+          "runtimeExportClause": "Remote, RemoteError, RemoteScope, TYPERT_OWNED_VALUE, TypertRemoteService, bindTypertRemote, createTypertRemoteInfo, isRemoteJsonValue, isRemoteUplinkItem, isTypertOwnedValue, isTypertRemoteMethod, isTypertRemoteSegment, principalOf, remoteErrorOf, remoteMethods, typertOwnedValue",
+          "symbolLines": [
+            {
+              "line": 11,
+              "marker": "class extends"
+            },
+            {
+              "line": 339,
+              "marker": "class extends"
+            },
+            {
+              "line": 480,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "d0f7cecc5f19e822f3900d0ae4da629c7a1e8ca1a387d0b4136ec6231c1cbc4c",
+          "bytes": 252,
+          "lines": 7,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 6,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./remote-info",
+            "types"
+          ],
+          "target": "./lib/types/remote-info.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote-info",
+            "default"
+          ],
+          "target": "./lib/types/remote-info.js",
+          "exists": true,
+          "sha256": "b09ccf25e7e8e625bebb42daa3cea5a407bc2db966ade815f0b2888413d48f76",
+          "bytes": 6392,
+          "lines": 143,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "34d910e35b8a5ed524974d0d7312b39a04c3f052585a3873d666ba076ca1cb9e",
+          "bytes": 1181,
+          "lines": 48
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-typert-registry",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/typert/registry/package.json",
+      "sourceManifestHash": "2acb7a49c8264460c2000264f5317bf026213362443dc37092f37c05f484c2b5",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-typert-registry/package.json",
+      "installedManifestMetadata": {
+        "sha256": "09dc088e4603c0340086db56128e4170a7e90d41f44bc850a4e78503f60ef06d",
+        "bytes": 1491,
+        "lines": 61
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "node": "./lib/client.node.js",
+          "browser": "./lib/client.browser.js",
+          "default": "./lib/client.browser.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [],
+          "platform": "web",
+          "immediately": true
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "ea5e3beb6ddd09a7b77e6fc79933f71ba93382d0ec1caa70bd1f92c904caccdd",
+          "bytes": 24195,
+          "lines": 632,
+          "runtimeExportClause": "TypertRegistry, TypertRegistry as default, typertEndpoint, typertKey, typertPackageKey",
+          "symbolLines": [
+            {
+              "line": 317,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 321,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 323,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 400,
+              "marker": "class extends"
+            },
+            {
+              "line": 632,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "node"
+          ],
+          "target": "./lib/client.node.js",
+          "exists": true,
+          "sha256": "b56ea1a47ddacdaeae24f5a83d293243a86ba710f6c6d5a99cf84dc51e69cfee",
+          "bytes": 24515,
+          "lines": 646,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 317,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 321,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 323,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 400,
+              "marker": "class extends"
+            },
+            {
+              "line": 640,
+              "marker": "function apply("
+            },
+            {
+              "line": 644,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "browser"
+          ],
+          "target": "./lib/client.browser.js",
+          "exists": true,
+          "sha256": "423eedcf80732d1524e7aefd16ef78935a53f4d0f7c4daaf1a457a51a4943fe0",
+          "bytes": 26132,
+          "lines": 656,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 323,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 327,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 329,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 406,
+              "marker": "class extends"
+            },
+            {
+              "line": 646,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.browser.js",
+          "exists": true,
+          "sha256": "423eedcf80732d1524e7aefd16ef78935a53f4d0f7c4daaf1a457a51a4943fe0",
+          "bytes": 26132,
+          "lines": 656,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 323,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 327,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 329,
+              "marker": "registerProvider("
+            },
+            {
+              "line": 406,
+              "marker": "class extends"
+            },
+            {
+              "line": 646,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "b8c4bd46aa852c08d4ba9793bd008038587880f45cb7b92b0f2e1b9a593bc092",
+          "bytes": 247,
+          "lines": 7,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 6,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "09dc088e4603c0340086db56128e4170a7e90d41f44bc850a4e78503f60ef06d",
+          "bytes": 1491,
+          "lines": 61
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-session-controller",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/session-controller/package.json",
+      "sourceManifestHash": "142a3743344acb068ca0d87b82abecb31019626f0dc38d94791d47ffc80167b2",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-session-controller/package.json",
+      "installedManifestMetadata": {
+        "sha256": "f3b8d8badbdd33e312196cd0fc9392d04f55a352131934bf1c2cdc1f4cb3d5e1",
+        "bytes": 6164,
+        "lines": 167
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./remote-events": {
+          "types": "./lib/types/remote-events.d.ts",
+          "default": "./lib/types/remote-events.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "external": [
+            "@deepseek-ai/dsh-api-gateway/client"
+          ],
+          "inject": [
+            "@deepseek-ai/dsh-api-gateway",
+            "@deepseek-ai/dsh-client-file-upload"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "a9801acb577b03053c5d5a3191ff555c5f1d791d0acddec113bea4511e33b386",
+          "bytes": 132150,
+          "lines": 3367,
+          "runtimeExportClause": "ApiSessionNotFound, SessionController, SessionController as default, SessionFileReferences, SessionSkillCatalog, buildModelCatalog",
+          "symbolLines": [
+            {
+              "line": 87,
+              "marker": "class extends"
+            },
+            {
+              "line": 89,
+              "marker": "class extends"
+            },
+            {
+              "line": 98,
+              "marker": "class extends"
+            },
+            {
+              "line": 110,
+              "marker": "class extends"
+            },
+            {
+              "line": 120,
+              "marker": "class extends"
+            },
+            {
+              "line": 3367,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "933fe63cada3bd5126d2a96ca042524dd1b2ada286fc0c49c0967a0927312bd2",
+          "bytes": 258,
+          "lines": 5,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote-events",
+            "types"
+          ],
+          "target": "./lib/types/remote-events.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote-events",
+            "default"
+          ],
+          "target": "./lib/types/remote-events.js",
+          "exists": true,
+          "sha256": "4107bd2407269bbf2f531d3284ebb7840a889b1cc364050515e3e3a4a686cd01",
+          "bytes": 52,
+          "lines": 2,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 1,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "82f2301c18f0e51340c1eedf8ecdfb939e873b3770a80632e438b86e82887d0e",
+          "bytes": 166568,
+          "lines": 4326,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 19,
+              "marker": "class extends"
+            },
+            {
+              "line": 401,
+              "marker": "class extends"
+            },
+            {
+              "line": 3667,
+              "marker": "class extends"
+            },
+            {
+              "line": 3682,
+              "marker": "class extends"
+            },
+            {
+              "line": 4262,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "0c12316ed398710bcd87520f2332ebb647f0ab5f71cdfe04551c0592b48b2c3c",
+          "bytes": 365047,
+          "lines": 4053,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "f8760911d70173fc2e845b74747bda43f9d9e1d09789d78a00522decf853bb5b",
+          "bytes": 223130,
+          "lines": 2013,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "f3b8d8badbdd33e312196cd0fc9392d04f55a352131934bf1c2cdc1f4cb3d5e1",
+          "bytes": 6164,
+          "lines": 167
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-workspace-controller",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/workspace-controller/package.json",
+      "sourceManifestHash": "b8ecf310919db79731846b02b7f029eb7f097c63a2f5602a1e13784cdbbee95d",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-workspace-controller/package.json",
+      "installedManifestMetadata": {
+        "sha256": "f5499f48871a9cef38ec21f81868cca8e9f1cc7ca04ed1b027631f34dc71fdbf",
+        "bytes": 3052,
+        "lines": 99
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./default-workspace": {
+          "types": "./lib/types/default-workspace.d.ts",
+          "default": "./lib/types/default-workspace.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "external": [
+            "@deepseek-ai/dsh-api-gateway/client"
+          ],
+          "inject": [
+            "@deepseek-ai/dsh-api-gateway",
+            "@deepseek-ai/dsh-client-connection"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "257848af0e4bacb15265660a3750c7909bb4002ab02a1c2a3188045f882ee39e",
+          "bytes": 39881,
+          "lines": 1049,
+          "runtimeExportClause": "DirectoryPickerController, WorkspaceController, WorkspaceController as default",
+          "symbolLines": [
+            {
+              "line": 1049,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "26d5d5311f5f0e6fda62ab1f400643cd1fe3b795e633f4e50070423d4712bf8e",
+          "bytes": 366,
+          "lines": 8,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 7,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "c43d2bd83e74588f2b9a761f36c5fbae870146d7af9685f30a38ed515a82cced",
+          "bytes": 20614,
+          "lines": 531,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 357,
+              "marker": "class extends"
+            },
+            {
+              "line": 371,
+              "marker": "class extends"
+            },
+            {
+              "line": 381,
+              "marker": "class extends"
+            },
+            {
+              "line": 450,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./default-workspace",
+            "types"
+          ],
+          "target": "./lib/types/default-workspace.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./default-workspace",
+            "default"
+          ],
+          "target": "./lib/types/default-workspace.js",
+          "exists": true,
+          "sha256": "cc90ea42884d81e406eaa4efb4d56bb3bb84d56deb01d3dab2da3af0ba0b0508",
+          "bytes": 1456,
+          "lines": 29,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "d8d43921e8be756dea73c58b175fdb533175698ecaf07b0615a928122e85b3ba",
+          "bytes": 66052,
+          "lines": 898,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "d636a9335d9f46bcafb816db6ce468ed9596acfbd4bcfda13fe77bd14ee78573",
+          "bytes": 50869,
+          "lines": 668,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "f5499f48871a9cef38ec21f81868cca8e9f1cc7ca04ed1b027631f34dc71fdbf",
+          "bytes": 3052,
+          "lines": 99
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-tool-present",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/deliverables/tool-present/package.json",
+      "sourceManifestHash": "c43985603082d055c63d8987d9c395383e595c49ed1af3830ea6f337a213913d",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-tool-present/package.json",
+      "installedManifestMetadata": {
+        "sha256": "93092d5b21b5bf288a5fb7057a665456c277ad2aa6776c4271518c584e362691",
+        "bytes": 2019,
+        "lines": 64
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": null,
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "b4944a5a114ebf528542775f222125afa331c47e061b481adfcacd7e06bfb5ce",
+          "bytes": 4239,
+          "lines": 127,
+          "runtimeExportClause": "Config, apply, inject, name",
+          "symbolLines": [
+            {
+              "line": 21,
+              "marker": "function apply("
+            },
+            {
+              "line": 127,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "01ae2a5b120382f9a648ced7ee8507493a134f216d100fc61600c6c9738235d2",
+          "bytes": 44,
+          "lines": 2,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 1,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "93092d5b21b5bf288a5fb7057a665456c277ad2aa6776c4271518c584e362691",
+          "bytes": 2019,
+          "lines": 64
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    },
+    {
+      "package": "@deepseek-ai/dsh-api-workspace-files",
+      "installed": true,
+      "version": "0.2.1-rc.5",
+      "sourceManifest": "packages/api/workspace-files/package.json",
+      "sourceManifestHash": "22fbe24bd8da7edc2c59c374997655c3946f910ef55e7f9484b49e9bef178b49",
+      "installedManifest": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar/dsh/node_modules/@deepseek-ai/dsh-api-workspace-files/package.json",
+      "installedManifestMetadata": {
+        "sha256": "90a1ec734e6b6625a08ac34dd4583481da41f0d28e7c2b3a501644a482eb6ecc",
+        "bytes": 2539,
+        "lines": 85
+      },
+      "exportsEqualToReference": true,
+      "exports": {
+        ".": {
+          "types": "./lib/types/index.d.ts",
+          "default": "./lib/index.js"
+        },
+        "./types": {
+          "types": "./lib/types/types.d.ts",
+          "default": "./lib/types/types.js"
+        },
+        "./client": {
+          "types": "./lib/types/client/index.d.ts",
+          "default": "./lib/client.js"
+        },
+        "./typert": {
+          "types": "./lib/typert.host.d.ts",
+          "default": "./lib/typert.host.js"
+        },
+        "./remote": {
+          "types": "./lib/typert.remote-client.d.ts",
+          "default": "./lib/typert.remote-client.js"
+        },
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./locale/*.json": "./locale/*.json"
+      },
+      "dsh": {
+        "client": {
+          "inject": [
+            "@deepseek-ai/dsh-api-gateway",
+            "@deepseek-ai/dsh-client-resources"
+          ],
+          "platform": "web"
+        }
+      },
+      "targets": [
+        {
+          "conditions": [
+            ".",
+            "types"
+          ],
+          "target": "./lib/types/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            ".",
+            "default"
+          ],
+          "target": "./lib/index.js",
+          "exists": true,
+          "sha256": "1d633aaf12df42e477438738f5939273ffc139ad96299ba471f97b46b2dd256c",
+          "bytes": 25087,
+          "lines": 637,
+          "runtimeExportClause": "WorkspaceFiles, WorkspaceFiles as default",
+          "symbolLines": [
+            {
+              "line": 637,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./types",
+            "types"
+          ],
+          "target": "./lib/types/types.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./types",
+            "default"
+          ],
+          "target": "./lib/types/types.js",
+          "exists": true,
+          "sha256": "e150bd474bd85180ae108b52b8d9a23ed55c97b9fcff0c66628899f85aedd78c",
+          "bytes": 749,
+          "lines": 17,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 16,
+              "marker": "export {"
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./client",
+            "types"
+          ],
+          "target": "./lib/types/client/index.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./client",
+            "default"
+          ],
+          "target": "./lib/client.js",
+          "exists": true,
+          "sha256": "de67777d792d3a5d90b4d9441b11e54e887b2c3f0156d61d0dd1ada562743c3f",
+          "bytes": 15886,
+          "lines": 480,
+          "runtimeExportClause": null,
+          "symbolLines": [
+            {
+              "line": 274,
+              "marker": "class extends"
+            },
+            {
+              "line": 462,
+              "marker": "function apply("
+            }
+          ]
+        },
+        {
+          "conditions": [
+            "./typert",
+            "types"
+          ],
+          "target": "./lib/typert.host.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./typert",
+            "default"
+          ],
+          "target": "./lib/typert.host.js",
+          "exists": true,
+          "sha256": "ffb407b64b813e4e9909cb380eb53b6bf7038f74a41fd55b4bafa932658f19c4",
+          "bytes": 43277,
+          "lines": 571,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./remote",
+            "types"
+          ],
+          "target": "./lib/typert.remote-client.d.ts",
+          "exists": false
+        },
+        {
+          "conditions": [
+            "./remote",
+            "default"
+          ],
+          "target": "./lib/typert.remote-client.js",
+          "exists": true,
+          "sha256": "b2f318688b5f88782c867dc40c496d76aef15f2262b309c18772a9e46b197634",
+          "bytes": 35248,
+          "lines": 460,
+          "runtimeExportClause": null,
+          "symbolLines": []
+        },
+        {
+          "conditions": [
+            "./src/*"
+          ],
+          "target": "./src/*",
+          "wildcard": true
+        },
+        {
+          "conditions": [
+            "./package.json"
+          ],
+          "target": "./package.json",
+          "exists": true,
+          "sha256": "90a1ec734e6b6625a08ac34dd4583481da41f0d28e7c2b3a501644a482eb6ecc",
+          "bytes": 2539,
+          "lines": 85
+        },
+        {
+          "conditions": [
+            "./locale/*.json"
+          ],
+          "target": "./locale/*.json",
+          "wildcard": true
+        }
+      ]
+    }
+  ],
+  "contracts": [
+    {
+      "id": "plain-js-strict-remote",
+      "sourcePath": "packages/api/gateway/src/index.ts",
+      "sourceLines": {
+        "start": 810,
+        "end": 871
+      },
+      "sourceSha256": "0a1234ae8400dbadebab5c53c8dfb352e24fa271b767645d5f0275fd620b36eb",
+      "installedPackage": "@deepseek-ai/dsh-api-gateway",
+      "obligation": "Strict local descriptor plus visible binding works without SRC decorator discovery; mount same strict descriptors on Client."
+    },
+    {
+      "id": "plain-js-remote-spec",
+      "sourcePath": "packages/typert/protocol/src/types.ts",
+      "sourceLines": {
+        "start": 588,
+        "end": 626
+      },
+      "sourceSha256": "7d9f75e0807ee4e4b3a997a1f28966314404a45c254ef135312144682611c107",
+      "installedPackage": "@deepseek-ai/dsh-typert-protocol",
+      "obligation": "createTypertRemoteInfo accepts exact codec spec; Client may mount a direct contribution without codegen."
+    },
+    {
+      "id": "plain-js-binding",
+      "sourcePath": "packages/typert/protocol/src/index.ts",
+      "sourceLines": {
+        "start": 232,
+        "end": 259
+      },
+      "sourceSha256": "68a759fada0b0f6414d9ebaf1a3d24480acb3197953ce84d0eb4f741eaa3e297",
+      "installedPackage": "@deepseek-ai/dsh-typert-protocol",
+      "obligation": "TypertRemoteService or bindTypertRemote binds Cordis service to wire namespace."
+    },
+    {
+      "id": "mcp-entry",
+      "sourcePath": "packages/mcp/mcp-client/src/index.ts",
+      "sourceLines": {
+        "start": 119,
+        "end": 203
+      },
+      "sourceSha256": "f279bd88743ca73b0d9834915d1bb31e455e21c87f4990808cfd55b273db4d1c",
+      "installedPackage": "@deepseek-ai/dsh-mcp-client",
+      "obligation": "No mcpManager service; one plugin instance per connection."
+    },
+    {
+      "id": "mcp-transport",
+      "sourcePath": "packages/mcp/mcp-client/src/transport.ts",
+      "sourceLines": {
+        "start": 31,
+        "end": 45
+      },
+      "sourceSha256": "6f3fca685af3d5654c476e95db24e1245dc1fa021a0bd7f477ce4ad997e1c8f6",
+      "installedPackage": "@deepseek-ai/dsh-mcp-client",
+      "obligation": "stdio or streamable-http; no OAuth/credential-ref config."
+    },
+    {
+      "id": "mcp-resources",
+      "sourcePath": "packages/mcp/mcp-resources/src/index.ts",
+      "sourceLines": {
+        "start": 74,
+        "end": 125
+      },
+      "sourceSha256": "6b19614393d187629b7d273d8e8bca3d30f45cf0eac75b51493d0678eb809b65",
+      "installedPackage": "@deepseek-ai/dsh-mcp-resources",
+      "obligation": "Scoped list/read provider, not a connection manager."
+    },
+    {
+      "id": "settings-persist",
+      "sourcePath": "packages/api/settings-controller/src/index.ts",
+      "sourceLines": {
+        "start": 97,
+        "end": 157
+      },
+      "sourceSha256": "73d05b8340fbcc93a814a19aaecb53b81a777b0af08f10271f4ff6dd415d3a53",
+      "installedPackage": "@deepseek-ai/dsh-api-settings-controller",
+      "obligation": "describe/update/replace/mutate; expectedRevision must be supplied by finance UI."
+    },
+    {
+      "id": "storage-atomic-update",
+      "sourcePath": "packages/storage/storage-domain/src/domain.ts",
+      "sourceLines": {
+        "start": 82,
+        "end": 118
+      },
+      "sourceSha256": "e9801b98454e45c530ea90293e6aaf3cba2d532ddf751a7e869fbe2524b12958",
+      "installedPackage": "@deepseek-ai/dsh-storage-domain",
+      "obligation": "One record atomic update on domain chain; close owned handle; no cross-table transaction."
+    },
+    {
+      "id": "human-command",
+      "sourcePath": "packages/interaction/commands/src/index.ts",
+      "sourceLines": {
+        "start": 333,
+        "end": 388
+      },
+      "sourceSha256": "c9416db54cc48ab5b72adaa22d8534596e87bc8795d88ac5d807fdcccb4e6066",
+      "installedPackage": "@deepseek-ai/dsh-commands",
+      "obligation": "UI command path; never expose approval command as an agent tool."
+    },
+    {
+      "id": "skills-isolation",
+      "sourcePath": "packages/skill/skill/src/index.ts",
+      "sourceLines": {
+        "start": 345,
+        "end": 423
+      },
+      "sourceSha256": "af4fad67fb086c3f5c93aed4604830718b4535e7e59a60d680404b07ea08477c",
+      "installedPackage": "@deepseek-ai/dsh-skill",
+      "obligation": "Scoped provider layers do not remove inherited global providers; isolate registry when allowlist requires exclusivity."
+    },
+    {
+      "id": "skills-roots",
+      "sourcePath": "packages/skill/skill-filesystem/src/index.ts",
+      "sourceLines": {
+        "start": 730,
+        "end": 755
+      },
+      "sourceSha256": "4be3a8f4142b27e07093cff1757876a80a344dd6f664a38775069244b89f4ec4",
+      "installedPackage": "@deepseek-ai/dsh-skill-filesystem",
+      "obligation": "Scans root direct children or flat md; includeDefaultRoots false for finance-only roots."
+    },
+    {
+      "id": "skill-loader",
+      "sourcePath": "packages/skill/tool-skill/src/index.ts",
+      "sourceLines": {
+        "start": 128,
+        "end": 157
+      },
+      "sourceSha256": "29f6cf10c7247379298d9a96a53aef9cb2b21dcf7266f57ab147860b27d7cc44",
+      "installedPackage": "@deepseek-ai/dsh-tool-skill",
+      "obligation": "Tool reads same scoped registry; isolate loader together with registry."
+    },
+    {
+      "id": "preset-service-leak",
+      "sourcePath": "packages/preset/agent-preset-registry/src/mount.ts",
+      "sourceLines": {
+        "start": 58,
+        "end": 82
+      },
+      "sourceSha256": "c008c324ca5b0e4d17dc167a440a0d30537d179905e99a8e67772968cec58917",
+      "installedPackage": "@deepseek-ai/dsh-agent-preset-registry",
+      "obligation": "Preset-owned services require an isolate realm; retained preset generations outlive declarations while used."
+    },
+    {
+      "id": "session-draft",
+      "sourcePath": "packages/client/ui-workspace/src/client/navigation.ts",
+      "sourceLines": {
+        "start": 73,
+        "end": 89
+      },
+      "sourceSha256": "e85db0304cc7f9fa61dc0e2b34e420dbcaea62478eefcb223af3da4af0a26076",
+      "installedPackage": "@deepseek-ai/dsh-client-ui-workspace",
+      "obligation": "startSession returns void, initializes draft; no promise/sessionId/execution success."
+    },
+    {
+      "id": "plugin-config-slots",
+      "sourcePath": "packages/client/ui-plugin-manager/src/client/slot-contract.ts",
+      "sourceLines": {
+        "start": 115,
+        "end": 150
+      },
+      "sourceSha256": "5a67047a6b25cd87c7e497b0963f5eec45ed8cb0ec734446b2c20418c41f22a8",
+      "installedPackage": "@deepseek-ai/dsh-client-ui-plugin-manager",
+      "obligation": "Bundle keyed settings and activation slot; activation is user-enablement guidance, not durable once-only state."
+    },
+    {
+      "id": "client-module-loading",
+      "sourcePath": "packages/client/modules/README.md",
+      "sourceLines": {
+        "start": 32,
+        "end": 54
+      },
+      "sourceSha256": "2ad555f181caa617730f19d7e8e963756f9bb3ab5223b6c467c30c51ddcf4098",
+      "installedPackage": "@deepseek-ai/dsh-client-modules",
+      "obligation": "Built ./client factory, shared module baseline and Host-driven HMR; package inject metadata is not Cordis ordering."
+    },
+    {
+      "id": "remote-mount",
+      "sourcePath": "packages/api/gateway/README.md",
+      "sourceLines": {
+        "start": 24,
+        "end": 60
+      },
+      "sourceSha256": "3cd3977248900fc1f79359e19722a7d2a71502c33276d1a1e0a600adffed72fd",
+      "installedPackage": "@deepseek-ai/dsh-api-gateway",
+      "obligation": "New service needs strict generated descriptors on Host and own Client contribution mount; no discovery proxy."
+    },
+    {
+      "id": "plugin-manager-lifecycle",
+      "sourcePath": "packages/boot/plugin-manager/README.md",
+      "sourceLines": {
+        "start": 148,
+        "end": 162
+      },
+      "sourceSha256": "d3a3693a7e93a67126781cbf15e047858a65afbac1254c2180b4dcece6dd0b03",
+      "installedPackage": "@deepseek-ai/dsh-plugin-manager",
+      "obligation": "Removal: deselect, unload, remove package, publish resolution; failures preserve completed stages."
+    },
+    {
+      "id": "deliverable-preview",
+      "sourcePath": "packages/client/ui-deliverables/README.md",
+      "sourceLines": {
+        "start": 33,
+        "end": 39
+      },
+      "sourceSha256": "72205fe2cd82f4f0b7724108e588761c3801895f7c229751fe469f71eb8a93b9",
+      "installedPackage": "@deepseek-ai/dsh-client-ui-deliverables",
+      "obligation": "Use present declarations + native file actions + sidebar resource; no component imports."
+    }
+  ],
+  "observations": {
+    "hostInspect": {
+      "settings": "verified",
+      "storageDomain": "verified",
+      "commands": "verified",
+      "mcpManager": "no catalogued Service"
+    },
+    "clientInspect": {
+      "Service.remote": "timed out after 10000ms"
+    },
+    "missingConcreteTargetsByExtension": {
+      ".d.ts": 83,
+      ".js": 0,
+      ".json": 0
+    },
+    "staticClientBaseline": "dsh-client-ui-slots is shell-seeded, absence as a standalone runtime package is not a missing Slot service."
+  }
+}

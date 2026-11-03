@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "testsRun": 12,
+  "failures": 0,
+  "errors": 0,
+  "sourceTreeSha256": "1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b",
+  "businessE2E": 0,
+  "scope": "Static source and migration-design evidence, not installed product execution"
+}
