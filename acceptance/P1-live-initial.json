@@ -1,0 +1,121 @@
+{
+  "phase": "initial",
+  "startedAt": "2026-11-03T15:08:54.396Z",
+  "evidence": "REAL_NATIVE_LOADER_HOST",
+  "transport": "in-process-native-owner-peer-not-browser",
+  "businessE2E": false,
+  "checks": [
+    {
+      "id": "service-active",
+      "status": "PASS",
+      "elapsedMs": 1
+    },
+    {
+      "id": "refuse-to-change-existing-user-binding",
+      "status": "PASS",
+      "elapsedMs": 0
+    },
+    {
+      "id": "strict-gateway-rejects-wrong-type-and-extra-fields",
+      "status": "PASS",
+      "elapsedMs": 3
+    },
+    {
+      "id": "relative-missing-and-file-paths-rejected-without-state-change",
+      "status": "PASS",
+      "elapsedMs": 2
+    },
+    {
+      "id": "canonical-native-workspace-binding",
+      "status": "PASS",
+      "elapsedMs": 30
+    },
+    {
+      "id": "native-tool-dispatch-uses-same-service-operation",
+      "status": "PASS",
+      "elapsedMs": 1
+    },
+    {
+      "id": "host-domain-contains-committed-binding",
+      "status": "PASS",
+      "elapsedMs": 1
+    },
+    {
+      "id": "follow-starts-with-complete-native-baseline",
+      "status": "PASS",
+      "elapsedMs": 1
+    },
+    {
+      "id": "switch-commits-new-default-without-moving-files",
+      "status": "PASS",
+      "elapsedMs": 20
+    },
+    {
+      "id": "stale-revision-rejected",
+      "status": "PASS",
+      "elapsedMs": 1
+    },
+    {
+      "id": "concurrent-revision-writers-cannot-overwrite",
+      "status": "PASS",
+      "elapsedMs": 6
+    },
+    {
+      "id": "leave-owned-binding-for-lifecycle-persistence-test",
+      "status": "PASS",
+      "elapsedMs": 6
+    }
+  ],
+  "status": "PASS",
+  "initialSnapshot": {
+    "version": "1",
+    "stage": "P1",
+    "revision": 0,
+    "onboardingVersion": 0,
+    "binding": null,
+    "workspaceStatus": "UNBOUND",
+    "error": null,
+    "limitations": [
+      "P1 provides workspace binding only; financial Agents, data sources, runs and review are not implemented.",
+      "Switching changes the default for new tasks only; existing Sessions and files are never moved.",
+      "Directory monitoring uses best-effort filesystem events, not polling. Permission changes or missing-parent recovery may require a fresh status read.",
+      "Workspace registration and binding persistence are separate native domains; a failed save may retain an unused Workspace registration.",
+      "Streams coalesce intermediate changes to the latest observed snapshot."
+    ]
+  },
+  "fixtureRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\tmp\\p1-63e89ad6-fbaf-490c-a64a-d6e26adbd5b5",
+  "lifecycleExpectedSnapshot": {
+    "version": "1",
+    "stage": "P1",
+    "revision": 4,
+    "onboardingVersion": 1,
+    "binding": {
+      "workspaceId": "78c429cd-c471-45ee-aae7-ee2a2da76810",
+      "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\tmp\\p1-63e89ad6-fbaf-490c-a64a-d6e26adbd5b5\\b",
+      "boundAt": "2026-11-03T15:08:54.468Z"
+    },
+    "workspaceStatus": "READY",
+    "error": null,
+    "limitations": [
+      "P1 provides workspace binding only; financial Agents, data sources, runs and review are not implemented.",
+      "Switching changes the default for new tasks only; existing Sessions and files are never moved.",
+      "Directory monitoring uses best-effort filesystem events, not polling. Permission changes or missing-parent recovery may require a fresh status read.",
+      "Workspace registration and binding persistence are separate native domains; a failed save may retain an unused Workspace registration.",
+      "Streams coalesce intermediate changes to the latest observed snapshot."
+    ]
+  },
+  "fixtureWorkspaces": [
+    {
+      "workspaceId": "eab1ba0c-0ec8-4d09-98b6-4ebb57cea051",
+      "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\tmp\\p1-63e89ad6-fbaf-490c-a64a-d6e26adbd5b5\\a"
+    },
+    {
+      "workspaceId": "78c429cd-c471-45ee-aae7-ee2a2da76810",
+      "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\tmp\\p1-63e89ad6-fbaf-490c-a64a-d6e26adbd5b5\\b"
+    }
+  ],
+  "cleanup": "PENDING_NATIVE_DISABLE_ENABLE_REMOVE_REINSTALL_THEN_FINAL_PROBE",
+  "finishedAt": "2026-11-03T15:08:54.473Z",
+  "checksPassed": 12,
+  "checksFailed": 0
+}

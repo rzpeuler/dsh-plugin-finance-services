@@ -1,0 +1,22 @@
+{
+  "name": "@local/dsh-financial-services-p1-initial",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY native Host acceptance fixture; not a financial product.",
+  "exports": {
+    ".": "./probe.js"
+  },
+  "files": [
+    "probe.js",
+    "cordis.patch.yml"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+- insert:
+    - id: finance-p1-initial-probe
+      name: '@local/dsh-financial-services-p1-initial'
+      config:
+        phase: 'initial'
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"

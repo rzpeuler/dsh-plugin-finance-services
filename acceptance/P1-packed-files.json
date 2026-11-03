@@ -1,0 +1,93 @@
+{
+  "tarball": "dist\\local-dsh-financial-services-0.1.2.tgz",
+  "sha256": "39bbc90e78bb5faac6f5a69f5485d69cf64707cba9922f8b73de2346c72e4fcd",
+  "bytes": 26565,
+  "fileCount": 17,
+  "files": [
+    {
+      "path": "package/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "package/NOTICE",
+      "bytes": 1268,
+      "sha256": "a2eedc57db933b8fd48a216bdc6b08bd7c6942158a3e023954b7a82ffc55366a"
+    },
+    {
+      "path": "package/src/client-factory.js",
+      "bytes": 19886,
+      "sha256": "104b1044120e09604eb5b9e40ee3f7328617c295054d81139df768c020184c98"
+    },
+    {
+      "path": "package/lib/client.js",
+      "bytes": 22857,
+      "sha256": "1a6120ca926656d7fd17460a7c3a134462f00b7723c34489fb78d709ca16e925"
+    },
+    {
+      "path": "package/src/contract.js",
+      "bytes": 3089,
+      "sha256": "3638373ce5b097f1a8e8e9ed9423fafe37365f928b521ed3803a1525cc5d2c40"
+    },
+    {
+      "path": "package/lib/host.js",
+      "bytes": 26585,
+      "sha256": "7c3e523bcd2c1fbfcc7f8fc5728472cd2ea1e0d2b563428fcb3039292c27ec76"
+    },
+    {
+      "path": "package/src/host.js",
+      "bytes": 3874,
+      "sha256": "8b7e70c990a2b43a8210e944b94feca88ecb6a3919eb94f8f65ba6e8a23c3db0"
+    },
+    {
+      "path": "package/src/host/reflection.js",
+      "bytes": 2123,
+      "sha256": "6a7fcca20405e37baa09c108181d82bd5d8a76cfb6ea54fbd3a5ab0f92a5c94e"
+    },
+    {
+      "path": "package/src/host/tool.js",
+      "bytes": 2931,
+      "sha256": "1b731b979753195f5932d0d9e0cd8a41f1f95f9b52a2d1c37a0fe2e08430e0d0"
+    },
+    {
+      "path": "package/src/workspace-binding.js",
+      "bytes": 14623,
+      "sha256": "c52485121ef0ab9fc6f71984197b5e4dcf13f04aad855ca0b13395269189ad83"
+    },
+    {
+      "path": "package/lib/build-manifest.json",
+      "bytes": 869,
+      "sha256": "72542d0b27d19dd40b5fc54a364a787ae27c9d6c19bb51a4f0745bcdee4ad089"
+    },
+    {
+      "path": "package/locale/en.json",
+      "bytes": 253,
+      "sha256": "3c187ba95a3c2f57961b88646ea5c1ce5bd3136dd5fb95ac2e055df117f57183"
+    },
+    {
+      "path": "package/package.json",
+      "bytes": 1699,
+      "sha256": "2c0d6129b099afff8e055309120436c073c45ccfdcbe70c85890bbd21000dfc7"
+    },
+    {
+      "path": "package/locale/zh.json",
+      "bytes": 260,
+      "sha256": "377973710f2af54784153105f493f5fccd7900924dfb2e70a7482e1a69b17e19"
+    },
+    {
+      "path": "package/README.md",
+      "bytes": 3374,
+      "sha256": "f331a66e2b1ca2fe5e8546b5f5d94e3f814cdbf3aa5bb04a477dfdf0804efdf4"
+    },
+    {
+      "path": "package/icon.svg",
+      "bytes": 545,
+      "sha256": "daf4806c15c9713defb173e9e37fb5072b532a5cf64a4a4f8b66af5ec70e3368"
+    },
+    {
+      "path": "package/cordis.patch.yml",
+      "bytes": 83,
+      "sha256": "7a1c850e6c0b180dea72a0e11d217c4e68f9a7fea1ce6f7fceac2eaac0192e2c"
+    }
+  ]
+}

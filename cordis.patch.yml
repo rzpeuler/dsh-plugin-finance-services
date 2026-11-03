@@ -1,0 +1,3 @@
+- insert:
+    - id: financial-services
+      name: '@local/dsh-financial-services'

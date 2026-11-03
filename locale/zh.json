@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Financial Services 金融服务",
+    "description": "金融工作区设置：绑定真实存在的本地目录，持久保存已核验的工作区标识。当前仅为 P1 骨架，金融 Agent 与任务执行尚未开放。"
+  }
+}

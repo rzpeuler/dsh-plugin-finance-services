@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Financial Services",
+    "description": "Financial workspace setup: bind an existing local directory and persist its verified Workspace identity. P1 skeleton only; financial agents and execution are not yet available."
+  }
+}

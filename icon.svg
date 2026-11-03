@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>Financial Services</title>
+  <desc>Original folded ledger with three financial columns; no vendor branding.</desc>
+  <rect width="64" height="64" rx="15" fill="#123F46"/>
+  <path d="M16 13h23l10 11v27H16V13Z" stroke="#F2EAD5" stroke-width="2.8" stroke-linejoin="round"/>
+  <path d="M39 13v11h10" stroke="#F2EAD5" stroke-width="2.8" stroke-linejoin="round"/>
+  <path d="M24 43v-9m8 9V28m8 15v-9" stroke="#EFC675" stroke-width="3.2" stroke-linecap="round"/>
+</svg>

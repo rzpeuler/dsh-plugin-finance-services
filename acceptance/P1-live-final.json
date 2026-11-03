@@ -1,0 +1,70 @@
+{
+  "phase": "final",
+  "startedAt": "2026-11-03T15:11:18.160Z",
+  "evidence": "REAL_NATIVE_LOADER_HOST",
+  "transport": "in-process-native-owner-peer-not-browser",
+  "businessE2E": false,
+  "checks": [
+    {
+      "id": "service-active",
+      "status": "PASS",
+      "elapsedMs": 2
+    },
+    {
+      "id": "binding-survived-native-disable-enable-and-remove-reinstall",
+      "status": "PASS",
+      "elapsedMs": 0
+    },
+    {
+      "id": "unbind-clears-only-default-and-retains-onboarding-version",
+      "status": "PASS",
+      "elapsedMs": 8
+    },
+    {
+      "id": "remove-only-owned-test-registrations-and-preserve-directories",
+      "status": "PASS",
+      "elapsedMs": 31
+    }
+  ],
+  "status": "PASS",
+  "initialSnapshot": {
+    "version": "1",
+    "stage": "P1",
+    "revision": 4,
+    "onboardingVersion": 1,
+    "binding": {
+      "workspaceId": "78c429cd-c471-45ee-aae7-ee2a2da76810",
+      "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\tmp\\p1-63e89ad6-fbaf-490c-a64a-d6e26adbd5b5\\b",
+      "boundAt": "2026-11-03T15:08:54.468Z"
+    },
+    "workspaceStatus": "READY",
+    "error": null,
+    "limitations": [
+      "P1 provides workspace binding only; financial Agents, data sources, runs and review are not implemented.",
+      "Switching changes the default for new tasks only; existing Sessions and files are never moved.",
+      "Directory monitoring uses best-effort filesystem events, not polling. Permission changes or missing-parent recovery may require a fresh status read.",
+      "Workspace registration and binding persistence are separate native domains; a failed save may retain an unused Workspace registration.",
+      "Streams coalesce intermediate changes to the latest observed snapshot."
+    ]
+  },
+  "restoredSnapshot": {
+    "version": "1",
+    "stage": "P1",
+    "revision": 5,
+    "onboardingVersion": 1,
+    "binding": null,
+    "workspaceStatus": "UNBOUND",
+    "error": null,
+    "limitations": [
+      "P1 provides workspace binding only; financial Agents, data sources, runs and review are not implemented.",
+      "Switching changes the default for new tasks only; existing Sessions and files are never moved.",
+      "Directory monitoring uses best-effort filesystem events, not polling. Permission changes or missing-parent recovery may require a fresh status read.",
+      "Workspace registration and binding persistence are separate native domains; a failed save may retain an unused Workspace registration.",
+      "Streams coalesce intermediate changes to the latest observed snapshot."
+    ]
+  },
+  "cleanup": "COMPLETE_REGISTRATIONS_REMOVED_FILES_RETAINED",
+  "finishedAt": "2026-11-03T15:11:18.204Z",
+  "checksPassed": 4,
+  "checksFailed": 0
+}

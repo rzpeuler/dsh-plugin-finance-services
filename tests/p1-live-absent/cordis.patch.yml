@@ -1,0 +1,5 @@
+- insert:
+    - id: finance-p1-absent-probe
+      name: '@local/dsh-financial-services-p1-absent'
+      config:
+        bundleRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle'

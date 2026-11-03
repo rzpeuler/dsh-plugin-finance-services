@@ -1,0 +1,11 @@
+{
+  "name": "@local/dsh-financial-services-p1-absent",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY native unload rejection fixture, never shipped in the financial Bundle.",
+  "exports": { ".": "./probe.js" },
+  "files": ["probe.js", "cordis.patch.yml"],
+  "engines": { "dsh": "0.2.1-rc.5" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

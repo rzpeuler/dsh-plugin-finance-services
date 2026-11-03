@@ -1,0 +1,44 @@
+# Financial Services for DSH
+
+独立、仓库外 Financial Services Bundle。当前版本 **0.1.2 / P1 开发阶段**，不是完整金融移植产品。P0 清点与设计已验收；P1 安装、绑定和生命周期测试以阶段记录为准。不得把本阶段入口当成10角色与商业数据已经可用。
+
+## 当前范围
+
+- 原生 Plugin Manager 单一安装单元，无 DSH Core 修改。
+- 一个 Financial Services 导航入口，以及原生插件配置/启用引导位置。
+- Host 负责真实 Workspace 目录验证、规范路径/ID绑定、版本化持久状态；Client 只显示真实 Host 状态。
+- 默认仅绑定真实已存在的本地目录。使用原生目录选择器，或输入绝对目录；不会调用全局 initializeDefault，也不会自动执行金融任务。
+- 禁用/卸载不删除用户目录、原始附件或 DSH Session 历史。重新安装从Host持久域读取既有绑定；目录已移动则需重新绑定。
+- Workspace切换仅改变未来任务默认目录，不移动历史 Session 或成果。
+
+## 安装
+
+要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。通过 DSH 原生 Plugin Manager 安装此源码目录或本项目构建的本地 tarball。开发构建使用锁文件及以下脚本：
+
+```text
+pnpm install --ignore-scripts
+pnpm run build
+pnpm test
+pnpm run check:package
+pnpm pack
+```
+
+不在用户 Profile 目录手写配置或运行包管理器。安装返回 application=applied 才表示已应用；restart-required 必须按提示重启。源码修改不保证现有页面自动刷新，必须先重建Client artifact，并按宿主返回的生命周期操作。
+
+## 首次使用
+
+进入 Financial Services。若尚未绑定，选择或输入一个真实已存在的本地工作目录，确认保存。页面显示原生Workspace ID、规范路径及状态。不存在/无权限/路径移动明确报错；不会把配置存在视为可用。取消目录选择不写配置。当前阶段不提交模型任务。
+
+## 权限和业务限制
+
+绑定工作目录不改变 Shell、工具审批、文件沙箱或商业数据授权。金融内部Review与 ask/never 独立。后续金融功能永久禁止自动发布、客户通信、正式总账记账、交易/资金操作及代替专业合规签字。
+
+商业MCP均未配置/未验证；本版DSH没有任务书指定的动态MCP Manager，不能声称支持其restart/probe/watch/OAuth管理接口。源仓库缺失的LBO/comps/Nike二进制模板不会被虚构补齐。阶段记录明确区分静态测试、真实Host集成、UI操作和金融数据E2E。
+
+## 来源和审计
+
+完整源码仓库的 SOURCE_INVENTORY、COMPATIBILITY_MATRIX、MIGRATION_MATRIX、SECURITY_MATRIX、TEST_REPORT 及 acceptance 目录保留每阶段标准和实际结果。根 LICENSE / NOTICE 与未来迁移资产的原始许可须同时分发。商业数据不因开源代码许可而自动获得使用权。
+
+## English summary
+
+An independent out-of-tree DSH bundle. Version 0.1.2 implements only the P1 native integration skeleton; business workflows and commercial data are not represented as complete. Install through the native Plugin Manager, bind an existing local workspace, and follow the recorded lifecycle outcome. Disable/uninstall preserves user files, workspace registrations and session history. Review policy does not grant tool or data permissions.

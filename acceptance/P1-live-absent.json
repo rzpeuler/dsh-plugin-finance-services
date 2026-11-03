@@ -1,0 +1,27 @@
+{
+  "evidence": "REAL_NATIVE_LOADER_HOST",
+  "phase": "absent",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "service-removed",
+      "status": "PASS"
+    },
+    {
+      "id": "tool-removed",
+      "status": "PASS"
+    },
+    {
+      "id": "domain-handle-closed",
+      "status": "PASS"
+    },
+    {
+      "id": "native-gateway-refuses-unloaded-method",
+      "status": "PASS"
+    }
+  ],
+  "businessE2E": false,
+  "rejectionCode": "gateway/definition-unavailable",
+  "checkedAt": "2026-11-03T15:16:51.969Z",
+  "checksPassed": 4
+}
