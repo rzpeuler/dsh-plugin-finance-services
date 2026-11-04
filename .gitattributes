@@ -1,1 +1,6 @@
 * text=auto eol=lf
+# Upstream resource bytes (including intentional Markdown hard breaks) remain hash-locked.
+assets/source-archive/** -text -whitespace
+assets/skills/** -text -whitespace
+assets/role-skills/** -text -whitespace
+assets/source-snapshot.zip -text

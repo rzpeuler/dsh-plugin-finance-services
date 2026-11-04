@@ -3,6 +3,8 @@ import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 import vm from 'node:vm'
 import { createFinanceClient } from '../src/client-factory.js'
+import { createFinanceContract } from '../src/contract.js'
+import { z } from 'zod'
 
 // These tests exercise only plugin callbacks and registration/resource ownership.
 // No component rendering, DOM emulation, browser interaction or visual assertions.
@@ -13,6 +15,25 @@ const SNAPSHOT = Object.freeze({
   version: '1', stage: 'P1', revision: 3, onboardingVersion: 0,
   binding: null, workspaceStatus: 'UNBOUND', error: null, limitations: ['P1 only'],
 })
+const CATALOG_ADDRESS = 'dsh-resource://finance-catalog/current'
+// TEST_ONLY fixtures are callback inputs, never a rendering or native-runtime simulation.
+const role = (index, worker = false) => ({
+  id: `finance-test-${worker ? 'worker' : 'main'}-${index}`, kind: worker ? 'worker' : 'main', slug: `TEST_ONLY-${index}`,
+  name: `TEST_ONLY ${worker ? 'Worker' : 'Agent'} ${index}`, description: 'TEST_ONLY role description',
+  parentId: worker ? `finance-test-main-${Math.floor(index / 3)}` : null, writer: worker && index % 3 === 2, shellRestricted: true,
+  builtinTools: ['read'], allowedMcpServers: [], workerPresetIds: worker ? [] : Array.from({ length: 3 }, (_, offset) => `finance-test-worker-${index * 3 + offset}`),
+  skillNames: ['TEST_ONLY-skill-0'], sourcePath: `TEST_ONLY/${index}.yaml`, sourceSha256: 'TEST_ONLY-source-sha', adaptedPromptSha256: 'TEST_ONLY-prompt-sha',
+  mountStatus: index === 0 ? 'UNAVAILABLE' : 'AVAILABLE', diagnostic: index === 0 ? 'TEST_ONLY native mount diagnostic' : null,
+})
+const CATALOG = Object.freeze({
+  stage: 'P2', sourceTreeSha256: 'TEST_ONLY-tree-sha',
+  agents: Array.from({ length: 10 }, (_, index) => role(index)), workers: Array.from({ length: 30 }, (_, index) => role(index, true)),
+  skills: Array.from({ length: 63 }, (_, index) => ({ name: `TEST_ONLY-skill-${index}`, description: 'TEST_ONLY skill description', assetStatus: index ? 'AVAILABLE' : 'BLOCKED', issues: index ? [] : ['TEST_ONLY missing template'] })),
+  commands: Array.from({ length: 41 }, (_, index) => ({ id: `TEST_ONLY-command-${index}`, name: `TEST_ONLY Command ${index}`, sourcePath: `TEST_ONLY/${index}.md`, targetPresetIds: ['finance-test-main-1', 'finance-test-main-2'], selectionRequired: true })),
+  steering: Array.from({ length: 29 }, (_, index) => ({ id: `TEST_ONLY-steering-${index}`, targetPresetId: `finance-test-main-${index % 10}`, title: 'TEST_ONLY steering title' })),
+  limitations: ['TEST_ONLY catalogue limitation'],
+})
+const DRAFT = Object.freeze({ status: 'DRAFT_READY', workspaceId: 'TEST_ONLY-workspace', agentPreset: 'finance-test-main', prompt: 'TEST_ONLY unsent prompt', whenDraftExists: 'keep', autoSubmit: false, error: null })
 const OK = value => ({ ok: true, value })
 const FAILURE = { ok: false, error: { code: 'gateway/internal', message: 'TEST_ONLY failure', details: {} } }
 function contractFactory() { return { remote: { package: '@local/dsh-financial-services', descriptors: [] } } }
@@ -22,7 +43,7 @@ function fixture(options = {}) {
   const entries = new Map()
   const providers = new Map()
   const dictionaries = new Map()
-  const calls = { mount: [], bind: [], snapshot: [], follow: [], pick: 0, panel: [], streams: [], accepted: 0, streamDisposals: 0 }
+  const calls = { mount: [], bind: [], snapshot: [], catalog: [], prepare: [], start: [], follow: [], pick: 0, panel: [], streams: [], accepted: 0, streamDisposals: 0 }
   const ctx = {
     effect(callback) {
       const dispose = callback()
@@ -58,6 +79,9 @@ function fixture(options = {}) {
     },
     uiWorkspace: {
       async pickDirectory() { calls.pick++; return options.directory ?? 'C:\\TEST_ONLY' },
+      startSession(workspaceId, input) { calls.start.push({ workspaceId, input }); return options.start?.() },
+      prompt() { throw new Error('Draft callbacks must never prompt or submit') },
+      submit() { throw new Error('Draft callbacks must never prompt or submit') },
     },
     layout: { selectPanel(panel) { calls.panel.push(panel) } },
     remote: {
@@ -68,6 +92,8 @@ function fixture(options = {}) {
       },
       financeOperations: {
         async snapshot(request) { calls.snapshot.push(request); return options.snapshot ?? OK(SNAPSHOT) },
+        async catalog(request) { calls.catalog.push(request); return typeof options.catalog === 'function' ? options.catalog() : options.catalog ?? OK(CATALOG) },
+        async prepareDraft(request) { calls.prepare.push(request); return typeof options.prepare === 'function' ? options.prepare() : options.prepare ?? OK(DRAFT) },
         async bindWorkspace(request) { calls.bind.push(request); return options.bind ?? OK({ status: 'BOUND', snapshot: SNAPSHOT, error: null }) },
         async *follow(request, signal) {
           calls.follow.push({ request, signal })
@@ -170,7 +196,7 @@ test('one global sidebar id matches a new main key; config and activation belong
     assert.equal(registration.locale, 'financial-services')
     if (!registration.inject) continue
     const face = registration.inject()
-    assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory'])
+    assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory', 'startDraft'])
     assert.ok(Object.values(face).every(value => typeof value === 'function'))
   }
   assert.equal(f.entries.get('sidebar.panellist:financial-services').registration.label(), 'Financial Services')
@@ -305,6 +331,9 @@ test('disposal removes all owned registrations and old callbacks fail closed; re
   assert.equal(f.dictionaries.size, 0)
   assert.equal(f.calls.unmounted, true)
   assert.equal((await old.bindWorkspace({ path: 'C:\\TEST_ONLY', expectedRevision: 3 })).ok, false)
+  assert.equal((await old.startDraft({ agentId: 'finance-test-main' })).status, 'CANCELLED')
+  assert.equal(f.calls.prepare.length, 0)
+  assert.equal(f.calls.start.length, 0)
   await assert.rejects(old.pickDirectory(), error => error.code === 'gateway/cancelled')
   old.openWorkbench()
   assert.equal(f.calls.bind.length, 0)
@@ -312,7 +341,8 @@ test('disposal removes all owned registrations and old callbacks fail closed; re
   assert.equal(f.calls.panel.length, 0)
   await f.plugin.apply(f.ctx)
   assert.equal(f.entries.size, 4)
-  assert.equal(f.providers.size, 1)
+  assert.equal(f.providers.size, 2)
+  assert.deepEqual([...f.providers.keys()], ['finance-workspace', 'finance-catalog'])
   await f.dispose()
 })
 
@@ -324,4 +354,124 @@ test('a completed bind after plugin disposal cannot report success through the o
   await f.dispose()
   resolve(OK({ status: 'BOUND', snapshot: SNAPSHOT, error: null }))
   assert.equal((await pending).ok, false)
+})
+
+test('catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics', async () => {
+  const { Catalog, PreparedDraft } = createFinanceContract(z).schemas
+  assert.equal(Catalog.safeParse(CATALOG).success, true, 'TEST_ONLY catalogue obeys the exact shared P2 shape and counts')
+  assert.equal(PreparedDraft.safeParse(DRAFT).success, true)
+  assert.equal(Catalog.safeParse({ ...CATALOG, agents: CATALOG.agents.slice(1) }).success, false)
+  assert.equal(Catalog.safeParse({ ...CATALOG, extraStatus: 'TEST_ONLY invented status' }).success, false)
+  for (const result of [OK(CATALOG), FAILURE]) {
+    const f = await started({ catalog: result })
+    assert.equal(f.providers.size, 2)
+    const frames = await Array.fromAsync(f.providers.get('finance-catalog').open(CATALOG_ADDRESS, { signal: new AbortController().signal }))
+    assert.equal(frames.length, 1)
+    assert.equal(frames[0], result)
+    assert.deepEqual(f.calls.catalog, [{}])
+    assert.equal(f.calls.prepare.length, 0)
+    assert.equal(f.calls.start.length, 0)
+    await f.dispose()
+  }
+})
+
+test('catalogue address guards, resource cancellation and unloading suppress late data', async () => {
+  let finish
+  const f = await started({ catalog: () => new Promise(resolve => { finish = resolve }) })
+  const provider = f.providers.get('finance-catalog')
+  const cancelled = new AbortController()
+  cancelled.abort()
+  assert.deepEqual(await Array.fromAsync(provider.open(CATALOG_ADDRESS, { signal: cancelled.signal })), [])
+  const [bad] = await Array.fromAsync(provider.open('dsh-resource://finance-catalog/other', { signal: new AbortController().signal }))
+  assert.equal(bad.error.code, 'gateway/bad-request')
+  assert.equal(f.calls.catalog.length, 0)
+  const controller = new AbortController()
+  const iterator = provider.open(CATALOG_ADDRESS, { signal: controller.signal })
+  const pending = iterator.next()
+  controller.abort()
+  finish(OK(CATALOG))
+  assert.equal((await pending).done, true)
+  const late = provider.open(CATALOG_ADDRESS, { signal: new AbortController().signal }).next()
+  await f.dispose()
+  finish(OK(CATALOG))
+  assert.equal((await late).done, true)
+  assert.deepEqual(await Array.fromAsync(provider.open(CATALOG_ADDRESS, { signal: new AbortController().signal })), [])
+})
+
+test('catalogue errors remain explicit failed resource frames', async () => {
+  const f = await started({ catalog: () => { throw new Error('TEST_ONLY catalogue unavailable') } })
+  const [result] = await Array.fromAsync(f.providers.get('finance-catalog').open(CATALOG_ADDRESS, { signal: new AbortController().signal }))
+  assert.equal(result.ok, false)
+  assert.match(result.error.message, /catalogue unavailable/)
+  await f.dispose()
+})
+
+test('draft callback distinguishes transport failure and Host business rejection; neither starts a Session', async () => {
+  const rejected = { ...DRAFT, status: 'REJECTED', workspaceId: null, agentPreset: null, error: { code: 'TEST_ONLY_NOT_READY', message: 'TEST_ONLY unavailable preset or workspace' } }
+  for (const response of [FAILURE, OK(rejected)]) {
+    const f = await started({ prepare: response })
+    const request = { agentId: 'finance-test-main' }
+    const result = await f.face().startDraft(request)
+    assert.equal(f.calls.prepare[0], request)
+    assert.equal(result.status, response.ok ? 'REJECTED' : 'REMOTE_ERROR')
+    assert.equal(result.error, response.ok ? rejected.error : FAILURE.error)
+    assert.equal(result.whenDraftExists, 'keep')
+    assert.equal(result.autoSubmit, false)
+    if (response.ok) assert.equal(result, rejected)
+    assert.equal(f.calls.start.length, 0)
+    await f.dispose()
+  }
+})
+
+test('only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID', async () => {
+  for (const choice of [{}, { prompt: 'TEST_ONLY free prompt' }, { commandId: 'TEST_ONLY multi-target command' }, { steeringId: 'TEST_ONLY steering' }]) {
+    const f = await started()
+    const request = { agentId: 'finance-test-main', ...choice }
+    const result = await f.face().startDraft(request)
+    assert.equal(result, DRAFT)
+    assert.equal(f.calls.prepare[0], request)
+    assert.deepEqual(f.calls.start, [{ workspaceId: DRAFT.workspaceId, input: { agentPreset: DRAFT.agentPreset, prompt: DRAFT.prompt, whenDraftExists: 'keep' } }])
+    assert.equal('sessionId' in result, false)
+    assert.equal('cwd' in f.calls.start[0].input, false)
+    assert.equal('autoSubmit' in f.calls.start[0].input, false)
+    await f.dispose()
+  }
+})
+
+test('draft preparation throw and native start failure carry distinct errors without reporting execution success', async () => {
+  const preparation = await started({ prepare: () => { throw new Error('TEST_ONLY transport lost') } })
+  const remote = await preparation.face().startDraft({ agentId: 'finance-test-main' })
+  assert.equal(remote.status, 'REMOTE_ERROR')
+  assert.match(remote.error.message, /transport lost/)
+  assert.equal(preparation.calls.start.length, 0)
+  await preparation.dispose()
+  for (const start of [() => { throw new Error('TEST_ONLY native opening failed') }, () => Promise.reject(new Error('TEST_ONLY native opening failed'))]) {
+    const f = await started({ start })
+    const result = await f.face().startDraft({ agentId: 'finance-test-main' })
+    assert.equal(result.status, 'START_FAILED')
+    assert.match(result.error.message, /native opening failed/)
+    assert.equal(result.workspaceId, DRAFT.workspaceId)
+    assert.equal(result.autoSubmit, false)
+    await f.dispose()
+  }
+})
+
+test('unloading during prepareDraft prevents native start; unloading during start cannot report ready', async () => {
+  let finishPrepare
+  const f = await started({ prepare: () => new Promise(resolve => { finishPrepare = resolve }) })
+  const pending = f.face().startDraft({ agentId: 'finance-test-main' })
+  await f.dispose()
+  finishPrepare(OK(DRAFT))
+  assert.equal((await pending).status, 'CANCELLED')
+  assert.equal(f.calls.start.length, 0)
+  let finishStart
+  const g = await started({ start: () => new Promise(resolve => { finishStart = resolve }) })
+  const opening = g.face().startDraft({ agentId: 'finance-test-main' })
+  // Let prepareDraft resolve into startSession without a timer or fake renderer.
+  await Promise.resolve()
+  await Promise.resolve()
+  assert.equal(g.calls.start.length, 1)
+  await g.dispose()
+  finishStart()
+  assert.equal((await opening).status, 'CANCELLED')
 })

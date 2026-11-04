@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-financial-services",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "description": "Financial Services for DeepSeek Harness: native workspace binding and staged, audited migration of financial workflows.",
   "private": true,
   "type": "module",
@@ -12,6 +12,12 @@
   "exports": {
     ".": "./lib/host.js",
     "./client": "./lib/client.js",
+    "./role": "./lib/role.js",
+    "./floor": "./lib/floor.js",
+    "./role/locale/*.json": "./locale/role/*.json",
+    "./role/icon": "./icon.svg",
+    "./floor/locale/*.json": "./locale/floor/*.json",
+    "./floor/icon": "./icon.svg",
     "./package.json": "./package.json",
     "./locale/*.json": "./locale/*.json",
     "./icon": "./icon.svg"
@@ -19,12 +25,17 @@
   "files": [
     "lib/host.js",
     "lib/client.js",
+    "lib/role.js",
+    "lib/floor.js",
     "lib/build-manifest.json",
+    "assets/**/*",
     "src/**/*.js",
     "cordis.patch.yml",
-    "locale/*.json",
+    "locale/**/*.json",
     "icon.svg",
     "README.md",
+    "docs/ASSET_ADAPTATION.md",
+    "docs/ROLE_RUNTIME.md",
     "LICENSE",
     "NOTICE",
     "licenses/**/*"
@@ -37,13 +48,16 @@
   "dependencies": {
     "@deepseek-ai/dsh-storage-domain": "0.2.1-rc.5",
     "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.5",
+    "@deepseek-ai/schemastery": "3.18.5",
     "zod": "4.4.3"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "~4.0.5"
+    "@deepseek-ai/cordis": "~4.0.5",
+    "@deepseek-ai/dsh-scope": "0.2.1-rc.5"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-scope": "0.2.1-rc.5",
     "rollup": "4.67.4"
   },
   "dsh": {

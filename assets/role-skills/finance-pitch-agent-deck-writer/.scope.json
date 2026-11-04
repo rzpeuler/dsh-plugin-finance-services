@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-pitch-agent-deck-writer",
+  "skillNames": [
+    "xlsx-author",
+    "pptx-author",
+    "pitch-deck"
+  ],
+  "grantsTools": false
+}

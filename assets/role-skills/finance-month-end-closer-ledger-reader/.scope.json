@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-month-end-closer-ledger-reader",
+  "skillNames": [],
+  "grantsTools": false
+}

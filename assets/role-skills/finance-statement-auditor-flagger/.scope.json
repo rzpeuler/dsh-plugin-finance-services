@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-statement-auditor-flagger",
+  "skillNames": [
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-statement-auditor-statement-reader",
+  "skillNames": [],
+  "grantsTools": false
+}

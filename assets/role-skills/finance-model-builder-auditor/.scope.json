@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-model-builder-auditor",
+  "skillNames": [
+    "audit-xls"
+  ],
+  "grantsTools": false
+}

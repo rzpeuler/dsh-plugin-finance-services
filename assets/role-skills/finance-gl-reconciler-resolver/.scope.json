@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-gl-reconciler-resolver",
+  "skillNames": [
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

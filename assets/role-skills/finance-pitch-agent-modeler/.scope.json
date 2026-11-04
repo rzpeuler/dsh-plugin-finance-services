@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-pitch-agent-modeler",
+  "skillNames": [
+    "dcf-model",
+    "lbo-model"
+  ],
+  "grantsTools": false
+}

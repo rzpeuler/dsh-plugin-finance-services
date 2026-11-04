@@ -1,4 +1,6 @@
 import { constants, watch } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { FinanceCatalog } from './catalog.js'
 import { access, realpath, stat } from 'node:fs/promises'
 import { Service } from '@deepseek-ai/cordis'
 import { TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
@@ -16,12 +18,14 @@ function watchDirectory(directory, changed, failed) {
   return () => watcher.close()
 }
 
-/** Financial Services P1 Host service. Default export is the Loader's sole plugin form. */
+/** Financial Services Host service. Default export is the Loader's sole plugin form. */
 export default class FinanceOperations extends TypertRemoteService {
   static inject = ['tools', 'typert', 'workspaceRegistry', 'storageDomain']
 
   constructor(ctx) {
     super(ctx, 'financeOperations')
+    this.roleGrants = new WeakMap()
+    this.financialActive = false
   }
 
   async* [Service.init]() {
@@ -40,11 +44,19 @@ export default class FinanceOperations extends TypertRemoteService {
     let registryRefresh
     // Register cleanup before asynchronous initialization; even failed activation releases the handle.
     yield async () => {
+      this.financialActive = false
       if (registryRefresh !== undefined) clearImmediate(registryRefresh)
       await operations.dispose()
       await domain.close()
     }
     await operations.initialize()
+    this.schemas = schemas
+    this.catalogData = new FinanceCatalog({
+      assetsRoot: fileURLToPath(new URL('../assets/', import.meta.url)),
+      presets: () => this.ctx.get('agentPresets'), binding: operations,
+    })
+    await this.catalogData.initialize()
+    this.financialActive = true
     this.ctx.on('domain/changed', change => {
       if (change.domain !== 'workspace' || registryRefresh !== undefined) return
       // Registry publishes its entity projection after its durable domain writes settle.
@@ -79,6 +91,48 @@ export default class FinanceOperations extends TypertRemoteService {
   /** @param request - Exactly {}. @param signal - Native gateway cancellation. @returns Full initial snapshot and observed changes. */
   follow(request, signal) {
     return this.requireOperations().follow(request, signal)
+  }
+
+  /** Trusted plugin-only admission; never a Remote/Tool method. The Agent effect owns its revocation. */
+  registerRoleRuntime(agent, roleId) {
+    if (!this.financialActive || !agent || typeof agent !== 'object') throw new Error('ROLE_AUTHORITY_UNAVAILABLE: financial role admission is unavailable')
+    const role = this.catalogData.role(roleId)
+    const grant = { roleId, sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 }
+    this.roleGrants.set(agent, grant)
+    return () => { if (this.roleGrants.get(agent) === grant) this.roleGrants.delete(agent) }
+  }
+
+  /** Trusted floor-only check. A retained revision cannot borrow a different source/Prompt version's grant. */
+  isRoleRuntimeActive(agent, roleId, expected) {
+    if (!this.financialActive || this.operations?.closed) return false
+    const grant = this.roleGrants.get(agent)
+    return grant?.roleId === roleId && grant.sourceSha256 === expected.sourceSha256 && grant.adaptedPromptSha256 === expected.adaptedPromptSha256
+  }
+
+  /** @param roleId - A trusted preset Config identity. @returns Validated role and its permitted Skill resource roots. */
+  async roleDefinition(roleId) {
+    this.requireOperations()
+    return this.catalogData.role(roleId)
+  }
+
+  /** @param roleId - A declared role identity. @returns Its native filesystem Skill scan root, never a user-supplied path. */
+  skillRoot(roleId) {
+    this.requireOperations()
+    return this.catalogData.skillRoot(roleId)
+  }
+
+  /** @param request - Exactly {}. @returns Source-backed catalogue with actual native preset diagnostics. */
+  async catalog(request) {
+    this.requireOperations()
+    this.schemas.EmptyRequest.parse(request)
+    return this.schemas.Catalog.parse(await this.catalogData.catalog())
+  }
+
+  /** @param request - Main role and at most one template or free-form prompt. @returns An unsent draft intent, not a created Session. */
+  async prepareDraft(request) {
+    this.requireOperations()
+    const input = this.schemas.PrepareDraftRequest.parse(request)
+    return this.schemas.PreparedDraft.parse(await this.catalogData.prepareDraft(input))
   }
 
   requireOperations() {

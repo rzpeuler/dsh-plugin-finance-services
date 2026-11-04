@@ -1,6 +1,6 @@
 # Financial Services 实施状态
 
-当前阶段：P0、P1关键验收已通过，进入P2。`@local/dsh-financial-services@0.1.2`骨架已在desktop Profile原生安装并启用；38单元测试及20真实Host检查通过，安装/禁用/启用/卸载/重装均applied。当前只实现Workspace绑定与入口，尚无金融业务E2E；视觉/页面点击和Desktop进程重启未验证。
+当前阶段：P0、P1关键验收已通过，P2实施中、未验收。40独立角色、63完整技能、41命令及29样例迁移和受限运行时/目录已实现；90本地测试与构建/payload检查通过。首轮真实Host验收7通过/91失败/509未执行，旧实时Host接口与scope身份问题未解决。现原生链接安装候选 `@local/dsh-financial-services@0.2.1`、applied，但实时仍观察到旧JS，需完整退出并重新打开Desktop后复核，不能只刷新页面或把安装成功当功能成功。默认绑定已恢复为未绑定revision8；没有真实金融业务E2E或商业数据查询。
 
 本仓库独立于其他投研应用。开发范围仅限本目录；上游 Downloads 源目录和 DSH 安装包只读。`audit/dsh-reference` 是为补足安装包未携带治理文件而获取的 DSH 同版本只读参照 checkout，不是需要改造的宿主或替代服务器。
 
@@ -14,4 +14,4 @@
 - 金融内部 Review Policy 独立于当前工具审批策略 never，不能据此扩大文件或外部数据权限。
 
 ## 证据入口
-[阶段总账](acceptance/README.md)；[P0记录](acceptance/P0.md)；[P1记录](acceptance/P1.md)；[中间验收报告](ACCEPTANCE_REPORT.md)。仅实际执行的测试进入通过数；P2–P6尚未验收。
+[阶段总账](acceptance/README.md)；[P0记录](acceptance/P0.md)；[P1记录](acceptance/P1.md)；[P2记录](acceptance/P2.md)；[中间验收报告](ACCEPTANCE_REPORT.md)。仅实际执行的测试进入通过数；P2–P6尚未验收。

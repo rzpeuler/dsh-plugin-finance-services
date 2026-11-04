@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-model-builder-builder",
+  "skillNames": [
+    "dcf-model",
+    "lbo-model",
+    "3-statement-model",
+    "comps-analysis",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

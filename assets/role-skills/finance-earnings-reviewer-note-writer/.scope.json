@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-earnings-reviewer-note-writer",
+  "skillNames": [
+    "morning-note",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

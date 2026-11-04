@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-earnings-reviewer-model-updater",
+  "skillNames": [
+    "model-update"
+  ],
+  "grantsTools": false
+}

@@ -1,0 +1,14 @@
+{
+  "stage": "P2",
+  "status": "FAILED_BEFORE_INSTALL",
+  "candidate": "0.2.0",
+  "archiveSha256": "26aeaa8b6d57441c658e093ea65e335a4d592c3bbff9f58bfc52027afcaa5650",
+  "archiveBytes": 2023132,
+  "fileCount": 997,
+  "failure": "Native pnpm pack excludes two .gitignore metadata files from the ordinary source archive tree.",
+  "missing": ["assets/source-archive/.gitignore", "assets/source-archive/plugins/vertical-plugins/investment-banking/.gitignore"],
+  "mismatchedAssets": [],
+  "businessSkillResourcesMissing": false,
+  "correctiveAction": "Add a deterministic full-source ZIP preserving every original relative path and byte, validate all 363 source members and hashes, and explicitly document the package-manager metadata exclusion.",
+  "nativeInstallAttempted": false
+}

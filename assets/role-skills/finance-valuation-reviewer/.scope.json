@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-valuation-reviewer",
+  "skillNames": [
+    "accrual-schedule",
+    "ai-readiness",
+    "break-trace",
+    "dd-checklist",
+    "dd-meeting-prep",
+    "deal-screening",
+    "deal-sourcing",
+    "gl-recon",
+    "ic-memo",
+    "nav-tieout",
+    "portfolio-monitoring",
+    "returns-analysis",
+    "roll-forward",
+    "unit-economics",
+    "value-creation-plan",
+    "variance-commentary",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

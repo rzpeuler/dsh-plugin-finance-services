@@ -43,7 +43,20 @@ assert.ok(!/<script|<foreignObject|\bon\w+\s*=|https?:\/\/(?!www\.w3\.org\/2000\
 const patch = await readFile(join(root, 'cordis.patch.yml'), 'utf8');
 assert.match(patch, /id: financial-services/);
 assert.equal((patch.match(/name: '@local\/dsh-financial-services'/g) ?? []).length, 1);
-assert.ok(!/override|preset-standard|initializeDefault/.test(patch));
+assert.deepEqual(patch.split('\n').filter(line => line.startsWith('- ')), ['- insert:'], 'Bundle may only append its own declarations');
+const assets = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'), 'utf8'));
+assert.equal(assets.roles.length, 40);
+assert.equal((patch.match(/^    - id: preset-finance-/gm) ?? []).length, 40);
+for (const role of assets.roles) assert.ok(patch.includes(`    - id: preset-${role.id}\n`));
+for (const entry of ['role', 'floor']) {
+  assert.equal(pkg.exports[`./${entry}`], `./lib/${entry}.js`);
+  const code = await readFile(join(root, `lib/${entry}.js`), 'utf8');
+  assert.ok(!/from\s+['"]\.\.?\//.test(code), `${entry} must contain its own implementation`);
+  for (const locale of ['en', 'zh']) {
+    const meta = JSON.parse(await readFile(join(root, `locale/${entry}/${locale}.json`), 'utf8')).meta;
+    assert.ok(meta.title.trim() && meta.description.trim());
+  }
+}
 
 const client = await readFile(join(root, 'lib/client.js'), 'utf8');
 new Script(client, { filename: 'lib/client.js' });
@@ -55,6 +68,10 @@ const build = JSON.parse(await readFile(join(root, 'lib/build-manifest.json'), '
 assert.equal(build.version, pkg.version);
 assert.equal(build.hostSha256, createHash('sha256').update(host).digest('hex'));
 assert.equal(build.clientSha256, createHash('sha256').update(client).digest('hex'));
+assert.equal(build.assetsManifestSha256, createHash('sha256').update(await readFile(join(root, 'assets/agent-manifest.json'))).digest('hex'));
+assert.equal(build.sourceSnapshotSha256, createHash('sha256').update(await readFile(join(root, 'assets/source-snapshot.zip'))).digest('hex'));
+assert.equal(build.patchSha256, createHash('sha256').update(patch).digest('hex'));
+for (const [file, expected] of Object.entries(build.entrySha256)) assert.equal(createHash('sha256').update(await readFile(join(root, 'lib', file))).digest('hex'), expected);
 for (const [path, expected] of Object.entries(build.sourceSha256)) {
   assert.equal(createHash('sha256').update(await readFile(join(root, path))).digest('hex'), expected, `Stale build: ${path}`);
 }

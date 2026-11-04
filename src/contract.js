@@ -26,7 +26,26 @@ export function createFinanceContract(z) {
     z.strictObject({ action: z.literal('bind'), path: z.string().min(1), expectedRevision: Revision }),
     z.strictObject({ action: z.literal('unbind'), expectedRevision: Revision }),
   ])
-  const schemas = { EmptyRequest, BindRequest, UnbindRequest, Snapshot, BindResult, StateRoot, ToolRequest }
+  const PublicRole = z.strictObject({
+    id: z.string(), kind: z.enum(['main', 'worker']), slug: z.string(), name: z.string(), description: z.string(),
+    parentId: z.string().nullable(), writer: z.boolean(), shellRestricted: z.boolean(),
+    builtinTools: z.array(z.string()), allowedMcpServers: z.array(z.string()), workerPresetIds: z.array(z.string()), skillNames: z.array(z.string()),
+    sourcePath: z.string(), sourceSha256: z.string(), adaptedPromptSha256: z.string(),
+    mountStatus: z.enum(['AVAILABLE', 'UNAVAILABLE']), diagnostic: z.string().nullable(),
+  })
+  const Catalog = z.strictObject({
+    stage: z.literal('P2'), sourceTreeSha256: z.string(), agents: z.array(PublicRole).length(10), workers: z.array(PublicRole).length(30),
+    skills: z.array(z.strictObject({ name: z.string(), description: z.string(), assetStatus: z.string(), issues: z.array(z.string()) })).length(63),
+    commands: z.array(z.strictObject({ id: z.string(), name: z.string(), sourcePath: z.string(), targetPresetIds: z.array(z.string()), selectionRequired: z.boolean() })).length(41),
+    steering: z.array(z.strictObject({ id: z.string(), targetPresetId: z.string(), title: z.string() })).length(29),
+    limitations: z.array(z.string()),
+  })
+  const PrepareDraftRequest = z.strictObject({ agentId: z.string().regex(/^finance-[a-z0-9-]+$/), prompt: z.string().max(64000).optional(),
+    commandId: z.string().optional(), steeringId: z.string().optional() }).refine(value => [value.prompt, value.commandId, value.steeringId].filter(item => item !== undefined).length <= 1,
+    'Choose a free-form prompt, command or steering example, not several at once')
+  const PreparedDraft = z.strictObject({ status: z.enum(['DRAFT_READY', 'REJECTED']), workspaceId: z.string().nullable(), agentPreset: z.string().nullable(),
+    prompt: z.string(), whenDraftExists: z.literal('keep'), autoSubmit: z.literal(false), error: ErrorInfo.nullable() })
+  const schemas = { EmptyRequest, BindRequest, UnbindRequest, Snapshot, BindResult, StateRoot, ToolRequest, Catalog, PrepareDraftRequest, PreparedDraft }
   const codec = name => ({ mode: 'strict', typeSymbol: `${packageName}#${name}`, create: () => schemas[name] })
   const descriptor = (method, input, output, description) => ({
     id: `${packageName}#financeOperations/${method}`,
@@ -39,6 +58,8 @@ export function createFinanceContract(z) {
     descriptor('snapshot', 'EmptyRequest', 'Snapshot', 'Read the persisted default workspace binding and check its current directory and registry status.'),
     descriptor('bindWorkspace', 'BindRequest', 'BindResult', 'Bind an existing absolute directory for new financial tasks only; reject stale revisions without replacing the previous binding.'),
     descriptor('unbindWorkspace', 'UnbindRequest', 'BindResult', 'Clear only the default binding for new tasks; retain Workspace registrations, directories and Session history.'),
+    descriptor('catalog', 'EmptyRequest', 'Catalog', 'Read the installed main roles, internal Workers, scoped Skills and draft templates with native preset diagnostics.'),
+    descriptor('prepareDraft', 'PrepareDraftRequest', 'PreparedDraft', 'Validate a main role, template and bound Workspace; return an unsent draft intent without creating a Session or executing it.'),
     {
       ...descriptor('follow', 'EmptyRequest', 'Snapshot', 'Follow the initial snapshot and subsequent observed changes until cancellation or service disposal.'),
       mode: 'stream', cancellation: { parameter: 'signal' },

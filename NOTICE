@@ -14,10 +14,14 @@ LSEG partner authorship and Kensho Technologies, LLC copyright notices must
 remain with the corresponding migrated assets. No commercial market data,
 credentials or Microsoft tenant grants are included or implied.
 
-The P1 skeleton consists of independently authored DSH integration code and an
-original icon. Business asset migration is tracked separately in the source
-inventory and per-stage acceptance records; no upstream binary templates are
-invented or claimed to be included.
+DSH integration code and the original icon are independently authored.
+Migrated source files are retained byte-for-byte in assets/source-snapshot.zip
+and under assets/source-archive. npm omits .gitignore from the ordinary tree;
+the complete ZIP preserves both such metadata files and all 363 source files;
+adapted prompts and Skills carry modification and provenance notices. All six
+upstream license files, including Kensho attribution, remain with those assets.
+Business execution is not represented as verified by asset inclusion. Missing
+upstream binary templates are not invented or claimed to be included.
 
 DSH runtime packages and Zod retain their respective MIT licenses. They are
 installation dependencies, not code copied into this project's Client artifact.

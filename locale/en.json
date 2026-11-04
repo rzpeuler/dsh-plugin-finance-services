@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Financial Services",
-    "description": "Financial workspace setup: bind an existing local directory and persist its verified Workspace identity. P1 skeleton only; financial agents and execution are not yet available."
+    "description": "P2 financial workbench: persistent Workspace binding, installed main roles, internal Workers, scoped Skills and source diagnostics. Open native task drafts without submitting; data, Office business execution and deterministic Review Gates remain staged."
   }
 }

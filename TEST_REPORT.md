@@ -47,3 +47,16 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - 构建/发布检查：原生lazy Client、单一Host artifact、exports/files闭包、17文件26565字节tarball、SVG XML、安装资源hash与中英元信息均核验。自有项目peer检查无问题；未修改其他插件依赖。
 - 三个临时TEST_ONLY验收Bundle已卸载；两个自有测试Workspace注册已撤销，目录与canary文件保留。最终主Bundle启用、默认绑定清空、revision5。
 - 仍NOT_VERIFIED：真实视觉/点击/主题/窄屏、Desktop进程重启、模型首轮token比较。仍未实现：P2角色技能、金融执行/交付/审核与数据Adapter。商业数据E2E=0，NOT_CONFIGURED。
+
+## P2 实施中，原生验收失败（2026-11-03–04）
+
+**不验收P2，不进入P3完成声明。** [阶段记录](acceptance/P2.md) / [结构化结果](acceptance/P2-results.json)。
+
+- 整套本地90/90 PASS（资产16、Catalogue6、Client21、角色23、API7、Workspace17），见 [TAP](acceptance/P2-unit-tests-current.tap)。0.2.1后又执行Workspace/真实Service实例注入依赖的17项重点测试，含grant替换、旧撤销不影响新grant、源Hash漂移/卸载拒绝，全部PASS。替身不等于native provider/dispatcher。
+- 源实际363文件及SHA未变，40不同persona、63全资源/111来源、41命令、29样例、13主节点和20组44条件Skill节点保留。保留6许可/Kensho；原缺模板三技能BLOCKED，未虚构。
+- 构建三个自有Host插件真实导出及原生lazy Client，通过exports/metadata/SVG/源码artifact hash与40原生Preset声明检查。
+- 第一次pack遗漏两个.gitignore元数据，已保留 [失败](acceptance/P2-pack-failure-001.json)。确定性完整源ZIP补保363全部原路径及1981638 bytes；[最终payload检查](acceptance/P2-packed-files.json)通过，但不是功能通过。
+- 首次真正原生Host检查 **7 PASS / 91 FAIL / 509 NOT_RUN**，见 [不可覆盖记录](acceptance/P2-live-host-failure-001.json)。40声明均broken，scopeOf(ctx)为undefined；live Host仍旧P1接口/catalog不可用，尽管0.2.0安装的manifest/lib字节已验证更新。没有成功创建Session或执行模型/dispatcher。
+- 探针同时传workspaceId与cwd违反原生互斥规则，已独立修正；保留旧错误，新身份retry-1 fixture已生成。不能将探针错误或前提失败计为功能通过。
+- 原测试默认绑定已恢复null、revision8；只撤销自有Workspace注册，canary/目录/历史保留，原active测试Bundle已卸载。原生移除0.2.0后链接安装0.2.1候选applied，实时仍见旧实现。按宿主开发说明，替换包需要完整进程重启取得fresh JS；不启动替代server或改Scope私有Symbol/WeakMap绕过。
+- Desktop重启后还须验证真实scope/63技能/两个业务Session/实际工具拒绝/Worker真实结果、Client RPC与草稿、retained-floor和token预算。视觉/商业数据/Office/审核Gate仍未通过或未实现；整体目标保持active。

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-meeting-prep-agent",
+  "skillNames": [
+    "buyer-list",
+    "cim-builder",
+    "client-report",
+    "client-review",
+    "datapack-builder",
+    "deal-tracker",
+    "fsi-strip-profile",
+    "investment-proposal",
+    "merger-model",
+    "pitch-deck",
+    "pptx-author",
+    "process-letter",
+    "teaser"
+  ],
+  "grantsTools": false
+}

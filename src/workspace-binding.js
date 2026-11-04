@@ -189,7 +189,7 @@ export class WorkspaceBindingOperations {
       }
     }
     const limitations = [
-      'P1 provides workspace binding only; financial Agents, data sources, runs and review are not implemented.',
+      'This endpoint reports workspace binding only; consult the financial catalogue for role and dependency availability.',
       'Switching changes the default for new tasks only; existing Sessions and files are never moved.',
       'Directory monitoring uses best-effort filesystem events, not polling. Permission changes or missing-parent recovery may require a fresh status read.',
       'Workspace registration and binding persistence are separate native domains; a failed save may retain an unused Workspace registration.',

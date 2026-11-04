@@ -1,0 +1,23 @@
+{
+  "stage": "P2",
+  "status": "IN_PROGRESS_NATIVE_FAILED",
+  "stageAccepted": false,
+  "observedDate": "2026-11-04",
+  "unitAndStatic": {"passed": 90, "failed": 0, "evidence": "P2-unit-tests-current.tap", "nativeHostEquivalent": false},
+  "coverageImplementedInSource": {"mainRoles": 10, "workers": 30, "skills": 63, "skillOrigins": 111, "commands": 41, "steeringExamples": 29, "writers": 10, "sourceBashExceptionsKeptWithoutShell": 2},
+  "sourceSnapshot": {"files": 363, "bytes": 1981638, "treeSha256": "1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b", "completeZip": "assets/source-snapshot.zip", "unchanged": true},
+  "packaging": {"initialFailure": "P2-pack-failure-001.json", "finalPayloadEvidence": "P2-packed-files.json", "candidateVersionTested": "0.2.0", "payloadPassDoesNotMeanNativePass": true},
+  "nativeFirstRun": {"runId": "d9f36125-0ba8-4bf0-84da-2326865ffcff", "passed": 7, "failed": 91, "notRun": 509, "evidence": "P2-live-host-failure-001.json", "sessionsSuccessfullyCreated": 0, "dispatcherCalls": 0, "modelCalls": 0, "errors": ["Old live Host interface: catalog Gateway unavailable; skillRoot not a function despite new installed bytes", "All forty declared Presets broken: role/floor scopeOf(ctx) undefined; no permission checks weakened", "Probe passed mutually exclusive workspaceId and cwd; corrected in retry-1 fixture, original failure preserved"]},
+  "nativeLifecycle": [
+    {"action": "Install packed 0.2.0", "application": "applied", "warnings": [], "logId": "operation-TYcurI", "capabilityStatus": "FAILED"},
+    {"action": "Install original active TEST_ONLY probe", "application": "applied", "logId": "operation-64JdKC"},
+    {"action": "Remove original active TEST_ONLY probe", "application": "applied", "warnings": [], "logId": "operation-YiVv2o"},
+    {"action": "Attempt link switch while installed", "application": "failed", "error": "already-installed", "nextStepFollowed": "remove_bundle first"},
+    {"action": "Remove 0.2.0 main", "application": "applied", "warnings": [], "logId": "operation-1baw5Z"},
+    {"action": "Link-install 0.2.1 source Bundle", "application": "applied", "warnings": [], "logId": "operation-HDO5ci", "liveObservation": "finance_workspace still returned the old P1 implementation text; new JS generation unverified"}
+  ],
+  "currentCandidate": {"version": "0.2.1", "installationMode": "native Plugin Manager external directory link", "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle", "enabled": true, "freshProcessValidation": "REQUIRED_NOT_RUN"},
+  "testCleanup": {"initialBinding": null, "finalBinding": null, "revisionBefore": 5, "revisionAfter": 8, "ownedWorkspaceRemoved": "36e999a2-b569-4aea-a450-93c8a86e12a2", "canaryAndDirectoriesRetained": true, "sessionHistoryDeleted": false, "originalProbeRemoved": true},
+  "nextRequiredOperation": "Completely exit and reopen the existing DeepSeek Harness Desktop to obtain a fresh JS module generation; merely refreshing the browser is not sufficient. Then verify Host methods/scope identity before installing active-retry-1.",
+  "limits": ["Restart may clear stale generation but does not itself prove the scope problem fixed", "No core, global symbol, permissions or unrelated Profile dependencies were modified", "No browser click, visual validation, commercial data query, Office business output or Worker model result has passed", "P3 through P6 are not accepted; the overall goal remains active"]
+}

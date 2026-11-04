@@ -7,9 +7,10 @@
 - 独立代码位置：当前workspace的 `financial-services-bundle`；分支 `feat/financial-services`。未修改其他业务项目、DSH Core、Session、Subagent或Client内核。
 - 上游：本地 `C:/Users/Administrator/Downloads/financial-services-main`，363文件，SHA256 `1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b`。无.git，Git commit未知；不以远端HEAD冒充。
 - DSH：`0.2.1-rc.5`，Profile `desktop`，现有GUI `http://127.0.0.1:58156`。审计参照为同版本tag，commit `b830ec950faba0a46dda564be3e2d854afed94f1`；实际运行时exports与Inspect优先。
-- 当前骨架：`@local/dsh-financial-services@0.1.2`，已原生安装且启用；唯一导航ID `financial-services`。
-- 安装spec：`file:C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/dist/local-dsh-financial-services-0.1.2.tgz`。
-- tarball：26565 bytes、17文件，SHA256 `39bbc90e78bb5faac6f5a69f5485d69cf64707cba9922f8b73de2346c72e4fcd`。只包含源码/原生Host与Client artifact/patch/原创图标/中英元信息/LICENSE/NOTICE，不含测试夹具、参照DSH树、凭据或商业数据。
+- 当前候选：`@local/dsh-financial-services@0.2.1`，原生外部目录链接安装并启用，唯一导航ID `financial-services`。applied不是角色功能通过：实时仍有旧JS代际特征，P2等待完整Desktop重启后复验。
+- 安装目标：当前workspace中的本项目根目录；只用原生Plugin Manager，不手改Profile。
+- P1已验收tarball `0.1.2`：26565 bytes、17文件、SHA256 `39bbc90e78bb5faac6f5a69f5485d69cf64707cba9922f8b73de2346c72e4fcd`，历史验收保持，不冒充P2成品。
+- P2候选 `0.2.0` payload：1000文件、2805818 bytes、SHA256 `04705fbd7527807e4fb7e3284a371d80d723d9fc7eb0e5746aeb3e9cff3a86bb`，包内源码/资源完整，但原生角色验收失败，不能作为工作成品交付。所有363源件及两个被pnpm普通树忽略的.gitignore均在完整只读源ZIP保留。无凭据或商业数据。
 
 ## 功能与状态
 
@@ -20,11 +21,11 @@
 | 一个工作台入口/插件配置与启用引导装配 | IMPLEMENTED | 四live Slot精确注册；实际页面点击/渲染尚未观察 |
 | 原生Workspace规范path/id绑定及Host持久化 | IMPLEMENTED | 真实Gateway/工具共享方法，原生registry/domain、错误路径、CAS与事件流通过 |
 | 卸载/重装恢复绑定、不删用户文件 | IMPLEMENTED | 绑定revision4恢复，canary不变；结束后默认绑定已清空，测试注册撤销 |
-| 10主Agent/30Worker/63Skill运行时迁移 | PARTIAL | 源码映射已审计；P2尚未实施验收 |
+| 10主Agent/30Worker/63Skill运行时迁移 | PARTIAL | 已实现40独立persona/63完整资源与权限执行器，90本地测试通过；真实scope/Session尚未通过，P2未验收 |
 | 金融数据契约/第三方Adapter | PARTIAL | 设计与来源已审计；P3未实施 |
 | 业务执行/真实Excel与PPT文档交付 | PARTIAL | P4未实施，无伪造业务输出 |
 | 四Review策略/确定性Gate/Queue/恢复 | PARTIAL | 源13主Prompt节点、44条件Skill节点已保留；P5未实现 |
-| 完整工作台页面/检索/移动端/主题 | PARTIAL | P6未实施；当前仅P1绑定页面，无静态假运行卡片 |
+| 完整工作台页面/检索/移动端/主题 | PARTIAL | P2源码已有角色/技能/命令/草稿目录，原生fresh JS与视觉未验；P6未实施，无静态假运行卡片 |
 | 指定dsh-mcp-manager动态管理接口 | BLOCKED | 此DSH版本没有该原生服务；不造通用第二Manager或修改Core |
 | 商业MCP数据/OAuth/供应商entitlement | NOT_CONFIGURED | 无真实授权验证与数据查询，连接配置不等于可用 |
 | 上游标准LBO/comps/Nike示例模板 | BLOCKED / PARTIAL | 本地未附原二进制；用户自带模板路线须另验，不能伪造原模板 |
@@ -36,6 +37,7 @@
 
 - P0：12静态单测、17上游验证项、618源SHA/行号检查通过。原始commit未知如实保留。
 - P1：38单元测试、20真实当前Host检查通过；原生生命周期及四Client Slot核验完成。实际命令与失败/复测见 [TEST_REPORT](TEST_REPORT.md)、[P1阶段记录](acceptance/P1.md)、[结构化证据](acceptance/P1-results.json)。
+- P2：90本地测试、构建与完整payload检查通过；首次真实Host检查7通过/91失败/509未执行，未成功创建Session/调用模型。探针互斥参数错误已修；旧接口与scope错误需fresh进程再验。真实失败及清理见 [P2记录](acceptance/P2.md)、[不可覆盖首跑](acceptance/P2-live-host-failure-001.json)、[阶段结果](acceptance/P2-results.json)。
 - 所有阶段记录在 [验收总账](acceptance/README.md)。0.1.0与0.1.1失败保留；不把package步骤exit0当application成功。
 - **没有真实金融数据E2E，没有商业查询，没有金融模型/报告成品验收。** 原生Host集成不等于业务闭环。
 - 无浏览器控制工具：页面实际点击、目录选择器操作、渲染图标、明暗主题与窄屏为NOT_VERIFIED。源码、Slot注册与资源hash不能替代视觉验收。

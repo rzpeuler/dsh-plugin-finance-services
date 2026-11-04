@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-kyc-screener",
+  "skillNames": [
+    "accrual-schedule",
+    "break-trace",
+    "gl-recon",
+    "kyc-doc-parse",
+    "kyc-rules",
+    "nav-tieout",
+    "roll-forward",
+    "variance-commentary",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

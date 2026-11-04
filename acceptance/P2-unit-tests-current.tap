@@ -1,0 +1,550 @@
+﻿TAP version 13
+# Subtest: P0 complete upstream tree remains unchanged, exact 363 files and tree SHA
+ok 1 - P0 complete upstream tree remains unchanged, exact 363 files and tree SHA
+  ---
+  duration_ms: 79.106
+  type: 'test'
+  ...
+# Subtest: schema v1 contains exact stable main and worker IDs with source names
+ok 2 - schema v1 contains exact stable main and worker IDs with source names
+  ---
+  duration_ms: 0.8741
+  type: 'test'
+  ...
+# Subtest: 40 source config/prompt hashes, original bodies and distinct adapted personas are preserved
+ok 3 - 40 source config/prompt hashes, original bodies and distinct adapted personas are preserved
+  ---
+  duration_ms: 10.6359
+  type: 'test'
+  ...
+# Subtest: Managed YAML tool baseline: ten leaf writers, two source shell exceptions, exact server scope
+ok 4 - Managed YAML tool baseline: ten leaf writers, two source shell exceptions, exact server scope
+  ---
+  duration_ms: 0.4284
+  type: 'test'
+  ...
+# Subtest: Worker skills exactly equal source YAML, main-only explicit domain expansion covers all 63
+ok 5 - Worker skills exactly equal source YAML, main-only explicit domain expansion covers all 63
+  ---
+  duration_ms: 0.8421
+  type: 'test'
+  ...
+# Subtest: 63 skills preserve valid first-line frontmatter, exact source body and complete resource files
+ok 6 - 63 skills preserve valid first-line frontmatter, exact source body and complete resource files
+  ---
+  duration_ms: 23.2109
+  type: 'test'
+  ...
+# Subtest: all 111 source skill origins and their complete deduplication tree proofs are traceable
+ok 7 - all 111 source skill origins and their complete deduplication tree proofs are traceable
+  ---
+  duration_ms: 25.4555
+  type: 'test'
+  ...
+# Subtest: every role root exists with direct child skill folders and full regular-file resources, no links
+ok 8 - every role root exists with direct child skill folders and full regular-file resources, no links
+  ---
+  duration_ms: 63.233
+  type: 'test'
+  ...
+# Subtest: 13 original review nodes and 20 groups / 44 conditional steps preserve exact quotes and source hashes
+ok 9 - 13 original review nodes and 20 groups / 44 conditional steps preserve exact quotes and source hashes
+  ---
+  duration_ms: 8.1815
+  type: 'test'
+  ...
+# Subtest: missing LBO, comps and Nike templates explicitly BLOCKED without invented files
+ok 10 - missing LBO, comps and Nike templates explicitly BLOCKED without invented files
+  ---
+  duration_ms: 1.3486
+  type: 'test'
+  ...
+# Subtest: external runtime paths and recalc scripts retain coordinates and require P4 adaptation
+ok 11 - external runtime paths and recalc scripts retain coordinates and require P4 adaptation
+  ---
+  duration_ms: 8.0473
+  type: 'test'
+  ...
+# Subtest: 41 complete financial command bodies retain hashes, parameters and safe explicit draft routing
+ok 12 - 41 complete financial command bodies retain hashes, parameters and safe explicit draft routing
+  ---
+  duration_ms: 7.5629
+  type: 'test'
+  ...
+# Subtest: 29 steering samples retain original events, titles and source coordinates without auto submission
+ok 13 - 29 steering samples retain original events, titles and source coordinates without auto submission
+  ---
+  duration_ms: 1.1447
+  type: 'test'
+  ...
+# Subtest: all 363 source files including all six licenses and Kensho notices are archived byte-for-byte
+ok 14 - all 363 source files including all six licenses and Kensho notices are archived byte-for-byte
+  ---
+  duration_ms: 54.5667
+  type: 'test'
+  ...
+# Subtest: all static reference evidence retains source and resolved-file SHA provenance
+ok 15 - all static reference evidence retains source and resolved-file SHA provenance
+  ---
+  duration_ms: 48.2001
+  type: 'test'
+  ...
+# Subtest: generator ownership ledger matches assets, excludes runtime edits, and contains no deletion operation
+ok 16 - generator ownership ledger matches assets, excludes runtime edits, and contains no deletion operation
+  ---
+  duration_ms: 38.5458
+  type: 'test'
+  ...
+# Subtest: packaged authority-bearing manifest validates 40 roles and exact source ownership
+ok 17 - packaged authority-bearing manifest validates 40 roles and exact source ownership
+  ---
+  duration_ms: 45.6198
+  type: 'test'
+  ...
+# Subtest: asset resolver rejects path traversal and foreign absolute or alternate-data spellings
+ok 18 - asset resolver rejects path traversal and foreign absolute or alternate-data spellings
+  ---
+  duration_ms: 22.1985
+  type: 'test'
+  ...
+# Subtest: catalogue exposes ten main roles, thirty internal workers and true source limitations
+ok 19 - catalogue exposes ten main roles, thirty internal workers and true source limitations
+  ---
+  duration_ms: 26.473
+  type: 'test'
+  ...
+# Subtest: draft preparation validates workspace and native preset status without creating sessions
+ok 20 - draft preparation validates workspace and native preset status without creating sessions
+  ---
+  duration_ms: 65.0955
+  type: 'test'
+  ...
+# Subtest: all command targets require explicit allowed main identity and ambiguous templates stay explicit
+ok 21 - all command targets require explicit allowed main identity and ambiguous templates stay explicit
+  ---
+  duration_ms: 27.5898
+  type: 'test'
+  ...
+# Subtest: steering drafts preserve role ownership and template selection is strict at the entry
+ok 22 - steering drafts preserve role ownership and template selection is strict at the entry
+  ---
+  duration_ms: 15.0376
+  type: 'test'
+  ...
+# Subtest: factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+ok 23 - factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+  ---
+  duration_ms: 2.8296
+  type: 'test'
+  ...
+# Subtest: mount completes before registering resources, dictionaries or slots
+ok 24 - mount completes before registering resources, dictionaries or slots
+  ---
+  duration_ms: 0.6288
+  type: 'test'
+  ...
+# Subtest: failed mount does not leave partial registrations
+ok 25 - failed mount does not leave partial registrations
+  ---
+  duration_ms: 0.5058
+  type: 'test'
+  ...
+# Subtest: one global sidebar id matches a new main key; config and activation belong only to this package
+ok 26 - one global sidebar id matches a new main key; config and activation belong only to this package
+  ---
+  duration_ms: 1.6197
+  type: 'test'
+  ...
+# Subtest: factory dictionaries have matching bilingual keys and package locale files contain metadata only
+ok 27 - factory dictionaries have matching bilingual keys and package locale files contain metadata only
+  ---
+  duration_ms: 5.8482
+  type: 'test'
+  ...
+# Subtest: binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+ok 28 - binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+  ---
+  duration_ms: 0.552
+  type: 'test'
+  ...
+# Subtest: directory selection uses native uiWorkspace and navigation uses layout only
+ok 29 - directory selection uses native uiWorkspace and navigation uses layout only
+  ---
+  duration_ms: 0.2565
+  type: 'test'
+  ...
+# Subtest: resource passes through native result frames, including failures, without inventing Host facts
+ok 30 - resource passes through native result frames, including failures, without inventing Host facts
+  ---
+  duration_ms: 0.71
+  type: 'test'
+  ...
+# Subtest: native supervisor opener reads a new baseline on every physical generation
+ok 31 - native supervisor opener reads a new baseline on every physical generation
+  ---
+  duration_ms: 0.4155
+  type: 'test'
+  ...
+# Subtest: stream exceptions first produce a failed resource frame and remain visible to native retry classification
+ok 32 - stream exceptions first produce a failed resource frame and remain visible to native retry classification
+  ---
+  duration_ms: 0.8417
+  type: 'test'
+  ...
+# Subtest: resource abort closes an active native stream and prevents late frames
+ok 33 - resource abort closes an active native stream and prevents late frames
+  ---
+  duration_ms: 0.6418
+  type: 'test'
+  ...
+# Subtest: pre-aborted and unsupported resource addresses do not call Host methods
+ok 34 - pre-aborted and unsupported resource addresses do not call Host methods
+  ---
+  duration_ms: 0.3407
+  type: 'test'
+  ...
+# Subtest: disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+ok 35 - disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+  ---
+  duration_ms: 0.3594
+  type: 'test'
+  ...
+# Subtest: a completed bind after plugin disposal cannot report success through the old callback
+ok 36 - a completed bind after plugin disposal cannot report success through the old callback
+  ---
+  duration_ms: 0.1905
+  type: 'test'
+  ...
+# Subtest: catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+ok 37 - catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+  ---
+  duration_ms: 17.9392
+  type: 'test'
+  ...
+# Subtest: catalogue address guards, resource cancellation and unloading suppress late data
+ok 38 - catalogue address guards, resource cancellation and unloading suppress late data
+  ---
+  duration_ms: 0.2409
+  type: 'test'
+  ...
+# Subtest: catalogue errors remain explicit failed resource frames
+ok 39 - catalogue errors remain explicit failed resource frames
+  ---
+  duration_ms: 0.1581
+  type: 'test'
+  ...
+# Subtest: draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+ok 40 - draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+  ---
+  duration_ms: 0.2411
+  type: 'test'
+  ...
+# Subtest: only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+ok 41 - only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+  ---
+  duration_ms: 0.398
+  type: 'test'
+  ...
+# Subtest: draft preparation throw and native start failure carry distinct errors without reporting execution success
+ok 42 - draft preparation throw and native start failure carry distinct errors without reporting execution success
+  ---
+  duration_ms: 0.305
+  type: 'test'
+  ...
+# Subtest: unloading during prepareDraft prevents native start; unloading during start cannot report ready
+ok 43 - unloading during prepareDraft prevents native start; unloading during start cannot report ready
+  ---
+  duration_ms: 0.2186
+  type: 'test'
+  ...
+# Subtest: Client-embedded factory has no module closure dependencies
+ok 44 - Client-embedded factory has no module closure dependencies
+  ---
+  duration_ms: 5.0642
+  type: 'test'
+  ...
+# Subtest: all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+ok 45 - all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+  ---
+  duration_ms: 3.957
+  type: 'test'
+  ...
+# Subtest: request codecs reject missing, wrongly typed, fractional, negative and extra fields
+ok 46 - request codecs reject missing, wrongly typed, fractional, negative and extra fields
+  ---
+  duration_ms: 1.5993
+  type: 'test'
+  ...
+# Subtest: Snapshot, nested binding/error, state root and BindResult remain strict
+ok 47 - Snapshot, nested binding/error, state root and BindResult remain strict
+  ---
+  duration_ms: 1.6325
+  type: 'test'
+  ...
+# Subtest: workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+ok 48 - workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+  ---
+  duration_ms: 4.0822
+  type: 'test'
+  ...
+# Subtest: Tool output uses only the native JSON Schema subset while executor retains refinements
+ok 49 - Tool output uses only the native JSON Schema subset while executor retains refinements
+  ---
+  duration_ms: 0.7789
+  type: 'test'
+  ...
+# Subtest: reflection describes the actual public signatures and stream, without business readings
+ok 50 - reflection describes the actual public signatures and stream, without business readings
+  ---
+  duration_ms: 0.3853
+  type: 'test'
+  ...
+# Subtest: all 40 actual manifest roles retain distinct source file/query allowlists and never expose Bash
+ok 51 - all 40 actual manifest roles retain distinct source file/query allowlists and never expose Bash
+  ---
+  duration_ms: 10.6252
+  type: 'test'
+  ...
+# Subtest: every actual query role checks source allowlist at execution and reports NOT_CONFIGURED without invented data
+ok 52 - every actual query role checks source allowlist at execution and reports NOT_CONFIGURED without invented data
+  ---
+  duration_ms: 6.4891
+  type: 'test'
+  ...
+# Subtest: invalid trusted roles fail before capability registration
+ok 53 - invalid trusted roles fail before capability registration
+  ---
+  duration_ms: 1.5244
+  type: 'test'
+  ...
+# Subtest: workspace and assigned skill resources are read-only data, bounded and hashed
+ok 54 - workspace and assigned skill resources are read-only data, bounded and hashed
+  ---
+  duration_ms: 24.6871
+  type: 'test'
+  ...
+# Subtest: relative path validation rejects traversal, absolute, UNC, drive-relative, ADS and Windows aliases
+ok 55 - relative path validation rejects traversal, absolute, UNC, drive-relative, ADS and Windows aliases
+  ---
+  duration_ms: 0.4179
+  type: 'test'
+  ...
+# Subtest: writer creates independent artifact directories; original and cross-Session writes fail at the executor
+ok 56 - writer creates independent artifact directories; original and cross-Session writes fail at the executor
+  ---
+  duration_ms: 17.1236
+  type: 'test'
+  ...
+# Subtest: source readonly or no-Read roles cannot gain write/edit/Read through direct runtime calls
+ok 57 - source readonly or no-Read roles cannot gain write/edit/Read through direct runtime calls
+  ---
+  duration_ms: 8.3085
+  type: 'test'
+  ...
+# Subtest: concurrent create never overwrites, and hash plus native version CAS rejects stale/concurrent edits
+ok 58 - concurrent create never overwrites, and hash plus native version CAS rejects stale/concurrent edits
+  ---
+  duration_ms: 20.3036
+  type: 'test'
+  ...
+# Subtest: real junction ancestors and linked files cannot expose or mutate other directories
+ok 59 - real junction ancestors and linked files cannot expose or mutate other directories
+  ---
+  duration_ms: 20.6107
+  type: 'test'
+  ...
+# Subtest: glob and literal grep are bounded and do not interpret content as commands
+ok 60 - glob and literal grep are bounded and do not interpret content as commands
+  ---
+  duration_ms: 29.9729
+  type: 'test'
+  ...
+# Subtest: text bounds hold at exact line limit and oversized/NUL edits reject before any mutation
+ok 61 - text bounds hold at exact line limit and oversized/NUL edits reject before any mutation
+  ---
+  duration_ms: 19.9442
+  type: 'test'
+  ...
+# Subtest: native cwd changes, lost authority and disposal revoke actual file access
+ok 62 - native cwd changes, lost authority and disposal revoke actual file access
+  ---
+  duration_ms: 7.4465
+  type: 'test'
+  ...
+# Subtest: actual-dispatch guard enforces explicit worker allowlist, absolute depth, cwd and blocks alternate tools
+ok 63 - actual-dispatch guard enforces explicit worker allowlist, absolute depth, cwd and blocks alternate tools
+  ---
+  duration_ms: 0.9934
+  type: 'test'
+  ...
+# Subtest: actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+ok 64 - actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+  ---
+  duration_ms: 28.4209
+  type: 'test'
+  ...
+# Subtest: dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+ok 65 - dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+  ---
+  duration_ms: 7.2389
+  type: 'test'
+  ...
+# Subtest: missing local native definitions never borrow same-name globals; missing declared module fails creation
+ok 66 - missing local native definitions never borrow same-name globals; missing declared module fails creation
+  ---
+  duration_ms: 8.4657
+  type: 'test'
+  ...
+# Subtest: Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+ok 67 - Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+  ---
+  duration_ms: 7.909
+  type: 'test'
+  ...
+# Subtest: role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+ok 68 - role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+  ---
+  duration_ms: 4.3881
+  type: 'test'
+  ...
+# Subtest: global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+ok 69 - global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+  ---
+  duration_ms: 5.8804
+  type: 'test'
+  ...
+# Subtest: independent native floor denies retained main-own subagent after role unmount or global owner removal
+ok 70 - independent native floor denies retained main-own subagent after role unmount or global owner removal
+  ---
+  duration_ms: 14.9518
+  type: 'test'
+  ...
+# Subtest: floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+ok 71 - floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+  ---
+  duration_ms: 6.6541
+  type: 'test'
+  ...
+# Subtest: same role ID in separate retained composition scopes does not share effects or runtime grants
+ok 72 - same role ID in separate retained composition scopes does not share effects or runtime grants
+  ---
+  duration_ms: 9.9394
+  type: 'test'
+  ...
+# Subtest: entry validates Config strictly and requires a genuine composition scope
+ok 73 - entry validates Config strictly and requires a genuine composition scope
+  ---
+  duration_ms: 3.2787
+  type: 'test'
+  ...
+# Subtest: fully qualified path check rejects Windows current-drive/root paths
+ok 74 - fully qualified path check rejects Windows current-drive/root paths
+  ---
+  duration_ms: 0.9938
+  type: 'test'
+  ...
+# Subtest: cold root is singular and unbound; actual methods validate before side effects
+ok 75 - cold root is singular and unbound; actual methods validate before side effects
+  ---
+  duration_ms: 10.7881
+  type: 'test'
+  ...
+# Subtest: bind persists native-returned canonical path/id and onboarding after durability; switch retains old registration
+ok 76 - bind persists native-returned canonical path/id and onboarding after durability; switch retains old registration
+  ---
+  duration_ms: 9.7753
+  type: 'test'
+  ...
+# Subtest: directory alias resolves through native-create substitute; saved spelling is canonical
+ok 77 - directory alias resolves through native-create substitute; saved spelling is canonical
+  ---
+  duration_ms: 8.0893
+  type: 'test'
+  ...
+# Subtest: relative, missing, file and permission failures reject and preserve the existing root
+ok 78 - relative, missing, file and permission failures reject and preserve the existing root
+  ---
+  duration_ms: 7.1532
+  type: 'test'
+  ...
+# Subtest: concurrent same-revision binds serialize and late work cannot overwrite the winner
+ok 79 - concurrent same-revision binds serialize and late work cannot overwrite the winner
+  ---
+  duration_ms: 5.1392
+  type: 'test'
+  ...
+# Subtest: persisted CAS is rechecked after asynchronous native registration, not only at request admission
+ok 80 - persisted CAS is rechecked after asynchronous native registration, not only at request admission
+  ---
+  duration_ms: 3.0305
+  type: 'test'
+  ...
+# Subtest: storage failure leaves old state untouched and does not publish a successful change
+ok 81 - storage failure leaves old state untouched and does not publish a successful change
+  ---
+  duration_ms: 5.4685
+  type: 'test'
+  ...
+# Subtest: publication waits for storage acknowledgment and persists before follow receives a binding
+ok 82 - publication waits for storage acknowledgment and persists before follow receives a binding
+  ---
+  duration_ms: 4.1043
+  type: 'test'
+  ...
+# Subtest: root survives helper reconstruction; native registry missing is explicit
+ok 83 - root survives helper reconstruction; native registry missing is explicit
+  ---
+  duration_ms: 4.3598
+  type: 'test'
+  ...
+# Subtest: status differentiates missing directory, path drift and simulated permission failures without rewriting state
+ok 84 - status differentiates missing directory, path drift and simulated permission failures without rewriting state
+  ---
+  duration_ms: 5.356
+  type: 'test'
+  ...
+# Subtest: follow has an initial baseline, observes events without polling, suppresses duplicate values and aborts pending next
+ok 85 - follow has an initial baseline, observes events without polling, suppresses duplicate values and aborts pending next
+  ---
+  duration_ms: 4.8362
+  type: 'test'
+  ...
+# Subtest: filesystem event reconciliation publishes a real missing-directory observation
+ok 86 - filesystem event reconciliation publishes a real missing-directory observation
+  ---
+  duration_ms: 4.7998
+  type: 'test'
+  ...
+# Subtest: follow subscribe/bind race never loses the latest durable revision; pre-abort and return release listeners
+ok 87 - follow subscribe/bind race never loses the latest durable revision; pre-abort and return release listeners
+  ---
+  duration_ms: 3.4173
+  type: 'test'
+  ...
+# Subtest: unbind CAS clears only the default and retains onboarding, files and native registrations
+ok 88 - unbind CAS clears only the default and retains onboarding, files and native registrations
+  ---
+  duration_ms: 3.9708
+  type: 'test'
+  ...
+# Subtest: dispose drains in-flight commit, ends streams and prevents post-dispose publication or registration
+ok 89 - dispose drains in-flight commit, ends streams and prevents post-dispose publication or registration
+  ---
+  duration_ms: 3.6781
+  type: 'test'
+  ...
+# Subtest: actual Cordis Service initialization owns strict/tool effects and closes the injected domain on unload (substituted services)
+ok 90 - actual Cordis Service initialization owns strict/tool effects and closes the injected domain on unload (substituted services)
+  ---
+  duration_ms: 45.2598
+  type: 'test'
+  ...
+1..90
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 465.4396

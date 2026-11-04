@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "phase": "P2",
+  "scope": "Asset generation and static verification only",
+  "status": "STATIC_ASSET_TESTS_PASSED",
+  "sourceTreeSha256": "1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b",
+  "counts": {
+    "mainRoles": 10,
+    "workers": 30,
+    "skills": 63,
+    "commands": 41,
+    "steering": 29,
+    "writers": 10,
+    "sourceShellExceptions": 2,
+    "originalReviewCheckpoints": 13,
+    "originalConditionalReviewGroups": 20,
+    "originalConditionalReviewSteps": 44
+  },
+  "manifestSha256": "b01955236b43cbcab1ccbc097a162b2201b059d34a87662c2de05d3ef3a94b1c",
+  "validationCommand": "node --test tests/assets.test.js",
+  "realLoaderVerification": "PARENT_TASK_REQUIRED_NOT_SIMULATED",
+  "businessE2E": "NOT_RUN",
+  "reviewGate": "P5_NOT_IMPLEMENTED",
+  "dataAdapters": "P3_NOT_CONFIGURED",
+  "officeExecution": "P4_ADAPTATION_REQUIRED",
+  "blockedSkills": [
+    "comps-analysis",
+    "fsi-strip-profile",
+    "lbo-model"
+  ],
+  "sourceScriptsExecuted": false,
+  "deletions": false,
+  "testEvidence": {
+    "command": "$env:DSH_RECORD_ASSET_ACCEPTANCE='1'; & 'C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\node\\bin\\node.exe' --test tests/assets.test.js",
+    "testsPassed": 16,
+    "testsFailed": 0,
+    "testFileSha256": "0b6d5dd3663bfed62c28406e93cd55141b1fca20265fdfdb1bb4b41335aa4fe8",
+    "executedAt": "2026-11-03T15:50:53.977Z",
+    "nativeSkillDiscovery": "NOT_MOCKED_PARENT_TASK_VERIFIES_REAL_LOADER"
+  }
+}

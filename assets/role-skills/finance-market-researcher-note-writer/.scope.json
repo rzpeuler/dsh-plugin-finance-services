@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-market-researcher-note-writer",
+  "skillNames": [
+    "pptx-author"
+  ],
+  "grantsTools": false
+}

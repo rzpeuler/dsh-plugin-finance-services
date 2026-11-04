@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-gl-reconciler-reader",
+  "skillNames": [],
+  "grantsTools": false
+}
