@@ -1,0 +1,64 @@
+﻿TAP version 13
+# Subtest: fourteen stable capabilities and self-contained Client schema factory
+ok 1 - fourteen stable capabilities and self-contained Client schema factory
+  ---
+  duration_ms: 9.2943
+  type: 'test'
+  ...
+# Subtest: dates, known offsets, dimensions and strict nested envelopes are validated
+ok 2 - dates, known offsets, dimensions and strict nested envelopes are validated
+  ---
+  duration_ms: 0.5079
+  type: 'test'
+  ...
+# Subtest: unit conversion is deterministic and retains original supplier/version/license provenance
+ok 3 - unit conversion is deterministic and retains original supplier/version/license provenance
+  ---
+  duration_ms: 3.5757
+  type: 'test'
+  ...
+# Subtest: sources and revisions are separate observations, never averaged or deduplicated
+ok 4 - sources and revisions are separate observations, never averaged or deduplicated
+  ---
+  duration_ms: 1.7381
+  type: 'test'
+  ...
+# Subtest: PIT uses original availability, not the later historical retrieval time
+ok 5 - PIT uses original availability, not the later historical retrieval time
+  ---
+  duration_ms: 1.496
+  type: 'test'
+  ...
+# Subtest: currency, dimension, entity, period and accounting incompatibilities are not silently repaired
+ok 6 - currency, dimension, entity, period and accounting incompatibilities are not silently repaired
+  ---
+  duration_ms: 0.6582
+  type: 'test'
+  ...
+# Subtest: required fields are not guessed or replaced with zero
+ok 7 - required fields are not guessed or replaced with zero
+  ---
+  duration_ms: 1.1207
+  type: 'test'
+  ...
+# Subtest: ratios scale explicitly and conversion overflow is rejected
+ok 8 - ratios scale explicitly and conversion overflow is rejected
+  ---
+  duration_ms: 0.5
+  type: 'test'
+  ...
+# Subtest: range periods may contain individual observations without erasing their original periods
+ok 9 - range periods may contain individual observations without erasing their original periods
+  ---
+  duration_ms: 0.3532
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 132.0555

@@ -1,0 +1,11 @@
+# TEST_ONLY P3 native Host foundation probe
+
+This directory is the only authored/output area. Nothing here installs bundles, changes the Profile, starts a model, calls external network services, changes the default workspace binding, mutates Client state, or deletes files/history.
+
+Run `node tests/p3-native/build.mjs` to create a new time/UUID package. The parent installs its printed absolute target **only after** the main `financeData` Service and independent MCP-style and REST/file-style test adapter bundles are active. The generated package deliberately omits locale/icon resources: it is a disposable, explicitly TEST_ONLY metadata-free fixture, not a product UI feature.
+
+The probe uses the real native `agents.create` + `agentPresets.mount` pattern with an owned cwd and exactly two `finance-pitch-agent-modeler` Agents plus one `finance-model-builder-builder` Agent. Finance Service prerequisites are read with native `ctx.get`; absence produces NOT_RUN and a failing terminal report, never a fabricated Service. There is no ToolsStub and no model-facing Tool execution. `tools.schemas` is read only to confirm the native safety envelope.
+
+Every report carries `REAL_NATIVE_HOST_SERVICES_NOT_CLIENT_TOOL_OR_COMMERCIAL` and `p3Status: PARTIAL`. A probe PASS means only its actual Host Service checks passed; it is not a FinanceDataTool, Client, live MCP connection, commercial data, supplier-equivalence or business-E2E claim. MCP revenue 2 million and REST revenue 2.1 million are distinct independently invented TOY observations, never averaged.
+
+Evidence stays under `tests/p3-native/runs/TEST_ONLY-<uuid>/`; the terminal summary is `tests/p3-native/latest-foundation.json`. The exact existing `tests/p2-live/report-io.js` bytes are copied into each generated package, with append-only journal, bounded checkpoints and I/O failures isolated from cleanup. Model turns, retained-session history and the original canary SHA are checked. Cleanup CAS removes only this run's scope IDs from its binding tuples; concurrent other bindings/scopes are preserved and stale policy snapshots are never restored. Agent disposal is exact-created-ID and ownership-marker fenced. Adapter original status is restored; no adapter is removed by this probe. Cancellation coverage is only a pre-aborted native query, not fabricated in-flight provider control.

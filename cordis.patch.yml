@@ -2,6 +2,11 @@
 - insert:
     - id: financial-services
       name: '@local/dsh-financial-services'
+    - id: finance-data
+      name: '@local/dsh-financial-services/data'
+      config:
+        requestTimeoutMs: 10000
+        maxConcurrentQueries: 32
     - id: preset-finance-pitch-agent
       name: '@deepseek-ai/dsh-agent-preset'
       config:

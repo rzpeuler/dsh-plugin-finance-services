@@ -1,0 +1,13 @@
+{
+  "recordType": "TRANSCRIBED_ACTUAL_READ_ONLY_TOOL_RESULTS",
+  "runtime": "0.2.1-rc.5",
+  "observedDate": "2026-11-05",
+  "calls": [
+    {"tool": "cordis_inspect_query", "input": {"platform": "host", "provider": "Config", "method": "listConfigs", "input": {"name": "@deepseek-ai/dsh-mcp-client", "limit": 5}}, "data": {"entries": [], "total": 0, "nextOffset": null}},
+    {"tool": "cordis_inspect_query", "input": {"platform": "host", "provider": "Config", "method": "listConfigs", "input": {"name": "@deepseek-ai/dsh-mcp-manager", "limit": 5}}, "data": {"entries": [], "total": 0, "nextOffset": null}},
+    {"tool": "read", "path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar\\dsh\\node_modules\\@deepseek-ai\\dsh-mcp-manager\\package.json", "result": "not found"},
+    {"tool": "read", "path": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar\\dsh\\node_modules\\@deepseek-ai\\dsh-mcp-client\\README.md", "result": "FOUND", "verifiedLines": "26-69: declarative per-server stdio/streamable-http configuration, timeout and reconnect; not a dynamic Manager API"}
+  ],
+  "conclusions": {"nativeMcpClientExists": true, "configuredNativeServersObserved": 0, "managerPackageFound": false, "managerBusinessApiVerified": false, "realNativeMcpConnectionTested": false, "commercialAuthorizationVerified": false},
+  "limits": ["Zero Config rows do not prove that a package is absent", "MCP-style in-process TEST_ONLY Adapter is not a native MCP connection", "Native client can be configured through a supported bundle; that is not evidence of Manager operations or native credential/OAuth integration"]
+}

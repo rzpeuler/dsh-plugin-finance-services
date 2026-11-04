@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TEST_ONLY REST/file financial adapter",
+    "description": "Reads a package-owned HTTP-shaped JSON fixture. Distinct synthetic observations, no external HTTP or commercial authorization."
+  }
+}

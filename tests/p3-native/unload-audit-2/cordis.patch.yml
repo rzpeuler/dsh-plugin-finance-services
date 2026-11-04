@@ -1,0 +1,6 @@
+# Disposable read-only TEST_ONLY audit. Product display resources intentionally not required.
+- insert:
+    - id: finance-p3-unload-audit-2-test-only
+      name: '@local/finance-p3-unload-audit-2-test-only'
+      config:
+        bundleRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle'

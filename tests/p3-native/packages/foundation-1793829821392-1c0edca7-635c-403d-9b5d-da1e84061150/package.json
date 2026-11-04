@@ -1,0 +1,24 @@
+{
+  "name": "@local/dsh-finance-p3-native-foundation-1793829821392-1c0edca7-635c-403d-9b5d-da1e84061150-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY native Host Service foundation probe; no model, Client, commercial execution or profile changes.",
+  "exports": {
+    ".": "./probe.js"
+  },
+  "files": [
+    "probe.js",
+    "report-io.js",
+    "cordis.patch.yml",
+    "TEST_ONLY-fixture.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

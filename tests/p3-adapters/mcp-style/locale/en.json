@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TEST_ONLY MCP-style financial adapter",
+    "description": "In-process fake tool-call interface with invented observations. No commercial authorization or external MCP process."
+  }
+}

@@ -1,0 +1,4 @@
+- insert:
+    - id: finance-test-mcp-adapter
+      name: '@local/finance-test-mcp-adapter'
+      config: {}

@@ -1,0 +1,32 @@
+{
+  "name": "@local/finance-test-rest-adapter",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "description": "Reads a package-owned HTTP-shaped JSON fixture. Distinct synthetic observations, no external HTTP or commercial authorization.",
+  "engines": {
+    "node": "^22.19.0 || >=24",
+    "dsh": "0.2.1-rc.5"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "control.js",
+    "fixture.json",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "status": 200,
+  "headers": { "content-type": "application/json", "x-fixture": "TEST_ONLY" },
+  "body": {
+    "security": { "ticker": "TOY", "market": "US" },
+    "report": {
+      "fiscal_period": { "type": "annual", "from": "2024-01-01", "to": "2024-12-31" },
+      "currency": "USD",
+      "scale": "ones",
+      "basis": "US_GAAP",
+      "scope": "consolidated",
+      "measurement_type": "actual",
+      "source_as_of": "2025-02-01T00:00:00Z",
+      "publicly_available_at": "2025-02-02T00:00:00Z",
+      "revision": "rest-toy-r1",
+      "line_items": [
+        { "code": "TOTAL_REVENUE", "amount": 2100000 },
+        { "code": "EBITDA", "amount": 450000 }
+      ]
+    },
+    "notice": "TEST_ONLY separately invented observation. Not equivalent to MCP toy data or commercial data."
+  }
+}

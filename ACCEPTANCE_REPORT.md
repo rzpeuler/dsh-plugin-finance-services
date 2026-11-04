@@ -7,7 +7,7 @@
 - 独立代码位置：当前workspace的 `financial-services-bundle`；分支 `feat/financial-services`。未修改其他业务项目、DSH Core、Session、Subagent或Client内核。
 - 上游：本地 `C:/Users/Administrator/Downloads/financial-services-main`，363文件，SHA256 `1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b`。无.git，Git commit未知；不以远端HEAD冒充。
 - DSH：`0.2.1-rc.5`，Profile `desktop`，现有GUI `http://127.0.0.1:60820`。审计参照为同版本tag，commit `b830ec950faba0a46dda564be3e2d854afed94f1`；实际运行时exports与Inspect优先。
-- 当前候选：`@local/dsh-financial-services@0.2.2`，原生链接安装enabled/applied、warnings空，唯一导航ID `financial-services`。115本地、587原生能力、141计算/权限补验、12Client、46恢复、10禁用底线通过；真实Worker/started锁通过。004总IO失败保留。0.2.2新角色正常版本导出已生效，无新增重启要求。
+- 当前候选：`@local/dsh-financial-services@0.3.0-alpha.1`，原生链接安装enabled/applied、warnings空，唯一导航ID `financial-services`不变。P3基础新增173本地回归、26原生服务和6卸载审计通过；模型Tool/Client及Manager/credential兼容未收口。P2历史0.2.2基线的587原生能力、141计算、12Client、46恢复、10禁用及真实Worker/started锁证据保留；004总IO失败不改绿。
 - 安装目标：当前workspace中的本项目根目录；只用原生Plugin Manager，不手改Profile。
 - P1已验收tarball `0.1.2`：26565 bytes、17文件、SHA256 `39bbc90e78bb5faac6f5a69f5485d69cf64707cba9922f8b73de2346c72e4fcd`，历史验收保持，不冒充P2成品。
 - P2候选 `0.2.0` payload：1000文件、2805818 bytes、SHA256 `04705fbd7527807e4fb7e3284a371d80d723d9fc7eb0e5746aeb3e9cff3a86bb`，包内源码/资源完整，但原生角色验收失败，不能作为工作成品交付。所有363源件及两个被pnpm普通树忽略的.gitignore均在完整只读源ZIP保留。无凭据或商业数据。
@@ -22,7 +22,7 @@
 | 原生Workspace规范path/id绑定及Host持久化 | IMPLEMENTED | 真实Gateway/工具共享方法，原生registry/domain、错误路径、CAS与事件流通过 |
 | 卸载/重装恢复绑定、不删用户文件 | IMPLEMENTED | 绑定revision4恢复，canary不变；结束后默认绑定已清空，测试注册撤销 |
 | 10主Agent/30Worker/63Skill运行时迁移 | IMPLEMENTED_P2_SCOPE | 原权限/代理缺陷修复已原生通过；新增恰两角色固定数值计算，无代码或Shell；双main真实composer预填/keep及恢复均通过，详见P2最终记录 |
-| 金融数据契约/第三方Adapter | PARTIAL | 设计与来源已审计；P3未实施 |
+| 金融数据契约/第三方Adapter | PARTIAL_P3_FOUNDATION | 14契约、两独立TEST_ONLY Provider原生查询/回退/权限/卸载通过；Tool/Client、原生Manager/credential与升级矩阵待验 |
 | 业务执行/真实Excel与PPT文档交付 | PARTIAL | P4未实施，无伪造业务输出 |
 | 四Review策略/确定性Gate/Queue/恢复 | PARTIAL | 源13主Prompt节点、44条件Skill节点已保留；P5未实现 |
 | 完整工作台页面/检索/移动端/主题 | PARTIAL | P2源码已有角色/技能/命令/草稿目录，原生fresh JS与视觉未验；P6未实施，无静态假运行卡片 |

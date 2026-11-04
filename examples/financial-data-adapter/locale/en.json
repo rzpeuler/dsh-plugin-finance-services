@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TEST_ONLY financial adapter template",
+    "description": "Independent Host plugin skeleton, NOT_CONFIGURED by default; requires explicit installation and source policy binding."
+  }
+}

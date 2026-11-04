@@ -1,6 +1,6 @@
 # Financial Services for DSH
 
-独立、仓库外 Financial Services Bundle。当前源码版本 **0.2.1 / P2 集成候选版**，不是完整金融移植产品。P0、P1关键验收已完成；P2角色、技能与受限运行时的原生验收以完整源码仓库的阶段记录为准。角色注册/技能加载不代表金融业务或商业数据已验证。
+独立、仓库外 Financial Services Bundle。当前版本 **0.3.0-alpha.1 / P3 基础服务候选版**，不是完整金融移植产品。P0–P2关键验收通过；P3已有173本地回归、26原生服务检查和6卸载审计，但模型查询Tool、Data Sources Client及原生Manager/凭据兼容尚未收口。角色注册/技能加载和TEST_ONLY数据不代表真实金融业务或商业数据已验证。
 
 ## 当前范围
 
@@ -11,13 +11,14 @@
 - 禁用/卸载不删除用户目录、原始附件或 DSH Session 历史。重新安装从Host持久域读取既有绑定；目录已移动则需重新绑定。
 - Workspace切换仅改变未来任务默认目录，不移动历史 Session 或成果。
 - 10主角色、30独立Worker persona、63完整金融技能及41命令/29样例的只读目录；入口只创建未提交草稿。
-- 每角色独立的原生Preset与Skill registry/provider/loader作用域；Writer无MCP，主/Reader无写入，两个源Bash例外不开放通用Shell。
+- 每角色独立的原生Preset与Skill registry/provider/loader作用域；Writer无MCP，主/Reader无写入。恰两源Bash角色有固定数值剖面，无通用Shell，不冒称Office工作簿。
+- 新增Host `financeData`服务：14稳定能力接口、显式Session/来源策略、时点与单位规范化。两个独立TEST_ONLY Adapter已原生安装/查询/卸载验证，用户可据[数据契约](docs/DATA_CONTRACT.md)扩展；商业Provider默认不授权，模型与前端接入仍待完成。
 - 文件操作通过宿主FS/provider与沙箱策略；写入只限该Session分配的成果目录，创建不覆盖、编辑需SHA与原生版本CAS。已有链接/junction拒绝；不宣称提供超越宿主的恶意本地OS进程TOCTOU隔离。
 - 独立权限底线随原生retained revision保留；角色/root被撤销或源/Prompt版本不符时，拒绝包括原生Agent-own委派工具在内的操作。
 
 ## 安装
 
-要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。当前P2原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但复制安装的fresh进程验收尚未通过，不能当作已验证的P2安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
+要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。当前候选的原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但0.3.0-alpha.1复制安装的fresh进程矩阵尚未执行，不能当作已验证的安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
 
 ```text
 pnpm install --ignore-scripts
@@ -45,4 +46,4 @@ pnpm pack
 
 ## English summary
 
-An independent out-of-tree DSH bundle. Version 0.2.1 is a P2 integration candidate with ten main presets, thirty separately scoped Workers, sixty-three complete Skill directories and unsent draft templates. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. Commercial adapters, Office execution and deterministic Review Gate are not yet implemented. Native registration, static tests and business E2E are reported separately. Install through the native Plugin Manager; disable/uninstall preserves user files and native history. Review policy never grants tool, sandbox or commercial data permissions.
+An independent out-of-tree DSH bundle. Version 0.3.0-alpha.1 is a P3 foundation candidate; P0–P2 key acceptance passed. It includes ten main presets, thirty separately scoped Workers, sixty-three complete Skill directories and unsent draft templates. Versioned data contracts and two independent TEST_ONLY Adapters passed native service checks; model-query/Client integration and native Manager/credential compatibility remain incomplete. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. Commercial adapters, Office execution and deterministic Review Gate are not yet implemented. Native registration, static tests and business E2E are reported separately. Install through the native Plugin Manager; disable/uninstall preserves user files and native history. Review policy never grants tool, sandbox or commercial data permissions.

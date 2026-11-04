@@ -1,0 +1,6 @@
+# TEST_ONLY disposable metadata-free fixture. Parent installs after core and both independent Adapters.
+- insert:
+    - id: finance-p3-native-foundation-1793829821392-1c0edca7-635c-403d-9b5d-da1e84061150-test-only
+      name: '@local/dsh-finance-p3-native-foundation-1793829821392-1c0edca7-635c-403d-9b5d-da1e84061150-test-only'
+      config:
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"

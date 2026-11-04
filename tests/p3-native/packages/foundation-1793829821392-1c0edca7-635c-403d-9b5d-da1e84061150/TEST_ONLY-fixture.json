@@ -1,0 +1,9 @@
+{
+  "kind": "TEST_ONLY_P3_NATIVE_PACKAGE",
+  "identity": "foundation-1793829821392-1c0edca7-635c-403d-9b5d-da1e84061150",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native\\packages\\foundation-1793829821392-1c0edca7-635c-403d-9b5d-da1e84061150",
+  "mode": "foundation",
+  "evidence": "REAL_NATIVE_HOST_SERVICES_NOT_CLIENT_TOOL_OR_COMMERCIAL",
+  "p3Status": "PARTIAL",
+  "installed": false
+}

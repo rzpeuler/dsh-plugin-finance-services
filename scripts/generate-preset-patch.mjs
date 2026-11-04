@@ -1,6 +1,6 @@
 /** Emit native Preset declarations; only the user-facing Bundle is an installation unit. */
 import assert from 'node:assert/strict'
-import { readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
@@ -9,7 +9,9 @@ const manifest = JSON.parse(await readFile(join(root, 'assets/agent-manifest.jso
 assert.equal(manifest.roles.length, 40)
 assert.equal(new Set(manifest.roles.map(role => role.id)).size, 40)
 const lines = ['# Generated from audited financial assets. Do not edit the declarations by hand.', '- insert:',
-  '    - id: financial-services', "      name: '@local/dsh-financial-services'"]
+  '    - id: financial-services', "      name: '@local/dsh-financial-services'",
+  '    - id: finance-data', "      name: '@local/dsh-financial-services/data'",
+  '      config:', '        requestTimeoutMs: 10000', '        maxConcurrentQueries: 32']
 const quoted = value => JSON.stringify(value)
 let order = 1000
 for (const role of manifest.roles) {
@@ -48,7 +50,11 @@ for (const role of manifest.roles) {
 }
 const patch = lines.join('\n') + '\n'
 await writeFile(join(root, 'cordis.patch.yml'), patch, 'utf8')
-await writeFile(join(root, 'acceptance/P2-preset-patch.json'), JSON.stringify({
+// Build outputs are volatile; never overwrite a previously accepted stage's evidence.
+await mkdir(join(root, 'lib'), { recursive: true })
+const reportPath = join(root, 'lib/preset-patch-manifest.json')
+try { await readFile(reportPath) } catch (error) { if (error.code !== 'ENOENT') throw error }
+await writeFile(reportPath, JSON.stringify({
   scope: 'Generated declarations, not native activation evidence',
   patchSha256: createHash('sha256').update(patch).digest('hex'),
   mainIds: manifest.roles.filter(role => role.kind === 'main').map(role => role.id),

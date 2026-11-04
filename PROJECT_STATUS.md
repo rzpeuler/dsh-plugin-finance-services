@@ -1,6 +1,8 @@
 # Financial Services 实施状态
 
-当前阶段：P0、P1、P2关键验收通过，准备P3。候选 `@local/dsh-financial-services@0.2.2` 已原生链接安装并enabled/applied，无新增重启要求。P2证据：115本地测试、587原生能力、12原生Client草稿链、141原生数值/权限补验、10禁用底线通过；真实只读Worker及started-root改绑锁通过。004收尾IO失败仍保留，46项独立恢复确认清理，不改失败为PASS。两源Bash角色使用固定数值剖面代替脚本，恰两角色获工具、modeler不写，builder只写自己JSON，不冒称Excel。当前默认绑定null/revision19、用户导航/草稿恢复、所有临时包已移除。缺模板、商业数据授权、Office业务成品、P5强制Gate及视觉/实际鼠标仍明确未完成；没有金融业务E2E成功宣称。详见[阶段记录](acceptance/P2.md)。
+当前阶段：P0、P1、P2关键验收通过，P3实施中且未验收。当前候选`0.3.0-alpha.1`已原生enabled/applied：14能力契约、173本地回归、两个独立TEST_ONLY Adapter的26项原生服务检查与6项卸载审计通过。默认绑定仍null/revision19，数据策略revision2/空绑定，所有临时包已移除。模型查询Tool与Data Sources Client尚未接入；原生client存在但Manager公开操作/真实凭据兼容仍未验，不能把P3标绿。见[P3记录](acceptance/P3.md)与[数据接口](docs/DATA_CONTRACT.md)。
+
+P2历史验收基线 `@local/dsh-financial-services@0.2.2` 当时原生链接安装并enabled/applied，无新增重启要求。P2证据：115本地测试、587原生能力、12原生Client草稿链、141原生数值/权限补验、10禁用底线通过；真实只读Worker及started-root改绑锁通过。004收尾IO失败仍保留，46项独立恢复确认清理，不改失败为PASS。两源Bash角色使用固定数值剖面代替脚本，恰两角色获工具、modeler不写，builder只写自己JSON，不冒称Excel。当前默认绑定null/revision19、用户导航/草稿恢复、所有临时包已移除。缺模板、商业数据授权、Office业务成品、P5强制Gate及视觉/实际鼠标仍明确未完成；没有金融业务E2E成功宣称。详见[阶段记录](acceptance/P2.md)。
 
 本仓库独立于其他投研应用。开发范围仅限本目录；上游 Downloads 源目录和 DSH 安装包只读。`audit/dsh-reference` 是为补足安装包未携带治理文件而获取的 DSH 同版本只读参照 checkout，不是需要改造的宿主或替代服务器。
 

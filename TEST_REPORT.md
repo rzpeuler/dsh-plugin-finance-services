@@ -88,3 +88,14 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - [token对照](acceptance/P2-controlled-compute-token-comparison.json)给出modeler/builder header增量275/289；排除pre-step Skill与完整首轮，不计provider usage或优化收益。
 - 原生主Bundle 0.2.2 remove+install均applied、warnings空；新的正常角色导出与新Preset已实际运行，Host/floor未无意义重写，无新重启。所有临时包已原生移除。
 - P2关键标准通过，缺模板/商业数据/Office/P5 Gate/视觉局限原样进入既定后续阶段。P3–P6未验收；这不构成完整金融业务E2E。
+
+### 2026-11-05 P3基础服务（整阶段未验收）
+
+- [173项当前回归](acceptance/P3-current-regression.tap)全部PASS，含P2既有115及P3契约/规范化、策略、真实Cordis生命周期+服务double、21项独立Adapter测试。Service double不算NativeHost，21项已计入173，不重复相加。
+- 两独立TEST_ONLY包与中文扩展模板的27分发文件经过隔离复制、导入、真实本地fixture查询/语法/locale/原创SVG检查；不联网，不是原生UI证据。
+- 主Bundle 0.3.0-alpha.1原生applied、warnings空；新增financeData、financial_data域与三个严格控制面Remote方法，原角色/主机/floor字节不为本次新服务而无谓重写。Config Inspect确认include:finance-data，安装链接资源中英locale/原SVG已读取，视觉NOT_VERIFIED。
+- [原生基础检查](acceptance/P3-foundation-native-pass-001.json)26/26：两真实独立Adapter安装/来源切换/fallback、单位2m与2.1m独立观察、PIT/币种/空值不可伪造、exact-Agent/不同Session/Writer拒绝、durable CAS/策略恢复、3自有Agent销毁、0模型。没有FinancialDataTool或Client调用冒充。
+- [卸载审计](acceptance/P3-adapter-unload-audit.json)6/6：实际catalog无两个Adapter、控制服务撤销、自有scope策略无残留、Agent仍销毁、durable策略与catalog一致、默认绑定null/revision19。首次测试遗漏await导致5/6的[失败记录](acceptance/P3-adapter-unload-failure-001.json)保留；重试只修观察，没有改用户绑定。
+- 两Adapter和所有测试探针已原生移除；financial_data revision2/空绑定，文件和历史不删。
+- 当前发行版确有dsh-mcp-client，但无已挂client/manager Config；Manager包实际读取not found。见[兼容边界](docs/MCP_COMPATIBILITY.md)。不建第二个通用Manager，也不把进程内MCP形状模拟当真实MCP连接。
+- P3仍待FinancialDataTool实际dispatcher、Data Sources Client、原生Manager/凭据兼容及升级/重装矩阵。商业源、Office、Review Gate与视觉依旧不声称完成。

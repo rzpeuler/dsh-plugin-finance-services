@@ -1,0 +1,4 @@
+- insert:
+    - id: finance-data-adapter-example
+      name: '@local/finance-data-adapter-example'
+      config: {}

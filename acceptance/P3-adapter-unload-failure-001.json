@@ -1,0 +1,36 @@
+{
+  "evidence": "REAL_NATIVE_READ_ONLY_POST_UNINSTALL_AUDIT",
+  "observedAt": "2026-11-04T22:10:23.167Z",
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "removed-adapters-absent-from-live-catalog",
+      "status": "PASS"
+    },
+    {
+      "id": "removed-controls-not-provided",
+      "status": "PASS"
+    },
+    {
+      "id": "owned-source-policy-scopes-not-retained",
+      "status": "PASS"
+    },
+    {
+      "id": "owned-agents-remain-disposed-without-cold-resume",
+      "status": "PASS"
+    },
+    {
+      "id": "native-durable-policy-matches-catalog-after-cleanup",
+      "status": "PASS"
+    },
+    {
+      "id": "default-financial-binding-unchanged",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- null\n"
+    }
+  ],
+  "adapterCount": 0,
+  "policyRevision": 2,
+  "modelCalls": 0,
+  "noUserStateMutated": true
+}

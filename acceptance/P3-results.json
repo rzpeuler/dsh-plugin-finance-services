@@ -1,0 +1,129 @@
+{
+  "stage": "P3",
+  "status": "IN_PROGRESS_FOUNDATION_NATIVE_SERVICE_PASS",
+  "stageAccepted": false,
+  "observedDate": "2026-11-05",
+  "candidate": {
+    "version": "0.3.0-alpha.1",
+    "installation": "native external directory link",
+    "enabled": true,
+    "application": "applied",
+    "warnings": [],
+    "installLogId": "operation-HMEPFM"
+  },
+  "contracts": {
+    "version": "1.0.0",
+    "capabilityIds": 14,
+    "registeredTestCapabilities": [
+      "financial.statements"
+    ],
+    "otherCapabilitiesAreNotImpliedAvailable": true
+  },
+  "localRegression": {
+    "passed": 173,
+    "failed": 0,
+    "evidence": "P3-current-regression.tap",
+    "includesAdapterUnitTests": 21,
+    "nativeEquivalent": false
+  },
+  "distributionChecks": {
+    "independentPackages": 3,
+    "copiedFiles": 27,
+    "command": "node tests/p3-adapters/check-packages.mjs",
+    "passed": true,
+    "nativeVisualEquivalent": false
+  },
+  "nativeFoundation": {
+    "passed": 26,
+    "failed": 0,
+    "notRun": 0,
+    "evidence": "P3-foundation-native-pass-001.json",
+    "scope": "REAL_NATIVE_HOST_SERVICES_NOT_CLIENT_TOOL_OR_COMMERCIAL",
+    "modelCalls": 0
+  },
+  "nativeUnloadAudit": {
+    "passed": 6,
+    "failed": 0,
+    "evidence": "P3-adapter-unload-audit.json",
+    "firstAttemptFailure": "P3-adapter-unload-failure-001.json",
+    "firstFailureCause": "Read-only test audit did not await the potentially asynchronous financeOperations.snapshot result; product binding remained unchanged",
+    "adapterCountAfterRemoval": 0,
+    "ownedScopesRemoved": true,
+    "ownedAgentsDisposed": true,
+    "coldResumed": false,
+    "policyRevision": 2,
+    "financialBinding": null,
+    "financialRevision": 19
+  },
+  "independentAdapters": [
+    {
+      "package": "@local/finance-test-mcp-adapter",
+      "adapterId": "test-mcp-statements",
+      "sourceId": "test-only-mcp",
+      "nativeInstalledAndQueried": true,
+      "removed": true,
+      "installLogId": "operation-TOk5Rg",
+      "removeLogId": "operation-9J2bDe",
+      "actualMcpConnection": false
+    },
+    {
+      "package": "@local/finance-test-rest-adapter",
+      "adapterId": "test-rest-statements",
+      "sourceId": "test-only-rest",
+      "nativeInstalledAndQueried": true,
+      "removed": true,
+      "installLogId": "operation-zQW6E7",
+      "removeLogId": "operation-xqmohC",
+      "externalHttpConnection": false
+    }
+  ],
+  "mcpCompatibility": {
+    "runtime": "0.2.1-rc.5",
+    "nativeClientShipped": true,
+    "clientActiveConfigRows": 0,
+    "managerActiveConfigRows": 0,
+    "managerPackageRead": "NOT_FOUND",
+    "managerPublicOperationsVerified": false,
+    "nativeExternalConnectionExecuted": false,
+    "secondGeneralManagerCreated": false,
+    "evidence": "../docs/MCP_COMPATIBILITY.md"
+  },
+  "implementedSafety": [
+    "registration never grants access",
+    "exact role/Session/source/capability intersection",
+    "writer query denied",
+    "explicit source status and license-use permission",
+    "PIT and actual/estimate separation",
+    "unit scaling without guessed FX",
+    "no averaging of providers or revisions",
+    "durable prepare-save-commit CAS",
+    "cancellation and late-result rejection",
+    "bounded safe diagnostics without provider exception text"
+  ],
+  "remainingKeyAcceptance": [
+    "FinancialDataTool actual native dispatcher integration",
+    "Data Sources production Client resource/callback projection and configuration verification",
+    "native MCP manager/credential integration compatibility gap",
+    "full adapter upgrade/reinstall and in-flight native lifecycle matrix"
+  ],
+  "limits": [
+    "TEST_ONLY observations are invented and differently valued, never commercial-equivalence or financial-E2E evidence",
+    "No Office, deterministic Review Gate, actual mouse or visual completion claimed",
+    "P4 through P6 are not accepted; do not advance past P3 without resolving its key criteria"
+  ],
+  "installedConfigEntry": "include:finance-data",
+  "displayResources": {
+    "installedLinkedEnglishAndChineseRead": true,
+    "originalSvgRead": true,
+    "exportAndDistributionCheck": true,
+    "renderedVisual": "NOT_VERIFIED"
+  },
+  "staticReviewOpen": [
+    {
+      "id": "P3-LIFECYCLE-DISPOSER-THROW",
+      "status": "OPEN_STATIC_REVIEW_NOT_RUNTIME_REPRODUCED",
+      "finding": "registerAdapter disposer calls provider unsubscribe before deleting its registry entry; a throwing unsubscribe can interrupt projection cleanup. Registry-wide disposal must also complete other owned cleanup after one provider fails.",
+      "next": "Add an explicit failing regression, make map cleanup unconditional and preserve a diagnostic, then validate a fresh native module generation before accepting P3 lifecycle."
+    }
+  ]
+}

@@ -11,3 +11,5 @@ acceptance/tmp/
 financial-services/artifacts/
 tests/p2-client/runs/
 tests/p2-compute/runs/
+tests/p3-native/runs/
+tests/p3-native/latest-foundation.json

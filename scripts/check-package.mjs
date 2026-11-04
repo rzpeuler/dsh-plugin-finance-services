@@ -48,7 +48,7 @@ const assets = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'
 assert.equal(assets.roles.length, 40);
 assert.equal((patch.match(/^    - id: preset-finance-/gm) ?? []).length, 40);
 for (const role of assets.roles) assert.ok(patch.includes(`    - id: preset-${role.id}\n`));
-for (const entry of ['role', 'floor']) {
+for (const entry of ['role', 'floor', ...(pkg.exports['./data'] ? ['data'] : [])]) {
   assert.equal(pkg.exports[`./${entry}`], `./lib/${entry}.js`);
   const code = await readFile(join(root, `lib/${entry}.js`), 'utf8');
   assert.ok(!/from\s+['"]\.\.?\//.test(code), `${entry} must contain its own implementation`);
