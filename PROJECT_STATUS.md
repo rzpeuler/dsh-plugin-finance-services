@@ -1,6 +1,6 @@
 # Financial Services 实施状态
 
-当前阶段：P0、P1关键验收已通过，P2实施中、未验收。40独立角色、63完整技能、41命令及29样例迁移和受限运行时/目录已实现；90本地测试与构建/payload检查通过。首轮真实Host验收7通过/91失败/509未执行，旧实时Host接口与scope身份问题未解决。现原生链接安装候选 `@local/dsh-financial-services@0.2.1`、applied，但实时仍观察到旧JS，需完整退出并重新打开Desktop后复核，不能只刷新页面或把安装成功当功能成功。默认绑定已恢复为未绑定revision8；没有真实金融业务E2E或商业数据查询。
+当前阶段：P0、P1关键验收已通过，P2实施中、未验收。用户完整重启后，新接口、40独立角色/实际Session上下文、63技能原生发现加载与隔离均通过；第二轮真实Host为349通过/196失败/0未执行。失败集中于Cordis服务facade引用误判，已改成逐Agent grant及源/Prompt SHA验证，93本地回归通过。原生Plugin Manager明确要求再次完整进程重启（unmanaged-plugin）以加载该修复，尚未冒称原生权限已通过。候选仍为链接安装 `@local/dsh-financial-services@0.2.1`。测试绑定已恢复为null、revision11；没有真实金融业务E2E、商业数据查询或Office成品。客户端真回调/原生草稿验收夹具已准备，尚未执行。
 
 本仓库独立于其他投研应用。开发范围仅限本目录；上游 Downloads 源目录和 DSH 安装包只读。`audit/dsh-reference` 是为补足安装包未携带治理文件而获取的 DSH 同版本只读参照 checkout，不是需要改造的宿主或替代服务器。
 

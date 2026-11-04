@@ -6,7 +6,7 @@
 |---|---|---|---|
 | P0 清点与设计 | PASS | 全文件 hash、10/30/63 覆盖、许可、治理、宿主真实接口、方案 | 12测试+17上游检查通过；618源位置核验，详见P0记录 |
 | P1 骨架与首次启用 | PASS_KEY_ACCEPTANCE | 原生安装/禁用/启用/卸载；唯一导航；真实 Workspace 绑定与持久恢复 | 38单测+20原生Host检查通过；四live Slot验证；视觉未验证 |
-| P2 完整迁移 | IN_PROGRESS_NATIVE_FAILED | 40 Preset、63 Skill、资源/变体完整、工具权限拒绝、两个业务 Agent 原生 Session | 90本地测试通过；首次Host 7通过/91失败/509未执行；需fresh Desktop JS复验，未验收 |
+| P2 完整迁移 | IN_PROGRESS_ROLE_FIX_RESTART_REQUIRED | 40 Preset、63 Skill、资源/变体完整、工具权限拒绝、两个业务 Agent 原生 Session | 第二轮Host 349通过/196失败/0未执行；40原生上下文及63技能通过。代理误判修复后93本地通过，宿主明确需重启加载；未验收 |
 | P3 数据基础 | NOT_STARTED | 第三方契约、两个不同风格 TEST_ONLY Adapter、切换/fallback/单位/PIT/卸载/权限与真实 UI | NOT_RUN |
 | P4 业务与交付 | NOT_STARTED | 10 角色步骤映射、真实 Worker 结果、Excel 公式与可打开文档/演示文稿、来源记录 | NOT_RUN |
 | P5 审核与恢复 | NOT_STARTED | 四策略、启动快照、确定性 Gate、幂等/过期/并发、重启后新执行单元 | NOT_RUN |

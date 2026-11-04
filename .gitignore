@@ -9,3 +9,4 @@ coverage/
 audit/dsh-reference/
 acceptance/tmp/
 financial-services/artifacts/
+tests/p2-client/runs/

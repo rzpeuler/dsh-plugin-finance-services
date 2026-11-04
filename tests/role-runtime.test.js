@@ -60,6 +60,22 @@ class PromptStub extends Service {
   context(value) { return this.layers.effect(this.ctx, layer => layer.entries.insert(value.name, value), { label: 'TEST_ONLY prompt' }) }
 }
 
+/** Actual Cordis Service: each get returns a distinct context-bound facade over one test-only backing grant store. */
+class AuthorityStub extends Service {
+  constructor(ctx, byId, grants) { super(ctx, 'financeOperations'); this.byId = byId; this.grants = grants; this.admitting = true }
+  async roleDefinition(id) { return this.byId.get(id) }
+  registerRoleRuntime(agent, roleId) {
+    if (!this.admitting) throw new Error('TEST_ONLY root is closed to runtime admission')
+    assert.equal(this.grants.has(agent), false)
+    this.grants.set(agent, roleId)
+    return () => { if (this.grants.get(agent) === roleId) this.grants.delete(agent) }
+  }
+  isRoleRuntimeActive(agent, roleId, expected) {
+    const role = this.byId.get(roleId)
+    return this.admitting && this.grants.get(agent) === roleId && role?.source.sha256 === expected.sourceSha256 && role?.prompt.adaptedSha256 === expected.adaptedPromptSha256
+  }
+}
+
 async function fixture(t, options = {}) {
   const ctx = new Context()
   t.after(() => ctx.fiber.dispose())
@@ -69,19 +85,10 @@ async function fixture(t, options = {}) {
   const compositions = new Map()
   const byId = new Map(roles.map(role => [role.id, role]))
   const grants = new Map()
-  const authority = {
-    async roleDefinition(id) { return byId.get(id) },
-    registerRoleRuntime(agent, roleId) {
-      assert.equal(grants.has(agent), false)
-      grants.set(agent, roleId)
-      return () => { if (grants.get(agent) === roleId) grants.delete(agent) }
-    },
-    isRoleRuntimeActive(agent, roleId, expected) {
-      const role = byId.get(roleId)
-      return grants.get(agent) === roleId && role?.source.sha256 === expected.sourceSha256 && role?.prompt.adaptedSha256 === expected.adaptedPromptSha256
-    },
-  }
-  const revoke = ctx.provide('financeOperations', authority)
+  let authority
+  const authorityFiber = ctx.plugin(inner => { authority = new AuthorityStub(inner, byId, grants) })
+  await authorityFiber
+  const revoke = () => authorityFiber.dispose()
   ctx.provide('agents', { list: () => agents })
   ctx.provide('agentPresets', {
     composedPreset(context) { return scopeChainOf(scopeOf(context)).map(key => compositions.get(key)?.role.id).find(Boolean) },
@@ -132,7 +139,7 @@ async function fixture(t, options = {}) {
   }
   const dispatch = (agent, name, args = {}) => ctx.tools.execute({ agent, name, arguments: args, callId: 'TEST_ONLY-call', signal: new AbortController().signal })
   const names = agent => ctx.tools.schemas(agent).map(tool => tool.name).sort()
-  return { ctx, compose, create, dispatch, names, agents, revoke, compositions, grants, byId }
+  return { ctx, compose, create, dispatch, names, agents, revoke, compositions, grants, byId, authority }
 }
 
 test('actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools', async t => {
@@ -158,6 +165,59 @@ test('actual Cordis plus scope stubs isolate main/Worker schemas and actual disp
   const ordinary = { id: 'ordinary-user' }
   assert.equal((await f.dispatch(ordinary, 'pwsh')).isError, false)
   assert.equal((await f.dispatch(ordinary, 'write')).isError, false)
+})
+
+test('real Cordis Service facades with one backing grant admit query and native calls despite distinct proxy references', async t => {
+  const f = await fixture(t)
+  const role = roles.find(role => role.kind === 'main')
+  const composition = await f.compose(role)
+  const agent = await f.create(composition)
+  const first = f.ctx.get('financeOperations')
+  const second = f.ctx.get('financeOperations')
+  assert.notEqual(first, second, 'actual Cordis must supply distinct Service facades for this regression')
+  const expected = { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 }
+  assert.equal(first.isRoleRuntimeActive(agent, role.id, expected), true)
+  assert.equal(second.isRoleRuntimeActive(agent, role.id, expected), true)
+  const result = await f.dispatch(agent, 'finance_data_query', { source: role.allowedMcpServers[0], query: 'TEST_ONLY request' })
+  assert.equal(result.isError, false)
+  assert.equal(result.value.status, 'NOT_CONFIGURED')
+  assert.equal((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).isError, false)
+})
+
+test('captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched', async t => {
+  const f = await fixture(t)
+  const role = roles.find(role => role.kind === 'main')
+  const composition = await f.compose(role)
+  const agent = await f.create(composition)
+  const query = f.ctx.tools.get('finance_data_query', agent)
+  const args = { source: role.allowedMcpServers[0], query: 'TEST_ONLY request' }
+  const exec = { agent, signal: new AbortController().signal }
+  assert.equal((await query.execute(args, exec)).status, 'NOT_CONFIGURED')
+  f.byId.set(role.id, { ...role, prompt: { ...role.prompt, adaptedSha256: '0'.repeat(64) } })
+  await assert.rejects(query.execute(args, exec), /ROLE_AUTHORITY_UNAVAILABLE/)
+  f.byId.set(role.id, role)
+  f.authority.admitting = false
+  await assert.rejects(query.execute(args, exec), /ROLE_AUTHORITY_UNAVAILABLE/)
+  assert.match((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
+})
+
+test('replacement Cordis root without a grant cannot authorize a retained native own subagent or held executor', async t => {
+  const f = await fixture(t)
+  const role = roles.find(role => role.kind === 'main')
+  const composition = await f.compose(role)
+  const agent = await f.create(composition)
+  const query = f.ctx.tools.get('finance_data_query', agent)
+  await f.revoke()
+  const replacementGrants = new Map()
+  const replacement = f.ctx.plugin(inner => {
+    const root = new AuthorityStub(inner, f.byId, replacementGrants)
+    root.admitting = false
+  })
+  await replacement
+  await assert.rejects(async () => { await composition.fiber }, /root is closed/)
+  assert.equal(replacementGrants.has(agent), false)
+  assert.match((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
+  await assert.rejects(query.execute({ source: role.allowedMcpServers[0], query: 'x' }, { agent, signal: new AbortController().signal }), /ROLE_AGENT_REQUIRED|ROLE_AUTHORITY_UNAVAILABLE/)
 })
 
 test('dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow', async t => {

@@ -25,7 +25,7 @@ financeOperations.isRoleRuntimeActive(agent, roleId, { sourceSha256, adaptedProm
 
 main 的 native `subagent` 使用 spawn provider、所属三 Preset allowlist、maxDepth=1，由父负责原生插件 Config；role 不造 backend 或总控。实际 dispatch guard 再确定性要求显式 `agent_preset` 为所属 Worker、`max(header.delegationDepth, options.subagentDepth) < 1`、不是已有子 Session、cwd 只能省略或等于 Session header 中的精确 Workspace 根。relative cwd `.` 也不接受。fork、workflow、通用 subagent aliases、run_code、任意 own-layer 新增工具和 Shell 都不在运行时允许集合内。main 控制/通信仍交给原生 backend 验证父子权限；Worker 不重挂问人/控制工具。
 
-每个注册同时由 Agent effect 与 role plugin 的 effect 负责清理。每次 guard/自有 executor 都检查当前 global `financeOperations` 与挂载时 owner 相同。创建完成后最后注册 runtime grant；卸载先撤销 grant，再移除 prompt/guard/tools/mask，旧持有的 executor 也不能继续访问。
+每个注册同时由 Agent effect 与 role plugin 的 effect 负责清理。每次 guard/自有 executor 都向当前 global `financeOperations` 重新验证 exact Agent、role ID、source SHA 与 adapted Prompt SHA 对应的 runtime grant；Cordis 的 context-bound Service facade 不使用代理引用相等来判断授权。创建完成后最后注册 runtime grant；卸载先撤销 grant，再移除 prompt/guard/tools/mask，旧持有的 executor 也不能继续访问。
 
 独立 [floor.js](../src/floor.js) 是父任务实现的必要装配项：它不硬依赖 financeOperations，随 retained preset revision 保留 allow[] 与单调拒绝 guard。floor 要求 exact Agent runtime grant 与 source/prompt SHA 都仍有效。这样 role 自身禁用、根服务消失或替换后，旧 Agent 既不能重新继承 ambient 工具，也不能借仍属于 native plugin 的 own-layer subagent 发起调用。底层 native tool schema 此时可能仍可见，但 actual dispatch 被 floor 拒绝；不可把“schema 可见”误写成“获授权”。
 
@@ -81,4 +81,4 @@ node --test tests/role*.test.js
 
 [role-runtime.test.js](../tests/role-runtime.test.js) 使用真实 Cordis 与 dsh-scope，替代 tools/FS/registry 服务做 actual-stub-dispatch、双 owner 清理、普通 Agent 不受影响、两个 retained revision、缺本地 native definition、root/role卸载以及真实独立 floor grant/hash 拒绝测试。native delegation backend 与 Loader 未被该 fixture 启动。
 
-当前 23 项均通过（13 文件/权限测试 + 10 Cordis/scope 生命周期测试）。未运行真实 LLM 委派、商业 MCP、Office 金融业务 E2E；不将这些单测记为已完成业务迁移。
+当前 26 项均通过（13 文件/权限测试 + 13 Cordis/scope 生命周期测试）；Service facade 回归使用真实 Cordis Service，确认两个不同 facade 共享有效 grant 时允许执行，同时直接持有 executor 绕开 floor 仍会重验 grant/版本，root 关闭、替换或 source/prompt 漂移继续拒绝。未运行真实 LLM 委派、商业 MCP、Office 金融业务 E2E；不将这些单测记为已完成业务迁移。

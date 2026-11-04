@@ -60,3 +60,12 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - 探针同时传workspaceId与cwd违反原生互斥规则，已独立修正；保留旧错误，新身份retry-1 fixture已生成。不能将探针错误或前提失败计为功能通过。
 - 原测试默认绑定已恢复null、revision8；只撤销自有Workspace注册，canary/目录/历史保留，原active测试Bundle已卸载。原生移除0.2.0后链接安装0.2.1候选applied，实时仍见旧实现。按宿主开发说明，替换包需要完整进程重启取得fresh JS；不启动替代server或改Scope私有Symbol/WeakMap绕过。
 - Desktop重启后还须验证真实scope/63技能/两个业务Session/实际工具拒绝/Worker真实结果、Client RPC与草稿、retained-floor和token预算。视觉/商业数据/Office/审核Gate仍未通过或未实现；整体目标保持active。
+
+### 用户重启后的复测与代理修复
+
+- 第二次真实Host：[349 PASS / 196 FAIL / 0 NOT_RUN](acceptance/P2-live-host-failure-002.json)。40 Preset与实际Agent上下文、63独立原生Skill全文加载、真实Gateway目录和草稿intent等已通过；没有模型调用。测试绑定恢复null、revision11。
+- 失败集中于服务facade引用比较错误；已改为每Agent当前grant及source/Prompt SHA证明。真实Cordis Service多facade、root替换/关闭、held executor与漂移新增回归通过；角色26项、[全套93项](acceptance/P2-unit-tests-proxy-fix.tap)通过。新增测试曾直接assert.rejects一个Fiber导致用法错误，已改async await Fiber，未修改生产限制做绿。
+- 原生管理器明确返回restart-required/unmanaged-plugin；Preset外部保留的角色代码尚未刷新，修复的真实dispatch仍NOT_RUN，不能把本地绿当原生绿。
+- 已准备新版无模型探针：40 persona全文canonical/raw SHA、同main独立Session、作用域/权限实际执行。可选真实Worker改为caller-delivery、能力检查全PASS前不启动、有限时预算与精确activation清理；不冒充正向工具dispatcher或金融E2E。
+- 原生Client fixture的7项JS语法及构建检查通过，严格JSON/UTF-8界限与plain-only安全导航门禁已review；尚未安装/执行，没有预写验收通过报告。
+- 两main的SystemPrompt/Tool-envelope heuristic已获得，但遗漏pre-step Skill目录，完整首轮、provider usage与缓存收益仍NOT_MEASURED；[模型体验](docs/MODEL_EXPERIENCE.md)明确该区别。

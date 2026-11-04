@@ -17,7 +17,7 @@
 
 ## 安装
 
-要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。通过 DSH 原生 Plugin Manager 安装此源码目录或本项目构建的本地 tarball。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
+要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。当前P2原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但复制安装的fresh进程验收尚未通过，不能当作已验证的P2安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
 
 ```text
 pnpm install --ignore-scripts
@@ -27,7 +27,7 @@ pnpm run check:package
 pnpm pack
 ```
 
-不在用户 Profile 目录手写配置或运行包管理器。安装返回 application=applied 才表示已应用；restart-required 必须按提示重启。源码修改不保证现有页面自动刷新，必须先重建Client artifact，并按宿主返回的生命周期操作。
+不在用户 Profile 目录手写配置或运行包管理器。安装返回 application=applied 才表示已应用；restart-required 必须按提示重启。源码修改不保证现有页面自动刷新，必须先重建Client artifact，并按宿主返回的生命周期操作。上下文预算与未测口径见[模型体验](docs/MODEL_EXPERIENCE.md)。
 
 ## 首次使用
 

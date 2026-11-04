@@ -5,12 +5,19 @@ import { fileURLToPath } from 'node:url';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const flags = process.argv.slice(2);
-for (const flag of flags) if (flag !== '--run-model-smoke' && !/^--revision=[a-z0-9][a-z0-9-]{0,39}$/.test(flag)) throw new Error(`Unknown flag: ${flag}`);
+for (const flag of flags) if (flag !== '--run-model-smoke' && !/^--revision=[a-z0-9][a-z0-9-]{0,39}$/.test(flag)
+  && !/^--model-timeout-ms=[1-9][0-9]{0,5}$/.test(flag)) throw new Error(`Unknown flag: ${flag}`);
 const revisions = flags.filter(flag => flag.startsWith('--revision='));
 if (revisions.length > 1) throw new Error('Supply --revision once');
 const revision = revisions[0]?.slice('--revision='.length);
 const suffix = revision ? `-${revision}` : '';
 const runModelSmoke = flags.includes('--run-model-smoke');
+const timeouts = flags.filter(flag => flag.startsWith('--model-timeout-ms='));
+if (timeouts.length > 1) throw new Error('Supply --model-timeout-ms once');
+const modelTimeoutMs = timeouts.length ? Number(timeouts[0].slice('--model-timeout-ms='.length)) : 120000;
+if (!Number.isSafeInteger(modelTimeoutMs) || modelTimeoutMs < 1 || modelTimeoutMs > 300000) {
+  throw new Error('modelTimeoutMs must be a positive safe integer no greater than 300000');
+}
 const probe = await readFile(join(root, 'tests/p2-live-probe.js'), 'utf8');
 const fixtureBase = join(root, 'tests', 'p2-live');
 await mkdir(fixtureBase, { recursive: true });
@@ -43,7 +50,7 @@ for (const phase of ['active', 'disabled']) {
   }, null, 2) + '\n');
   await materialize('probe.js', probe);
   await materialize('cordis.patch.yml',
-    `# Disposable TEST_ONLY fixture. Install only this phase, never both concurrently.\n- insert:\n    - id: finance-p2-${phase}${suffix}-test-only-probe\n      name: '${name}'\n      config:\n        phase: '${phase}'\n        runModelSmoke: ${phase === 'active' && runModelSmoke}\n        bundleRoot: ${JSON.stringify(root)}\n`);
+    `# Disposable TEST_ONLY fixture. Install only this phase, never both concurrently.\n- insert:\n    - id: finance-p2-${phase}${suffix}-test-only-probe\n      name: '${name}'\n      config:\n        phase: '${phase}'\n        runModelSmoke: ${phase === 'active' && runModelSmoke}\n        modelTimeoutMs: ${modelTimeoutMs}\n        bundleRoot: ${JSON.stringify(root)}\n`);
   console.log(`Prepared ${phase}: ${directory}; runModelSmoke=${phase === 'active' && runModelSmoke}`);
 }
 console.log('No installation, Profile edit, Workspace registration, or Session creation was performed. Parent owns native installation and lifecycle switching.');

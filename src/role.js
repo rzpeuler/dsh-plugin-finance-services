@@ -23,8 +23,8 @@ export async function apply(ctx, config) {
   const composition = scopeOf(ctx)
   if (!composition) throw new Error('ROLE_SCOPE_REQUIRED: finance role runtime must mount inside its independent preset')
   const authority = ctx.financeOperations
-  const authorize = () => { if (ctx.get('financeOperations') !== authority) throw new Error('ROLE_AUTHORITY_UNAVAILABLE: financial role owner was removed or replaced') }
   const role = validateRole(await authority.roleDefinition(roleId), roleId)
+  const expectedRevision = Object.freeze({ sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 })
   const runtimes = new Map()
   const installing = new Set()
   const removing = new Set()
@@ -68,6 +68,11 @@ export async function apply(ctx, config) {
     let state
     try {
       const nativeTools = nativeFor(agent)
+      // Cordis produces context-bound Service facades; backing authorization is a grant, not proxy reference equality.
+      const authorize = () => {
+        const current = ctx.get('financeOperations')
+        if (current?.isRoleRuntimeActive(agent, role.id, expectedRevision) !== true) throw new Error('ROLE_AUTHORITY_UNAVAILABLE: the exact financial Agent grant or source revision is no longer active')
+      }
       const filesystem = new RoleFilesystem({ fs: ctx.fs, workingDirectory: ctx.workingDirectory, sandboxPolicy: ctx.sandboxPolicy, agent, role, authorize })
       state = { filesystem, dispose: undefined }
       // Publish the guard's lookup before own registrations emit tools/change; a reentrant reconciliation cannot duplicate it.
