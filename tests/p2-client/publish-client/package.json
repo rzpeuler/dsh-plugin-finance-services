@@ -1,0 +1,7 @@
+{
+ "name": "@local/dsh-financial-services-p2-publish-client-test-only",
+ "version": "0.0.1", "private": true, "type": "module",
+ "description": "TEST_ONLY one-shot publication of own verified Client build; no product UI or models.",
+ "exports": {".": "./probe.js"}, "engines": {"dsh": "0.2.1-rc.5"},
+ "dsh": {"bundle": {"patch": "./cordis.patch.yml"}}
+}

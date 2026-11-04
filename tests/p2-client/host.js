@@ -19,7 +19,7 @@ export default class FinanceP2ClientTestOnly extends TypertRemoteService {
     this.finished = false
     this.tail = Promise.resolve()
     this.diagnosticTail = Promise.resolve()
-    this.diagnostic = { schemaVersion: 1, package: '@local/dsh-financial-services-p2-client-retry-1',
+    this.diagnostic = { schemaVersion: 1, package: '@local/dsh-financial-services-p2-client-retry-4',
       status: 'NOT_RUN', financialExecution: 'NOT_RUN', diagnosticOperationsMutateBinding: false, checkpoints: [] }
   }
 

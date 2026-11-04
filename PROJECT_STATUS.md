@@ -1,6 +1,6 @@
 # Financial Services 实施状态
 
-当前阶段：P0、P1关键验收已通过，P2实施中，Client真实草稿链待验；两源Bash例外只保守禁Shell，受控计算替代仍未实现。用户再次完整重启后，原生能力587/587通过：40不同persona全文、63技能、角色权限/路径/CAS与独立Session均已验证。真实Worker以deepseek-account/deepseek-flash只读玩具数据并返回模型结果，已开始root改绑锁也通过；该次总汇写入发生UNKNOWN文件错误，保留失败，另以46/46原生恢复检查确认自有资源清理，未把失败安装改PASS。禁用retained-floor实际10/10通过，主Bundle已恢复启用。候选为链接安装 `@local/dsh-financial-services@0.2.1`；默认绑定保持null、revision17。Client Host初始化与Remote注册、Host graph及全部依赖通过，但当前页未报告Client apply，尚无真实草稿预填证据。没有真实金融业务E2E、商业查询或Office成品。
+当前阶段：P0、P1、P2关键验收通过，准备P3。候选 `@local/dsh-financial-services@0.2.2` 已原生链接安装并enabled/applied，无新增重启要求。P2证据：115本地测试、587原生能力、12原生Client草稿链、141原生数值/权限补验、10禁用底线通过；真实只读Worker及started-root改绑锁通过。004收尾IO失败仍保留，46项独立恢复确认清理，不改失败为PASS。两源Bash角色使用固定数值剖面代替脚本，恰两角色获工具、modeler不写，builder只写自己JSON，不冒称Excel。当前默认绑定null/revision19、用户导航/草稿恢复、所有临时包已移除。缺模板、商业数据授权、Office业务成品、P5强制Gate及视觉/实际鼠标仍明确未完成；没有金融业务E2E成功宣称。详见[阶段记录](acceptance/P2.md)。
 
 本仓库独立于其他投研应用。开发范围仅限本目录；上游 Downloads 源目录和 DSH 安装包只读。`audit/dsh-reference` 是为补足安装包未携带治理文件而获取的 DSH 同版本只读参照 checkout，不是需要改造的宿主或替代服务器。
 

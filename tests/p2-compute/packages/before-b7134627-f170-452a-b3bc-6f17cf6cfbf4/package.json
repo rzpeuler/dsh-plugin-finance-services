@@ -1,0 +1,24 @@
+{
+  "name": "@local/dsh-finance-p2-compute-before-b7134627-f170-452a-b3bc-6f17cf6cfbf4-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY controlled-compute before native probe; never runs models or modifies Client/default binding.",
+  "exports": {
+    ".": "./probe.js"
+  },
+  "files": [
+    "probe.js",
+    "report-io.js",
+    "cordis.patch.yml",
+    "TEST_ONLY-fixture.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

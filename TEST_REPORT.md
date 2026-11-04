@@ -78,4 +78,13 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - [独立原生恢复](acceptance/P2-live-host-recovery-004.json)46/46 PASS、recoveryStatus COMPLETE；核36自有Agent absent、5原controller live idle、child absent，marker/hash/路径匹配后仅注销owned Workspace。默认null/rev17不倒写，文件/历史保留，原失败仍FAIL。
 - [禁用retained-floor](acceptance/P2-live-host-disabled.json)10/10 PASS，5原live Session未cold-resume，服务与Roster撤销后实际调用被拒；随后主Bundle恢复enabled/applied，测试包移除。
 - Client原夹具无报告；retry1 Host初始化与strict注册有[checkpoint](acceptance/P2-client-diagnostic.json)，但45秒无Client apply。已确认并修测试Host同步snapshot误用.then；不能据此断言历史无报告原因。公共[Host graph](acceptance/P2-client-graph.json)验证产物路径与全部8依赖存在；Client HMR/本地mount支持实际已读，尚无页面模块队列状态。真实草稿/keep与导航恢复仍NOT_RUN。
-- Worker实际provider计数已记录；完整main首轮与因果缓存优化仍未测。P2未验收，P3–P6未启动验收；商业查询、Office与金融业务E2E仍0。
+- Worker实际provider计数已记录；完整main首轮与因果缓存优化仍未测。当时P2未验收，以下为后续收口。
+
+### 2026-11-05 P2最终收口
+
+- [115本地测试](acceptance/P2-numeric-generation-tests-pass.tap)全部PASS；包含固定数值17项、工具权限接线4项及既有回归。最初旧权限名单预期1项失败保留；更新恰两角色新窄工具预期，不放开Shell。Client namespace guarded stub 22项通过，明确不是原生或视觉测试。
+- [真实Client004](acceptance/P2-live-client-pass-004.json)12/12 PASS：native resources、精确4slot、两main独立原生Session/实际composer草稿、keep、Worker拒绝、无submit/0model、原用户导航/草稿恢复。此前真实namespace注入缺失和follow raw Snapshot错误均已修，失败003不改绿。绑定null/rev19、自有registry注销、文件/历史保留。
+- [原生计算before](acceptance/P2-controlled-compute-before-pass-002.json)9/9，[after](acceptance/P2-controlled-compute-pass-003.json)141/141：40上下文恰两工具、4有限剖面手算金值/敏感度/非法输入、writer自己JSON与hash、readonly拒写、held executor边界及真实Skill reference链/跨role拒绝。没有模型或外部数据调用。初次before缺Agent路由的2失败保留，重试只用公开默认route作meter，不提交模型。
+- [token对照](acceptance/P2-controlled-compute-token-comparison.json)给出modeler/builder header增量275/289；排除pre-step Skill与完整首轮，不计provider usage或优化收益。
+- 原生主Bundle 0.2.2 remove+install均applied、warnings空；新的正常角色导出与新Preset已实际运行，Host/floor未无意义重写，无新重启。所有临时包已原生移除。
+- P2关键标准通过，缺模板/商业数据/Office/P5 Gate/视觉局限原样进入既定后续阶段。P3–P6未验收；这不构成完整金融业务E2E。

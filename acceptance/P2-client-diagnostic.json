@@ -1,25 +1,185 @@
 {
   "schemaVersion": 1,
-  "package": "@local/dsh-financial-services-p2-client-retry-1",
+  "package": "@local/dsh-financial-services-p2-client-retry-4",
   "status": "NOT_RUN",
   "financialExecution": "NOT_RUN",
   "diagnosticOperationsMutateBinding": false,
   "checkpoints": [
     {
       "stage": "HOST_INIT_ENTERED",
-      "at": "2026-11-04T11:30:38.388Z",
+      "at": "2026-11-04T16:37:44.697Z",
       "services": []
     },
     {
       "stage": "HOST_REMOTE_REGISTERED",
-      "at": "2026-11-04T11:30:38.392Z",
+      "at": "2026-11-04T16:37:44.714Z",
       "services": []
     },
     {
-      "stage": "NO_CLIENT_REPORT_WITHIN_45_SECONDS",
-      "at": "2026-11-04T11:31:23.394Z",
+      "stage": "CLIENT_APPLY",
+      "at": "2026-11-04T16:37:44.820Z",
+      "services": [
+        {
+          "key": "slots",
+          "present": true
+        },
+        {
+          "key": "resources",
+          "present": true
+        },
+        {
+          "key": "sessions",
+          "present": true
+        },
+        {
+          "key": "uiWorkspace",
+          "present": true
+        },
+        {
+          "key": "layout",
+          "present": true
+        },
+        {
+          "key": "conversation",
+          "present": true
+        }
+      ]
+    },
+    {
+      "stage": "REMOTE_MOUNTED",
+      "at": "2026-11-04T16:37:44.983Z",
+      "services": [
+        {
+          "key": "slots",
+          "present": true
+        },
+        {
+          "key": "resources",
+          "present": true
+        },
+        {
+          "key": "sessions",
+          "present": true
+        },
+        {
+          "key": "uiWorkspace",
+          "present": true
+        },
+        {
+          "key": "layout",
+          "present": true
+        },
+        {
+          "key": "conversation",
+          "present": true
+        }
+      ]
+    },
+    {
+      "stage": "DEPENDENCIES_WAITING",
+      "at": "2026-11-04T16:37:44.991Z",
+      "services": [
+        {
+          "key": "slots",
+          "present": true
+        },
+        {
+          "key": "resources",
+          "present": true
+        },
+        {
+          "key": "sessions",
+          "present": true
+        },
+        {
+          "key": "uiWorkspace",
+          "present": true
+        },
+        {
+          "key": "layout",
+          "present": true
+        },
+        {
+          "key": "conversation",
+          "present": true
+        }
+      ]
+    },
+    {
+      "stage": "DEPENDENCIES_READY",
+      "at": "2026-11-04T16:37:45.003Z",
+      "services": [
+        {
+          "key": "slots",
+          "present": true
+        },
+        {
+          "key": "resources",
+          "present": true
+        },
+        {
+          "key": "sessions",
+          "present": true
+        },
+        {
+          "key": "uiWorkspace",
+          "present": true
+        },
+        {
+          "key": "layout",
+          "present": true
+        },
+        {
+          "key": "conversation",
+          "present": true
+        }
+      ]
+    },
+    {
+      "stage": "CLIENT_RUN_STARTED",
+      "at": "2026-11-04T16:37:45.012Z",
+      "services": [
+        {
+          "key": "slots",
+          "present": true
+        },
+        {
+          "key": "resources",
+          "present": true
+        },
+        {
+          "key": "sessions",
+          "present": true
+        },
+        {
+          "key": "uiWorkspace",
+          "present": true
+        },
+        {
+          "key": "layout",
+          "present": true
+        },
+        {
+          "key": "conversation",
+          "present": true
+        }
+      ]
+    },
+    {
+      "stage": "HOST_BEGIN_RECEIVED",
+      "at": "2026-11-04T16:37:45.067Z",
+      "services": []
+    },
+    {
+      "stage": "HOST_FINISH_RECEIVED",
+      "at": "2026-11-04T16:37:46.684Z",
+      "services": []
+    },
+    {
+      "stage": "HOST_UNLOADED",
+      "at": "2026-11-04T16:52:10.537Z",
       "services": []
     }
   ],
-  "lastStage": "NO_CLIENT_REPORT_WITHIN_45_SECONDS"
+  "lastStage": "HOST_UNLOADED"
 }

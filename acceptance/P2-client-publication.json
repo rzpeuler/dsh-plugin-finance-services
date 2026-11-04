@@ -1,0 +1,9 @@
+{
+  "operation": "native clientModules.rebuilt completed-own-build publication",
+  "package": "@local/dsh-financial-services",
+  "clientSha256": "c9c85b14fe2184d07e515aee2ebfcf8b82872340c69055b92e5f260609796fa3",
+  "before": "bb933b899f86",
+  "after": "bb933b899f86",
+  "hostAndRoleNotRewritten": true,
+  "businessExecution": false
+}

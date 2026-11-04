@@ -1,0 +1,10 @@
+{
+  "name": "@local/dsh-financial-services-p2-runtime-inspect",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "TEST_ONLY renderless read-only Client activation inspector; no navigation, binding or models.",
+  "exports": {".": "./probe.js", "./client": "./client.js"},
+  "engines": {"dsh": "0.2.1-rc.5"},
+  "dsh": {"bundle": {"patch": "./cordis.patch.yml"}, "client": {"platform": "web", "inject": ["@deepseek-ai/dsh-cordis-client-runner"]}}
+}

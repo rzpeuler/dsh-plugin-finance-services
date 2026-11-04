@@ -126,7 +126,7 @@ test('all 40 actual manifest roles retain distinct source file/query allowlists 
   for (const item of roles) {
     const role = validateRole(item, item.id)
     const names = roleToolNames(role)
-    assert.deepEqual(names, [...role.exposedFileTools, ...role.allowedMcpServers.length ? ['finance_data_query'] : []])
+    assert.deepEqual(names, [...role.exposedFileTools, ...role.allowedMcpServers.length ? ['finance_data_query'] : [], ...['finance-pitch-agent-modeler', 'finance-model-builder-builder'].includes(role.id) ? ['finance_model_calculate'] : []])
     if (role.kind === 'main') assert.ok(!names.includes('write') && !names.includes('edit'))
     if (role.writer) assert.ok(!names.includes('finance_data_query'))
     assert.ok(!names.some(name => /shell|bash|pwsh|exec/.test(name)))

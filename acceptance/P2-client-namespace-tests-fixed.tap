@@ -1,0 +1,167 @@
+﻿TAP version 13
+# Subtest: factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+not ok 1 - factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+  ---
+  duration_ms: 3.2605
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:162:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Values have same structure but are not reference-equal:
+    
+    [
+      'remote.financeOperations'
+    ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'remote.financeOperations'
+  actual:
+    0: 'remote.financeOperations'
+  operator: 'deepStrictEqual'
+  stack: |-
+    Object.inject (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:52:14)
+    Object.apply (evalmachine.<anonymous>:404:15)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:181:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: mount completes before registering resources, dictionaries or slots
+ok 2 - mount completes before registering resources, dictionaries or slots
+  ---
+  duration_ms: 1.0812
+  type: 'test'
+  ...
+# Subtest: failed mount does not leave partial registrations
+ok 3 - failed mount does not leave partial registrations
+  ---
+  duration_ms: 0.5978
+  type: 'test'
+  ...
+# Subtest: one global sidebar id matches a new main key; config and activation belong only to this package
+ok 4 - one global sidebar id matches a new main key; config and activation belong only to this package
+  ---
+  duration_ms: 1.203
+  type: 'test'
+  ...
+# Subtest: factory dictionaries have matching bilingual keys and package locale files contain metadata only
+ok 5 - factory dictionaries have matching bilingual keys and package locale files contain metadata only
+  ---
+  duration_ms: 6.873
+  type: 'test'
+  ...
+# Subtest: binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+ok 6 - binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+  ---
+  duration_ms: 0.5599
+  type: 'test'
+  ...
+# Subtest: directory selection uses native uiWorkspace and navigation uses layout only
+ok 7 - directory selection uses native uiWorkspace and navigation uses layout only
+  ---
+  duration_ms: 0.405
+  type: 'test'
+  ...
+# Subtest: resource passes through native result frames, including failures, without inventing Host facts
+ok 8 - resource passes through native result frames, including failures, without inventing Host facts
+  ---
+  duration_ms: 0.8738
+  type: 'test'
+  ...
+# Subtest: native supervisor opener reads a new baseline on every physical generation
+ok 9 - native supervisor opener reads a new baseline on every physical generation
+  ---
+  duration_ms: 0.3748
+  type: 'test'
+  ...
+# Subtest: stream exceptions first produce a failed resource frame and remain visible to native retry classification
+ok 10 - stream exceptions first produce a failed resource frame and remain visible to native retry classification
+  ---
+  duration_ms: 0.5876
+  type: 'test'
+  ...
+# Subtest: resource abort closes an active native stream and prevents late frames
+ok 11 - resource abort closes an active native stream and prevents late frames
+  ---
+  duration_ms: 0.374
+  type: 'test'
+  ...
+# Subtest: pre-aborted and unsupported resource addresses do not call Host methods
+ok 12 - pre-aborted and unsupported resource addresses do not call Host methods
+  ---
+  duration_ms: 0.1661
+  type: 'test'
+  ...
+# Subtest: disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+ok 13 - disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+  ---
+  duration_ms: 0.3119
+  type: 'test'
+  ...
+# Subtest: a completed bind after plugin disposal cannot report success through the old callback
+not ok 14 - a completed bind after plugin disposal cannot report success through the old callback
+  ---
+  duration_ms: 0.1696
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:372:1'
+  failureType: 'testCodeFailure'
+  error: 'cannot get property remote.financeOperations without inject'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Object.get [as financeOperations] (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:147:74)
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:375:16)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+ok 15 - catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+  ---
+  duration_ms: 12.5248
+  type: 'test'
+  ...
+# Subtest: catalogue address guards, resource cancellation and unloading suppress late data
+ok 16 - catalogue address guards, resource cancellation and unloading suppress late data
+  ---
+  duration_ms: 0.2482
+  type: 'test'
+  ...
+# Subtest: catalogue errors remain explicit failed resource frames
+ok 17 - catalogue errors remain explicit failed resource frames
+  ---
+  duration_ms: 0.1753
+  type: 'test'
+  ...
+# Subtest: draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+ok 18 - draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+  ---
+  duration_ms: 0.2414
+  type: 'test'
+  ...
+# Subtest: only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+ok 19 - only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+  ---
+  duration_ms: 0.3263
+  type: 'test'
+  ...
+# Subtest: draft preparation throw and native start failure carry distinct errors without reporting execution success
+ok 20 - draft preparation throw and native start failure carry distinct errors without reporting execution success
+  ---
+  duration_ms: 0.3675
+  type: 'test'
+  ...
+# Subtest: unloading during prepareDraft prevents native start; unloading during start cannot report ready
+ok 21 - unloading during prepareDraft prevents native start; unloading during start cannot report ready
+  ---
+  duration_ms: 0.242
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 19
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 144.0772

@@ -1,0 +1,7 @@
+# Disposable TEST_ONLY metadata-free fixture. Install exclusively by parent.
+- insert:
+    - id: finance-p2-compute-before-b7134627-f170-452a-b3bc-6f17cf6cfbf4-test-only
+      name: '@local/dsh-finance-p2-compute-before-b7134627-f170-452a-b3bc-6f17cf6cfbf4-test-only'
+      config:
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"
+        mode: 'before'

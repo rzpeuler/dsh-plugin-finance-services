@@ -1,0 +1,4 @@
+# Disposable TEST_ONLY read-only inspector, no product UI/artwork.
+- insert:
+    - id: finance-p2-runtime-inspect-test-only
+      name: '@local/dsh-financial-services-p2-runtime-inspect'

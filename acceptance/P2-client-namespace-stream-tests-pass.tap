@@ -1,0 +1,142 @@
+﻿TAP version 13
+# Subtest: factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+ok 1 - factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+  ---
+  duration_ms: 2.9611
+  type: 'test'
+  ...
+# Subtest: mount completes before registering resources, dictionaries or slots
+ok 2 - mount completes before registering resources, dictionaries or slots
+  ---
+  duration_ms: 0.7496
+  type: 'test'
+  ...
+# Subtest: failed mount does not leave partial registrations
+ok 3 - failed mount does not leave partial registrations
+  ---
+  duration_ms: 0.4641
+  type: 'test'
+  ...
+# Subtest: one global sidebar id matches a new main key; config and activation belong only to this package
+ok 4 - one global sidebar id matches a new main key; config and activation belong only to this package
+  ---
+  duration_ms: 1.0574
+  type: 'test'
+  ...
+# Subtest: factory dictionaries have matching bilingual keys and package locale files contain metadata only
+ok 5 - factory dictionaries have matching bilingual keys and package locale files contain metadata only
+  ---
+  duration_ms: 5.4988
+  type: 'test'
+  ...
+# Subtest: binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+ok 6 - binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+  ---
+  duration_ms: 0.5096
+  type: 'test'
+  ...
+# Subtest: directory selection uses native uiWorkspace and navigation uses layout only
+ok 7 - directory selection uses native uiWorkspace and navigation uses layout only
+  ---
+  duration_ms: 0.2145
+  type: 'test'
+  ...
+# Subtest: resource passes through native result frames, including failures, without inventing Host facts
+ok 8 - resource passes through native result frames, including failures, without inventing Host facts
+  ---
+  duration_ms: 0.6887
+  type: 'test'
+  ...
+# Subtest: native supervisor opener reads a new baseline on every physical generation
+ok 9 - native supervisor opener reads a new baseline on every physical generation
+  ---
+  duration_ms: 0.3859
+  type: 'test'
+  ...
+# Subtest: stream exceptions first produce a failed resource frame and remain visible to native retry classification
+ok 10 - stream exceptions first produce a failed resource frame and remain visible to native retry classification
+  ---
+  duration_ms: 0.5011
+  type: 'test'
+  ...
+# Subtest: resource abort closes an active native stream and prevents late frames
+ok 11 - resource abort closes an active native stream and prevents late frames
+  ---
+  duration_ms: 0.3137
+  type: 'test'
+  ...
+# Subtest: pre-aborted and unsupported resource addresses do not call Host methods
+ok 12 - pre-aborted and unsupported resource addresses do not call Host methods
+  ---
+  duration_ms: 0.164
+  type: 'test'
+  ...
+# Subtest: disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+ok 13 - disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+  ---
+  duration_ms: 0.384
+  type: 'test'
+  ...
+# Subtest: a completed bind after plugin disposal cannot report success through the old callback
+ok 14 - a completed bind after plugin disposal cannot report success through the old callback
+  ---
+  duration_ms: 0.1574
+  type: 'test'
+  ...
+# Subtest: catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+ok 15 - catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+  ---
+  duration_ms: 12.2475
+  type: 'test'
+  ...
+# Subtest: catalogue address guards, resource cancellation and unloading suppress late data
+ok 16 - catalogue address guards, resource cancellation and unloading suppress late data
+  ---
+  duration_ms: 0.2411
+  type: 'test'
+  ...
+# Subtest: catalogue errors remain explicit failed resource frames
+ok 17 - catalogue errors remain explicit failed resource frames
+  ---
+  duration_ms: 0.1791
+  type: 'test'
+  ...
+# Subtest: draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+ok 18 - draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+  ---
+  duration_ms: 0.2367
+  type: 'test'
+  ...
+# Subtest: only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+ok 19 - only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+  ---
+  duration_ms: 0.329
+  type: 'test'
+  ...
+# Subtest: draft preparation throw and native start failure carry distinct errors without reporting execution success
+ok 20 - draft preparation throw and native start failure carry distinct errors without reporting execution success
+  ---
+  duration_ms: 0.3804
+  type: 'test'
+  ...
+# Subtest: unloading during prepareDraft prevents native start; unloading during start cannot report ready
+ok 21 - unloading during prepareDraft prevents native start; unloading during start cannot report ready
+  ---
+  duration_ms: 0.2417
+  type: 'test'
+  ...
+# Subtest: namespace calls use the mounted child injection, never the bare remote parent (guarded callback stub)
+ok 22 - namespace calls use the mounted child injection, never the bare remote parent (guarded callback stub)
+  ---
+  duration_ms: 0.1783
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 136.0948

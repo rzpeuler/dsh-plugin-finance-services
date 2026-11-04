@@ -1,0 +1,13 @@
+# TEST_ONLY controlled computation probe
+
+This is a disposable native Host test fixture, not a product plugin or financial workflow. Parent exclusively installs generated packages. No model/network/shell calls, Client calls, navigation, default binding changes, workspace registry changes, user data, or history deletion.
+
+Generate with `node tests/p2-compute/build.mjs before` before installing product calculator code. It creates a unique package identity/path under this directory; repeated generation preserves the prior latest evidence bytes inside the new package. `before` creates only the two exact source-Bash Workers, verifies old tool visibility/calculator denial, and measures their native assembled system text and tool envelope.
+
+After product code is installed, generate with `node tests/p2-compute/build.mjs after`. `after` additionally creates all forty exact roles, checks only the two authorized Workers see/dispatch the calculator, obtains schemas/examples through native `describe`, calculates examples and independent hand-arithmetic cases, tests invalid inputs and role restrictions, writes only the builder's own synthetic JSON artifact through native `write`, verifies it with native `read`/SHA, and exercises actual Skill `resourceBase` reference reads plus a cross-role denial. Calculator executors retained before exact-Agent disposal must reject afterwards. It does not unload the live global financial authority to test revocation; that belongs in isolated runtime regression tests.
+
+Generated packages copy the previously tested report recorder byte-for-byte. Runtime reports are `acceptance/P2-controlled-compute-before.json` and `acceptance/P2-controlled-compute-after.json`; unique journals/terminal receipts remain under `tests/p2-compute/runs`. Marker and exact-Agent ownership validation precede every disposal; no directories or histories are deleted. Report I/O failures are contained by the recorder and do not prevent subsequent cleanup.
+
+Token measurements copy the existing native probe's `systemPrompt.assemble`, `tokenMeter.estimateMessage`, and `tokenMeter.measure` envelope delta. For idle directly-created Workers lacking an explicit route, public read-only `agentDefaultModel.currentSelection()` supplies the effective meter route. Measurements are **heuristic**, **incomplete first turn**, and **exclude agent/pre-step Skill catalogue**, user input, other pre-step contributions, and provider usage. No model request is made.
+
+The disposable fixtures intentionally omit display metadata/icons and Client assets. They are diagnostic-only packages, not user-facing product features.

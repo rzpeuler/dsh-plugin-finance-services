@@ -4,3 +4,5 @@ assets/source-archive/** -text -whitespace
 assets/skills/** -text -whitespace
 assets/role-skills/** -text -whitespace
 assets/source-snapshot.zip -text
+# Native TAP assertion diagnostics are immutable evidence, including whitespace and CRLF.
+acceptance/*.tap -text -whitespace

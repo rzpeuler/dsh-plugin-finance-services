@@ -1,0 +1,214 @@
+﻿TAP version 13
+# Subtest: all descriptions expose bounded exact strict JSON schemas and valid TEST_ONLY examples
+ok 1 - all descriptions expose bounded exact strict JSON schemas and valid TEST_ONLY examples
+  ---
+  duration_ms: 12.1312
+  type: 'test'
+  ...
+# Subtest: DCF independent flat five-year midyear valuation oracle and equity bridge
+ok 2 - DCF independent flat five-year midyear valuation oracle and equity bridge
+  ---
+  duration_ms: 1.1831
+  type: 'test'
+  ...
+# Subtest: DCF uses negative source net-debt weights, never gross debt or a clamp
+ok 3 - DCF uses negative source net-debt weights, never gross debt or a clamp
+  ---
+  duration_ms: 1.0494
+  type: 'test'
+  ...
+# Subtest: DCF annual growth, delta revenue NWC, exit multiple and warning flags
+ok 4 - DCF annual growth, delta revenue NWC, exit multiple and warning flags
+  ---
+  duration_ms: 3.5215
+  type: 'test'
+  ...
+# Subtest: DCF all three 5x5 sensitivities recalculate center and driver effects independently
+ok 5 - DCF all three 5x5 sensitivities recalculate center and driver effects independently
+  ---
+  duration_ms: 3.5399
+  type: 'test'
+  ...
+# Subtest: LBO independent beginning-balance interest, cash waterfall, MOIC and IRR oracle
+ok 6 - LBO independent beginning-balance interest, cash waterfall, MOIC and IRR oracle
+  ---
+  duration_ms: 0.7509
+  type: 'test'
+  ...
+# Subtest: LBO multiple-priority mandatory/sweep waterfall caps principal and retains surplus cash
+ok 7 - LBO multiple-priority mandatory/sweep waterfall caps principal and retains surplus cash
+  ---
+  duration_ms: 0.6389
+  type: 'test'
+  ...
+# Subtest: LBO 5x5 sensitivity reruns entry funding and exit returns with true center
+ok 8 - LBO 5x5 sensitivity reruns entry funding and exit returns with true center
+  ---
+  duration_ms: 0.9486
+  type: 'test'
+  ...
+# Subtest: LBO loss cases are explicit and do not fabricate an XIRR
+ok 9 - LBO loss cases are explicit and do not fabricate an XIRR
+  ---
+  duration_ms: 1.4805
+  type: 'test'
+  ...
+# Subtest: three statements hand-calculated IS, WC, financing and balance-sheet ties
+ok 10 - three statements hand-calculated IS, WC, financing and balance-sheet ties
+  ---
+  duration_ms: 0.6761
+  type: 'test'
+  ...
+# Subtest: three statements annual rollforwards, negative earnings tax floor and rejected plugs
+ok 11 - three statements annual rollforwards, negative earnings tax floor and rejected plugs
+  ---
+  duration_ms: 1.8368
+  type: 'test'
+  ...
+# Subtest: comps ratio oracles, QUARTILE.INC interpolation and NM exclusion n
+ok 12 - comps ratio oracles, QUARTILE.INC interpolation and NM exclusion n
+  ---
+  duration_ms: 0.9083
+  type: 'test'
+  ...
+# Subtest: comps all-NM and single-point statistics are explicit
+ok 13 - comps all-NM and single-point statistics are explicit
+  ---
+  duration_ms: 0.4315
+  type: 'test'
+  ...
+# Subtest: comps rejects all silent currency/unit/asOf/period mixing and duplicate peers
+ok 14 - comps rejects all silent currency/unit/asOf/period mixing and duplicate peers
+  ---
+  duration_ms: 1.7603
+  type: 'test'
+  ...
+# Subtest: strict validation rejects unknown code/path/URL, unsupported sections, classifications and units
+ok 15 - strict validation rejects unknown code/path/URL, unsupported sections, classifications and units
+  ---
+  duration_ms: 13.6638
+  type: 'test'
+  ...
+# Subtest: finite bounded numbers, no coercion, array caps and plain JSON only
+ok 16 - finite bounded numbers, no coercion, array caps and plain JSON only
+  ---
+  duration_ms: 4.6322
+  type: 'test'
+  ...
+# Subtest: hash is deterministic across property order, changes on inputs, and caller data is untouched
+ok 17 - hash is deterministic across property order, changes on inputs, and caller data is untouched
+  ---
+  duration_ms: 0.9597
+  type: 'test'
+  ...
+# Subtest: only exact source Bash exception roles with assigned financial skills acquire bounded computation
+ok 18 - only exact source Bash exception roles with assigned financial skills acquire bounded computation
+  ---
+  duration_ms: 1.4215
+  type: 'test'
+  ...
+# Subtest: progressive contracts and fixed numeric results remain bounded and role-attributed
+ok 19 - progressive contracts and fixed numeric results remain bounded and role-attributed
+  ---
+  duration_ms: 12.6789
+  type: 'test'
+  ...
+# Subtest: modeler cannot calculate unassigned models or inject code/path fields
+ok 20 - modeler cannot calculate unassigned models or inject code/path fields
+  ---
+  duration_ms: 1.5533
+  type: 'test'
+  ...
+# Subtest: both describe and calculate require the existing exact Agent admission even through a held definition
+ok 21 - both describe and calculate require the existing exact Agent admission even through a held definition
+  ---
+  duration_ms: 2.4856
+  type: 'test'
+  ...
+# Subtest: actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+ok 22 - actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+  ---
+  duration_ms: 27.9027
+  type: 'test'
+  ...
+# Subtest: real Cordis Service facades with one backing grant admit query and native calls despite distinct proxy references
+ok 23 - real Cordis Service facades with one backing grant admit query and native calls despite distinct proxy references
+  ---
+  duration_ms: 6.8379
+  type: 'test'
+  ...
+# Subtest: captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched
+ok 24 - captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched
+  ---
+  duration_ms: 7.0604
+  type: 'test'
+  ...
+# Subtest: replacement Cordis root without a grant cannot authorize a retained native own subagent or held executor
+ok 25 - replacement Cordis root without a grant cannot authorize a retained native own subagent or held executor
+  ---
+  duration_ms: 8.1115
+  type: 'test'
+  ...
+# Subtest: dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+ok 26 - dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+  ---
+  duration_ms: 7.485
+  type: 'test'
+  ...
+# Subtest: missing local native definitions never borrow same-name globals; missing declared module fails creation
+ok 27 - missing local native definitions never borrow same-name globals; missing declared module fails creation
+  ---
+  duration_ms: 9.3593
+  type: 'test'
+  ...
+# Subtest: Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+ok 28 - Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+  ---
+  duration_ms: 6.6641
+  type: 'test'
+  ...
+# Subtest: role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+ok 29 - role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+  ---
+  duration_ms: 4.8234
+  type: 'test'
+  ...
+# Subtest: global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+ok 30 - global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+  ---
+  duration_ms: 5.0871
+  type: 'test'
+  ...
+# Subtest: independent native floor denies retained main-own subagent after role unmount or global owner removal
+ok 31 - independent native floor denies retained main-own subagent after role unmount or global owner removal
+  ---
+  duration_ms: 16.8102
+  type: 'test'
+  ...
+# Subtest: floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+ok 32 - floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+  ---
+  duration_ms: 7.0554
+  type: 'test'
+  ...
+# Subtest: same role ID in separate retained composition scopes does not share effects or runtime grants
+ok 33 - same role ID in separate retained composition scopes does not share effects or runtime grants
+  ---
+  duration_ms: 9.5237
+  type: 'test'
+  ...
+# Subtest: entry validates Config strictly and requires a genuine composition scope
+ok 34 - entry validates Config strictly and requires a genuine composition scope
+  ---
+  duration_ms: 3.6506
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 273.5417

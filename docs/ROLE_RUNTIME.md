@@ -15,7 +15,7 @@ financeOperations.registerRoleRuntime(agent, roleId) // 返回同步、幂等 re
 financeOperations.isRoleRuntimeActive(agent, roleId, { sourceSha256, adaptedPromptSha256 }) // boolean
 ```
 
-角色定义校验、工具生成与 FS 执行分别在 [policy.js](../src/role/policy.js)、[tools.js](../src/role/tools.js)、[filesystem.js](../src/role/filesystem.js)。main 必须只读且所属恰三 Worker；Worker 不可再委派；writer 必须无 MCP。每个角色的 read/grep/glob/write/edit 精确保留源 builtinTools 差异，不统一添加 Read；源两个 Bash 例外不提供通用 Shell，受控计算待 P4。
+角色定义校验、工具生成与 FS 执行分别在 [policy.js](../src/role/policy.js)、[tools.js](../src/role/tools.js)、[filesystem.js](../src/role/filesystem.js)。main 必须只读且所属恰三 Worker；Worker 不可再委派；writer 必须无 MCP。每个角色的 read/grep/glob/write/edit 精确保留源 builtinTools 差异，不统一添加 Read；源两个 Bash 例外不提供通用 Shell，仅这两者获得固定 `finance_model_calculate` 数值剖面；modeler只允许DCF/LBO且不可写，builder另允许三表/Comps并只能用已有工具写自己JSON成果。Office交付仍属P4。
 
 ## 原生机制与实际执行约束
 
@@ -54,6 +54,14 @@ mutation 先调用 `sandboxPolicy.resolve({ session })`，原生 read-only 一�
 
 **威胁模型限制：**与 native fs-sandbox 的 trusted-tool 模型一致，不声称抵御拥有本地 OS 权限的恶意进程在最后检查与 syscall 之间交换 ancestor 的 TOCTOU。原生 public FS seam 自身也声明该残留；这里未改 Core/kernel。已有 symlink/junction、模型工具可发起的跨目录请求和通过 native 调用竞争覆盖都会拒绝，不能把这个明确限制写成内核级沙箱保证。
 
+## 两源Bash例外的固定数值替代
+
+纯数值核心为[calculation.js](../src/role/calculation.js)，不访问文件/网络/进程。恰两个源角色按ID、原始Bash授权与assigned skills联合获得`finance_model_calculate`；调用先走相同exact-Agent/grant检查。先用`{action:'describe',model:'dcf'}`取完整严格schema/example，再以`calculate`和匹配model的`input_json`计算；输入最多50000 UTF-8 bytes、结果100000 bytes，未知字段/代码/路径参数拒绝。源脚本从未因这个替代而获执行权限。
+
+DCF遵循源net-debt权重与midyear约定；LBO限定无PIK/分红/复杂再融资的债务水瀑；三表限定无SBC/NOL/递延税的明确年度剖面；Comps仅同币种/单位/期间/asOf观察，NM返回null且不计入分位。支持范围在describe中明示，超范围不静默简化。所有结果标记TEST_ONLY或UNSOURCED、commercialReady=false、reviewRequired=true、NUMERIC_RESULT_NOT_OFFICE；这不是P5强制Gate。
+
+新Preset正常引用`@local/dsh-financial-services/role-numeric-1`；构建保留原role artifact给既有引用，不改宿主缓存或私有符号。0.2.2已原生applied。数字结果无需缺失Office模板，builder仍只能用原write工具新建自己JSON；缺模板和真实工作簿交付按P4单独验收。
+
 ## 查询与不可信内容
 
 仅 allowedMcpServers 非空且非 writer 才注册 `finance_data_query`；executor 再验证 exact source 属于本角色源 allowlist。P2 没有查询 adapter，所有获准请求确定性返回 `NOT_CONFIGURED`，不提供 data 字段、不调用 MCP、不推测金融数字、不联网 fallback。源 server enabled/通配配置不是写 API 授权，后续 P3 必须另实现窄 capability/source/session 执行约束。
@@ -67,9 +75,9 @@ mutation 先调用 `sandboxPolicy.resolve({ session })`，原生 read-only 一�
 - glob：仅 `* / ** / ?` 小语法，256 字符 pattern、100 路径；动态规划匹配，避免模型构造 regex 回溯。
 - traversal：最多 1500 目录项、24 层；路径最长 2048 字符，不跟随 link。搜索遇到上限显式 truncated。
 - write/edit 字符输入最多 250000；文件最多 1 MiB，edit 按 native CRLF 恢复的保守上界提交前检查，NUL 在工具校验阶段拒绝。输出不回显完整修改文件，返回 path/hash/artifactDirectory。
-- 不支持通用 Shell/Python、Office 二进制生成、原件编辑、artifact 发布/交易/记账/客户通讯、工作目录迁移或任意父分配目录。Office 与受控计算待 P4；P5 确定性人审 Gate 也不在这里伪称完成。
+- 不支持通用 Shell/Python、Office 二进制生成、原件编辑、artifact 发布/交易/记账/客户通讯、工作目录迁移或任意父分配目录。Office 仍待 P4；固定纯数值计算不运行任何脚本；P5 确定性人审 Gate 也不在这里伪称完成。
 
-模型预算：新增每角色最多四个自有工具（main 三文件工具+查询，writer 三文件工具，reader按源更少），另复用原生技能/控制定义及一段 required runtime context。未取得真实模型首轮 token 记录，before/after token 差值未测；不能用字符数或 schema 大小冒充 token。
+模型预算：新增每角色最多四个自有工具（main 三文件工具+查询，writer 三文件工具，reader按源更少），另复用原生技能/控制定义及一段 required runtime context。两计算角色以原生tokenMeter在相同范围测了前后SystemPrompt/header-tools：modeler增加61/214、builder增加68/221 tokens（总计275/289）。只属启发式header预算，不含pre-step Skill目录，不是完整首轮或provider usage；见[token对照](../acceptance/P2-controlled-compute-token-comparison.json)。
 
 ## 已运行单测
 
@@ -81,4 +89,4 @@ node --test tests/role*.test.js
 
 [role-runtime.test.js](../tests/role-runtime.test.js) 使用真实 Cordis 与 dsh-scope，替代 tools/FS/registry 服务做 actual-stub-dispatch、双 owner 清理、普通 Agent 不受影响、两个 retained revision、缺本地 native definition、root/role卸载以及真实独立 floor grant/hash 拒绝测试。native delegation backend 与 Loader 未被该 fixture 启动。
 
-当前 26 项均通过（13 文件/权限测试 + 13 Cordis/scope 生命周期测试）；Service facade 回归使用真实 Cordis Service，确认两个不同 facade 共享有效 grant 时允许执行，同时直接持有 executor 绕开 floor 仍会重验 grant/版本，root 关闭、替换或 source/prompt 漂移继续拒绝。未运行真实 LLM 委派、商业 MCP、Office 金融业务 E2E；不将这些单测记为已完成业务迁移。
+原受限运行时局部 26 项均通过（13 文件/权限测试 + 13 Cordis/scope 生命周期测试）；Service facade 回归使用真实 Cordis Service，确认两个不同 facade 共享有效 grant 时允许执行，同时直接持有 executor 绕开 floor 仍会重验 grant/版本，root 关闭、替换或 source/prompt 漂移继续拒绝。另有[587原生能力](../acceptance/P2-live-host-pass-003.json)、[141原生计算补验](../acceptance/P2-controlled-compute-pass-003.json)、[12原生Client检查](../acceptance/P2-live-client-pass-004.json)及真实只读Worker模型的独立证据；004总IO失败仍保留。商业 MCP和Office金融业务E2E未运行，不将能力烟测记为业务交付。

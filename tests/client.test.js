@@ -43,8 +43,28 @@ function fixture(options = {}) {
   const entries = new Map()
   const providers = new Map()
   const dictionaries = new Map()
-  const calls = { mount: [], bind: [], snapshot: [], catalog: [], prepare: [], start: [], follow: [], pick: 0, panel: [], streams: [], accepted: 0, streamDisposals: 0 }
+  const calls = { mount: [], inject: [], namespaceReads: 0, bind: [], snapshot: [], catalog: [], prepare: [], start: [], follow: [], pick: 0, panel: [], streams: [], accepted: 0, streamDisposals: 0 }
+  let mounted = false
+  const namespaceScopes = []
   const ctx = {
+    inject(names, callback) {
+      assert.equal(mounted, true, 'Namespace injection must follow mount')
+      assert.deepEqual(Array.from(names), ['remote.financeOperations'])
+      calls.inject.push(names)
+      const scoped = Object.create(ctx)
+      const remote = Object.create(ctx.remote)
+      let active = true
+      Object.defineProperty(remote, 'financeOperations', { get() {
+        assert.equal(active, true, 'Disposed namespace scope accessed')
+        calls.namespaceReads++
+        return namespace
+      } })
+      scoped.remote = remote
+      namespaceScopes.push(scoped)
+      const cleanup = callback(scoped)
+      effects.push(() => { active = false; if (typeof cleanup === 'function') cleanup() })
+      return { async dispose() { active = false } }
+    },
     effect(callback) {
       const dispose = callback()
       effects.push(dispose)
@@ -88,7 +108,8 @@ function fixture(options = {}) {
       async $mount(remote) {
         calls.mount.push(remote)
         if (options.mount) await options.mount()
-        effects.push(() => { calls.unmounted = true })
+        mounted = true
+        effects.push(() => { mounted = false; calls.unmounted = true })
       },
       financeOperations: {
         async snapshot(request) { calls.snapshot.push(request); return options.snapshot ?? OK(SNAPSHOT) },
@@ -98,7 +119,7 @@ function fixture(options = {}) {
         async *follow(request, signal) {
           calls.follow.push({ request, signal })
           if (options.follow) { yield* options.follow(signal); return }
-          yield OK({ ...SNAPSHOT, revision: 4 })
+          yield { ...SNAPSHOT, revision: 4 }
         },
       },
       $stream(spec) {
@@ -122,8 +143,10 @@ function fixture(options = {}) {
       },
     },
   }
+  const namespace = ctx.remote.financeOperations
+  Object.defineProperty(ctx.remote, 'financeOperations', { get() { throw new Error('cannot get property remote.financeOperations without inject') } })
   return {
-    ctx, entries, providers, dictionaries, calls,
+    ctx, namespace, entries, providers, dictionaries, calls,
     face() { return entries.get('main:financial-services').registration.inject() },
     async dispose() { for (const effect of effects.splice(0).reverse()) await effect() },
   }
@@ -295,7 +318,7 @@ test('resource abort closes an active native stream and prevents late frames', a
       if (signal.aborted) resolve()
       else signal.addEventListener('abort', resolve, { once: true })
     })
-    yield OK({ ...SNAPSHOT, revision: 999 })
+    yield { ...SNAPSHOT, revision: 999 }
   } })
   const controller = new AbortController()
   const iterator = f.providers.get('finance-workspace').open(ADDRESS, { signal: controller.signal })
@@ -349,7 +372,7 @@ test('disposal removes all owned registrations and old callbacks fail closed; re
 test('a completed bind after plugin disposal cannot report success through the old callback', async () => {
   const f = await started()
   let resolve
-  f.ctx.remote.financeOperations.bindWorkspace = () => new Promise(done => { resolve = done })
+  f.namespace.bindWorkspace = () => new Promise(done => { resolve = done })
   const pending = f.face().bindWorkspace({ path: 'C:\\TEST_ONLY', expectedRevision: 3 })
   await f.dispose()
   resolve(OK({ status: 'BOUND', snapshot: SNAPSHOT, error: null }))
@@ -474,4 +497,13 @@ test('unloading during prepareDraft prevents native start; unloading during star
   await g.dispose()
   finishStart()
   assert.equal((await opening).status, 'CANCELLED')
+})
+
+test('namespace calls use the mounted child injection, never the bare remote parent (guarded callback stub)', async () => {
+  const f = await started()
+  assert.throws(() => f.ctx.remote.financeOperations, /without inject/)
+  assert.deepEqual(f.calls.inject, [['remote.financeOperations']])
+  assert.equal((await f.face().startDraft({ agentId: 'finance-test-main' })).status, 'DRAFT_READY')
+  assert.ok(f.calls.namespaceReads > 0)
+  await f.dispose()
 })

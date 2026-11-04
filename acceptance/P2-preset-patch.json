@@ -1,6 +1,6 @@
 {
   "scope": "Generated declarations, not native activation evidence",
-  "patchSha256": "bdfb87c98107e65156cf7d8097e040dcfb23356446886d9f30bf68d86f5ee54c",
+  "patchSha256": "1da0b055a68a119f9045edce38c222f3cd1b15d34a12aff8e2f73deb90860fbf",
   "mainIds": [
     "finance-pitch-agent",
     "finance-market-researcher",

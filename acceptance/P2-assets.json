@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "phase": "P2",
   "scope": "Asset generation and static verification only",
-  "status": "STATIC_ASSET_TESTS_PASSED",
+  "status": "GENERATED_PENDING_TEST_EXECUTION",
   "sourceTreeSha256": "1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b",
   "counts": {
     "mainRoles": 10,
@@ -16,7 +16,7 @@
     "originalConditionalReviewGroups": 20,
     "originalConditionalReviewSteps": 44
   },
-  "manifestSha256": "b01955236b43cbcab1ccbc097a162b2201b059d34a87662c2de05d3ef3a94b1c",
+  "manifestSha256": "c275f72b59386259b090b41ceb9baed55a24137a0f63e86834b0bfdaed217d22",
   "validationCommand": "node --test tests/assets.test.js",
   "realLoaderVerification": "PARENT_TASK_REQUIRED_NOT_SIMULATED",
   "businessE2E": "NOT_RUN",
@@ -29,13 +29,5 @@
     "lbo-model"
   ],
   "sourceScriptsExecuted": false,
-  "deletions": false,
-  "testEvidence": {
-    "command": "$env:DSH_RECORD_ASSET_ACCEPTANCE='1'; & 'C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\node\\bin\\node.exe' --test tests/assets.test.js",
-    "testsPassed": 16,
-    "testsFailed": 0,
-    "testFileSha256": "0b6d5dd3663bfed62c28406e93cd55141b1fca20265fdfdb1bb4b41335aa4fe8",
-    "executedAt": "2026-11-03T15:50:53.977Z",
-    "nativeSkillDiscovery": "NOT_MOCKED_PARENT_TASK_VERIFIES_REAL_LOADER"
-  }
+  "deletions": false
 }

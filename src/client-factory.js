@@ -405,8 +405,10 @@ export function createFinanceClient(React, z, createFinanceContract) {
 
   return {
     inject: ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'],
-    async apply(ctx) {
-      await ctx.remote.$mount(createFinanceContract(z).remote)
+    async apply(rootCtx) {
+      await rootCtx.remote.$mount(createFinanceContract(z).remote)
+      // Mount publishes a separate Cordis service; bare `remote` does not grant namespace access.
+      rootCtx.inject(['remote.financeOperations'], ctx => {
       const lifetime = new AbortController()
       ctx.effect(() => () => lifetime.abort(), 'financial-services: callback lifetime')
       ctx.effect(() => ctx.locale.register(NS, { en, zh }), 'financial-services: dictionaries')
@@ -468,7 +470,8 @@ export function createFinanceClient(React, z, createFinanceContract) {
                 const initial = await ctx.remote.financeOperations.snapshot({})
                 if (generationSignal.aborted) return
                 yield initial
-                for await (const frame of ctx.remote.financeOperations.follow({}, generationSignal)) yield frame
+                // Streaming invocations yield decoded Snapshots, unlike unary RemoteResults.
+                for await (const value of ctx.remote.financeOperations.follow({}, generationSignal)) yield { ok: true, value }
               } catch (error) {
                 if (generationSignal.aborted) return
                 // Publish stale state before the native supervisor waits for a new carrier generation.
@@ -523,6 +526,7 @@ export function createFinanceClient(React, z, createFinanceContract) {
       ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({
         name: 'plugins.bundle.config', key: PACKAGE, locale: NS, inject,
       }, WorkspacePage))
+      })
     },
   }
 }

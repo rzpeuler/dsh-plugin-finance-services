@@ -1,0 +1,354 @@
+﻿TAP version 13
+# Subtest: factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+not ok 1 - factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+  ---
+  duration_ms: 2.6557
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:141:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (evalmachine.<anonymous>:404:15)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:160:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: mount completes before registering resources, dictionaries or slots
+not ok 2 - mount completes before registering resources, dictionaries or slots
+  ---
+  duration_ms: 0.5409
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:165:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:175:3)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: failed mount does not leave partial registrations
+ok 3 - failed mount does not leave partial registrations
+  ---
+  duration_ms: 0.4616
+  type: 'test'
+  ...
+# Subtest: one global sidebar id matches a new main key; config and activation belong only to this package
+not ok 4 - one global sidebar id matches a new main key; config and activation belong only to this package
+  ---
+  duration_ms: 0.3869
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:187:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:188:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: factory dictionaries have matching bilingual keys and package locale files contain metadata only
+not ok 5 - factory dictionaries have matching bilingual keys and package locale files contain metadata only
+  ---
+  duration_ms: 0.4368
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:208:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:209:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+not ok 6 - binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+  ---
+  duration_ms: 0.3138
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:226:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:228:15)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: directory selection uses native uiWorkspace and navigation uses layout only
+not ok 7 - directory selection uses native uiWorkspace and navigation uses layout only
+  ---
+  duration_ms: 0.318
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:236:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:237:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: resource passes through native result frames, including failures, without inventing Host facts
+not ok 8 - resource passes through native result frames, including failures, without inventing Host facts
+  ---
+  duration_ms: 0.3564
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:245:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:246:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: native supervisor opener reads a new baseline on every physical generation
+not ok 9 - native supervisor opener reads a new baseline on every physical generation
+  ---
+  duration_ms: 0.3729
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:261:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:262:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: stream exceptions first produce a failed resource frame and remain visible to native retry classification
+not ok 10 - stream exceptions first produce a failed resource frame and remain visible to native retry classification
+  ---
+  duration_ms: 0.3948
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:276:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:278:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: resource abort closes an active native stream and prevents late frames
+not ok 11 - resource abort closes an active native stream and prevents late frames
+  ---
+  duration_ms: 0.3525
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:291:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:294:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: pre-aborted and unsupported resource addresses do not call Host methods
+not ok 12 - pre-aborted and unsupported resource addresses do not call Host methods
+  ---
+  duration_ms: 0.2658
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:314:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:315:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+not ok 13 - disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+  ---
+  duration_ms: 0.2365
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:327:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:328:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: a completed bind after plugin disposal cannot report success through the old callback
+not ok 14 - a completed bind after plugin disposal cannot report success through the old callback
+  ---
+  duration_ms: 0.1753
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:351:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:352:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+not ok 15 - catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+  ---
+  duration_ms: 12.3826
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:361:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:368:15)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: catalogue address guards, resource cancellation and unloading suppress late data
+not ok 16 - catalogue address guards, resource cancellation and unloading suppress late data
+  ---
+  duration_ms: 0.2707
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:380:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:382:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: catalogue errors remain explicit failed resource frames
+not ok 17 - catalogue errors remain explicit failed resource frames
+  ---
+  duration_ms: 0.2227
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:403:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:404:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+not ok 18 - draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+  ---
+  duration_ms: 0.247
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:411:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:414:15)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+not ok 19 - only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+  ---
+  duration_ms: 0.2131
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:428:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:430:15)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: draft preparation throw and native start failure carry distinct errors without reporting execution success
+not ok 20 - draft preparation throw and native start failure carry distinct errors without reporting execution success
+  ---
+  duration_ms: 0.2121
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:443:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:444:23)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: unloading during prepareDraft prevents native start; unloading during start cannot report ready
+not ok 21 - unloading during prepareDraft prevents native start; unloading during start cannot report ready
+  ---
+  duration_ms: 0.1861
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\client.test.js:461:1'
+  failureType: 'testCodeFailure'
+  error: 'rootCtx.inject is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Object.apply (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/client-factory.js:411:15)
+    async started (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:137:3)
+    async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/client.test.js:463:13)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 1
+# fail 20
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138.0878

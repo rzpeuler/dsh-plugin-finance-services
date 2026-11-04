@@ -7,7 +7,7 @@
 - [Client源码](<../tests/p2-client/client.js>)：无组件、无React/DOM渲染，无产品feature值导入；只调用已挂载production StoredEntry.inject()返回的真实callback。
 - [Host源码](<../tests/p2-client/host.js>)：独立TypertRemoteService，只用严格native descriptors接收结果和辅助读取/清理，不开HTTP路由，不用fetch/自定义credential，不注册模型工具。
 - [严格共享描述符](<../tests/p2-client/contract.js>)：所有request/result为strictObject；结果为至多2,000,000 UTF-8字节的已验证JSON文本（TextEncoder实测字节数），不接收用户原draft。
-- [构建脚本](<../scripts/build-p2-client-fixture.mjs>)：仅写tests/p2-client/fixture-retry-1内的单包Host+Client产物，不构建产品。依赖由现有项目提供，不自行安装。
+- [构建脚本](<../scripts/build-p2-client-fixture.mjs>)：仅写tests/p2-client/fixture-retry-2内的单包Host+Client产物，不构建产品。依赖由现有项目提供，不自行安装。
 
 构建命令（使用父任务已加载的托管Node）：
 
@@ -19,7 +19,17 @@
 & '<managed-node.exe>' scripts/build-p2-client-fixture.mjs
 ```
 
-生成的package为`@local/dsh-financial-services-p2-client-retry-1`，版本`0.0.1`，独立产物目录为[fixture-retry-1](<../tests/p2-client/fixture-retry-1/>)。父先remove原`@local/dsh-financial-services-p2-client-test-only`，然后安装新identity；不覆盖已加载Host module以规避native Node import cache。只有一个Host安装行及同包Client，无产品导航、Preset、Tool、配置UI。icon/locale例外仅适用于这个一次性、renderless、明确TEST_ONLY的测试单元，不是产品发行例外。
+生成的package为`@local/dsh-financial-services-p2-client-retry-2`，版本`0.0.1`，独立产物目录为[fixture-retry-2](<../tests/p2-client/fixture-retry-2/>)。父先remove前一TEST_ONLY包，然后安装新identity；不覆盖已加载Host module以规避native Node import cache。只有一个Host安装行及同包Client，无产品导航、Preset、Tool、配置UI。icon/locale例外仅适用于这个一次性、renderless、明确TEST_ONLY的测试单元，不是产品发行例外。
+
+## retry-2：独立于故障Remote通道的本地Inspect
+
+父实际刷新后retry-1仍无Client checkpoint，但公开runtime inspector确认生产及retry-1的materialization/registry/fiber均ACTIVE、无加载错误，7个services存在，modules.entries.state无failures且releaseChange为null；因此“未加载/缺DI/必须刷新”不再是当前解释。原始0.0.1的历史停点仍未知。retry-1的activate catch隐藏实际异常，是明确诊断缺陷。
+
+retry-2外层硬inject `remote/cordisInspect`，metadata再列`@deepseek-ai/dsh-cordis-client-runner`。apply同步通过`ctx.effect(() => ctx.cordisInspect.register(...))`注册`FinanceP2ClientFixtureState.state({})`，query只克隆apply闭包内的stage/error/checkpointResult/history，不做Remote mount或业务调用，卸载自动注销。该公开注册signature已核[Inspect registry:48–73](<../audit/dsh-reference/packages/extensions/cordis-client-runner/src/client/inspect-registry.ts#L48-L73>)。
+
+启动阶段逐步记录`CONTRACT_CREATE_START/END`、`REMOTE_MOUNT_START/END`及每个checkpoint的`START/END`。首次异常保留失败operation及name/code/message/stack/detailsJson/remoteStack，单字段明确截断到256/4096/8192/12288字符；history至多32条。checkpoint保留实际RemoteResult的ok/value或name/code/message/details/stack，不再只抛generic rejected。只记录fixture自有启动错误和固定checkpoint请求的返回，不读取/导出任何用户draft字段。
+
+retry-2改为同一package的一次full `$mount(remote)`，不再拆diagnostic owner。纯读同版RemoteStore.register/validateInvocation显示原`/diagnostic`贡献的package与descriptor/typeSymbol前缀无强制相等检查，故没有证据把owner mismatch定为retry-1根因；保留首个实际错误再决定修复。纯生成不执行fixture、不安装、不预写验收PASS。
 
 ## 原始NoReport诊断结论与retry-1
 

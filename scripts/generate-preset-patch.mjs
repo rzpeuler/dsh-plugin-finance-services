@@ -44,7 +44,7 @@ for (const role of manifest.roles) {
   } else {
     assert.deepEqual(role.workerPresetIds, [])
   }
-  lines.push('          - id: finance-role', "            name: '@local/dsh-financial-services/role'", '            config:', `              roleId: ${role.id}`)
+  lines.push('          - id: finance-role', "            name: '@local/dsh-financial-services/role-numeric-1'", '            config:', `              roleId: ${role.id}`)
 }
 const patch = lines.join('\n') + '\n'
 await writeFile(join(root, 'cordis.patch.yml'), patch, 'utf8')

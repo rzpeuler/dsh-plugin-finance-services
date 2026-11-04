@@ -23,6 +23,17 @@ The proxy-admission correction changes execution authorization, not tool names, 
 
 A real source-owned Reader Worker subsequently completed a toy read through `deepseek-account/deepseek-flash`. Its native model events reported these raw counters: first step input 2646, output 47, total 2693, cache-read 0; second step input 162, output 136, total 2986, cache-read 2688. Evidence: [partial run 004](../acceptance/P2-live-host-partial-004.json), independently preserved in its journal and recovery report. Do not add or reinterpret these provider counters as a product optimization benchmark. The model result passed, but the overall fixture installation failed during report publication; that failure remains recorded. A complete main-role first-turn comparison is still `NOT_MEASURED`.
 
+## Controlled numeric profiles: measured header change
+
+The two source Bash exceptions now use one progressive `finance_model_calculate` tool. `describe` returns a strict model-specific request schema, example and source profile; those full schemas are not repeated in the first-turn header. The read-only modeler receives DCF/LBO only; the builder additionally receives simple three-statement/comps profiles. No code, script or path is accepted.
+
+| Role | System before→after | Tool envelope before→after | Total increase |
+|---|---:|---:|---:|
+| finance-pitch-agent-modeler | 1977→2038 | 422→636 | 275 |
+| finance-model-builder-builder | 2006→2074 | 627→848 | 289 |
+
+[Native before/after comparison](../acceptance/P2-controlled-compute-token-comparison.json) uses public `tokenMeter` on the same measured sections. It excludes pre-step Skill messages and subsequent context; **not a complete first-turn or provider-reported usage comparison**. This is the measured cost of extra capability, not claimed token savings. The native supplement verified all four fixed profiles and permissions without invoking any model.
+
 ## Stability and limits
 
 Persona text and tool definitions are stable for a retained preset revision. Workspace paths, Session identities and source observations are Session-specific context; they can change a provider's cache prefix. One within-Worker cached step was observed above; latency improvements, cross-Session reuse and any causal cache benefit from this implementation have not been established.

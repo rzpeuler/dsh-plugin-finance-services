@@ -69,49 +69,112 @@ export function createP2ClientFixture(z, createP2ClientContract) {
 
   const dependencies = ['slots', 'resources', 'sessions', 'uiWorkspace', 'layout', 'conversation']
   const presence = ctx => dependencies.map(key => ({ key, present: ctx.get(key) !== undefined }))
-  async function checkpoint(ctx, stage) {
+  async function checkpoint(ctx, stage, recordResult) {
     const result = await bounded(() => ctx.remote.financeP2ClientTestOnly.checkpoint({ stage, services: presence(ctx) }),
       new AbortController().signal, `TEST_ONLY checkpoint ${stage}`)
-    ensure(result.ok, `TEST_ONLY checkpoint ${stage} rejected`)
+    recordResult?.(stage, result)
+    if (!result.ok) throw Object.assign(new Error(errorText(result.error)), {
+      name: result.error?.name ?? 'RemoteError', code: result.error?.code,
+      details: result.error?.details, remoteStack: result.error?.stack,
+    })
+    return result.value
   }
 
   return {
     // Bootstrap cannot wait for the business dependencies it is meant to diagnose.
-    inject: ['remote'],
+    inject: ['remote', 'cordisInspect'],
     apply(ctx) {
+      // This read-only channel is registered synchronously, before contract construction or $mount.
+      const state = { package: '@local/dsh-financial-services-p2-client-retry-3', stage: 'APPLY_ENTERED',
+        error: null, checkpointResult: null, history: [], userDraftExported: false }
+      const boundedText = (value, limit) => String(value ?? '').slice(0, limit)
+      const detailsText = value => {
+        try { return boundedText(JSON.stringify(value) ?? '', 8192) }
+        catch { return '[unserializable error details]' }
+      }
+      const recordResult = (stage, result) => {
+        if (state.checkpointResult?.ok === false) return
+        state.checkpointResult = { stage, ok: result.ok, ...(result.ok
+          ? { value: result.value }
+          : { error: { name: boundedText(result.error?.name, 256), code: boundedText(result.error?.code, 256),
+            message: boundedText(result.error?.message ?? result.error, 4096), detailsJson: detailsText(result.error?.details),
+            stack: boundedText(result.error?.stack, 12288) } }) }
+      }
+      const mark = (stage, error) => {
+        const operation = state.stage
+        state.stage = stage
+        if (error !== undefined && state.error === null) {
+          const text = (value, limit) => String(value ?? '').slice(0, limit)
+          state.error = { operation, name: text(error?.name, 256), code: text(error?.code, 256),
+            message: text(error?.message ?? error, 4096), stack: text(error?.stack, 12288),
+            detailsJson: detailsText(error?.details), remoteStack: text(error?.remoteStack, 12288) }
+        }
+        state.history.push({ stage, at: new Date().toISOString() })
+        if (state.history.length > 32) state.history.shift()
+      }
+      ctx.effect(() => ctx.cordisInspect.register({
+        manifest: { id: 'FinanceP2ClientFixtureState', description: 'TEST_ONLY fixture-local startup diagnostics independent of Remote mount.',
+          methods: [{ name: 'state', description: 'Read bounded startup stages and original error fields; no drafts, Sessions or business operation.',
+            inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+            outputSchema: { description: 'Fixture-local stage/error/history only; never user draft fields.' } }] },
+        async query(method) {
+          if (method !== 'state') throw new Error('Unknown fixture diagnostic method')
+          return JSON.parse(JSON.stringify(state))
+        },
+      }), 'TEST_ONLY fixture-local Inspect')
+      mark('INSPECT_REGISTERED')
       const lifetime = new AbortController()
       ctx.effect(() => {
-        const task = activate(ctx, lifetime.signal)
+        const task = activate(ctx, lifetime.signal, mark, recordResult)
         return async () => { lifetime.abort(new Error('TEST_ONLY fixture disposed')); await task }
       }, 'TEST_ONLY P2 Client activation')
     },
   }
 
-  async function activate(ctx, signal) {
-    let mounted = false
+  async function activate(ctx, signal, mark, recordResult) {
+    let namespaceReady = false
+    let namespaceChild
     let child
+    const tracedCheckpoint = async stage => {
+      mark(`CHECKPOINT_${stage}_START`)
+      await checkpoint(ctx, stage, recordResult)
+      mark(`CHECKPOINT_${stage}_END`)
+    }
     try {
+      mark('CONTRACT_CREATE_START')
       const { remote } = createP2ClientContract(z)
-      // A separate native contribution keeps the first handshake smaller than the business mount.
-      await bounded(() => ctx.remote.$mount({ package: `${remote.package}/diagnostic`,
-        descriptors: remote.descriptors.filter(row => row.method === 'checkpoint') }), signal, 'Diagnostic native Remote mount')
-      mounted = true
-      await checkpoint(ctx, 'CLIENT_APPLY')
-      await bounded(() => ctx.remote.$mount({ package: remote.package,
-        descriptors: remote.descriptors.filter(row => row.method !== 'checkpoint') }), signal, 'Business native Remote mount')
-      await checkpoint(ctx, 'REMOTE_MOUNTED')
-      await checkpoint(ctx, 'DEPENDENCIES_WAITING')
+      mark('CONTRACT_CREATE_END')
+      mark('REMOTE_MOUNT_START')
+      await bounded(() => ctx.remote.$mount(remote), signal, 'Full native Remote mount')
+      mark('REMOTE_MOUNT_END')
+      // $mount provides a distinct child Service; injecting `remote` alone does not grant its namespace.
+      mark('REMOTE_NAMESPACE_INJECT_START')
+      const namespaceLifetime = new AbortController()
+      let acceptNamespace
+      const namespace = new Promise(resolve => { acceptNamespace = resolve })
+      namespaceChild = ctx.inject(['remote', 'remote.financeP2ClientTestOnly'], scopedCtx => {
+        acceptNamespace(scopedCtx)
+        return () => namespaceLifetime.abort(new Error('TEST_ONLY Remote namespace scope disposed'))
+      })
+      ctx = await bounded(() => namespace, signal, 'Native Remote namespace activation')
+      signal = AbortSignal.any([signal, namespaceLifetime.signal])
+      namespaceReady = true
+      mark('REMOTE_NAMESPACE_INJECT_END')
+      await tracedCheckpoint('CLIENT_APPLY')
+      await tracedCheckpoint('REMOTE_MOUNTED')
+      await tracedCheckpoint('DEPENDENCIES_WAITING')
       const dependencyLifetime = new AbortController()
       let accept
       const ready = new Promise(resolve => { accept = resolve })
-      child = ctx.inject([...dependencies, 'remote'], services => {
+      child = ctx.inject([...dependencies, 'remote', 'remote.financeP2ClientTestOnly'], services => {
         accept(services)
         return () => dependencyLifetime.abort(new Error('TEST_ONLY native dependency scope disposed'))
       })
       let services
       try { services = await bounded(() => ready, signal, 'Native dependency activation') }
       catch (error) {
-        await checkpoint(ctx, 'DEPENDENCIES_TIMEOUT')
+        mark('DEPENDENCIES_WAIT_FAILED', error)
+        await tracedCheckpoint('DEPENDENCIES_TIMEOUT')
         const result = await bounded(() => ctx.remote.financeP2ClientTestOnly.finish({ runId: crypto.randomUUID(),
           clientReportJson: JSON.stringify({ status: 'PARTIAL', checks: [{ id: 'native-dependencies', status: 'NOT_RUN',
             error: 'Required native Client services did not activate within deadline; no navigation/binding attempted' }],
@@ -119,15 +182,22 @@ export function createP2ClientFixture(z, createP2ClientContract) {
         ensure(result.ok, 'Missing dependencies report rejected')
         return
       }
-      await checkpoint(ctx, 'DEPENDENCIES_READY')
-      await checkpoint(ctx, 'CLIENT_RUN_STARTED')
+      await tracedCheckpoint('DEPENDENCIES_READY')
+      await tracedCheckpoint('CLIENT_RUN_STARTED')
+      mark('RUN_START')
       await run(services, AbortSignal.any([signal, dependencyLifetime.signal]))
+      mark('RUN_SETTLED')
     } catch (error) {
-      if (mounted) await checkpoint(ctx, 'CLIENT_RUN_FAILED').catch(() => {})
+      // Only startup errors are exported verbatim; user input is never inspected on this path.
+      mark('ACTIVATION_FAILED', error)
+      if (namespaceReady) await checkpoint(ctx, 'CLIENT_RUN_FAILED', recordResult).catch(checkpointError => {
+        mark('FAILURE_CHECKPOINT_FAILED', checkpointError)
+      })
       // The Host-owned NoReport deadline is the evidence if even bootstrap RPC is unavailable.
       console.error('TEST_ONLY Client activation failed; inspect Host diagnostic (no user draft exported)')
     } finally {
       await child?.dispose()
+      await namespaceChild?.dispose()
     }
   }
 
@@ -212,6 +282,10 @@ export function createP2ClientFixture(z, createP2ClientContract) {
       const workspaceResource = await resource(workspaceAddress)
       await check('workspace-resource-real-host-baseline', async () => {
         const host = JSON.parse((await rpc('baseline', {})).snapshotJson)
+        const current = workspaceResource.source.getSnapshot()
+        report.workspaceBaselineObservation = { hostKeys: Object.keys(host), hostRevision: host.revision,
+          resourceStatus: current.status, resourceValueKeys: Object.keys(current.value ?? {}), resourceRevision: current.value?.revision,
+          resourceRemoteOk: current.value?.ok, nestedRevision: current.value?.value?.revision }
         await observe(workspaceResource.source, value => value.status === 'live' && value.value.revision === host.revision, signal, 'Workspace Host baseline')
         ensure(JSON.stringify(workspaceResource.source.getSnapshot().value) === JSON.stringify(host), 'Resource baseline differs from real Host')
         return { revision: host.revision, workspaceStatus: host.workspaceStatus, matchesHost: true }

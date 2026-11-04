@@ -1,6 +1,6 @@
 /** TEST_ONLY strict descriptors shared by the disposable Host and Client halves. */
 export function createP2ClientContract(z) {
-  const packageName = '@local/dsh-financial-services-p2-client-retry-1'
+  const packageName = '@local/dsh-financial-services-p2-client-retry-4'
   const RunId = z.string().uuid()
   const JsonText = z.string().max(2_000_000)
     .refine(text => new TextEncoder().encode(text).byteLength <= 2_000_000, 'Serialized JSON exceeds 2,000,000 UTF-8 bytes')

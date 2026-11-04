@@ -87,7 +87,7 @@
         "originalSha256": "135797e70fac4cb78f2ac396a91155835d1ddbf99599a3ba9e2f7d5ce78c5fea",
         "originalTextSha256": "135797e70fac4cb78f2ac396a91155835d1ddbf99599a3ba9e2f7d5ce78c5fea",
         "adaptedPath": "prompts/finance-pitch-agent.md",
-        "adaptedSha256": "181c763f9fc7f13c260ece76c9e74379bc8a9857338bf09ed4cd8f2b62f5ef69"
+        "adaptedSha256": "2b4d60f371072aef2452c8bc68df5a2597583559f09c70db9cdcb8ea6e6755e0"
       },
       "reviewCheckpoints": [
         {
@@ -696,7 +696,7 @@
         "originalSha256": "c8b22cef45635f63438641849eab43c1a71a53154d424db3f182bd3e6ae8a2d0",
         "originalTextSha256": "fbc5d84261c207461da51abfcc1749c015c19a8083ea73261bbef56996778dd3",
         "adaptedPath": "prompts/finance-pitch-agent-researcher.md",
-        "adaptedSha256": "f654a66162a4253c146c0fd6013308e5cdb848fa32d1ed49a2ceba16637cf1ba",
+        "adaptedSha256": "329b2e2376fa357ce1dddf4298dd220e2c0488e4225428e6944fbbb2e62ded9c",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/pitch-agent/subagents/researcher.yaml",
           "line_start": 3,
@@ -754,7 +754,7 @@
         "originalSha256": "ff01637c7146c661d2c67736b711635c7195b20f1ef20087ea445598101f663c",
         "originalTextSha256": "98b617cc6868602fd761f17d11a9f3c30af25b7ef87c07e6e2a31c967fb19ff1",
         "adaptedPath": "prompts/finance-pitch-agent-modeler.md",
-        "adaptedSha256": "b8df48799c1488c17e41d2c9d2321717f3bacd4335c92bd57f167b7fe8700ff1",
+        "adaptedSha256": "2620179070f532fe0ec833cb683971ee2d8afcf0fbea2cebe3837f2badcbbe2e",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/pitch-agent/subagents/modeler.yaml",
           "line_start": 3,
@@ -812,7 +812,7 @@
         "originalSha256": "007178142439a458b25668460e19e65dfbc63c7a28fa3e020d9066dee7b7992d",
         "originalTextSha256": "c7fbec817e54a302c27016d30b9e71242dc63b7788f3a185a8176b165fe64c88",
         "adaptedPath": "prompts/finance-pitch-agent-deck-writer.md",
-        "adaptedSha256": "4d1bfd1ae98b3ac9dd19598ff76b6bd509868739b08b0e39198a4e1898ab34a8",
+        "adaptedSha256": "06c916e26d03c66636169962bc4e1f9fc00238970e352f863696a977c0203f1a",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/pitch-agent/subagents/deck-writer.yaml",
           "line_start": 3,
@@ -919,7 +919,7 @@
         "originalSha256": "274316fb54f895acc29e589f34d7b506f60d878fc4a477f5403ab99c0611ae6d",
         "originalTextSha256": "274316fb54f895acc29e589f34d7b506f60d878fc4a477f5403ab99c0611ae6d",
         "adaptedPath": "prompts/finance-market-researcher.md",
-        "adaptedSha256": "a9d0792c395d971a45c98ce7dc86b9929805aff88f388c567332205a3b0ad55e"
+        "adaptedSha256": "1b15664dd8f530d7f9d61eb4f949b5017973e45f33ccc42f870ebbed06bd1928"
       },
       "reviewCheckpoints": [
         {
@@ -1350,7 +1350,7 @@
         "originalSha256": "cea72dbe3d7eb338f5192e7857a8ef4a3a3ebe2f142d6a1e05bbe882a4fad7b1",
         "originalTextSha256": "e2b437345df079803c1218ddd0d1cbf28fa7bba50b98ed27aa5605523a4c9a7d",
         "adaptedPath": "prompts/finance-market-researcher-sector-reader.md",
-        "adaptedSha256": "89ca06f3ab1395b96eafa63a8a32f5fae0e7aefce62fd0e469fc8a3c3a0baef3",
+        "adaptedSha256": "4c72278a43f17f13b3efba20b7573ec1bc75ae670eb1163f4fd9329444eca046",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/market-researcher/subagents/sector-reader.yaml",
           "line_start": 3,
@@ -1408,7 +1408,7 @@
         "originalSha256": "0600f1ce725da00c6f6a53bf071a3dcacc3e4af275e5dfda6ebb3ccb9d76a051",
         "originalTextSha256": "72feeebf1b9d0c47406157d839cbf140886704805219b24e7fca0fbd3a3ea3af",
         "adaptedPath": "prompts/finance-market-researcher-comps-spreader.md",
-        "adaptedSha256": "d20fbf2962a984b168799fddedf7a267c3186f318efa3f7873eb0b48e70d6d35",
+        "adaptedSha256": "43e2cade2b23f27b4c22520f3e04f2e681459be49c2eace7ab2cb9e1c628af53",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/market-researcher/subagents/comps-spreader.yaml",
           "line_start": 3,
@@ -1463,7 +1463,7 @@
         "originalSha256": "532d773a62f88f9c35191557bafc7fb924f3b323353724ba6c474066525e96e6",
         "originalTextSha256": "e0bd6a3c34c8f7876866e4578e7e5f0e82f147bdfa0087029220b5526589f723",
         "adaptedPath": "prompts/finance-market-researcher-note-writer.md",
-        "adaptedSha256": "1456fafc2bfedce794ba10c97196e6aabbb881ca4799393e3700eae8c08237ae",
+        "adaptedSha256": "30339d023c0edf4af50628655c642fb9905f3e8ea69135984a4457ff9d31242b",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/market-researcher/subagents/note-writer.yaml",
           "line_start": 3,
@@ -1558,7 +1558,7 @@
         "originalSha256": "6220361734da66c51871c7201c4347a3ee61eb385a81afa0bc9e2d9228299f3a",
         "originalTextSha256": "6220361734da66c51871c7201c4347a3ee61eb385a81afa0bc9e2d9228299f3a",
         "adaptedPath": "prompts/finance-earnings-reviewer.md",
-        "adaptedSha256": "3e52ecfe7d3a348bddade1048a934faafe9856793ed6d51782ca2f6289bce5f5"
+        "adaptedSha256": "621f9428b8566c140ee3715cecf8acaee713379b15f9a407d4d954ca8b86fc66"
       },
       "reviewCheckpoints": [
         {
@@ -1832,7 +1832,7 @@
         "originalSha256": "dedb2fb453f9bca9c6d0dd4838fce45a4683625d7abe5a91738dafd920886bc0",
         "originalTextSha256": "1a446a50baaf7a09e827ce14f4e5060d44be4b5bcb32c8d0254e0864d562da76",
         "adaptedPath": "prompts/finance-earnings-reviewer-transcript-reader.md",
-        "adaptedSha256": "e034cc0bf05e0bded6c870f133f21f4329cc4da1f6f59b3a48117a4d4284ecc7",
+        "adaptedSha256": "1bd12629c2f72067890b6d15731f6c773923a83ce4315686502e980dff11da6f",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/earnings-reviewer/subagents/transcript-reader.yaml",
           "line_start": 3,
@@ -1890,7 +1890,7 @@
         "originalSha256": "0116d5639b67fee1856c70d1cd9059ac99b6de9c41ae7f3e2ff784b537ebfeff",
         "originalTextSha256": "437b3e2d06f7d7626d9c32a9d7b961081a1a7852bddf51b56b3de3e1405dad7e",
         "adaptedPath": "prompts/finance-earnings-reviewer-model-updater.md",
-        "adaptedSha256": "f4710c845b223acdea33a8a0d7dd136456749febe52d367aad0725d72154ef26",
+        "adaptedSha256": "bcd83663c7c507036dd0e10096469d59510804d0cff43c74ef6684f951754b54",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/earnings-reviewer/subagents/model-updater.yaml",
           "line_start": 3,
@@ -1946,7 +1946,7 @@
         "originalSha256": "5cee07ae798b5c5f34b53482b319ba39d8e4368430e0cb0a3d3659603dddff76",
         "originalTextSha256": "c78dc3b3ac0ce4c22dd233c161e4c84cdb1ee902f5675e1e052dfa7c0c0d3350",
         "adaptedPath": "prompts/finance-earnings-reviewer-note-writer.md",
-        "adaptedSha256": "9c6946a31596644237d731a6d2aef94806dac3f32c22661145a1b5c35181a1b8",
+        "adaptedSha256": "3ce925e7b552b1cabd14ace959cbd0af4c00d198a81ea4f89d51a30c45780d4e",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/earnings-reviewer/subagents/note-writer.yaml",
           "line_start": 3,
@@ -2022,7 +2022,7 @@
         "originalSha256": "f85c3d1ea0bef2c2c666675bac64bd0a5f511193f20048e879eec199ea4f78a7",
         "originalTextSha256": "f85c3d1ea0bef2c2c666675bac64bd0a5f511193f20048e879eec199ea4f78a7",
         "adaptedPath": "prompts/finance-meeting-prep-agent.md",
-        "adaptedSha256": "35946287977366f6a5dbbe7d6c421a363dc316eae96bd7d46bb97066df4a874d"
+        "adaptedSha256": "d5f32bb7b7a0c159b800eb2edde86b7576ad77455f7474b6c0fe107ea16d679c"
       },
       "reviewCheckpoints": [
         {
@@ -2171,7 +2171,7 @@
         "originalSha256": "526a5090ecd1e9e968d75ac1923d1450bc493ebce6fd1dca1e240393f41f112d",
         "originalTextSha256": "88d8a99a1e1b73bf2a14b0bd020590629ce12f84149c3739f14dcd6731ef77e9",
         "adaptedPath": "prompts/finance-meeting-prep-agent-profiler.md",
-        "adaptedSha256": "c05801ead0716b29a5f69069ee4bf3b80f6b9984af8341c2a63bfc57fe9d7c9e",
+        "adaptedSha256": "5af464b6c41ba6f8f1a46ed941d5dc9d6758d486d9b213516b5ba7990ad5d7e6",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/meeting-prep-agent/subagents/profiler.yaml",
           "line_start": 3,
@@ -2220,7 +2220,7 @@
         "originalSha256": "f6200c52ef3c83f903c7aebfe96c3ddb85217fcf17092975779644da1ddd120c",
         "originalTextSha256": "811ddbf6fc7e6deb1ba839a0da139f5119c4ceaf8aa268ba65f98007a166cf34",
         "adaptedPath": "prompts/finance-meeting-prep-agent-news-reader.md",
-        "adaptedSha256": "42f7890800ba345e618c4168d28d1e22ff7964496666ef46e9c6d503fc82d05f",
+        "adaptedSha256": "f56ff957e629d5959045ee2720383cf0d9c5053af604c597d843499536c2b528",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/meeting-prep-agent/subagents/news-reader.yaml",
           "line_start": 3,
@@ -2278,7 +2278,7 @@
         "originalSha256": "cb320d2280876a4535c573a0e81edde7ed44716b280fab7b002311cce3f8b6b8",
         "originalTextSha256": "45ddfcc8bf973255d481d5bef85079d2c28731376b87035b6db81928c4b97ea3",
         "adaptedPath": "prompts/finance-meeting-prep-agent-pack-writer.md",
-        "adaptedSha256": "09f8190331d878d7010a4042be4524d1566635434094e23d98790b7e474a0f94",
+        "adaptedSha256": "de1276cefa350c79c4df565ce965f9ce1826bf5fef152f9b47398db57c481ab2",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/meeting-prep-agent/subagents/pack-writer.yaml",
           "line_start": 3,
@@ -2365,7 +2365,7 @@
         "originalSha256": "bb43823a4cd31a9ddb1ab227cd58f0c377894fd1414e980ae9034ed0a1c77436",
         "originalTextSha256": "bb43823a4cd31a9ddb1ab227cd58f0c377894fd1414e980ae9034ed0a1c77436",
         "adaptedPath": "prompts/finance-model-builder.md",
-        "adaptedSha256": "414853290037b9c06c36860ef47837dbc4a85655555d5b65ecb5fd20765f5037"
+        "adaptedSha256": "47f48cd6adf2aacfb421bdfb8d41ebaf858b5f0221596acd66fb984ef1b5d752"
       },
       "reviewCheckpoints": [
         {
@@ -2844,7 +2844,7 @@
         "originalSha256": "cf06634c3d1f70e044b485e68fbd0ac62fdb732e8565c75f4d495020006bf468",
         "originalTextSha256": "dde9066d5cfcb0c9147c265253ba5d7663f1dc72941d8d6cdcddd250d5c34d70",
         "adaptedPath": "prompts/finance-model-builder-data-puller.md",
-        "adaptedSha256": "d92c59750de5f64ac97b3c3830912b8294e15cc71e36e61d3f777d11654e4fd0",
+        "adaptedSha256": "b3d99d3ef0dccc0682853996316d0b6ad1bf1450840a75519f86437f3eb506b9",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/model-builder/subagents/data-puller.yaml",
           "line_start": 3,
@@ -2906,7 +2906,7 @@
         "originalSha256": "3936126aa3fee4dd05f287a33f68634b4d274feac2555aabb78440a35accf557",
         "originalTextSha256": "f93f466a117f5050716bc76f048ba1ba02316559f9abaa065d20d22833148eab",
         "adaptedPath": "prompts/finance-model-builder-builder.md",
-        "adaptedSha256": "5ec5eb1f2ae7d8ee2099eadf5d4767d73d238e6829553a7c16d4e66d36db1ddb",
+        "adaptedSha256": "ffe121dc5595acb5e1492d3e290549872f802f46b0e1f1142dd0493cea2e70e9",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/model-builder/subagents/builder.yaml",
           "line_start": 3,
@@ -2965,7 +2965,7 @@
         "originalSha256": "7313f79725e2aadd29b0c4df7a19188117c42a2e853bcbcb4e983daab1e1d727",
         "originalTextSha256": "7d6f9ec65abf800f36926c49d442f16fa8318691c39669ed31388684cd2dd84a",
         "adaptedPath": "prompts/finance-model-builder-auditor.md",
-        "adaptedSha256": "41f23250bcca4be4f1c7d15a1e3123a0f2dbaa56e5cf09190906aa49128baa7f",
+        "adaptedSha256": "1df16fa34fb16003ac0b56afecbd4f2c93b262672e973ed09daaf46e6e8b2670",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/model-builder/subagents/auditor.yaml",
           "line_start": 3,
@@ -3034,7 +3034,7 @@
         "originalSha256": "31f9ef51fdc0c750e24a732c8fd5eac4aa788e8dc9a15428b08b12b4389c1264",
         "originalTextSha256": "31f9ef51fdc0c750e24a732c8fd5eac4aa788e8dc9a15428b08b12b4389c1264",
         "adaptedPath": "prompts/finance-gl-reconciler.md",
-        "adaptedSha256": "096c6bc3501f4fd851fe63324ba631d88840f9edb46dbef5b8299de7277fd741"
+        "adaptedSha256": "ddb846a5d65e899d2188d77d857c3ad1ed81f3bfb7ceb5018e35da89299d92bf"
       },
       "reviewCheckpoints": [
         {
@@ -3145,7 +3145,7 @@
         "originalSha256": "2a790e019fcb40a5de53d852780a833d2beff9ac4c2eb6c41e4c83561778228e",
         "originalTextSha256": "ab6e5c683b6c7943a01a15e46d74545ca1247b686541493365dc0286baba3cfe",
         "adaptedPath": "prompts/finance-gl-reconciler-reader.md",
-        "adaptedSha256": "3b85080c32307387ae80ef9b08bdc60a25f214cc72f2d75d7337ad84c0da7386",
+        "adaptedSha256": "e9ff4f439f04d786a2a20b717e4fd038688c077543ccefff942a6a3857cda119",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/gl-reconciler/subagents/reader.yaml",
           "line_start": 10,
@@ -3201,7 +3201,7 @@
         "originalSha256": "e9c41e38bd95ba676df16f59be327072fd5590b396130fcebb1212794918bb2b",
         "originalTextSha256": "4551b0839b7c852409045ffbaf90e9dea81b73f96bc7967a6cd14658adb7da75",
         "adaptedPath": "prompts/finance-gl-reconciler-critic.md",
-        "adaptedSha256": "034f9aa52b915bb5ba28da186d920f9c4fa69cc2eaa8c09a25db28835bbd47ad",
+        "adaptedSha256": "8a938f3fcf95c128376ede9e7a9bc9a5b1862a5d431787a1480ffcd724b2ed2e",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/gl-reconciler/subagents/critic.yaml",
           "line_start": 3,
@@ -3254,7 +3254,7 @@
         "originalSha256": "f257c126203519d8e40e51097f43bc38f6581051fe5764d70d45e20285af4679",
         "originalTextSha256": "05adb60f2e97b5109887aa8c96769312e6880940e704d7352872c79c236a96a3",
         "adaptedPath": "prompts/finance-gl-reconciler-resolver.md",
-        "adaptedSha256": "0f12c63486703a6424ec7f084d051cc1e591273de3de590137d9f03b37ce2a12",
+        "adaptedSha256": "6ae02c7a76752248da958452377d836afa5278c581fa12b51165d78c19de3e80",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/gl-reconciler/subagents/resolver.yaml",
           "line_start": 3,
@@ -3324,7 +3324,7 @@
         "originalSha256": "00f6eff2850dbff5ecbd57a26c3f6f0f4fb46d8afb583c0b0c9890ecd4e48550",
         "originalTextSha256": "00f6eff2850dbff5ecbd57a26c3f6f0f4fb46d8afb583c0b0c9890ecd4e48550",
         "adaptedPath": "prompts/finance-kyc-screener.md",
-        "adaptedSha256": "1edc4024d7ad05fe218f7e7f1a28cb62b2607715df5b65340efe075bc854e27b"
+        "adaptedSha256": "f8b776265fd60b71e9653620d1807036408bf9b74b805a20dc2cbea1f6bf6dce"
       },
       "reviewCheckpoints": [
         {
@@ -3448,7 +3448,7 @@
         "originalSha256": "64f4e408465ad76a39cccb61a22eaacd89e0b510aba4e621eb0a2eba90888b11",
         "originalTextSha256": "e1ee5a30a304dbd8abe0777247bc70de991f18bd328f1e5618126bb7f23a20d2",
         "adaptedPath": "prompts/finance-kyc-screener-doc-reader.md",
-        "adaptedSha256": "febff0763cfaf148ff23bd756dc820be20f05f5e028f040b222b24bca0516ed1",
+        "adaptedSha256": "ab9ae4fd32ec0c6828508bac6a7873eae38b50813ee75685cc3a137b3eaffe1a",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/kyc-screener/subagents/doc-reader.yaml",
           "line_start": 3,
@@ -3503,7 +3503,7 @@
         "originalSha256": "44bb3b3b9eae0dd8ae28d14d554ab83c930ae70b5cf92f5376c976939c6aacb5",
         "originalTextSha256": "e13dffb4d4a48ccc7f98e7a9b412f9b64ae32ced16300fb46ef8250bfb79c4cc",
         "adaptedPath": "prompts/finance-kyc-screener-rules-engine.md",
-        "adaptedSha256": "e50dfcb9a4004b7eaa707bc8faeba7ef42a49a8529c0ac206d2b92c5a0c85f98",
+        "adaptedSha256": "30f9a3471dca318f2ae8e9d5523d513a94935aab93598f46133a8bab3dd93edc",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/kyc-screener/subagents/rules-engine.yaml",
           "line_start": 3,
@@ -3556,7 +3556,7 @@
         "originalSha256": "a1d44675203eb49b3bf9d96157ab11fb6014ab4affcc816d3ab8d1562751ed0b",
         "originalTextSha256": "fcb482e287ae5ed9d9a4a8d7a33eb490e7023359d017d61f3547710043f89c05",
         "adaptedPath": "prompts/finance-kyc-screener-escalator.md",
-        "adaptedSha256": "5d3d1ebf2d69d41fb81e41a9f0ccaaa73aa81f21a62784490000ce8117262910",
+        "adaptedSha256": "786a9674068e1c52a19e31065c85fb7e03cf2a37d2e5f665692c7d59e815e181",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/kyc-screener/subagents/escalator.yaml",
           "line_start": 3,
@@ -3634,7 +3634,7 @@
         "originalSha256": "fc86b92eccde10781ca04982a62396b04ffca9750296308381b6a336e6436a6a",
         "originalTextSha256": "fc86b92eccde10781ca04982a62396b04ffca9750296308381b6a336e6436a6a",
         "adaptedPath": "prompts/finance-valuation-reviewer.md",
-        "adaptedSha256": "3d40a6ecd04a0409816b7cd3383b688c4a4f573a47d4e4e607ccc3f8b125a998"
+        "adaptedSha256": "828d26a84f34b6ad9787900a55b5bf60d9ef9ac1b6e702a77343cc7a21f82403"
       },
       "reviewCheckpoints": [
         {
@@ -3791,7 +3791,7 @@
         "originalSha256": "bbe86dbc83d5264cabdb50fa4b3ceb8551f5be149fb1a2fe8cf1531350e71a76",
         "originalTextSha256": "57df750a66faa1c389552bf739d1a93ed7a7d799fda5218a4618f7bdb0750941",
         "adaptedPath": "prompts/finance-valuation-reviewer-package-reader.md",
-        "adaptedSha256": "d4833eaf260ecbddea5db8a2c8d14943818cff927b957ca909e1f64a8ae547e4",
+        "adaptedSha256": "a4b50e0d341a94164bb674f94d1e35b84da649a015987cf7cd37219f510812e9",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/valuation-reviewer/subagents/package-reader.yaml",
           "line_start": 3,
@@ -3848,7 +3848,7 @@
         "originalSha256": "983dbaa25ddda45e6360706819775efbfe2cebfc888b2cdf911f06c6be657d4e",
         "originalTextSha256": "412b95505732da55d70a3dba8b56afc97271c1e5e21bfb8cbd20ca74210162ec",
         "adaptedPath": "prompts/finance-valuation-reviewer-valuation-runner.md",
-        "adaptedSha256": "1ce686b6f7da54a66aef4f2a0035d9916bd482b4b9e58c95851b9d31c3ae7bc0",
+        "adaptedSha256": "42a9307ddf8813e7be7733d754a8588c6319ef5e84098431f878d1412c870ee9",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/valuation-reviewer/subagents/valuation-runner.yaml",
           "line_start": 3,
@@ -3903,7 +3903,7 @@
         "originalSha256": "3ca8ac2a016ae01f43ffe59ad73b5c58f45bae8090f351e71c891377334a1070",
         "originalTextSha256": "dbcd74ee7819c1425657bcfeb1d60e607b1c89dadf12432ffb3dbcda81a9c9cb",
         "adaptedPath": "prompts/finance-valuation-reviewer-publisher.md",
-        "adaptedSha256": "f0014d208f545f88f481520b5dcb7ebf8b26edd7c86711f5aec1aea44319e21e",
+        "adaptedSha256": "308195ea4767c894c4d2490259c07fddad3dfb7b56847f2e7eea877107673d3e",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/valuation-reviewer/subagents/publisher.yaml",
           "line_start": 3,
@@ -3972,7 +3972,7 @@
         "originalSha256": "45eb684b988f046ce07919a082e94cd1e24911dea28047b7e91e9e88f6aaf5a2",
         "originalTextSha256": "45eb684b988f046ce07919a082e94cd1e24911dea28047b7e91e9e88f6aaf5a2",
         "adaptedPath": "prompts/finance-month-end-closer.md",
-        "adaptedSha256": "d0b3a762cc2e4c92e45c23dd03980eac04c21f4d9c5babb055119f5ce8044507"
+        "adaptedSha256": "11d9aa4ea1b8359714ae4b188f4cdfdbdc925a1e1a8bd008cef9ac43940b5a46"
       },
       "reviewCheckpoints": [
         {
@@ -4093,7 +4093,7 @@
         "originalSha256": "0d686fb870f8c49eb2e0613e6f8dd0b379a3c03c2e978d066687a74fdf00b3b1",
         "originalTextSha256": "e6f8565346131b98458beb800bd0991e662bdd27e5b2a7e9633cd5ff589853b0",
         "adaptedPath": "prompts/finance-month-end-closer-ledger-reader.md",
-        "adaptedSha256": "6b799ef1d796dfc699137566dffc46876ed632d4193e841555a8b70bf675a824",
+        "adaptedSha256": "e327df8a2bbd5108ca9116cd577acd46791f9596883b3592410af5fc7645b740",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/month-end-closer/subagents/ledger-reader.yaml",
           "line_start": 3,
@@ -4148,7 +4148,7 @@
         "originalSha256": "e069b8b1d6c94724b6a5a2ee18c54e00dc2a43159591a90bcc6403abb822df4f",
         "originalTextSha256": "c60d7f9ff796dcb2664b307bc2ba508adaaba54149037cdd6bd37b3f46ce6ebe",
         "adaptedPath": "prompts/finance-month-end-closer-rollforward.md",
-        "adaptedSha256": "6c5bf43743a6fa45f3c735871eec788c9513de8172384bae3470467275c0a57b",
+        "adaptedSha256": "eb2021e76e6e407cf557d1b61cd804a42e903daf66be1ffb71a42c3c42b4b523",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/month-end-closer/subagents/rollforward.yaml",
           "line_start": 3,
@@ -4201,7 +4201,7 @@
         "originalSha256": "92e993c448fa2a1dc11ec6015d45e1dded32c9b497a358075888686dbe86b11f",
         "originalTextSha256": "ef3ba259483dcaa8891453bbbdba708dc09ff4b4573be60fa385061308d5ff3c",
         "adaptedPath": "prompts/finance-month-end-closer-poster.md",
-        "adaptedSha256": "d8e2d4f2159e7fc3477c6f5a9649bc83e8c68e3620c1e48241158b40cd91e8d6",
+        "adaptedSha256": "d67cbc7e5fbdaf90e0f49430b7310cb2e6a8e080fd485e5387324a37b65b971f",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/month-end-closer/subagents/poster.yaml",
           "line_start": 3,
@@ -4270,7 +4270,7 @@
         "originalSha256": "22c01eaf60309826ee0686b1b964a9660f9e9783dff5f40187510ba37e49e73b",
         "originalTextSha256": "22c01eaf60309826ee0686b1b964a9660f9e9783dff5f40187510ba37e49e73b",
         "adaptedPath": "prompts/finance-statement-auditor.md",
-        "adaptedSha256": "2d8b4a6268746fbdb72ceb56c36ca303720724b9ad671f98c8a2e30f2d72ef82"
+        "adaptedSha256": "df77efa118768d38e4e7b3e2d6d7dfd1fc9e0dd0ced9c6f723b68275682bd3ea"
       },
       "reviewCheckpoints": [
         {
@@ -4387,7 +4387,7 @@
         "originalSha256": "e5c999f0b0ffe0dc48a51d1af6dd6a205076452246c6bb56e8b0ddc311388c4c",
         "originalTextSha256": "c87964e9a7c1739d51b8075deacfcc8066ce1d0ee385c11edf9220cf55fd5fbb",
         "adaptedPath": "prompts/finance-statement-auditor-statement-reader.md",
-        "adaptedSha256": "3d83149431750102237d4db4f44cb6b2f4007d7c03da890895677fd059a4168b",
+        "adaptedSha256": "804af65f81c6b9007872dd46404f21108f5ccf21ca6be1577114421f1532e828",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/statement-auditor/subagents/statement-reader.yaml",
           "line_start": 3,
@@ -4442,7 +4442,7 @@
         "originalSha256": "b829d3e65d2f1e911e06dd04c3295f94930d5c96e52a4a8a175c26325c071219",
         "originalTextSha256": "f15beb2540f966bce1cee66fb0acd21ace4fed3a759a0193b587140c25e44498",
         "adaptedPath": "prompts/finance-statement-auditor-reconciler.md",
-        "adaptedSha256": "328a39f10178ee5066b2ea9aa0e534ec24b41db8eb58e35c365ad87e9125ce3c",
+        "adaptedSha256": "6e522e94759d051178940fb8ec2733c6e6bddf17a6738c8be6fb524566c8eecb",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/statement-auditor/subagents/reconciler.yaml",
           "line_start": 3,
@@ -4495,7 +4495,7 @@
         "originalSha256": "98f6ce7e9b7759d9ae23a230a4b826de9eb7f68ee884e9011f0090080994166b",
         "originalTextSha256": "8f3e5a7c93031d64cced5981b93ae3ac70e3173b3c0621f35e4a76c5568b3958",
         "adaptedPath": "prompts/finance-statement-auditor-flagger.md",
-        "adaptedSha256": "d5d0587aba900618c690286e4d926d76c77fb4c9721f254458dc4d20ef07dee5",
+        "adaptedSha256": "72c76c646ab2a766f3a3f385b88b7493830e8c5fb745f4c8ff44d49a86c3d701",
         "originalSourceRange": {
           "path": "managed-agent-cookbooks/statement-auditor/subagents/flagger.yaml",
           "line_start": 3,
