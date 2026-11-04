@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "package": "@local/dsh-financial-services-p2-client-retry-1",
+  "status": "NOT_RUN",
+  "financialExecution": "NOT_RUN",
+  "diagnosticOperationsMutateBinding": false,
+  "checkpoints": [
+    {
+      "stage": "HOST_INIT_ENTERED",
+      "at": "2026-11-04T11:30:38.388Z",
+      "services": []
+    },
+    {
+      "stage": "HOST_REMOTE_REGISTERED",
+      "at": "2026-11-04T11:30:38.392Z",
+      "services": []
+    },
+    {
+      "stage": "NO_CLIENT_REPORT_WITHIN_45_SECONDS",
+      "at": "2026-11-04T11:31:23.394Z",
+      "services": []
+    }
+  ],
+  "lastStage": "NO_CLIENT_REPORT_WITHIN_45_SECONDS"
+}

@@ -1,0 +1,9 @@
+# Disposable TEST_ONLY fixture. Install only this phase, never both concurrently.
+- insert:
+    - id: finance-p2-active-retry-6-model-test-only-probe
+      name: '@local/dsh-financial-services-p2-active-retry-6-model-test-only'
+      config:
+        phase: 'active'
+        runModelSmoke: true
+        modelTimeoutMs: 120000
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"

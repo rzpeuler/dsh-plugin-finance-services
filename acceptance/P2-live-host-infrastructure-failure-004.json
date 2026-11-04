@@ -1,0 +1,26 @@
+{
+  "runId": "6e45108d-0dbe-49a4-92a7-7a17683b9363",
+  "validationScope": "TEST_FIXTURE_REPORT_IO_FAILURE_NOT_PRODUCT_PERMISSION_FAILURE",
+  "nativeManagerResult": {
+    "stage": "enable",
+    "target": "@local/dsh-financial-services-p2-active-retry-6-model-test-only",
+    "application": "failed",
+    "packageExitCode": 0,
+    "error": {
+      "code": "operation-error",
+      "diagnostic": "dsh: warning: 1 entry did not activate\nfinance-p2-active-retry-6-model-test-only-probe (@local/dsh-financial-services-p2-active-retry-6-model-test-only): Error: UNKNOWN: unknown error, open 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\acceptance\\P2-live-host.json'"
+    },
+    "nextStep": "Report the diagnostic to the user; retry only after its cause is addressed.",
+    "packageLogId": "operation-Iiy83b"
+  },
+  "osStack": null,
+  "osErrno": null,
+  "osCause": "UNKNOWN_NOT_PROVEN",
+  "fixtureDefect": "Report save is outside each check's operation catch and may escape finally, interrupting remaining independent cleanup.",
+  "partialReport": "P2-live-host-partial-004.json",
+  "appendOnlyJournal": "P2-live-host-journal-004.jsonl",
+  "knownSuccessfulModelEvidence": "Real native Worker read, completed model output and route/usage; parent remained idle; exact activation disposed.",
+  "knownStartedRootEvidence": "Real prompt/cancel and native agent-preset/locked rejection.",
+  "overallAttemptPassed": false,
+  "retryPerformed": false
+}

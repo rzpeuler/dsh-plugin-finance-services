@@ -1,0 +1,16 @@
+{
+  "id": "report-io:1",
+  "status": "FAIL",
+  "operation": "owned-run-checkpoint",
+  "recordedAt": "2026-11-04T07:33:09.384Z",
+  "error": {
+    "name": "Error",
+    "code": "EPERM",
+    "errno": -4048,
+    "syscall": "rename",
+    "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\checkpoint-3db4932a-8ff4-4305-8098-3fb7ff87c0e1.tmp",
+    "dest": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\report.json",
+    "message": "EPERM: operation not permitted, rename 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\checkpoint-3db4932a-8ff4-4305-8098-3fb7ff87c0e1.tmp' -> 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\report.json'",
+    "stack": "Error: EPERM: operation not permitted, rename 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\checkpoint-3db4932a-8ff4-4305-8098-3fb7ff87c0e1.tmp' -> 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p2-live\\io-test-results\\contained-errors-5fdc9e50-027e-498d-8c8d-6a9fa4532f9c\\report.json'\n    at async rename (node:internal/fs/promises:785:10)\n    at async atomic (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p2-live/report-io.js:38:5)\n    at async checkpoint (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p2-live/report-io.js:51:7)\n    at async Object.record (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p2-live/report-io.js:57:42)\n    at async TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p2-live/report-io.test.mjs:46:31)\n    at async Test.run (node:internal/test_runner/test:1313:7)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:897:7)"
+  }
+}

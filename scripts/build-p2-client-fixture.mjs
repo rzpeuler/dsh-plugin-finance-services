@@ -9,8 +9,8 @@ import { createP2ClientContract } from '../tests/p2-client/contract.js'
 if (process.argv.length > 2) throw new Error('No flags supported: this builds the TEST_ONLY package, not the product')
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const base = join(root, 'tests', 'p2-client')
-const output = join(base, 'fixture')
-const packageName = '@local/dsh-financial-services-p2-client-test-only'
+const output = join(base, 'fixture-retry-1')
+const packageName = '@local/dsh-financial-services-p2-client-retry-1'
 const owner = { owner: 'financial-services-p2-client-fixture', kind: 'TEST_ONLY_NON_FINANCIAL' }
 await mkdir(output, { recursive: true })
 try {
@@ -52,7 +52,7 @@ await materialize('package.json', JSON.stringify({
     ] },
   },
 }, null, 2) + '\n')
-await materialize('cordis.patch.yml', `# TEST_ONLY disposable fixture; no product navigation or preset changes.\n- insert:\n    - id: finance-p2-client-test-only\n      name: '${packageName}'\n      config:\n        bundleRoot: ${JSON.stringify(root)}\n`)
+await materialize('cordis.patch.yml', `# TEST_ONLY disposable fixture; no product navigation or preset changes.\n- insert:\n    - id: finance-p2-client-retry-1\n      name: '${packageName}'\n      config:\n        bundleRoot: ${JSON.stringify(root)}\n`)
 await materialize('README.md', `# TEST_ONLY P2 Client/Host fixture\n\nInstall only after reviewing docs/P2_CLIENT_TEST_PLAN.md in the owning project. This package contributes no UI, tools, presets, locale namespace or artwork. Icon/locale metadata are intentionally omitted for this disposable renderless TEST_ONLY acceptance unit, not as a product-distribution exception.\n\nThe Client runs once per page activation. A safe ordinary mainView target and Conversation panel are mandatory. Only real production Slot inject callbacks are invoked. The Host receives results through native strict Typert RemoteService, restores binding by CAS and unregisters only its unique Workspace. Files and history remain. No model prompt is submitted.\n\nUninstall this test package after collecting acceptance/P2-live-client.json. Do not install it in a production profile for ongoing use. Rebuild does not install or execute it.\n`)
 console.log(`Prepared TEST_ONLY package: ${output}`)
 console.log('No installation, Profile change, server launch, Session creation, acceptance run, or product build performed.')

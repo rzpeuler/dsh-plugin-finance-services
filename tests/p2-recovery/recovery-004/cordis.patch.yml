@@ -1,0 +1,9 @@
+# TEST_ONLY one-run recovery; parent installs only after Client fixture releases its binding.
+- insert:
+    - id: finance-p2-recovery-004-test-only
+      name: '@local/dsh-financial-services-p2-recovery-004-test-only'
+      config:
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"
+        sourceRunId: '6e45108d-0dbe-49a4-92a7-7a17683b9363'
+        sourceWorkspaceId: '7ff62cd0-bc67-488d-a9e3-dba58eef8215'
+        sourceHashes: {"partial":"10081c4c7c3accaaba7626f70e1eb3fbbf84cf8809034db4f511d84472517651","journal":"08a040f0ef51b46ea593245c3cf1c8f08d40ec48f84ddb0478d8fe4738f2b6dd","infrastructure":"8db64f1fcd4f1df34f361621e4844dddd8dda1436886c6ecba3e161ceaafc043"}

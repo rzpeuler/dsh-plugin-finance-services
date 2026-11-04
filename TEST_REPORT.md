@@ -69,3 +69,13 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - 已准备新版无模型探针：40 persona全文canonical/raw SHA、同main独立Session、作用域/权限实际执行。可选真实Worker改为caller-delivery、能力检查全PASS前不启动、有限时预算与精确activation清理；不冒充正向工具dispatcher或金融E2E。
 - 原生Client fixture的7项JS语法及构建检查通过，严格JSON/UTF-8界限与plain-only安全导航门禁已review；尚未安装/执行，没有预写验收通过报告。
 - 两main的SystemPrompt/Tool-envelope heuristic已获得，但遗漏pre-step Skill目录，完整首轮、provider usage与缓存收益仍NOT_MEASURED；[模型体验](docs/MODEL_EXPERIENCE.md)明确该区别。
+
+### 本轮实际原生通过与未验收项
+
+- 第二次完整进程重启后，[003原生能力](acceptance/P2-live-host-pass-003.json)587/587 PASS，非模型；代理修复真实生效，40 persona、63技能与逐角色dispatcher/路径/CAS等通过。
+- [004追加journal](acceptance/P2-live-host-journal-004.jsonl)证明一次真实Worker模型read/输出/usage、parent无唤醒、exact activation清理及真实started-root锁均PASS。整体安装因收尾共享报告UNKNOWN open而FAILED，见[完整诊断](acceptance/P2-live-host-infrastructure-failure-004.json)；不以子项通过覆盖总失败。未知OS原因不猜Defender。
+- 修复仅属TEST_ONLY记录器：append单open、50项checkpoint、仅终态atomic latest，IO错误不逃出清理。真实FS错误反例2项通过，3个清理项仍完成，无mock provider/盲重试；不因此修改产品权限。
+- [独立原生恢复](acceptance/P2-live-host-recovery-004.json)46/46 PASS、recoveryStatus COMPLETE；核36自有Agent absent、5原controller live idle、child absent，marker/hash/路径匹配后仅注销owned Workspace。默认null/rev17不倒写，文件/历史保留，原失败仍FAIL。
+- [禁用retained-floor](acceptance/P2-live-host-disabled.json)10/10 PASS，5原live Session未cold-resume，服务与Roster撤销后实际调用被拒；随后主Bundle恢复enabled/applied，测试包移除。
+- Client原夹具无报告；retry1 Host初始化与strict注册有[checkpoint](acceptance/P2-client-diagnostic.json)，但45秒无Client apply。已确认并修测试Host同步snapshot误用.then；不能据此断言历史无报告原因。公共[Host graph](acceptance/P2-client-graph.json)验证产物路径与全部8依赖存在；Client HMR/本地mount支持实际已读，尚无页面模块队列状态。真实草稿/keep与导航恢复仍NOT_RUN。
+- Worker实际provider计数已记录；完整main首轮与因果缓存优化仍未测。P2未验收，P3–P6未启动验收；商业查询、Office与金融业务E2E仍0。

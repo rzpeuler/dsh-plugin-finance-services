@@ -67,19 +67,68 @@ export function createP2ClientFixture(z, createP2ClientContract) {
     }
   }
 
+  const dependencies = ['slots', 'resources', 'sessions', 'uiWorkspace', 'layout', 'conversation']
+  const presence = ctx => dependencies.map(key => ({ key, present: ctx.get(key) !== undefined }))
+  async function checkpoint(ctx, stage) {
+    const result = await bounded(() => ctx.remote.financeP2ClientTestOnly.checkpoint({ stage, services: presence(ctx) }),
+      new AbortController().signal, `TEST_ONLY checkpoint ${stage}`)
+    ensure(result.ok, `TEST_ONLY checkpoint ${stage} rejected`)
+  }
+
   return {
-    inject: ['slots', 'resources', 'remote', 'sessions', 'uiWorkspace', 'layout', 'conversation'],
-    async apply(ctx) {
-      await ctx.remote.$mount(createP2ClientContract(z).remote)
+    // Bootstrap cannot wait for the business dependencies it is meant to diagnose.
+    inject: ['remote'],
+    apply(ctx) {
       const lifetime = new AbortController()
-      // Activation must settle so the real renderer can mount; the owned task is not an apply barrier.
       ctx.effect(() => {
-        const task = run(ctx, lifetime.signal).catch(error => {
-          console.error('TEST_ONLY P2 Client fixture failed:', error)
-        })
+        const task = activate(ctx, lifetime.signal)
         return async () => { lifetime.abort(new Error('TEST_ONLY fixture disposed')); await task }
-      }, 'TEST_ONLY P2 Client run')
+      }, 'TEST_ONLY P2 Client activation')
     },
+  }
+
+  async function activate(ctx, signal) {
+    let mounted = false
+    let child
+    try {
+      const { remote } = createP2ClientContract(z)
+      // A separate native contribution keeps the first handshake smaller than the business mount.
+      await bounded(() => ctx.remote.$mount({ package: `${remote.package}/diagnostic`,
+        descriptors: remote.descriptors.filter(row => row.method === 'checkpoint') }), signal, 'Diagnostic native Remote mount')
+      mounted = true
+      await checkpoint(ctx, 'CLIENT_APPLY')
+      await bounded(() => ctx.remote.$mount({ package: remote.package,
+        descriptors: remote.descriptors.filter(row => row.method !== 'checkpoint') }), signal, 'Business native Remote mount')
+      await checkpoint(ctx, 'REMOTE_MOUNTED')
+      await checkpoint(ctx, 'DEPENDENCIES_WAITING')
+      const dependencyLifetime = new AbortController()
+      let accept
+      const ready = new Promise(resolve => { accept = resolve })
+      child = ctx.inject([...dependencies, 'remote'], services => {
+        accept(services)
+        return () => dependencyLifetime.abort(new Error('TEST_ONLY native dependency scope disposed'))
+      })
+      let services
+      try { services = await bounded(() => ready, signal, 'Native dependency activation') }
+      catch (error) {
+        await checkpoint(ctx, 'DEPENDENCIES_TIMEOUT')
+        const result = await bounded(() => ctx.remote.financeP2ClientTestOnly.finish({ runId: crypto.randomUUID(),
+          clientReportJson: JSON.stringify({ status: 'PARTIAL', checks: [{ id: 'native-dependencies', status: 'NOT_RUN',
+            error: 'Required native Client services did not activate within deadline; no navigation/binding attempted' }],
+          resourcesReleased: true, financialExecution: 'NOT_RUN' }) }), new AbortController().signal, 'Missing dependencies report')
+        ensure(result.ok, 'Missing dependencies report rejected')
+        return
+      }
+      await checkpoint(ctx, 'DEPENDENCIES_READY')
+      await checkpoint(ctx, 'CLIENT_RUN_STARTED')
+      await run(services, AbortSignal.any([signal, dependencyLifetime.signal]))
+    } catch (error) {
+      if (mounted) await checkpoint(ctx, 'CLIENT_RUN_FAILED').catch(() => {})
+      // The Host-owned NoReport deadline is the evidence if even bootstrap RPC is unavailable.
+      console.error('TEST_ONLY Client activation failed; inspect Host diagnostic (no user draft exported)')
+    } finally {
+      await child?.dispose()
+    }
   }
 
   async function run(ctx, signal) {
@@ -326,7 +375,7 @@ export function createP2ClientFixture(z, createP2ClientContract) {
           if (!originalId || ctx.layout.panelInfo.getSnapshot().activePanelId !== null) return
           const rows = selected(ctx)
           if (rows.length === 1 && (rows[0].id === originalId || rows[0].cwd === ownedPath)) ctx.uiWorkspace.openSession(originalId)
-        }, () => {}).catch(error => console.error('TEST_ONLY late navigation cancellation failed:', errorText(error)))
+        }, () => {}).catch(() => checkpoint(ctx, 'LATE_NAVIGATION_FAILED').catch(() => {}))
       }
       let released = true
       for (const dispose of cleanups.reverse()) {
@@ -347,7 +396,10 @@ export function createP2ClientFixture(z, createP2ClientContract) {
       try {
         const result = await rpc('finish', { runId, clientReportJson: JSON.stringify(report) }, true)
         ensure(result.restoredBinding && result.removedOwnedRegistry, 'Host cleanup incomplete; inspect TEST_ONLY report')
-      } catch (error) { console.error('TEST_ONLY Host result/cleanup failed:', errorText(error)) }
+      } catch (error) {
+        await checkpoint(ctx, 'CLIENT_FINISH_FAILED').catch(() => {})
+        console.error('TEST_ONLY Host finish failed; inspect Host diagnostic (no user draft exported)')
+      }
     }
   }
 }

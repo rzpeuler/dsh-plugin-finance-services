@@ -1,6 +1,6 @@
 # Financial Services 实施状态
 
-当前阶段：P0、P1关键验收已通过，P2实施中、未验收。用户完整重启后，新接口、40独立角色/实际Session上下文、63技能原生发现加载与隔离均通过；第二轮真实Host为349通过/196失败/0未执行。失败集中于Cordis服务facade引用误判，已改成逐Agent grant及源/Prompt SHA验证，93本地回归通过。原生Plugin Manager明确要求再次完整进程重启（unmanaged-plugin）以加载该修复，尚未冒称原生权限已通过。候选仍为链接安装 `@local/dsh-financial-services@0.2.1`。测试绑定已恢复为null、revision11；没有真实金融业务E2E、商业数据查询或Office成品。客户端真回调/原生草稿验收夹具已准备，尚未执行。
+当前阶段：P0、P1关键验收已通过，P2实施中，Client真实草稿链待验；两源Bash例外只保守禁Shell，受控计算替代仍未实现。用户再次完整重启后，原生能力587/587通过：40不同persona全文、63技能、角色权限/路径/CAS与独立Session均已验证。真实Worker以deepseek-account/deepseek-flash只读玩具数据并返回模型结果，已开始root改绑锁也通过；该次总汇写入发生UNKNOWN文件错误，保留失败，另以46/46原生恢复检查确认自有资源清理，未把失败安装改PASS。禁用retained-floor实际10/10通过，主Bundle已恢复启用。候选为链接安装 `@local/dsh-financial-services@0.2.1`；默认绑定保持null、revision17。Client Host初始化与Remote注册、Host graph及全部依赖通过，但当前页未报告Client apply，尚无真实草稿预填证据。没有真实金融业务E2E、商业查询或Office成品。
 
 本仓库独立于其他投研应用。开发范围仅限本目录；上游 Downloads 源目录和 DSH 安装包只读。`audit/dsh-reference` 是为补足安装包未携带治理文件而获取的 DSH 同版本只读参照 checkout，不是需要改造的宿主或替代服务器。
 

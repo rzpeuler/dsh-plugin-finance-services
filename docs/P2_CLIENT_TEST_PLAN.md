@@ -7,7 +7,7 @@
 - [Client源码](<../tests/p2-client/client.js>)：无组件、无React/DOM渲染，无产品feature值导入；只调用已挂载production StoredEntry.inject()返回的真实callback。
 - [Host源码](<../tests/p2-client/host.js>)：独立TypertRemoteService，只用严格native descriptors接收结果和辅助读取/清理，不开HTTP路由，不用fetch/自定义credential，不注册模型工具。
 - [严格共享描述符](<../tests/p2-client/contract.js>)：所有request/result为strictObject；结果为至多2,000,000 UTF-8字节的已验证JSON文本（TextEncoder实测字节数），不接收用户原draft。
-- [构建脚本](<../scripts/build-p2-client-fixture.mjs>)：仅写tests/p2-client/fixture内的单包Host+Client产物，不构建产品。依赖由现有项目提供，不自行安装。
+- [构建脚本](<../scripts/build-p2-client-fixture.mjs>)：仅写tests/p2-client/fixture-retry-1内的单包Host+Client产物，不构建产品。依赖由现有项目提供，不自行安装。
 
 构建命令（使用父任务已加载的托管Node）：
 
@@ -19,7 +19,19 @@
 & '<managed-node.exe>' scripts/build-p2-client-fixture.mjs
 ```
 
-生成的package为`@local/dsh-financial-services-p2-client-test-only`，版本`0.0.1`。只有一个Host安装行及同包Client，无产品导航、Preset、Tool、配置UI。icon/locale例外仅适用于这个一次性、renderless、明确TEST_ONLY的测试单元，不是产品发行例外。
+生成的package为`@local/dsh-financial-services-p2-client-retry-1`，版本`0.0.1`，独立产物目录为[fixture-retry-1](<../tests/p2-client/fixture-retry-1/>)。父先remove原`@local/dsh-financial-services-p2-client-test-only`，然后安装新identity；不覆盖已加载Host module以规避native Node import cache。只有一个Host安装行及同包Client，无产品导航、Preset、Tool、配置UI。icon/locale例外仅适用于这个一次性、renderless、明确TEST_ONLY的测试单元，不是产品发行例外。
+
+## 原始NoReport诊断结论与retry-1
+
+历史停点仍为`UNDETERMINED`，不把安装applied、子Inspect timeout或conversation未catalogued解释成Client已运行/GUI离线/service不存在。父的live Client catalog没有公开Meta/package.loader诊断入口；本fixture不猜接口，不用私有window hook。
+
+已确认的实际缺陷：原Host baseline把同步`financeOperations.snapshot({})`当Promise并调用`.then`，现在改为`await`兼容真实公开返回。该错误能够阻止begin，但正常finish仍应落盘，故不能单独解释历史NoReport。原Client在全部七个硬依赖与apply首个`$mount`之前没有任何Host证据，首await失败也不进入run/finally；run外失败/finish失败只console。因此仅凭无报告不能定位历史激活失败。
+
+已排除猜测：8个manifest inject package names与发行ASAR/同版reference匹配；它们是informational package edges，不代替service DI。发行Conversation的apply原生`ctx.plugin(ConversationController)`创建root singleton，公开`input.for(binding.ctx)`可按scope寻址，不应因未catalogued而删除composer检查。产品实际[Host产物](<../lib/host.js#L7-L9>)同样external import Cordis Service/TypertRemoteService；发行Service.init为`Symbol.for('cordis.init')`，Cordis明确执行该symbol方法并消费async generator。Host严格descriptor注册不依赖catalog reflection的非空services列表；空model本身不是严格调用失败证据。
+
+最小改动是保留原安全run，外层仅硬inject native `remote`，先mount单独diagnostic contribution，发送`CLIENT_APPLY`，再mount其余business descriptors，发送`REMOTE_MOUNTED`。随后原生`ctx.inject`等待原6个业务service，记录`DEPENDENCIES_WAITING/READY`，15秒未就绪则发送`DEPENDENCIES_TIMEOUT`并finish出`PARTIAL/NOT_RUN`报告，不导航、不分配Workspace。所有presence均用公开`ctx.get`只记service key/boolean，不包含用户draft或session私密文本。`CLIENT_APPLY`证明已进入apply且最小diagnostic mount已完成；若该最小mount自己失败/卡住，不能声称已区分factory与apply，Host会明确保留NoReport而非推断。
+
+Host在`[Service.init]`第一步写自有`acceptance/P2-client-diagnostic.json`的`HOST_INIT_ENTERED`，注册strict descriptors后写`HOST_REMOTE_REGISTERED`，注册失败写`HOST_REMOTE_REGISTRATION_FAILED`并继续抛错。45秒没有begin/finish且无active owned run时写`NO_CLIENT_REPORT_WITHIN_45_SECONDS`及`P2-live-client.json`的`NOT_RUN`，仅写fixture证据，不调用binding/registry操作。begin/finish到达另记Host checkpoint。Client异常追加固定失败stage，不把异常携带的用户文本导出。Host若连constructor/init都没有执行，任何同包代码无法自证；诊断文件缺失仍须父用Loader原生证据判断，不能伪造PASS。
 
 ## 已确认的公开API
 

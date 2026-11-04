@@ -1,6 +1,7 @@
 /** Disposable TEST_ONLY native Host acceptance. No model calls unless runModelSmoke === true. */
 import assert from 'node:assert/strict';
-import { mkdir, readFile, realpath, stat, writeFile, appendFile, symlink } from 'node:fs/promises';
+import { mkdir, readFile, realpath, stat, writeFile, symlink } from 'node:fs/promises';
+import { createProbeRecorder } from './p2-live/report-io.js';
 import { randomUUID, createHash } from 'node:crypto';
 import { join, resolve, relative, isAbsolute, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -44,11 +45,8 @@ export async function apply(ctx, config) {
       'Public rc.5 SessionHeader has no workspaceId: registry canonical-cwd membership is checked separately.',
       'Tool dispatcher calls are real capability smoke, not model-authored turns or financial E2E.',
       'Native token estimates are heuristic, not provider usage measurements.'] };
-  const nativeLog = join(fixtureRoot, 'nativeFixture.jsonl');
-  const save = async () => {
-    await writeFile(join(fixtureRoot, 'report.json'), JSON.stringify(report, null, 2) + '\n');
-    await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n');
-  };
+  const recorder = await createProbeRecorder({ runRoot: fixtureRoot, latestPath: reportPath, report });
+  const save = () => recorder.checkpoint();
   async function check(id, operation) {
     const start = Date.now();
     const startedAt = new Date(start).toISOString();
@@ -63,8 +61,7 @@ export async function apply(ctx, config) {
       }
     }
     report.checks.push(item);
-    await appendFile(nativeLog, JSON.stringify(item) + '\n');
-    await save();
+    await recorder.record(item);
     return item.status === 'PASS' ? item.detail : undefined;
   }
   const cancel = new AbortController();
@@ -494,7 +491,8 @@ export async function apply(ctx, config) {
         await check('native-worker-model-smoke', async () => {
           report.modelSmoke = { status: 'NOT_RUN', reason: 'Evaluating native model admission prerequisites.',
             invocationPath: 'native-Service-caller-delivery', nativeToolDispatcherPositive: false, timeoutMs: modelTimeoutMs };
-          const prerequisites = report.checks.filter(item => item.status !== 'PASS').map(item => ({ id: item.id, status: item.status }));
+          const prerequisites = [...report.checks.filter(item => item.status !== 'PASS').map(item => ({ id: item.id, status: item.status })),
+            ...report.io.failures.map(item => ({ id: item.id, status: 'FAIL' }))];
           if (prerequisites.length) {
             report.modelSmoke = { status: 'NOT_RUN', reason: 'All capability and safety checks must PASS before model admission.', prerequisites };
             missing(`Model admission denied: ${prerequisites.length} capability/safety prerequisites did not PASS`);
@@ -712,7 +710,7 @@ export async function apply(ctx, config) {
   } catch (error) {
     report.fatalError = errorInfo(error);
     report.checks.push({ id: 'probe-runner', status: 'FAIL', timing: { elapsedMs: 0 }, error: errorInfo(error) });
-    await appendFile(nativeLog, JSON.stringify({ id: 'probe-runner', error: errorInfo(error) }) + '\n');
+    await recorder.record({ id: 'probe-runner', status: 'FAIL', error: errorInfo(error) });
   } finally {
     if (phase === 'active' && bindingChanged && initial) await check('restore-original-binding', async () => {
       const now = await rpc('snapshot', {});
@@ -737,14 +735,14 @@ export async function apply(ctx, config) {
       assert.ok((await stat(path)).isDirectory()); assert.equal(await readFile(join(path, 'original-canary.txt'), 'utf8'), canary);
       return { id, filesRetained: true, sessionHistoryRetained: true };
     });
-    unobserve();
+    await check('dispose-probe-observer', async () => { unobserve(); return { disposed: true }; });
     cancel.abort();
-    await peer.dispose();
+    await check('dispose-probe-peer', async () => { await peer.dispose(); return { disposed: true }; });
     report.finishedAt = new Date().toISOString();
     report.checksPassed = report.checks.filter(item => item.status === 'PASS').length;
     report.checksFailed = report.checks.filter(item => item.status === 'FAIL').length;
     report.checksNotRun = report.checks.filter(item => item.status === 'NOT_RUN').length;
-    report.status = report.checksFailed ? 'FAIL' : report.checksNotRun ? 'PARTIAL' : 'PASS';
-    await save();
+    report.status = report.checksFailed || report.io.failures.length ? 'FAIL' : report.checksNotRun ? 'PARTIAL' : 'PASS';
+    await recorder.finish();
   }
 }

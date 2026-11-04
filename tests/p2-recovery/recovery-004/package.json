@@ -1,0 +1,24 @@
+{
+  "name": "@local/dsh-financial-services-p2-recovery-004-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY recovery of one failed acceptance fixture; never runs models or resumes Sessions.",
+  "exports": {
+    ".": "./probe.js"
+  },
+  "files": [
+    "probe.js",
+    "report-io.js",
+    "cordis.patch.yml",
+    "TEST_ONLY-fixture.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

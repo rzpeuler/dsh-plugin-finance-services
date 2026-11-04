@@ -19,6 +19,7 @@ if (!Number.isSafeInteger(modelTimeoutMs) || modelTimeoutMs < 1 || modelTimeoutM
   throw new Error('modelTimeoutMs must be a positive safe integer no greater than 300000');
 }
 const probe = await readFile(join(root, 'tests/p2-live-probe.js'), 'utf8');
+const reporter = await readFile(join(root, 'tests/p2-live/report-io.js'), 'utf8');
 const fixtureBase = join(root, 'tests', 'p2-live');
 await mkdir(fixtureBase, { recursive: true });
 for (const phase of ['active', 'disabled']) {
@@ -45,9 +46,11 @@ for (const phase of ['active', 'disabled']) {
   await materialize('package.json', JSON.stringify({
     name, version: '0.0.1', private: true, type: 'module',
     description: 'Disposable TEST_ONLY native Host acceptance probe; not a Financial Services installation unit.',
-    exports: { '.': './probe.js' }, files: ['probe.js', 'cordis.patch.yml', 'TEST_ONLY-fixture.json'],
+    exports: { '.': './probe.js' }, files: ['probe.js', 'p2-live/report-io.js', 'cordis.patch.yml', 'TEST_ONLY-fixture.json'],
     engines: { dsh: '0.2.1-rc.5' }, dsh: { bundle: { patch: './cordis.patch.yml' } },
   }, null, 2) + '\n');
+  await mkdir(join(directory, 'p2-live'), { recursive: true });
+  await materialize('p2-live/report-io.js', reporter);
   await materialize('probe.js', probe);
   await materialize('cordis.patch.yml',
     `# Disposable TEST_ONLY fixture. Install only this phase, never both concurrently.\n- insert:\n    - id: finance-p2-${phase}${suffix}-test-only-probe\n      name: '${name}'\n      config:\n        phase: '${phase}'\n        runModelSmoke: ${phase === 'active' && runModelSmoke}\n        modelTimeoutMs: ${modelTimeoutMs}\n        bundleRoot: ${JSON.stringify(root)}\n`);

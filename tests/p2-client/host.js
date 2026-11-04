@@ -18,22 +18,69 @@ export default class FinanceP2ClientTestOnly extends TypertRemoteService {
     this.used = false
     this.finished = false
     this.tail = Promise.resolve()
+    this.diagnosticTail = Promise.resolve()
+    this.diagnostic = { schemaVersion: 1, package: '@local/dsh-financial-services-p2-client-retry-1',
+      status: 'NOT_RUN', financialExecution: 'NOT_RUN', diagnosticOperationsMutateBinding: false, checkpoints: [] }
   }
 
   async* [Service.init]() {
+    await this.recordDiagnostic('HOST_INIT_ENTERED')
     const { remote, schemas } = createP2ClientContract(z)
     this.schemas = schemas
     yield () => this.cleanupOnUnload()
-    yield this.ctx.typert.register({
-      package: remote.package, face: 'host',
-      schemas: Object.entries(schemas).map(([name, schema]) => ({ name, create: () => schema })),
-      model: { services: [], events: [], objects: [] }, invocations: remote.descriptors,
-    })
+    try {
+      yield this.ctx.typert.register({
+        package: remote.package, face: 'host',
+        schemas: Object.entries(schemas).map(([name, schema]) => ({ name, create: () => schema })),
+        model: { services: [], events: [], objects: [] }, invocations: remote.descriptors,
+      })
+      await this.recordDiagnostic('HOST_REMOTE_REGISTERED')
+    } catch (error) {
+      await this.recordDiagnostic('HOST_REMOTE_REGISTRATION_FAILED')
+      throw error
+    }
+    // One deadline, not polling. It writes evidence only and never touches binding or registry.
+    this.noReportTimer = setTimeout(() => {
+      void this.serial(async () => {
+        if (this.run || this.finished) return
+        await this.recordDiagnostic('NO_CLIENT_REPORT_WITHIN_45_SECONDS')
+        await this.writeNoRunReport('No Client finish/begin received; inspect P2-client-diagnostic.json. Activation is not verified.')
+      }).catch(error => this.ctx.logger.error('TEST_ONLY diagnostic write failed: %s', String(error)))
+    }, 45_000)
+    this.noReportTimer.unref?.()
+    yield () => clearTimeout(this.noReportTimer)
   }
 
-  baseline(request) {
+  recordDiagnostic(stage, services = []) {
+    const task = this.diagnosticTail.then(async () => {
+      this.diagnostic.checkpoints.push({ stage, at: new Date().toISOString(), services })
+      this.diagnostic.lastStage = stage
+      await mkdir(join(this.root, 'acceptance'), { recursive: true })
+      await writeFile(join(this.root, 'acceptance', 'P2-client-diagnostic.json'), JSON.stringify(this.diagnostic, null, 2) + '\n')
+    })
+    this.diagnosticTail = task.catch(() => {})
+    return task
+  }
+
+  async writeNoRunReport(reason) {
+    await mkdir(join(this.root, 'acceptance'), { recursive: true })
+    await writeFile(join(this.root, 'acceptance', 'P2-live-client.json'), JSON.stringify({
+      schemaVersion: 1, status: 'NOT_RUN', reason, noWorkspaceAllocated: !this.used,
+      actualMouseClick: 'NOT_VERIFIED', visualRendering: 'NOT_VERIFIED', financialExecution: 'NOT_RUN',
+      diagnostic: 'P2-client-diagnostic.json',
+    }, null, 2) + '\n')
+  }
+
+  async checkpoint(request) {
+    const input = this.schemas.CheckpointRequest.parse(request)
+    await this.recordDiagnostic(input.stage, input.services)
+    return { recorded: true }
+  }
+
+  async baseline(request) {
     this.schemas.BaselineRequest.parse(request)
-    return this.ctx.financeOperations.snapshot({}).then(snapshot => ({ snapshotJson: JSON.stringify(snapshot) }))
+    const snapshot = await this.ctx.financeOperations.snapshot({})
+    return { snapshotJson: JSON.stringify(snapshot) }
   }
 
   begin(request) {
@@ -41,6 +88,7 @@ export default class FinanceP2ClientTestOnly extends TypertRemoteService {
     return this.serial(async () => {
       assert.equal(this.used, false, 'One run per fixture activation; reinstall/reload deliberately to rerun')
       this.used = true
+      await this.recordDiagnostic('HOST_BEGIN_RECEIVED')
       const root = await realpath(this.root)
       const directory = join(root, 'tests', 'p2-client', 'runs', `TEST_ONLY-${input.runId}`)
       // A UUID-owned new directory cannot contain a pre-existing user Workspace or draft.
@@ -93,6 +141,8 @@ export default class FinanceP2ClientTestOnly extends TypertRemoteService {
   finish(request) {
     const input = this.schemas.FinishRequest.parse(request)
     return this.serial(async () => {
+      clearTimeout(this.noReportTimer)
+      await this.recordDiagnostic('HOST_FINISH_RECEIVED')
       if (this.run) return this.finishRun(this.requireRun(input.runId), JSON.parse(input.clientReportJson))
       assert.equal(this.finished, false, 'Finished run cannot be overwritten')
       this.used = true
@@ -181,7 +231,10 @@ export default class FinanceP2ClientTestOnly extends TypertRemoteService {
 
   async cleanupOnUnload() {
     await this.serial(async () => {
+      clearTimeout(this.noReportTimer)
       if (this.run) await this.finishRun(this.run, { status: 'FAIL', reason: 'Fixture unloaded before Client completion', checks: [] })
+      else if (!this.finished) await this.writeNoRunReport('Fixture unloaded without a Client report; no binding operation performed.')
+      await this.recordDiagnostic('HOST_UNLOADED')
     })
   }
 }

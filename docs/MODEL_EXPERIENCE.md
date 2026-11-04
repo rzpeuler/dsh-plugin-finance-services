@@ -19,10 +19,12 @@ The native Host capability run recorded these estimates with the actual SystemPr
 
 Evidence: [native run 002](../acceptance/P2-live-host-failure-002.json). This run failed the separate dispatch authorization checks. These numbers are heuristic estimates, **not provider-reported usage or a complete first-turn budget**: the pre-step Skill catalogue and other subsequently injected messages are not included in the standalone SystemPrompt measurement. Removing the tool envelope in the measurement produced zero header-tool tokens; this is a bounded header-cost comparison, not an old-versus-new product performance result.
 
-The proxy-admission correction changes execution authorization, not tool names, schemas, descriptions or persona text. No token savings are claimed for it. Actual Worker usage and a complete request comparison remain pending the fresh-process model smoke; absent measurements must remain `NOT_MEASURED`.
+The proxy-admission correction changes execution authorization, not tool names, schemas, descriptions or persona text. No token savings are claimed for it.
+
+A real source-owned Reader Worker subsequently completed a toy read through `deepseek-account/deepseek-flash`. Its native model events reported these raw counters: first step input 2646, output 47, total 2693, cache-read 0; second step input 162, output 136, total 2986, cache-read 2688. Evidence: [partial run 004](../acceptance/P2-live-host-partial-004.json), independently preserved in its journal and recovery report. Do not add or reinterpret these provider counters as a product optimization benchmark. The model result passed, but the overall fixture installation failed during report publication; that failure remains recorded. A complete main-role first-turn comparison is still `NOT_MEASURED`.
 
 ## Stability and limits
 
-Persona text and tool definitions are stable for a retained preset revision. Workspace paths, Session identities and source observations are Session-specific context; they can change a provider's cache prefix. Provider cache hits, latency improvements and cross-Session reuse have not been measured.
+Persona text and tool definitions are stable for a retained preset revision. Workspace paths, Session identities and source observations are Session-specific context; they can change a provider's cache prefix. One within-Worker cached step was observed above; latency improvements, cross-Session reuse and any causal cache benefit from this implementation have not been established.
 
 Role runtime disposal revokes its Agent grant. The independent retained-preset permission floor refuses actions without a matching source/Prompt revision grant, including residual Agent-own native delegation. This does not replace the native sandbox, tool approval or source licensing, and does not implement the later financial Review Gate.
