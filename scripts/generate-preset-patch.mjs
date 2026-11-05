@@ -14,7 +14,8 @@ assert.equal(new Set(manifest.roles.map(role => role.id)).size, 40)
 const lines = ['# Generated from audited financial assets. Do not edit the declarations by hand.', '- insert:',
   '    - id: financial-services', "      name: '@local/dsh-financial-services'",
   '    - id: finance-data', `      name: '${dataModule}'`,
-  '      config:', '        requestTimeoutMs: 10000', '        maxConcurrentQueries: 32']
+  '      config:', '        requestTimeoutMs: 10000', '        maxConcurrentQueries: 32',
+  '    - id: finance-review', "      name: '@local/dsh-financial-services/review'", '      config:', '        policyId: original']
 const quoted = value => JSON.stringify(value)
 let order = 1000
 for (const role of manifest.roles) {

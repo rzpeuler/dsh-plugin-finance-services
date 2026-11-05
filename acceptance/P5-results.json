@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "CRITERIA_ESTABLISHED_KERNEL_AND_DURABLE_STORE_IMPLEMENTED_NATIVE_WIRING_PENDING",
+  "status": "NATIVE_GATE_AND_PERSISTENCE_VERIFIED_REMAINING_RESTART_UI_AND_ASK_HANDOVER",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -48,17 +48,18 @@
     ],
     "nativeWiring": "NOT_STARTED",
     "localTests": {
-      "passed": 36,
+      "passed": 37,
       "failed": 0,
       "evidence": [
         "P5-review-core-tests-001.tap",
-        "P5-review-store-tests-001.tap"
+        "P5-review-store-tests-001.tap",
+        "P5-local-tests-002.tap"
       ]
     },
     "fullRegression": {
-      "passed": 374,
+      "passed": 375,
       "failed": 0,
-      "evidence": "P5-regression-002.tap"
+      "evidence": "P5-regression-003.tap"
     },
     "durableStore": {
       "documentVersion": 1,
@@ -73,16 +74,16 @@
     "P5-LOCK": "PASS_LOCAL_KERNEL",
     "P5-SCOPE": "PASS_LOCAL_KERNEL",
     "P5-SNAPSHOT": "PARTIAL_LOCAL_KERNEL",
-    "P5-GATE": "PARTIAL_LOCAL_KERNEL",
+    "P5-GATE": "PASS_NATIVE_CORE",
     "P5-RECORD": "PASS_LOCAL_KERNEL",
     "P5-IDEMPOTENT": "PASS_LOCAL_KERNEL",
     "P5-INVALIDATE": "PASS_LOCAL_KERNEL",
-    "P5-QUEUE": "PARTIAL_LOCAL_KERNEL",
-    "P5-RESTART": "PARTIAL_LOCAL_KERNEL",
+    "P5-QUEUE": "PARTIAL_NATIVE",
+    "P5-RESTART": "PARTIAL_NATIVE",
     "P5-ASK": "NOT_RUN",
-    "P5-SEPARATION": "NOT_RUN",
+    "P5-SEPARATION": "PARTIAL_NATIVE",
     "P5-NOSIDE": "NOT_RUN",
-    "P5-PERSIST": "PARTIAL_LOCAL_KERNEL",
+    "P5-PERSIST": "PARTIAL_NATIVE",
     "P5-ERRORS": "NOT_RUN"
   },
   "designDecisions": [
@@ -90,21 +91,37 @@
     "fast skips only checkpoints explicitly marked fastSkippable, all of which already produce DRAFT artifacts; model, valuation, audit, controller and release checkpoints are not relaxable.",
     "A gate decision contains no publish/post/trade/grant field; authority is never widened by an approval.",
     "Stage records exist only to classify interrupted work: on open, any RUNNING stage becomes UNKNOWN_TERMINATED with a reason, so the product never implies an in-place resume.",
-    "A review is written to the document before it can satisfy the gate; a failed save rebuilds the gate from the persisted document."
+    "A review is written to the document before it can satisfy the gate; a failed save rebuilds the gate from the persisted document.",
+    "A run is never COMPLETED while a required checkpoint has no stage record; the probe exposed and fixed the weaker earlier rule.",
+    "Cordis service proxies cannot dispatch ECMAScript private methods; the service uses module-internal helper names instead (#private threw 'Receiver must be an instance of class FinanceReview' on the first native install)."
   ],
   "remainingKeyAcceptance": [
-    "Native own-domain storage wiring (storageDomain table) and cross-session host projection",
-    "Native restart comparison across a real process restart",
-    "Native deterministic gate probe without model turns",
+    "Cross-session host projection and UI jump to the exact Session",
+    "Real process-restart comparison and four-state recovery view",
     "Native ask_user_question handover with child Agents refused",
-    "Proof that business approval leaves tool approval, sandbox and MCP authority unchanged",
+    "Sandbox/MCP/approval-policy matrix proving separation beyond the tool surface",
     "Install/disable/uninstall persistence boundaries"
   ],
   "notClaimed": [
     "P5 complete",
     "P3 or P4 complete",
-    "Native review queue",
-    "External side effects",
-    "Workflow in-place resume"
-  ]
+    "Cross-session UI queue",
+    "In-place workflow resume",
+    "External side effects"
+  ],
+  "nativeServer": {
+    "service": "financeReview",
+    "entry": "finance-review",
+    "policyPinned": "original",
+    "domain": "financial_review",
+    "evidence": "P5-native-gate-001.json (renamed pass-003)",
+    "checksPassed": 10,
+    "checksFailed": 0,
+    "modelCalls": 0,
+    "workerCalls": 0,
+    "failureHistory": [
+      "P5-native-gate-failure-001.json",
+      "P5-native-gate-failure-002.json"
+    ]
+  }
 }

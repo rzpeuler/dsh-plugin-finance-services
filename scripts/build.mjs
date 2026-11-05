@@ -59,7 +59,7 @@ for (const path of sourceFiles) {
 const roleEntry = manifest.exports['./role-data-1'] ? 'role-data-1' : manifest.exports['./role-numeric-1'] ? 'role-numeric-1' : 'role';
 const dataEntry = manifest.exports['./data-runtime-2'] ? 'data-runtime-2' : 'data';
 // Each actual plugin export contains all its own implementation; shared native libraries remain external.
-for (const entry of clientOnly ? [] : ['host', 'role', 'floor', ...(manifest.exports['./data'] ? ['data'] : [])]) {
+for (const entry of clientOnly ? [] : ['host', 'role', 'floor', ...(manifest.exports['./data'] ? ['data'] : []), ...(manifest.exports['./review'] ? ['review'] : [])]) {
   const bundle = await rollup({
     input: join(src, `${entry}.js`),
     external: specifier => !specifier.startsWith('.') && !isAbsolute(specifier),
@@ -93,7 +93,7 @@ if (oldClient !== client) await writeFile(join(output, 'client.js'), client, 'ut
 const sources = {};
 for (const path of sourceFiles) sources[relative(root, path).replaceAll('\\', '/')] = sha256(await readFile(path));
 const entrySha256 = {};
-for (const entry of ['host', 'role', 'floor', ...(manifest.exports['./role-numeric-1'] ? ['role-numeric-1'] : []), ...(manifest.exports['./data'] ? ['data'] : []), ...(manifest.exports['./role-data-1'] ? ['role-data-1'] : []), ...(manifest.exports['./data-runtime-2'] ? ['data-runtime-2'] : [])]) entrySha256[`${entry}.js`] = sha256(await readFile(join(output, `${entry}.js`)));
+for (const entry of ['host', 'role', 'floor', ...(manifest.exports['./role-numeric-1'] ? ['role-numeric-1'] : []), ...(manifest.exports['./data'] ? ['data'] : []), ...(manifest.exports['./role-data-1'] ? ['role-data-1'] : []), ...(manifest.exports['./data-runtime-2'] ? ['data-runtime-2'] : []), ...(manifest.exports['./review'] ? ['review'] : [])]) entrySha256[`${entry}.js`] = sha256(await readFile(join(output, `${entry}.js`)));
 const build = { package: manifest.name, version: manifest.version, format: 'dsh-native-lazy-factory',
   clientSha256: sha256(client), hostSha256: entrySha256['host.js'], entrySha256, sourceSha256: sources,
   assetsManifestSha256: sha256(await readFile(join(root, 'assets/agent-manifest.json'))),

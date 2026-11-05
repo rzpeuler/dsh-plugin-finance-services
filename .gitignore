@@ -20,3 +20,4 @@ tests/p3-client/runs/
 tests/p3-client/latest.json
 tests/p3-native-mcp/runs/
 tests/p4-office-native/runs/
+tests/p5-native/latest.json

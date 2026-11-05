@@ -181,16 +181,22 @@ export class ReviewStore {
       return Object.freeze({ runId, status: 'UNKNOWN_TERMINATED', reason: 'PROCESS_RESTARTED_WITHOUT_TERMINAL_STAGE_RECORD', stages: interrupted.length })
     }
     const agents = [...new Set(stages.map(record => record.agentId))]
-    const outstanding = []
+    const awaitingReview = []
+    const missingStage = []
     for (const agentId of agents) {
       for (const checkpointId of requiredCheckpoints(this.#snapshot, agentId)) {
         const stage = stages.find(record => record.agentId === agentId && record.checkpointId === checkpointId)
-        if (!stage) continue
+        if (!stage) { missingStage.push({ agentId, checkpointId }); continue }
         const review = reviews.get(stageKey(stage))
-        if (!review || review.status !== 'APPROVED') outstanding.push({ agentId, checkpointId })
+        if (!review || review.status !== 'APPROVED') awaitingReview.push({ agentId, checkpointId })
       }
     }
-    if (outstanding.length) return Object.freeze({ runId, status: 'PENDING_REVIEW', outstanding: outstanding.length })
+    if (missingStage.length) {
+      return Object.freeze({ runId, status: 'IN_PROGRESS', reason: 'REQUIRED_STAGE_NOT_STARTED', outstanding: missingStage.length })
+    }
+    if (awaitingReview.length) {
+      return Object.freeze({ runId, status: 'PENDING_REVIEW', outstanding: awaitingReview.length })
+    }
     const terminal = stages.filter(record => record.status === 'COMPLETED')
     if (terminal.length === stages.length) return Object.freeze({ runId, status: 'COMPLETED', stages: stages.length })
     return Object.freeze({ runId, status: 'IN_PROGRESS', stages: stages.length })

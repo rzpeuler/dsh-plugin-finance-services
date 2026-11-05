@@ -1,0 +1,232 @@
+﻿TAP version 13
+# Subtest: a required checkpoint holds until a decision exists
+ok 1 - a required checkpoint holds until a decision exists
+  ---
+  duration_ms: 2.494
+  type: 'test'
+  ...
+# Subtest: a checkpoint the policy does not require allows the stage without any record
+ok 2 - a checkpoint the policy does not require allows the stage without any record
+  ---
+  duration_ms: 0.1932
+  type: 'test'
+  ...
+# Subtest: an approval for the same artifact allows the stage
+ok 3 - an approval for the same artifact allows the stage
+  ---
+  duration_ms: 0.5109
+  type: 'test'
+  ...
+# Subtest: changing the artifact invalidates the earlier approval
+ok 4 - changing the artifact invalidates the earlier approval
+  ---
+  duration_ms: 0.2612
+  type: 'test'
+  ...
+# Subtest: a rejection holds the stage and cannot be overwritten by a second decision
+ok 5 - a rejection holds the stage and cannot be overwritten by a second decision
+  ---
+  duration_ms: 0.2659
+  type: 'test'
+  ...
+# Subtest: only one settlement is accepted per session, run, agent and checkpoint
+ok 6 - only one settlement is accepted per session, run, agent and checkpoint
+  ---
+  duration_ms: 0.2005
+  type: 'test'
+  ...
+# Subtest: concurrent decisions in the same turn settle at most once
+ok 7 - concurrent decisions in the same turn settle at most once
+  ---
+  duration_ms: 0.1829
+  type: 'test'
+  ...
+# Subtest: a decision from another policy version is rejected and not stored
+ok 8 - a decision from another policy version is rejected and not stored
+  ---
+  duration_ms: 0.1841
+  type: 'test'
+  ...
+# Subtest: an approval taken under one snapshot cannot unlock another snapshot of the same version
+ok 9 - an approval taken under one snapshot cannot unlock another snapshot of the same version
+  ---
+  duration_ms: 0.285
+  type: 'test'
+  ...
+# Subtest: an expired approval no longer opens the gate
+ok 10 - an expired approval no longer opens the gate
+  ---
+  duration_ms: 0.2327
+  type: 'test'
+  ...
+# Subtest: a decision without a usable artifact identity is refused
+ok 11 - a decision without a usable artifact identity is refused
+  ---
+  duration_ms: 0.538
+  type: 'test'
+  ...
+# Subtest: records missing mandatory fields are refused
+ok 12 - records missing mandatory fields are refused
+  ---
+  duration_ms: 0.3305
+  type: 'test'
+  ...
+# Subtest: settling a checkpoint the policy does not require records nothing
+ok 13 - settling a checkpoint the policy does not require records nothing
+  ---
+  duration_ms: 0.1105
+  type: 'test'
+  ...
+# Subtest: the pending projection lists required checkpoints and reflects decisions
+ok 14 - the pending projection lists required checkpoints and reflects decisions
+  ---
+  duration_ms: 0.3987
+  type: 'test'
+  ...
+# Subtest: history is ordered, immutable and carries the record fields the task requires
+ok 15 - history is ordered, immutable and carries the record fields the task requires
+  ---
+  duration_ms: 0.1945
+  type: 'test'
+  ...
+# Subtest: the gate never widens external side effects or tool authority
+ok 16 - the gate never widens external side effects or tool authority
+  ---
+  duration_ms: 0.1806
+  type: 'test'
+  ...
+# Subtest: the catalogue covers exactly the ten main Agents and never invents a worker checkpoint
+ok 17 - the catalogue covers exactly the ten main Agents and never invents a worker checkpoint
+  ---
+  duration_ms: 0.8482
+  type: 'test'
+  ...
+# Subtest: original keeps the source-mandated intermediate and final reviews
+ok 18 - original keeps the source-mandated intermediate and final reviews
+  ---
+  duration_ms: 1.6456
+  type: 'test'
+  ...
+# Subtest: fast skips only the declared progress pause and keeps mandatory gates
+ok 19 - fast skips only the declared progress pause and keeps mandatory gates
+  ---
+  duration_ms: 0.8576
+  type: 'test'
+  ...
+# Subtest: strict adds assumption and result reviews on top of the original nodes
+ok 20 - strict adds assumption and result reviews on top of the original nodes
+  ---
+  duration_ms: 0.2473
+  type: 'test'
+  ...
+# Subtest: custom selects per checkpoint but cannot disable a mandatory one
+ok 21 - custom selects per checkpoint but cannot disable a mandatory one
+  ---
+  duration_ms: 0.5731
+  type: 'test'
+  ...
+# Subtest: scope resolves bundle then Agent then run, and records which levels applied
+ok 22 - scope resolves bundle then Agent then run, and records which levels applied
+  ---
+  duration_ms: 0.1488
+  type: 'test'
+  ...
+# Subtest: an invalid level fails loudly instead of silently falling back
+ok 23 - an invalid level fails loudly instead of silently falling back
+  ---
+  duration_ms: 0.2274
+  type: 'test'
+  ...
+# Subtest: locked boundaries and external side effects reject any configuration attempt
+ok 24 - locked boundaries and external side effects reject any configuration attempt
+  ---
+  duration_ms: 0.2664
+  type: 'test'
+  ...
+# Subtest: the snapshot is frozen and its digest identifies the requirement set
+ok 25 - the snapshot is frozen and its digest identifies the requirement set
+  ---
+  duration_ms: 0.3479
+  type: 'test'
+  ...
+# Subtest: checkpoint descriptions explain why a gate exists without implying approval
+ok 26 - checkpoint descriptions explain why a gate exists without implying approval
+  ---
+  duration_ms: 0.3618
+  type: 'test'
+  ...
+# Subtest: a decision survives a reload and stays once-only across restarts
+ok 27 - a decision survives a reload and stays once-only across restarts
+  ---
+  duration_ms: 1.9213
+  type: 'test'
+  ...
+# Subtest: a failed save never leaves an approval that only exists in memory
+ok 28 - a failed save never leaves an approval that only exists in memory
+  ---
+  duration_ms: 0.6808
+  type: 'test'
+  ...
+# Subtest: a stage that was running at shutdown becomes an unknown termination, not a resume
+ok 29 - a stage that was running at shutdown becomes an unknown termination, not a resume
+  ---
+  duration_ms: 0.5204
+  type: 'test'
+  ...
+# Subtest: open reports how many stages were classified as interrupted
+ok 30 - open reports how many stages were classified as interrupted
+  ---
+  duration_ms: 0.2972
+  type: 'test'
+  ...
+# Subtest: a failed stage and a changed artifact both demand a rerun
+ok 31 - a failed stage and a changed artifact both demand a rerun
+  ---
+  duration_ms: 0.3362
+  type: 'test'
+  ...
+# Subtest: a run with every required approval and terminal stage is completed
+ok 32 - a run with every required approval and terminal stage is completed
+  ---
+  duration_ms: 0.3361
+  type: 'test'
+  ...
+# Subtest: a run waiting on a required review is pending, not completed
+ok 33 - a run waiting on a required review is pending, not completed
+  ---
+  duration_ms: 0.2157
+  type: 'test'
+  ...
+# Subtest: an unknown run is distinguished from an empty queue
+ok 34 - an unknown run is distinguished from an empty queue
+  ---
+  duration_ms: 0.3773
+  type: 'test'
+  ...
+# Subtest: the queue keeps two sessions apart and reflects their own decisions
+ok 35 - the queue keeps two sessions apart and reflects their own decisions
+  ---
+  duration_ms: 0.4892
+  type: 'test'
+  ...
+# Subtest: a required stage that never started keeps the run in progress rather than completed
+ok 36 - a required stage that never started keeps the run in progress rather than completed
+  ---
+  duration_ms: 0.3037
+  type: 'test'
+  ...
+# Subtest: the persisted document is versioned, monotonic and rejects corruption
+ok 37 - the persisted document is versioned, monotonic and rejects corruption
+  ---
+  duration_ms: 0.2494
+  type: 'test'
+  ...
+1..37
+# tests 37
+# suites 0
+# pass 37
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 82.4687

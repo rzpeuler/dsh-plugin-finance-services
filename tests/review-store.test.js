@@ -140,6 +140,18 @@ test('the queue keeps two sessions apart and reflects their own decisions', asyn
   assert.ok(rows.every(row => Object.isFrozen(row)))
 })
 
+test('a required stage that never started keeps the run in progress rather than completed', async () => {
+  const seam = memorySeam()
+  const instance = await store(seam)
+  await instance.settle(review())
+  await instance.settle(review({ reviewId: 'review-deck', checkpointId: 'deck_complete' }))
+  await instance.recordStage({ runId: 'run-1', agentId: PITCH, checkpointId: 'valuation_complete', status: 'COMPLETED', artifact: { hash: HASH } })
+  const outcome = instance.classify('run-1')
+  assert.equal(outcome.status, 'IN_PROGRESS')
+  assert.equal(outcome.reason, 'REQUIRED_STAGE_NOT_STARTED')
+  assert.equal(outcome.outstanding, 1)
+})
+
 test('the persisted document is versioned, monotonic and rejects corruption', async () => {
   const seam = memorySeam()
   const instance = await store(seam)

@@ -66,6 +66,14 @@ for (const [entry, localeEntry] of [['role-numeric-1', 'role'], ['role-data-1', 
   assert.equal(pkg.exports[`./${entry}/icon`], './icon.svg');
   assert.ok(!/from\s+['"]\.\.?\//.test(await readFile(join(root, `lib/${entry}.js`), 'utf8')), `${entry} must be self-contained`);
 }
+if (pkg.exports['./review']) {
+  assert.equal(pkg.exports['./review'], './lib/review.js');
+  assert.ok(pkg.files.includes('lib/review.js'));
+  const review = await readFile(join(root, 'lib/review.js'), 'utf8');
+  assert.ok(!/from\s+['"]\.\.?\//.test(review), 'review must be self-contained');
+  assert.match(review, /financeReview/);
+  assert.ok(!/publish\(|post\(|trade\(|transfer\(/.test(review), 'the review service must not expose side-effecting operations');
+}
 const client = await readFile(join(root, 'lib/client.js'), 'utf8');
 new Script(client, { filename: 'lib/client.js' });
 assert.match(client, /window\.__ModuleLoader__\.load/);

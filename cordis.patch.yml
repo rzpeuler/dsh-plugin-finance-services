@@ -7,6 +7,10 @@
       config:
         requestTimeoutMs: 10000
         maxConcurrentQueries: 32
+    - id: finance-review
+      name: '@local/dsh-financial-services/review'
+      config:
+        policyId: original
     - id: preset-finance-pitch-agent
       name: '@deepseek-ai/dsh-agent-preset'
       config:
