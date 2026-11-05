@@ -1,0 +1,15 @@
+- insert:
+    - id: p4-office-native-20261105-g8b9d366d-technical-only
+      name: '@local/dsh-p4-office-native-20261105-g8b9d366d-technical-only'
+      config:
+        authorSessionId: session-d8bb3257-edd6-400b-91f5-764c05e96dc6
+        primaryRuntimeSource: 'C:\Users\Administrator\.dsh\dsh-runtimes\dsh-primary-runtime'
+        runRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p4-office-native\runs\20261105-g8b9d366d'
+        acceptNativeProviderPrivateTempAndPartial: true
+    # Installation-local technical bindings from actual dependency Tool/Office skill facts; not Model inputs.
+        bindings:
+          source: CREATOR_TOOL_AND_SKILL_SUPPLIED
+          payloadDigest: e2cef445c262ce6e8d28480b5ebecc8b0c54c06bea7183374debfcf02f30eb7d
+          python: 'C:\Users\Administrator\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\python.exe'
+          node: 'C:\Users\Administrator\AppData\Local\Programs\DeepSeek Harness\resources\runtime\primary-runtime\dependencies\node\bin\node.exe'
+          kitCli: 'C:\Users\Administrator\AppData\Local\Programs\DeepSeek Harness\resources\app.asar.unpacked\dsh\node_modules\@deepseek-ai\libreoffice-kit\lib\cli.js'

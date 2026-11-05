@@ -1,0 +1,7 @@
+{
+  "runId": "20261105-hd943e4c1",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\fixture-20261105-hd943e4c1",
+  "reportPath": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-hd943e4c1\\report.json",
+  "diagnosticOnly": true,
+  "scope": "TWO_FIXED_CONFINED_CALLS_SYSTEM_VS_BUNDLED"
+}
