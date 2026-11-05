@@ -6,6 +6,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     en: {
       title: 'Financial workbench', loading: 'Reading workspace state…', refresh: 'Refresh',
       tasksTitle: 'Tasks', templates: 'templates', checkpoints: 'checkpoints', startsNothing: 'Declarations only — no run is started here.',
+      backToSession: 'Open session', noSessionLinked: 'No session linked',
       download: 'Download workbook', downloading: 'Building the workbook…', downloaded: 'Workbook downloaded.',
       downloadFailed: 'The workbook could not be delivered.',
       workspace: 'Workspace', binding: 'Binding', unbound: 'Unbound', bound: 'Bound', revision: 'Revision',
@@ -22,6 +23,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     zh: {
       title: '金融工作台', loading: '正在读取工作区状态…', refresh: '刷新',
       tasksTitle: '任务', templates: '个模板', checkpoints: '检查点', startsNothing: '仅声明：此处不会启动任何运行。',
+      backToSession: '打开会话', noSessionLinked: '未关联会话',
       download: '下载工作簿', downloading: '正在生成工作簿…', downloaded: '工作簿已下载。',
       downloadFailed: '工作簿未能交付。',
       workspace: '工作区', binding: '绑定', unbound: '未绑定', bound: '已绑定', revision: '修订',
@@ -204,7 +206,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       h('p', { className: 'finance-p2__meta' }, `${t('source')}: ${state.source}`))
   }
 
-  function Panel({ workbenchT: t, loadOverview, loadWorkbook }) {
+  function Panel({ workbenchT: t, loadOverview, loadWorkbook, openSession }) {
     const [state, setState] = React.useState({ status: 'loading', cards: null, error: null })
     const [download, setDownload] = React.useState({ status: 'idle', error: null })
     const startDownload = () => {
@@ -257,7 +259,10 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
           `${shortId(run.runId)} · ${run.classification} · ${t('checkpoints')}: ${Object.entries(run.checkpoints).map(([id, state]) => `${id}=${state}`).join(', ')} · ${t('deliverablesTitle')}: ${run.deliverableCount}`)))) : null, cards.runs),
       card(t, t('deliverablesTitle'), deliverables ? (deliverables.items.length === 0 ? h('p', null, t('noDeliverables'))
         : h('ul', { className: 'finance-p2__list' }, deliverables.items.slice(0, 10).map(item => h('li', { key: `${item.runId}:${item.sha256}` },
-          `${item.path} · ${t('bytes')}: ${item.bytes} · ${t('classification')}: ${item.classification} · ${t('sha')}: ${item.sha256.slice(0, 12)}…`)))) : null, cards.deliverables),
+          `${item.path} · ${t('bytes')}: ${item.bytes} · ${t('classification')}: ${item.classification} · ${t('sha')}: ${item.sha256.slice(0, 12)}…`,
+          item.sessionId && openSession
+            ? h('button', { type: 'button', onClick: () => openSession(item.sessionId) }, t('backToSession'))
+            : h('span', { className: 'finance-p2__meta' }, item.sessionId ? ` ${t('noSessionLinked')}` : ''))))) : null, cards.deliverables),
       card(t, t('reviews'), reviews ? h('p', null,
         `${t('sessions')}: ${reviews.sessions} · ${t('items')}: ${reviews.items} · ${t('pending')}: ${reviews.pending} · ${t('decided')}: ${reviews.decided}`)
         : null, cards.reviews),
@@ -304,7 +309,11 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     const loadWorkbook = ctx.remote.financeReview?.reviewWorkbook
       ? async () => decodeWorkbook(await ctx.remote.financeReview.reviewWorkbook({}))
       : null
-    return { workbenchT, loadOverview, loadWorkbook }
+    // Native navigation only: the page's own uiWorkspace selects the Session and shows its Conversation.
+    const openSession = typeof ctx.uiWorkspace?.openSession === 'function'
+      ? sessionId => { try { ctx.uiWorkspace.openSession(sessionId) } catch { /* navigation refused; the page keeps its selection */ } }
+      : null
+    return { workbenchT, loadOverview, loadWorkbook, openSession }
   }
 
   return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns,

@@ -423,5 +423,15 @@
       "deliverable open or back-to-session",
       "offline case"
     ]
+  },
+  "deliverableOpen": {
+    "status": "BUILT_INSTALLED_AWAITING_CLICK",
+    "implementation": "deliverable rows call the page's own uiWorkspace.openSession(sessionId); no new navigation service",
+    "clientTests": "tests/workbench-client-panel.test.js (3 new checks: button, handler, installer guard)",
+    "install": {
+      "application": "applied"
+    },
+    "clicked": false,
+    "check": "UI-5 in P6-manual-plan-001.json"
   }
 }

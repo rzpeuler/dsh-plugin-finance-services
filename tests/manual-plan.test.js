@@ -6,8 +6,8 @@ import { readFileSync } from 'node:fs'
 const plan = JSON.parse(readFileSync('acceptance/P6-manual-plan-001.json', 'utf8'))
 
 test('the plan covers the four checks the user agreed to perform', () => {
-  assert.equal(plan.checks.length, 4)
-  assert.deepEqual(plan.checks.map(check => check.id), ['UI-1', 'UI-2', 'UI-3', 'UI-4'])
+  assert.equal(plan.checks.length, 5)
+  assert.deepEqual(plan.checks.map(check => check.id), ['UI-1', 'UI-2', 'UI-3', 'UI-4', 'UI-5'])
   for (const check of plan.checks) {
     assert.ok(check.title && check.open && check.expect, `${check.id} needs title, open and expect`)
     assert.ok(check.expect.length > 20, `${check.id} expectation is too vague`)

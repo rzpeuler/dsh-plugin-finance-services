@@ -96,14 +96,15 @@
     {
       "id": "P6-DELIVERABLE-OPEN",
       "stage": "P6",
-      "title": "Deliverables cannot yet be opened or traced back to their Session from the UI",
-      "status": "NOT_IMPLEMENTED",
-      "blockedBy": "Needs a native file card or preview entry point bound to the indexed path and Session.",
+      "title": "Deliverables now offer the native open-session action; the click itself is unverified",
+      "status": "PARTIAL",
+      "blockedBy": "A person must refresh the page, open a deliverable's session and confirm the switch.",
       "evidence": [
+        "acceptance/P6-manual-plan-001.json",
         "acceptance/P6-index-native-pass-001.json"
       ],
-      "notClaimed": "Open, preview or jump to Session",
-      "nextStep": "Wire the indexed deliverable to the native preview once the entry point is confirmed."
+      "notClaimed": "Verified navigation, or opening the file itself",
+      "nextStep": "Perform UI-5 and record the outcome."
     },
     {
       "id": "P6-LIFECYCLE-UI",

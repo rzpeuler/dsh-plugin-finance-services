@@ -247,3 +247,55 @@ test('the panel offers one download control and reports its state', async () => 
   assert.equal(buttons.length, 2, 'refresh plus download')
   assert.ok(buttons.some(button => texts(button).join(' ').includes('download')))
 })
+
+test('a deliverable linked to a session offers the native open-session action', async () => {
+  const opened = []
+  const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+  stub.reset()
+  client.Panel({ workbenchT: key => key, loadOverview: load, openSession: id => opened.push(id) })
+  await new Promise(resolve => setImmediate(resolve))
+  await new Promise(resolve => setImmediate(resolve))
+  stub.flush(); stub.rewind()
+  const tree = client.Panel({ workbenchT: key => key, loadOverview: load, openSession: id => opened.push(id) })
+  const buttons = flatten(tree).filter(node => node && node.type === 'button')
+  const sessionButtons = buttons.filter(button => texts(button).join(' ').includes('backToSession'))
+  assert.equal(sessionButtons.length, 1, 'one deliverable has a session')
+  sessionButtons[0].props.onClick()
+  assert.deepEqual(opened, ['session-a'])
+})
+
+test('without a native navigation handle the row stays informational', async () => {
+  const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+  stub.reset()
+  client.Panel({ workbenchT: key => key, loadOverview: load, openSession: null })
+  await new Promise(resolve => setImmediate(resolve))
+  await new Promise(resolve => setImmediate(resolve))
+  stub.flush(); stub.rewind()
+  const tree = client.Panel({ workbenchT: key => key, loadOverview: load, openSession: null })
+  const buttons = flatten(tree).filter(node => node && node.type === 'button')
+  assert.equal(buttons.filter(button => texts(button).join(' ').includes('backToSession')).length, 0)
+  assert.ok(texts(tree).join(' ').includes('noSessionLinked'))
+})
+
+test('the installer exposes the session handle only when the page provides one', () => {
+  const withNav = client.install({
+    effect(register) { register() },
+    locale: { register() {}, bind() { return key => key } },
+    remote: { financeOperations: { async snapshot() { return snapshot }, async catalog() { return catalogue } } },
+    uiWorkspace: { openSession(id) { this.last = id } },
+  })
+  assert.equal(typeof withNav.openSession, 'function')
+  withNav.openSession('session-z')
+  const withoutNav = client.install({
+    effect(register) { register() },
+    locale: { register() {}, bind() { return key => key } },
+    remote: { financeOperations: { async snapshot() { return snapshot }, async catalog() { return catalogue } } },
+  })
+  assert.equal(withoutNav.openSession, null)
+})
