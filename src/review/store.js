@@ -104,12 +104,19 @@ export class ReviewStore {
   evaluate(request) { return this.#gate.evaluate(request) }
 
   /** Record a stage transition. `RUNNING` is only meaningful within one process lifetime. */
-  async recordStage({ sessionId, runId, agentId, checkpointId, status, artifact }) {
+  async recordStage({ sessionId, runId, agentId, checkpointId, status, artifact, errorCode = null }) {
     if (!runId || !agentId || !checkpointId) fail('STAGE_RECORD_INVALID', 'runId, agentId and checkpointId are required')
     if (!STAGE_STATES.has(status)) fail('STAGE_RECORD_INVALID', 'status must be RUNNING, COMPLETED or FAILED')
+    if (errorCode !== null) {
+      if (typeof errorCode !== 'string' || !/^[A-Z][A-Z0-9_]{1,63}$/.test(errorCode)) {
+        fail('STAGE_RECORD_INVALID', 'errorCode must be an uppercase diagnostic code')
+      }
+      if (status !== 'FAILED') fail('STAGE_RECORD_INVALID', 'errorCode is only meaningful for a FAILED stage')
+    }
     const key = stageKey({ runId, agentId, checkpointId })
     const record = { runId, agentId, checkpointId, status, updatedAt: this.#now() }
     if (typeof sessionId === 'string' && sessionId) record.sessionId = sessionId
+    if (errorCode !== null) record.errorCode = errorCode
     if (artifact) record.artifact = { hash: artifact.hash ?? null, version: artifact.version ?? null }
     const candidate = { ...this.#document, stages: { ...this.#document.stages, [key]: record } }
     try {

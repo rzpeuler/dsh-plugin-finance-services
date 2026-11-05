@@ -84,7 +84,7 @@
     "P5-SEPARATION": "PASS_NATIVE_MATRIX",
     "P5-NOSIDE": "PASS_NATIVE_SURFACE",
     "P5-PERSIST": "PASS_NATIVE",
-    "P5-ERRORS": "PARTIAL_NATIVE"
+    "P5-ERRORS": "PASS_NATIVE_DIAGNOSTIC_CODES_PARTIAL_LINEAGE"
   },
   "designDecisions": [
     "Approvals bind both the policy version string and the snapshot digest, so a decision taken under one requirement set cannot unlock another snapshot with the same version label.",
@@ -310,5 +310,19 @@
     "custom": "enables only the chosen node and keeps mandatory ones",
     "isolation": "separate domains and decisions; a fast-mode record cannot unlock the original gate",
     "sideEffects": "DISABLED in all four"
+  },
+  "errorLineage": {
+    "status": "PASS_NATIVE_DIAGNOSTIC_CODES_PARTIAL_LINEAGE",
+    "evidence": "P6-error-lineage-native-pass-001.json",
+    "checksPassed": 6,
+    "checksFailed": 0,
+    "rule": "Only uppercase diagnostic codes are stored; free text and provider messages are refused",
+    "surface": [
+      "stage record",
+      "runs projection",
+      "reviewRuns dispatch",
+      "classification"
+    ],
+    "stillMissing": "Per-business source lineage; codes are not yet grouped by source or adapter"
   }
 }

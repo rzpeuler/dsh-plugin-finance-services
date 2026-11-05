@@ -163,3 +163,25 @@ test('the persisted document is versioned, monotonic and rejects corruption', as
   const corrupt = memorySeam({ ...seam.box.document, version: 99 })
   await assert.rejects(() => store(corrupt), error => error.code === 'STORE_CORRUPT')
 })
+
+test('a failed stage may carry a whitelisted diagnostic code and keep it across a reload', async () => {
+  const seam = memorySeam()
+  const first = await store(seam)
+  await first.recordStage({ sessionId: 'session-x', runId: 'run-x', agentId: PITCH, checkpointId: 'deck_complete',
+    status: 'FAILED', artifact: { hash: HASH }, errorCode: 'MODEL_TIMEOUT' })
+  const second = await store(seam)
+  const record = second.stageRecords().find(item => item.runId === 'run-x')
+  assert.equal(record.status, 'FAILED')
+  assert.equal(record.errorCode, 'MODEL_TIMEOUT')
+})
+
+test('diagnostic codes are restricted and only valid on a failed stage', async () => {
+  const seam = memorySeam()
+  const instance = await store(seam)
+  await assert.rejects(() => instance.recordStage({ runId: 'r', agentId: PITCH, checkpointId: 'deck_complete',
+    status: 'FAILED', errorCode: 'bad code with spaces' }), error => error.code === 'STAGE_RECORD_INVALID')
+  await assert.rejects(() => instance.recordStage({ runId: 'r', agentId: PITCH, checkpointId: 'deck_complete',
+    status: 'COMPLETED', errorCode: 'MODEL_TIMEOUT' }), error => error.code === 'STAGE_RECORD_INVALID')
+  await assert.rejects(() => instance.recordStage({ runId: 'r', agentId: PITCH, checkpointId: 'deck_complete',
+    status: 'FAILED', errorCode: 'lower_case' }), error => error.code === 'STAGE_RECORD_INVALID')
+})

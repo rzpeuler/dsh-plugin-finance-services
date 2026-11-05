@@ -3,13 +3,27 @@
   "observedDate": "2026-11-05",
   "rule": "A gap closes only with a new native or browser observation saved under acceptance/. Static code and installed state never close a gap.",
   "stages": {
-    "P0": {"stageAccepted": true},
-    "P1": {"stageAccepted": true},
-    "P2": {"stageAccepted": true},
-    "P3": {"stageAccepted": false},
-    "P4": {"stageAccepted": false},
-    "P5": {"stageAccepted": false},
-    "P6": {"stageAccepted": false}
+    "P0": {
+      "stageAccepted": true
+    },
+    "P1": {
+      "stageAccepted": true
+    },
+    "P2": {
+      "stageAccepted": true
+    },
+    "P3": {
+      "stageAccepted": false
+    },
+    "P4": {
+      "stageAccepted": false
+    },
+    "P5": {
+      "stageAccepted": false
+    },
+    "P6": {
+      "stageAccepted": false
+    }
   },
   "gaps": [
     {
@@ -18,7 +32,10 @@
       "title": "Native MCP Manager operations and safe financial delegation are unavailable",
       "status": "BLOCKED_HOST_INTERFACE",
       "blockedBy": "No shipped Manager package or public delegation contract that preserves the exact originating Agent, tool approval and monotonic floor.",
-      "evidence": ["acceptance/P3-native-mcp-pass-003.json", "acceptance/P3-native-mcp-unload-pass-003.json"],
+      "evidence": [
+        "acceptance/P3-native-mcp-pass-003.json",
+        "acceptance/P3-native-mcp-unload-pass-003.json"
+      ],
       "notClaimed": "Manager pass, commercial source access, OAuth",
       "nextStep": "Obtain a public delegation contract, or keep the documented compatibility boundary."
     },
@@ -28,7 +45,11 @@
       "title": "Agent-driven Office delivery is blocked",
       "status": "BLOCKED_HOST_INTERFACE",
       "blockedBy": "Six fixed calls under the native Windows confinement runner exit 0xC0000142, and ctx.fs exposes no binary workspace write or artifact publication.",
-      "evidence": ["acceptance/P4-native-startup-matrix-006.json", "acceptance/P4-office-confinement-read-control-008.json", "acceptance/P4-native-candidate-health-001.json"],
+      "evidence": [
+        "acceptance/P4-native-startup-matrix-006.json",
+        "acceptance/P4-office-confinement-read-control-008.json",
+        "acceptance/P4-native-candidate-health-001.json"
+      ],
       "notClaimed": "Agent-generated Excel, Word, PowerPoint or PDF",
       "nextStep": "Host supplies a usable confined subprocess or a binary artifact write; a creator-side sample already pins the content specification."
     },
@@ -38,7 +59,10 @@
       "title": "Ten native business runs with licensed data have not been executed",
       "status": "NOT_RUN",
       "blockedBy": "No licensed commercial data entitlement; Office channel blocked as above.",
-      "evidence": ["acceptance/P4-results.json", "docs/P4_BUSINESS_MAP.md"],
+      "evidence": [
+        "acceptance/P4-results.json",
+        "docs/P4_BUSINESS_MAP.md"
+      ],
       "notClaimed": "Any business E2E or commercial output",
       "nextStep": "Run per-business inputs once data or Office delivery becomes available."
     },
@@ -48,7 +72,10 @@
       "title": "Operating-system process restart has not been compared",
       "status": "NOT_RUN",
       "blockedBy": "Requires restarting the Desktop application; only bundle-level remove/reinstall and disable/enable were exercised.",
-      "evidence": ["acceptance/P5-separation-phase-b-002.json", "acceptance/P5-persist-phase-b.json"],
+      "evidence": [
+        "acceptance/P5-separation-phase-b-002.json",
+        "acceptance/P5-persist-phase-b.json"
+      ],
       "notClaimed": "Recovery across an application restart",
       "nextStep": "Restart the app after recording a review, then re-read the queue projection."
     },
@@ -58,7 +85,11 @@
       "title": "Every client page is unverified in a browser",
       "status": "NOT_RUN",
       "blockedBy": "No browser automation in this session; code, build, install and dispatch are verified instead.",
-      "evidence": ["acceptance/P6-workbench-tests-002.tap", "acceptance/P6-client-scenarios.tap", "acceptance/P6-i18n-coverage.tap"],
+      "evidence": [
+        "acceptance/P6-workbench-tests-002.tap",
+        "acceptance/P6-client-scenarios.tap",
+        "acceptance/P6-i18n-coverage.tap"
+      ],
       "notClaimed": "Visual acceptance, responsive layout, contrast, keyboard reachability",
       "nextStep": "Follow acceptance/MANUAL_CHECKLIST.md and save the observation."
     },
@@ -68,7 +99,9 @@
       "title": "Deliverables cannot yet be opened or traced back to their Session from the UI",
       "status": "NOT_IMPLEMENTED",
       "blockedBy": "Needs a native file card or preview entry point bound to the indexed path and Session.",
-      "evidence": ["acceptance/P6-index-native-pass-001.json"],
+      "evidence": [
+        "acceptance/P6-index-native-pass-001.json"
+      ],
       "notClaimed": "Open, preview or jump to Session",
       "nextStep": "Wire the indexed deliverable to the native preview once the entry point is confirmed."
     },
@@ -78,7 +111,10 @@
       "title": "UI behaviour across install, upgrade, disable, reinstall is unverified",
       "status": "NOT_RUN",
       "blockedBy": "Requires driving the Plugin Manager and the browser together.",
-      "evidence": ["acceptance/P5-persist-phase-b.json", "acceptance/P5-boundary-phase-b-003.json"],
+      "evidence": [
+        "acceptance/P5-persist-phase-b.json",
+        "acceptance/P5-boundary-phase-b-003.json"
+      ],
       "notClaimed": "UI lifecycle acceptance",
       "nextStep": "Record each lifecycle step in the manual checklist."
     },
@@ -88,19 +124,24 @@
       "title": "Accessibility and responsive behaviour are only statically plausible",
       "status": "NOT_RUN",
       "blockedBy": "Requires a rendered page and keyboard/screen-reader inspection.",
-      "evidence": ["tests/i18n-coverage.test.js"],
+      "evidence": [
+        "tests/i18n-coverage.test.js"
+      ],
       "notClaimed": "WCAG conformance or narrow-screen acceptance",
       "nextStep": "Inspect heading order, focus ring, contrast and a 520px viewport."
     },
     {
       "id": "P5-ERROR-LINEAGE",
       "stage": "P5",
-      "title": "Per-business error and source lineage is incomplete",
+      "title": "Diagnostic codes are stored and projected; per-business source lineage is missing",
       "status": "PARTIAL",
-      "blockedBy": "Error codes are whitelisted and values never leak, but no per-business lineage view exists.",
-      "evidence": ["acceptance/P5-queue-pass-002.json"],
-      "notClaimed": "Full error and source lineage per business",
-      "nextStep": "Extend the run projection with source and error codes once business runs exist."
+      "blockedBy": "Stage records carry whitelisted codes only; no source or adapter grouping exists yet.",
+      "evidence": [
+        "acceptance/P6-error-lineage-native-pass-001.json",
+        "acceptance/P5-queue-pass-002.json"
+      ],
+      "notClaimed": "Per-source error lineage",
+      "nextStep": "Group codes by source and adapter once business runs exist."
     }
   ]
 }

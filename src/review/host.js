@@ -22,6 +22,7 @@ const Stage = z.object({
   sessionId: z.string().min(1).max(128).optional(),
   runId: z.string().min(1).max(128), agentId: z.string().min(1).max(128), checkpointId: z.string().min(1).max(96),
   status: z.enum(['RUNNING', 'COMPLETED', 'FAILED', 'UNKNOWN_TERMINATED']),
+  errorCode: z.string().regex(/^[A-Z][A-Z0-9_]{1,63}$/).optional(),
   updatedAt: z.string().min(1).max(40), artifact: Artifact.optional(),
   classifiedAt: z.string().max(40).optional(), reason: z.string().max(160).optional(),
   interruptedRevision: z.number().int().min(0).optional(),
@@ -166,6 +167,7 @@ export default class FinanceReview extends TypertRemoteService {
       run.agents.add(stage.agentId)
       if (stage.sessionId) run.sessions.add(stage.sessionId)
       run.checkpoints[stage.checkpointId] = stage.status
+      if (stage.errorCode) { run.errors ??= {}; run.errors[stage.checkpointId] = stage.errorCode }
     }
     for (const item of deliverables) {
       const run = grouped.get(item.runId)
@@ -173,7 +175,7 @@ export default class FinanceReview extends TypertRemoteService {
     }
     const runsList = [...grouped.values()].map(run => ({
       runId: run.runId, agents: [...run.agents].sort(), sessions: [...run.sessions].sort(),
-      checkpoints: run.checkpoints, classification: this.store.classify(run.runId).status,
+      checkpoints: run.checkpoints, errors: run.errors ?? {}, classification: this.store.classify(run.runId).status,
       deliverableCount: run.deliverableCount,
     })).sort((a, b) => (a.runId < b.runId ? -1 : 1)).slice(0, 200)
     return Object.freeze(runsList.map(run => Object.freeze({ ...run })))
