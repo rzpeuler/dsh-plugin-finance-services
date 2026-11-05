@@ -18,7 +18,7 @@
 
 ## 安装
 
-要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。当前候选的原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但0.3.0-alpha.2复制安装的fresh进程矩阵尚未执行，不能当作已验证的安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
+要求 DSH `0.2.1-rc.5` 与 Node `^22.19 || >=24`。当前候选 `0.4.0-alpha.1` 的原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但复制安装的fresh进程矩阵尚未执行，不能当作已验证的安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
 
 ```text
 pnpm install --ignore-scripts
@@ -29,6 +29,29 @@ pnpm pack
 ```
 
 不在用户 Profile 目录手写配置或运行包管理器。安装返回 application=applied 才表示已应用；restart-required 必须按提示重启。源码修改不保证现有页面自动刷新，必须先重建Client artifact，并按宿主返回的生命周期操作。上下文预算与未测口径见[模型体验](docs/MODEL_EXPERIENCE.md)。
+
+## 升级与回滚
+
+升级 = 用同一路径重新 `install_bundle`（或先在 Manager 中卸载再安装）。审核策略在服务启动时固定，因此升级或重启后用**新**服务生命周期生效；已记录的审核决定按各自快照保留，不会因为升级自动失效或自动批准。旧的角色/数据模块（`role-numeric-1`、`data`）仍随包保留，引用它们的既有 Preset 继续可用；回滚到旧版本仍是同样的链接安装流程。升级不会删除用户文件、DSH 历史或审核记录。
+
+## 卸载
+
+在原生 Plugin Manager 中移除本 Bundle。卸载会撤下 Host 行与 Client 面板，但**不会**删除用户目录、成果文件、DSH Session 历史，也不会删除 `financial_review` / `financial_artifacts` 自有域中的审核与成果索引；重新安装后可继续读取。若目录本身已移动，需要重新绑定 Workspace。
+
+## 凭据与数据源依赖
+
+本版不保存任何商业数据凭据：Source Policy 只记录 adapter/来源/作用域/能力，真实凭据由宿主 credential 服务负责（当前未接入）。商业 Provider 默认为 `NOT_CONFIGURED` 且不自动授权；两个 TEST_ONLY Adapter 只用于验证注册/查询/卸载链路，不是商业数据。MCP 侧只验证了发行版原生 client 的连接与卸载，Manager 与安全委派接口缺失，见[MCP兼容边界](docs/MCP_COMPATIBILITY.md)。
+
+## Agent 能力目录
+
+10 个主 Agent 与 30 个 Worker 的 persona、工具权限与 Worker 白名单由 `assets/agent-manifest.json` 决定；目录入口只创建未提交草稿。各角色的能力差异与源依据见[业务源映射](docs/P4_BUSINESS_MAP.md)，工具与权限差异见[角色运行时](docs/ROLE_RUNTIME.md)。
+
+## 排障
+
+- 界面显示"审核服务不可用"：检查 `finance-review` 行是否启用；审核只读模型需要该行处于 active。
+- 数据源卡片显示 `NOT_CONFIGURED`：说明没有注册 Adapter 或没有配置来源策略，不代表连接失败。
+- 写入被拒绝：写入只允许在该 Session 的成果目录内，且编辑需携带当前 SHA；符号链接/junction 一律拒绝。
+- 升级后策略没变：策略在服务启动时固定，需要重新加载该行才会应用新配置。
 
 ## 首次使用
 
@@ -46,4 +69,4 @@ pnpm pack
 
 ## English summary
 
-An independent out-of-tree DSH bundle. Version 0.3.0-alpha.2 is a P3 foundation candidate; P0–P2 key acceptance passed. It includes ten main presets, thirty separately scoped Workers, sixty-three complete Skill directories and unsent draft templates. Versioned data contracts and two independent TEST_ONLY Adapters passed native service checks; model-query/Client integration has native evidence; the required native Manager/credential and safe MCP delegation contracts remain unavailable. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. Commercial adapters, Office execution and deterministic Review Gate are not yet implemented. Native registration, static tests and business E2E are reported separately. Install through the native Plugin Manager; disable/uninstall preserves user files and native history. Review policy never grants tool, sandbox or commercial data permissions.
+An independent out-of-tree DSH bundle. Version 0.4.0-alpha.1 covers P0–P2 accepted work plus partial P3–P6; P3, P4, P5 and P6 are explicitly **not** accepted as complete. It includes ten main presets, thirty separately scoped Workers, sixty-three complete Skill directories and unsent draft templates. Versioned data contracts and two independent TEST_ONLY Adapters passed native service checks; model-query/Client integration has native evidence; the required native Manager/credential and safe MCP delegation contracts remain unavailable. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. A deterministic review gate, a durable review store, a review read model and a read-only workbench are implemented and verified without model calls; commercial adapters and native Office delivery remain blocked (no usable confined subprocess and no binary workspace write). Native registration, static tests and business E2E are reported separately. Install through the native Plugin Manager; disable/uninstall preserves user files and native history. Review policy never grants tool, sandbox or commercial data permissions.

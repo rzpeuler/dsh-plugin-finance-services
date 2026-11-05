@@ -44,7 +44,7 @@
     "P6-LIFECYCLE": "NOT_RUN",
     "P6-OFFLINE": "NOT_RUN",
     "P6-A11Y": "NOT_RUN",
-    "P6-NO-FAKE": "NOT_RUN"
+    "P6-NO-FAKE": "PARTIAL_DOC_AND_PANEL_GUARDRAILS"
   },
   "browserRendered": false,
   "notClaimed": [
@@ -145,6 +145,33 @@
     "literalKeysChecked": true,
     "dictionarySymmetry": true,
     "dynamicKeysExcluded": true,
+    "rendered": false
+  },
+  "documentation": {
+    "status": "PASS_STRUCTURE_AND_LINKS",
+    "evidence": "P6-docs-completeness.tap",
+    "checksPassed": 5,
+    "checksFailed": 0,
+    "requiredDocuments": [
+      "README.md",
+      "SOURCE_INVENTORY.md",
+      "COMPATIBILITY_MATRIX.md",
+      "MIGRATION_MATRIX.md",
+      "SECURITY_MATRIX.md",
+      "TEST_REPORT.md",
+      "ACCEPTANCE_REPORT.md"
+    ],
+    "readmeSections": [
+      "安装",
+      "升级与回滚",
+      "卸载",
+      "首次使用",
+      "凭据与数据源依赖",
+      "Agent 能力目录",
+      "排障"
+    ],
+    "evidenceLinksChecked": "all relative and absolute links in stage documents resolve",
+    "knownGapsNamed": true,
     "rendered": false
   }
 }

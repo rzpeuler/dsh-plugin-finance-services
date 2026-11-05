@@ -1,0 +1,40 @@
+﻿TAP version 13
+# Subtest: every delivery-list document exists and is non-trivial
+ok 1 - every delivery-list document exists and is non-trivial
+  ---
+  duration_ms: 2.8003
+  type: 'test'
+  ...
+# Subtest: the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+ok 2 - the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+  ---
+  duration_ms: 0.4933
+  type: 'test'
+  ...
+# Subtest: the matrices and reports name the known gaps instead of a blanket success
+ok 3 - the matrices and reports name the known gaps instead of a blanket success
+  ---
+  duration_ms: 0.4847
+  type: 'test'
+  ...
+# Subtest: every evidence link in the stage documents resolves to a file that exists
+ok 4 - every evidence link in the stage documents resolves to a file that exists
+  ---
+  duration_ms: 14.435
+  type: 'test'
+  ...
+# Subtest: the acceptance directory keeps failures and passing evidence for every stage
+ok 5 - the acceptance directory keeps failures and passing evidence for every stage
+  ---
+  duration_ms: 0.4583
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 82.1101

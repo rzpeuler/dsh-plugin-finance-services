@@ -106,3 +106,9 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - [6原生模板检查](acceptance/P3-template-native-smoke.json)确认独立包默认NOT_CONFIGURED且无auto-grant；[9自有Agent卸载审计](acceptance/P3-alpha2-unload-audit.json)通过，策略revision8且无测试scope，原绑定null/19不变。
 - [7真实原生stdio检查](acceptance/P3-native-mcp-pass-003.json)与[2卸载检查](acceptance/P3-native-mcp-unload-pass-003.json)通过：发行版原生client实际握手、同实例ping/read、公开dispatcher守卫、金融角色raw MCP拒绝、工具注销。初两次探针错误假设的失败记录独立保留，产品权限未更改。
 - 原生MCP测试只允许人类授权的固定Host测试，不是金融Adapter桥接。指定Manager包和安全委派/凭据契约尚缺；不通过去掉Agent/换身份/调用私有连接绕过。详细兼容边界保持PARTIAL，P4–P6仍未验收。
+
+### P5/P6 增量（2026-11-05）
+
+- 本地回归：395 项全通过（P5 37 项策略/Gate/持久化，P6 客户端 13 项、文档完整性 5 项、i18n 2 项，其余为既有 P1–P4 套件）。
+- 原生无模型：P5 Gate 10 项、分离矩阵 6 项、服务重启持久 5 项、问答接管 10 项、副作用/禁用启用 12 项、策略矩阵与卸载 5 项；P6 成果索引与运行投影 7 项。全部 0 模型调用。
+- 未验证：浏览器渲染与交互、操作系统级进程重启、`fast` 与 `original` 的原生并列实例、原生 Office 产物、安全 MCP 委派。
