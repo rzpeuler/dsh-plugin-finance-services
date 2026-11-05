@@ -1,0 +1,58 @@
+{
+  "stage": "P5",
+  "status": "CRITERIA_ESTABLISHED_KERNEL_IMPLEMENTED_PERSISTENCE_AND_NATIVE_GATE_PENDING",
+  "stageAccepted": false,
+  "observedDate": "2026-11-05",
+  "previousStages": [
+    {"stage": "P3", "status": "PARTIAL_HOST_INTERFACE_GAP", "stageAccepted": false},
+    {"stage": "P4", "status": "PARTIAL", "stageAccepted": false}
+  ],
+  "criteriaEstablishedBeforeImplementation": true,
+  "criteria": "P5.md",
+  "policyModel": {
+    "version": "p5-policy-v1",
+    "policies": ["original", "fast", "strict", "custom"],
+    "scopeOrder": ["bundle", "agent", "run"],
+    "lockedBoundaries": 8,
+    "externalSideEffects": "DISABLED",
+    "agentsInCatalogue": 10,
+    "checkpointKinds": ["INTERMEDIATE", "FINAL", "ASSUMPTION", "RESULT"]
+  },
+  "kernel": {
+    "modules": ["../src/review/policy.js", "../src/review/gate.js"],
+    "nativeWiring": "NOT_STARTED",
+    "localTests": {"passed": 26, "failed": 0, "evidence": "P5-review-core-tests-001.tap"},
+    "fullRegression": {"passed": 364, "failed": 0, "evidence": "P5-regression-001.tap"}
+  },
+  "criteriaResults": {
+    "P5-POLICY": "PASS_LOCAL_KERNEL",
+    "P5-LOCK": "PASS_LOCAL_KERNEL",
+    "P5-SCOPE": "PASS_LOCAL_KERNEL",
+    "P5-SNAPSHOT": "PARTIAL_LOCAL_KERNEL",
+    "P5-GATE": "PARTIAL_LOCAL_KERNEL",
+    "P5-RECORD": "PASS_LOCAL_KERNEL",
+    "P5-IDEMPOTENT": "PASS_LOCAL_KERNEL",
+    "P5-INVALIDATE": "PASS_LOCAL_KERNEL",
+    "P5-QUEUE": "NOT_RUN",
+    "P5-RESTART": "NOT_RUN",
+    "P5-ASK": "NOT_RUN",
+    "P5-SEPARATION": "NOT_RUN",
+    "P5-NOSIDE": "NOT_RUN",
+    "P5-PERSIST": "NOT_RUN",
+    "P5-ERRORS": "NOT_RUN"
+  },
+  "designDecisions": [
+    "Approvals bind both the policy version string and the snapshot digest, so a decision taken under one requirement set cannot unlock another snapshot with the same version label.",
+    "fast skips only checkpoints explicitly marked fastSkippable, all of which already produce DRAFT artifacts; model, valuation, audit, controller and release checkpoints are not relaxable.",
+    "A gate decision contains no publish/post/trade/grant field; authority is never widened by an approval."
+  ],
+  "remainingKeyAcceptance": [
+    "Durable own-domain review store and cross-session queue projection",
+    "Restart classification (pending / completed / needs-rerun / unknown-terminated) and authorized config-change audit",
+    "Native deterministic gate probe without model turns",
+    "Native ask_user_question handover from main Agent or Host, with child Agents refused",
+    "Proof that business approval leaves tool approval, sandbox and MCP authority unchanged",
+    "Install/disable/uninstall persistence boundaries"
+  ],
+  "notClaimed": ["P5 complete", "P3 or P4 complete", "Native review queue", "External side effects", "Workflow in-place resume"]
+}
