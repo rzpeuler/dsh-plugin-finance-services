@@ -1,0 +1,1331 @@
+{
+  "note": "Expectations computed by Python Decimal with ROUND_HALF_EVEN; TEST_ONLY fixtures.",
+  "cases": [
+    {
+      "id": "half-even-tie-down-to-even",
+      "why": "100.01 split in half is 50.005: an exact half-cent tie that must land on the even cent below",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-HALF_EVEN_TIE_DOWN_TO_EV",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "50.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "50.00",
+              "carry": "0.00",
+              "ending": "50.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "50.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "50.00",
+              "carry": "0.00",
+              "ending": "50.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "100.01",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "100.00"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.01",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "50.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "50.00",
+            "ending": "50.00"
+          },
+          "LP-2": {
+            "realized": "50.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "50.00",
+            "ending": "50.00"
+          }
+        },
+        "fund_nav": "100.00"
+      }
+    },
+    {
+      "id": "half-even-tie-up-to-even",
+      "why": "100.03 split in half is 50.015: an exact half-cent tie that must land on the even cent above",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-HALF_EVEN_TIE_UP_TO_EVEN",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "50.02",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "50.02",
+              "carry": "0.00",
+              "ending": "50.02",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "50.02",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "50.02",
+              "carry": "0.00",
+              "ending": "50.02",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "100.03",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "100.04"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.01",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "50.02",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "50.02",
+            "ending": "50.02"
+          },
+          "LP-2": {
+            "realized": "50.02",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "50.02",
+            "ending": "50.02"
+          }
+        },
+        "fund_nav": "100.04"
+      }
+    },
+    {
+      "id": "thirds-with-exact-ownership-sum",
+      "why": "three LPs share a net income that does not divide evenly; ownership still sums to exactly one",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-THIRDS_WITH_EXACT_OWNERS",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.333333333333",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "333333.33",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "333333.33",
+              "carry": "0.00",
+              "ending": "333333.33",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.333333333333",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "333333.33",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "333333.33",
+              "carry": "0.00",
+              "ending": "333333.33",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "ownership": "0.333333333334",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "333333.33",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "333333.33",
+              "carry": "0.00",
+              "ending": "333333.33",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "1000000.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "999999.99"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.01",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.333333333333",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.333333333333",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "ownership": "0.333333333334",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "333333.33",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "333333.33",
+            "ending": "333333.33"
+          },
+          "LP-2": {
+            "realized": "333333.33",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "333333.33",
+            "ending": "333333.33"
+          },
+          "LP-3": {
+            "realized": "333333.33",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "333333.33",
+            "ending": "333333.33"
+          }
+        },
+        "fund_nav": "999999.99"
+      }
+    },
+    {
+      "id": "full-ownership-single-lp",
+      "why": "ownership of exactly one must copy the whole net income",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-FULL_OWNERSHIP_SINGLE_LP",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "1234567.89",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "1234567.89",
+              "carry": "0.00",
+              "ending": "1234567.89",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "1234567.89",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "1234567.89"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.00",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "1234567.89",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "1234567.89",
+            "ending": "1234567.89"
+          }
+        },
+        "fund_nav": "1234567.89"
+      }
+    },
+    {
+      "id": "zero-ownership",
+      "why": "a zero share must allocate exactly nothing rather than a rounding crumb",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-ZERO_OWNERSHIP",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "999999.99",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "999999.99",
+              "carry": "0.00",
+              "ending": "999999.99",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "0.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "999999.99",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "999999.99"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.00",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "999999.99",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "999999.99",
+            "ending": "999999.99"
+          },
+          "LP-2": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "0.00"
+          }
+        },
+        "fund_nav": "999999.99"
+      }
+    },
+    {
+      "id": "negative-carry",
+      "why": "a negative carry amount must increase the ending balance",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-NEGATIVE_CARRY",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "100000.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "500000.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "500000.00",
+              "carry": "-25000.00",
+              "ending": "625000.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "500000.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "625000.00"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.00",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "100000.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "-25000.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "500000.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "500000.00",
+            "ending": "625000.00"
+          }
+        },
+        "fund_nav": "625000.00"
+      }
+    },
+    {
+      "id": "distributions-above-contributions",
+      "why": "negative net flow must still tie out",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-DISTRIBUTIONS_ABOVE_CONT",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "1000000.00",
+              "contributions": "10000.00",
+              "distributions": "250000.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "760000.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "0.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "0.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-4",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "0.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-5",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "0.00",
+              "unrealized": "0.00",
+              "management_fee": "0.00",
+              "expenses": "0.00",
+              "allocated_net_income": "0.00",
+              "carry": "0.00",
+              "ending": "0.00",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "nav": "760000.00"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.00",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "1",
+              "beginning": "1000000.00",
+              "contributions": "10000.00",
+              "distributions": "250000.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-4",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-5",
+              "ownership": "0",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-3",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-4",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-5",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "760000.00"
+          },
+          "LP-2": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "0.00"
+          },
+          "LP-3": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "0.00"
+          },
+          "LP-4": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "0.00"
+          },
+          "LP-5": {
+            "realized": "0.00",
+            "unrealized": "0.00",
+            "management_fee": "0.00",
+            "expenses": "0.00",
+            "allocated_net_income": "0.00",
+            "ending": "0.00"
+          }
+        },
+        "fund_nav": "760000.00"
+      }
+    },
+    {
+      "id": "large-amounts-near-scale-limit",
+      "why": "amounts near the 24-digit ceiling must not lose precision",
+      "inputs": {
+        "schema_version": 1,
+        "batch_id": "BOUNDARY-LARGE_AMOUNTS_NEAR_SCALE",
+        "statements": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "STMT-B",
+            "extract_ref": "boundary/statements.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "1000000000000.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "450000000000.00",
+              "unrealized": "50000000000.00",
+              "management_fee": "25000000000.00",
+              "expenses": "0.50",
+              "allocated_net_income": "474999999999.50",
+              "carry": "0.00",
+              "ending": "1474999999999.50",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "realized": "450000000000.00",
+              "unrealized": "50000000000.00",
+              "management_fee": "25000000000.00",
+              "expenses": "0.50",
+              "allocated_net_income": "474999999999.50",
+              "carry": "0.00",
+              "ending": "474999999999.50",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        },
+        "nav_pack": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "NAV-B",
+            "extract_ref": "boundary/nav.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "totals": {
+            "realized": "900000000000.00",
+            "unrealized": "100000000000.00",
+            "management_fee": "50000000000.00",
+            "expenses": "1.00",
+            "nav": "1949999999999.00"
+          },
+          "terms": {
+            "allocation_method": "PRO_RATA_NET",
+            "ownership_basis": "NAV_PACK_COMMITMENT_FRACTION",
+            "carry_method": "SOURCED_LP_CRYSTALLIZED_AMOUNTS",
+            "rounding_basis": "ALLOCATED_NET_THEN_ENDING",
+            "money_scale": 2,
+            "rounding_method": "HALF_EVEN",
+            "fund_rounding_tolerance": "0.00",
+            "source_ref": "boundary/nav.json"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "ownership": "0.5",
+              "beginning": "1000000000000.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "ownership": "0.5",
+              "beginning": "0.00",
+              "contributions": "0.00",
+              "distributions": "0.00",
+              "carry": "0.00"
+            }
+          ]
+        },
+        "commitment_register": {
+          "entity_id": "ENTITY-BOUNDARY",
+          "fund_id": "FUND-BOUNDARY",
+          "period_start": "2026-01-01",
+          "period_end": "2026-03-31",
+          "currency": "USD",
+          "coverage": "FULL",
+          "source": {
+            "document_id": "REG-B",
+            "extract_ref": "boundary/register.json",
+            "classification": "TEST_ONLY",
+            "input_kind": "SIMULATED_FIXTURE"
+          },
+          "lps": [
+            {
+              "lp_id": "LP-1",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            },
+            {
+              "lp_id": "LP-2",
+              "commitment": "1000.00",
+              "unfunded": "0.00",
+              "recallable": "0.00"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "lps": {
+          "LP-1": {
+            "realized": "450000000000.00",
+            "unrealized": "50000000000.00",
+            "management_fee": "25000000000.00",
+            "expenses": "0.50",
+            "allocated_net_income": "474999999999.50",
+            "ending": "1474999999999.50"
+          },
+          "LP-2": {
+            "realized": "450000000000.00",
+            "unrealized": "50000000000.00",
+            "management_fee": "25000000000.00",
+            "expenses": "0.50",
+            "allocated_net_income": "474999999999.50",
+            "ending": "474999999999.50"
+          }
+        },
+        "fund_nav": "1949999999999.00"
+      }
+    }
+  ]
+}

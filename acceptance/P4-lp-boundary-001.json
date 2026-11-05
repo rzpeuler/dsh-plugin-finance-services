@@ -1,0 +1,64 @@
+{
+  "stage": "P4",
+  "id": "P4_LP_BOUNDARY_CROSS_CHECK",
+  "status": "PASS_CROSS_IMPLEMENTATION_BOUNDARY",
+  "observedDate": "2026-11-06",
+  "fixture": {
+    "path": "samples/p4/b07-lp-tieout/boundary-cases.json",
+    "sha256": "94d23bb5849a4f66c1649a4c5eeed3c0a44f344293461bca536e0af07785510a",
+    "cases": 8,
+    "classification": "TEST_ONLY / SIMULATED_FIXTURE"
+  },
+  "cases": [
+    {
+      "id": "half-even-tie-down-to-even",
+      "why": "100.01 split in half is 50.005: an exact half-cent tie that must land on the even cent below"
+    },
+    {
+      "id": "half-even-tie-up-to-even",
+      "why": "100.03 split in half is 50.015: an exact half-cent tie that must land on the even cent above"
+    },
+    {
+      "id": "thirds-with-exact-ownership-sum",
+      "why": "three LPs share a net income that does not divide evenly; ownership still sums to exactly one"
+    },
+    {
+      "id": "full-ownership-single-lp",
+      "why": "ownership of exactly one must copy the whole net income"
+    },
+    {
+      "id": "zero-ownership",
+      "why": "a zero share must allocate exactly nothing rather than a rounding crumb"
+    },
+    {
+      "id": "negative-carry",
+      "why": "a negative carry amount must increase the ending balance"
+    },
+    {
+      "id": "distributions-above-contributions",
+      "why": "negative net flow must still tie out"
+    },
+    {
+      "id": "large-amounts-near-scale-limit",
+      "why": "amounts near the 24-digit ceiling must not lose precision"
+    }
+  ],
+  "method": "Python Decimal (ROUND_HALF_EVEN) produces the expectations; the shipped BigInt kernel must reproduce every field.",
+  "agreement": "all eight cases agree on realized, unrealized, management_fee, expenses, allocated_net_income and ending, plus the fund sum",
+  "hazardsCovered": [
+    "exact half-cent tie rounding down to the even cent",
+    "exact half-cent tie rounding up to the even cent",
+    "thirds with an exact ownership sum",
+    "ownership of exactly one",
+    "zero ownership",
+    "negative carry",
+    "distributions above contributions",
+    "amounts near the 24-digit scale limit"
+  ],
+  "correction": "The first version of the tie cases used amounts that divided evenly, so they never exercised a tie. They were replaced with 100.01 and 100.03 halves, which are true half-cent ties.",
+  "notClaimed": [
+    "commercial data",
+    "native tool exposure",
+    "audit opinion"
+  ]
+}

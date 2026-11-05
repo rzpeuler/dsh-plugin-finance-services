@@ -264,5 +264,12 @@
     "checks": 7,
     "fixture": "samples/p4/b07-lp-tieout/inputs.json",
     "agreement": "realized, unrealized, management_fee, expenses, allocated_net_income and ending agree on all three LPs; the fund NAV sum agrees with the Python total"
+  },
+  "lpBoundary": {
+    "status": "PASS_CROSS_IMPLEMENTATION_BOUNDARY",
+    "evidence": "P4-lp-boundary-001.json",
+    "cases": 8,
+    "checks": 10,
+    "correctedTieCases": true
   }
 }
