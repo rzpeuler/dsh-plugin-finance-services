@@ -285,5 +285,14 @@
       "dom": "exactly one document.body.appendChild and one .click() in the whole client artifact"
     },
     "clicked": false
+  },
+  "clientArtifactVm": {
+    "status": "PASS_ARTIFACT_EXECUTES",
+    "evidence": "P6-client-artifact-vm.tap",
+    "checksPassed": 4,
+    "checksFailed": 0,
+    "what": "The built lib/client.js is executed in a browser-like realm with React/Zod stubs; the serialized factories run without ReferenceError and register the expected namespaces, panel and dictionaries.",
+    "catches": "A factory that closes over a module-level helper would break only after serialization; src-level tests cannot see it.",
+    "notRendered": true
   }
 }
