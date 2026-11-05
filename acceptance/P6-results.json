@@ -31,7 +31,7 @@
   },
   "criteriaResults": {
     "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-AGENTS": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-AGENTS": "PARTIAL_ROLE_MATRIX_AND_UI_NOT_RENDERED",
     "P6-RUNS": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
@@ -230,6 +230,27 @@
       "each local bundle row resolves to an exported entry",
       "no stage accepted while its ledger gap is open",
       "handover names every unaccepted stage and the blockers"
+    ]
+  },
+  "capabilityMatrix": {
+    "status": "PASS_NO_DRIFT",
+    "matrix": "CAPABILITY_MATRIX.json",
+    "document": "../docs/CAPABILITY_STATUS.md",
+    "evidence": "P6-capability-matrix.tap",
+    "checksPassed": 6,
+    "checksFailed": 0,
+    "counts": {
+      "mains": 10,
+      "workers": 30,
+      "skills": 63,
+      "commands": 41,
+      "capabilities": 14
+    },
+    "rules": [
+      "regeneration must match the committed matrix",
+      "each main owns exactly three workers",
+      "14 capabilities are unique and contract-only",
+      "no skill is orphaned"
     ]
   }
 }
