@@ -1,0 +1,131 @@
+{
+  "workbook": "B05_DCF_TEST_ONLY.xlsx",
+  "status": "PASS",
+  "evidence": "LIBREOFFICE_RECALCULATED_AND_INDEPENDENT_DECIMAL_BASELINE",
+  "checks": [
+    {
+      "id": "sheets-present",
+      "status": "PASS",
+      "detail": [
+        "Cover",
+        "Inputs",
+        "WACC",
+        "DCF",
+        "Sensitivity",
+        "Checks"
+      ]
+    },
+    {
+      "id": "formulas-preserved-not-hardcoded",
+      "status": "PASS"
+    },
+    {
+      "id": "live-formula-count-at-least-120",
+      "status": "PASS",
+      "detail": {
+        "formulas": 261
+      }
+    },
+    {
+      "id": "all-verification-checks-ok",
+      "status": "PASS",
+      "detail": {
+        "Grid 1 centre equals DCF": "OK",
+        "Grid 2 centre equals DCF": "OK",
+        "Grid 3 centre equals DCF": "OK",
+        "WACC independent recompute": "OK",
+        "EV equals PV(FCF) + PV(TV)": "OK",
+        "Equity equals EV minus net debt": "OK",
+        "Scenario selector in range": "OK",
+        "All DCF model checks OK": "OK",
+        "Sensitivity cells populated": "OK",
+        "Sensitivity minimum positive": "OK"
+      }
+    },
+    {
+      "id": "independent-baseline-matches-per-share",
+      "status": "PASS",
+      "detail": {
+        "workbook": 21.3767762653531,
+        "baseline": "21.3768"
+      }
+    },
+    {
+      "id": "independent-baseline-matches-enterprise-value",
+      "status": "PASS",
+      "detail": {
+        "workbook": 2287.67762653531,
+        "baseline": "2287.68"
+      }
+    },
+    {
+      "id": "wacc-matches-independent-capm",
+      "status": "PASS",
+      "detail": {
+        "workbook": 0.07775,
+        "baseline": "0.077750"
+      }
+    },
+    {
+      "id": "three-grid-centres-tie-to-dcf",
+      "status": "PASS",
+      "detail": {
+        "centres": [
+          21.3767762653531,
+          21.3767762653531,
+          21.3767762653531
+        ],
+        "dcf": 21.3767762653531
+      }
+    },
+    {
+      "id": "seventy-five-sensitivity-cells-numeric",
+      "status": "PASS",
+      "detail": {
+        "counted": 75
+      }
+    },
+    {
+      "id": "forecast-fcf-all-positive-numeric",
+      "status": "PASS",
+      "detail": [
+        115.4,
+        122.324,
+        129.66344,
+        137.4432464,
+        145.689841184
+      ]
+    },
+    {
+      "id": "growth-rows-equal-scenario-growth",
+      "status": "PASS",
+      "detail": [
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001
+      ]
+    }
+  ],
+  "baseline": {
+    "wacc": "0.077750",
+    "enterprise_value": "2287.677626535312429506963443",
+    "equity_value": "2137.677626535312429506963443",
+    "per_share": "21.37677626535312429506963443",
+    "pv_fcf": "518.0279728220633350097139209",
+    "pv_tv": "1769.649653713249094497249522",
+    "flows": [
+      "115.40",
+      "122.32",
+      "129.66",
+      "137.44",
+      "145.69"
+    ]
+  },
+  "recalculated": {
+    "per_share": 21.3767762653531,
+    "enterprise_value": 2287.67762653531,
+    "wacc": 0.07775
+  }
+}

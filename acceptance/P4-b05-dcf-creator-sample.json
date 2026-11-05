@@ -1,0 +1,170 @@
+{
+  "stage": "P4",
+  "id": "B05_DCF_CREATOR_SIDE_SAMPLE",
+  "status": "PASS",
+  "claim": "CREATOR_SIDE_OFFICE_CAPABILITY_SAMPLE_NOT_AGENT_DELIVERY",
+  "business": "finance-model-builder / dcf-model direct Skill method",
+  "classification": "TEST_ONLY",
+  "generatedAt": null,
+  "artifacts": [
+    {
+      "path": "samples/p4/b05-dcf/B05_DCF_TEST_ONLY.xlsx",
+      "bytes": 21298,
+      "sha256": "3a56e7f6b9694c2959b33a70f2d1e976852f64c8167b4f0c4046608e66261f44"
+    },
+    {
+      "path": "samples/p4/b05-dcf/B05_DCF_TEST_ONLY.pdf",
+      "bytes": 100190,
+      "sha256": "f7f7f7f66aef3c891b89c0e9887cb0f0329e9abe4cc0fd4d95f2a4c24e80f303"
+    },
+    {
+      "path": "samples/p4/b05-dcf/build/B05_DCF_TEST_ONLY_uncalculated.xlsx",
+      "bytes": 14696,
+      "sha256": "450affcb2062065d2f83df8b2182d976f7ca5503d1d86f013705757f3797c8dc"
+    }
+  ],
+  "recalculatedBy": "LIBREOFFICE_KIT_NATIVE_BACKEND",
+  "independentBaseline": {
+    "wacc": "0.077750",
+    "enterprise_value": "2287.677626535312429506963443",
+    "equity_value": "2137.677626535312429506963443",
+    "per_share": "21.37677626535312429506963443",
+    "pv_fcf": "518.0279728220633350097139209",
+    "pv_tv": "1769.649653713249094497249522",
+    "flows": [
+      "115.40",
+      "122.32",
+      "129.66",
+      "137.44",
+      "145.69"
+    ]
+  },
+  "recalculated": {
+    "per_share": 21.3767762653531,
+    "enterprise_value": 2287.67762653531,
+    "wacc": 0.07775
+  },
+  "checks": [
+    {
+      "id": "sheets-present",
+      "status": "PASS",
+      "detail": [
+        "Cover",
+        "Inputs",
+        "WACC",
+        "DCF",
+        "Sensitivity",
+        "Checks"
+      ]
+    },
+    {
+      "id": "formulas-preserved-not-hardcoded",
+      "status": "PASS"
+    },
+    {
+      "id": "live-formula-count-at-least-120",
+      "status": "PASS",
+      "detail": {
+        "formulas": 261
+      }
+    },
+    {
+      "id": "all-verification-checks-ok",
+      "status": "PASS",
+      "detail": {
+        "Grid 1 centre equals DCF": "OK",
+        "Grid 2 centre equals DCF": "OK",
+        "Grid 3 centre equals DCF": "OK",
+        "WACC independent recompute": "OK",
+        "EV equals PV(FCF) + PV(TV)": "OK",
+        "Equity equals EV minus net debt": "OK",
+        "Scenario selector in range": "OK",
+        "All DCF model checks OK": "OK",
+        "Sensitivity cells populated": "OK",
+        "Sensitivity minimum positive": "OK"
+      }
+    },
+    {
+      "id": "independent-baseline-matches-per-share",
+      "status": "PASS",
+      "detail": {
+        "workbook": 21.3767762653531,
+        "baseline": "21.3768"
+      }
+    },
+    {
+      "id": "independent-baseline-matches-enterprise-value",
+      "status": "PASS",
+      "detail": {
+        "workbook": 2287.67762653531,
+        "baseline": "2287.68"
+      }
+    },
+    {
+      "id": "wacc-matches-independent-capm",
+      "status": "PASS",
+      "detail": {
+        "workbook": 0.07775,
+        "baseline": "0.077750"
+      }
+    },
+    {
+      "id": "three-grid-centres-tie-to-dcf",
+      "status": "PASS",
+      "detail": {
+        "centres": [
+          21.3767762653531,
+          21.3767762653531,
+          21.3767762653531
+        ],
+        "dcf": 21.3767762653531
+      }
+    },
+    {
+      "id": "seventy-five-sensitivity-cells-numeric",
+      "status": "PASS",
+      "detail": {
+        "counted": 75
+      }
+    },
+    {
+      "id": "forecast-fcf-all-positive-numeric",
+      "status": "PASS",
+      "detail": [
+        115.4,
+        122.324,
+        129.66344,
+        137.4432464,
+        145.689841184
+      ]
+    },
+    {
+      "id": "growth-rows-equal-scenario-growth",
+      "status": "PASS",
+      "detail": [
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001,
+        0.0600000000000001
+      ]
+    }
+  ],
+  "notClaimed": [
+    "Agent or Worker execution",
+    "Native Bundle Tool registration",
+    "Commercial data or licensing",
+    "Comps, precedents, LBO, three-statement, football field or deck",
+    "P5 review gate or approval",
+    "Visual layout inspection"
+  ],
+  "blockedProducer": {
+    "confinementControls": [
+      "acceptance/P4-native-startup-matrix-006.json",
+      "acceptance/P4-office-env-control-007.json",
+      "acceptance/P4-office-confinement-read-control-008.json"
+    ],
+    "finding": "Six fixed calls under native confinement exit 0xC0000142 with empty output, including a Windows system executable",
+    "binaryWriteGap": "ctx.fs exposes no binary workspace write or artifact publication"
+  }
+}
