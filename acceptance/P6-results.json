@@ -36,9 +36,9 @@
     "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-SETTINGS": "NOT_RUN",
-    "P6-NAV": "NOT_RUN",
-    "P6-I18N": "NOT_RUN",
+    "P6-SETTINGS": "PARTIAL_NATIVE_CONFIG_SURFACE_NOT_RENDERED",
+    "P6-NAV": "PARTIAL_NATIVE_SLOT_CHECK",
+    "P6-I18N": "PARTIAL_STATIC_COVERAGE",
     "P6-RESPONSIVE": "NOT_RUN",
     "P6-PERMISSION": "NOT_RUN",
     "P6-LIFECYCLE": "NOT_RUN",
@@ -100,11 +100,51 @@
     "clientSections": "NOT_BUILT"
   },
   "remainingKeyAcceptance": [
-    "Client sections that render runs and the deliverable index",
     "Browser rendering and interaction for every section",
-    "Settings via the native bundle configuration surface",
-    "Navigation, i18n coverage, responsive and accessibility checks",
+    "Editable settings through the native configuration surface, with restart-scoped policy",
+    "Deliverable open and back-to-session navigation",
+    "Responsive, contrast and keyboard-focus checks",
     "Install/upgrade/restart/disable/reinstall lifecycle for the UI",
     "Offline and permission-denied states"
-  ]
+  ],
+  "settingsSurface": {
+    "status": "PASS_NATIVE_CONFIG_SURFACE_NOT_RENDERED",
+    "evidence": "P6-settings-config-surface-001.json",
+    "rows": {
+      "review": [
+        "policyId",
+        "customJson"
+      ],
+      "data": [
+        "requestTimeoutMs",
+        "maxConcurrentQueries"
+      ],
+      "main": "no configuration"
+    },
+    "separateSettingsStore": false,
+    "profileWrites": 0,
+    "rendered": false
+  },
+  "navigation": {
+    "slot": "main",
+    "keys": [
+      "plugins",
+      "conversation",
+      "schedules",
+      "financial-services"
+    ],
+    "financialServicesActive": true,
+    "distinctKeys": true,
+    "newKeys": 0,
+    "evidence": "P6-settings-config-surface-001.json"
+  },
+  "i18n": {
+    "status": "PASS_STATIC_COVERAGE",
+    "evidence": "P6-i18n-coverage.tap",
+    "files": 4,
+    "literalKeysChecked": true,
+    "dictionarySymmetry": true,
+    "dynamicKeysExcluded": true,
+    "rendered": false
+  }
 }
