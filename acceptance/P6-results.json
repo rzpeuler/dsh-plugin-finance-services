@@ -321,5 +321,11 @@
     "what": "Every rebuilt entry imports; service classes expose their methods; function plugins declare inject/apply/Config; role aliases equal the canonical generation; no side-effecting method exists on the review service; the client artifact still registers its factory.",
     "why": "The install is pending a restart, so this proves the bytes that will be loaded next, not the running instance.",
     "notBooted": "Cordis loader lifecycle is still not exercised here."
+  },
+  "runtimeState": {
+    "status": "NOT_LOADED",
+    "evidence": "P6-runtime-not-loaded-001.json",
+    "servicesPresent": [],
+    "reason": "install pending restart (unmanaged-plugin)"
   }
 }

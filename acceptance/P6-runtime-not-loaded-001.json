@@ -1,0 +1,32 @@
+{
+  "stage": "P6",
+  "id": "P6_RUNTIME_NOT_LOADED_AFTER_REFRESH",
+  "observedDate": "2026-11-06",
+  "status": "CONFIRMED_NOT_LOADED",
+  "method": "Host Service inspect: listService over the live runtime",
+  "observations": {
+    "financeOperationsPresent": false,
+    "financeDataPresent": false,
+    "financeReviewPresent": false,
+    "installResult": {
+      "application": "restart-required",
+      "restartReason": "unmanaged-plugin"
+    },
+    "reinstallAttempt": {
+      "code": "already-installed",
+      "changed": false
+    },
+    "configSurface": "current on disk (review row schema exposes serviceKey, domainSuffix, remote)"
+  },
+  "interpretation": [
+    "The package on disk is current; the running process exposes none of this bundle's services.",
+    "Native claims made before this refresh were observed against instances that existed then; they are not evidence about the current process.",
+    "Only static, build-level and artifact-level checks are possible until DSH restarts."
+  ],
+  "notAttempted": [
+    "restarting DSH",
+    "bypassing the plugin manager",
+    "editing profile files"
+  ],
+  "nextStep": "Restart DSH, then re-run the native smoke probes before any new native claim."
+}
