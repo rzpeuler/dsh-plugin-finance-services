@@ -69,15 +69,16 @@
     {
       "id": "P5-OS-RESTART",
       "stage": "P5",
-      "title": "Operating-system process restart has not been compared",
+      "title": "Service lifecycle restart is proven; an operating-system process restart is not",
       "status": "NOT_RUN",
-      "blockedBy": "Requires restarting the Desktop application; only bundle-level remove/reinstall and disable/enable were exercised.",
+      "blockedBy": "Restarting the Desktop application is outside this session; only bundle uninstall/reinstall and disable/enable were exercised.",
       "evidence": [
+        "acceptance/P5-running-recovery-native-001.json",
         "acceptance/P5-separation-phase-b-002.json",
         "acceptance/P5-persist-phase-b.json"
       ],
       "notClaimed": "Recovery across an application restart",
-      "nextStep": "Restart the app after recording a review, then re-read the queue projection."
+      "nextStep": "Restart the app after recording a running stage and re-read the run projection."
     },
     {
       "id": "P6-BROWSER-RENDERING",

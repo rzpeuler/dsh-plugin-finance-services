@@ -1,0 +1,6 @@
+- insert:
+    - id: dsh-finance-p5-running-verify-test-only
+      name: '@local/dsh-finance-p5-running-verify-test-only'
+      config:
+        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-running-verify\latest.json'
+        runId: 'run-running-0de65a7f'

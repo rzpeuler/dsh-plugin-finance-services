@@ -84,7 +84,8 @@
     "P5-SEPARATION": "PASS_NATIVE_MATRIX",
     "P5-NOSIDE": "PASS_NATIVE_SURFACE",
     "P5-PERSIST": "PASS_NATIVE",
-    "P5-ERRORS": "PASS_NATIVE_DIAGNOSTIC_CODES_PARTIAL_LINEAGE"
+    "P5-ERRORS": "PASS_NATIVE_DIAGNOSTIC_CODES_PARTIAL_LINEAGE",
+    "P5-RECOVERY": "PASS_NATIVE_LIFECYCLE_RESTART_NOT_OS"
   },
   "designDecisions": [
     "Approvals bind both the policy version string and the snapshot digest, so a decision taken under one requirement set cannot unlock another snapshot with the same version label.",
@@ -324,5 +325,21 @@
       "classification"
     ],
     "stillMissing": "Per-business source lineage; codes are not yet grouped by source or adapter"
+  },
+  "recoveryAcrossLifecycle": {
+    "status": "PASS_NATIVE_NOT_OS_RESTART",
+    "record": "P5-running-record-native-001.json",
+    "verify": "P5-running-recovery-native-001.json",
+    "checksPassed": 4,
+    "checksFailed": 0,
+    "runId": "run-running-0de65a7f",
+    "finding": "An interrupted stage is converted to UNKNOWN_TERMINATED on open and classified as UNKNOWN_TERMINATED with reason PROCESS_RESTARTED_WITHOUT_TERMINAL_STAGE_RECORD — deliberately distinct from NEEDS_RERUN.",
+    "guarantees": [
+      "never reported as completed",
+      "never PENDING_REVIEW",
+      "gate still HOLDs",
+      "no row auto-approved"
+    ],
+    "scope": "Service lifecycle restart (bundle remove and reinstall). An operating-system process restart is still unverified."
   }
 }

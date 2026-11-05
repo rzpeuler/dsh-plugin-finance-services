@@ -1,0 +1,42 @@
+{
+  "evidence": "REAL_NATIVE_RECOVERY_ACROSS_SERVICE_LIFECYCLE_NOT_OS_RESTART",
+  "status": "PASS",
+  "runId": "run-running-0de65a7f",
+  "checks": [
+    {
+      "id": "an-interrupted-stage-is-not-reported-as-completed",
+      "status": "PASS",
+      "detail": {
+        "checkpoints": {
+          "model_build_complete": "UNKNOWN_TERMINATED"
+        }
+      }
+    },
+    {
+      "id": "the-run-is-reported-as-interrupted-and-never-completed",
+      "status": "PASS",
+      "detail": {
+        "runId": "run-running-0de65a7f",
+        "status": "UNKNOWN_TERMINATED",
+        "reason": "PROCESS_RESTARTED_WITHOUT_TERMINAL_STAGE_RECORD",
+        "stages": 1
+      }
+    },
+    {
+      "id": "the-gate-will-not-accept-an-interrupted-stage",
+      "status": "PASS",
+      "detail": {
+        "decision": "HOLD",
+        "reason": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "id": "nothing-was-auto-approved-during-recovery",
+      "status": "PASS",
+      "detail": {
+        "rows": 1
+      }
+    }
+  ],
+  "modelCalls": 0
+}

@@ -1,0 +1,10 @@
+{
+  "evidence": "REAL_NATIVE_RUNNING_STAGE_LEFT_BEHIND",
+  "status": "RECORDED",
+  "runId": "run-running-0de65a7f",
+  "sessionId": "session-running-d8934b58",
+  "checkpoint": "model_build_complete",
+  "stageStatus": "RUNNING",
+  "classification": "IN_PROGRESS",
+  "note": "This service instance is removed next; the store must not treat the stage as completed."
+}
