@@ -39,3 +39,4 @@ tests/p4-templates/latest.json
 tests/p5-running-record/latest.json
 tests/p5-running-verify/latest.json
 tests/p6-post-restart-persist/latest.json
+tests/p6-seed-deliverable/latest.json

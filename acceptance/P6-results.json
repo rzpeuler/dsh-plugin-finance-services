@@ -425,7 +425,7 @@
     ]
   },
   "deliverableOpen": {
-    "status": "BUILT_INSTALLED_CLICK_FAILED_FIXED_AWAITING_RETRY",
+    "status": "BUILT_INSTALLED_SEEDED_AWAITING_CLICK",
     "failure": "P6-deliverable-open-failure-001.md",
     "fix": {
       "visibleOutcome": "a click now renders either the switched session or the refusal code",
@@ -439,6 +439,12 @@
     "install": {
       "application": "applied"
     },
-    "retriedByUser": false
+    "retriedByUser": false,
+    "seededRow": {
+      "evidence": "P6-seed-deliverable-001.json",
+      "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6",
+      "deliverableId": "deliverable-3-151b25b810cd",
+      "why": "the existing rows referenced probe sessions that no longer exist, so a live-linked row was needed to exercise the button"
+    }
   }
 }

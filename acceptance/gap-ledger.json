@@ -101,10 +101,11 @@
       "blockedBy": "A person must refresh and retry the click; the earlier attempt failed silently.",
       "evidence": [
         "acceptance/P6-deliverable-open-failure-001.md",
+        "acceptance/P6-seed-deliverable-001.json",
         "acceptance/P6-manual-plan-001.json"
       ],
       "notClaimed": "Verified navigation",
-      "nextStep": "Retry UI-5 and report whether it switches or shows a refusal code."
+      "nextStep": "Refresh and click the seeded row's open-session button; it is linked to a live session."
     },
     {
       "id": "P6-LIFECYCLE-UI",
