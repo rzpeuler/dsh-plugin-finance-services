@@ -1,0 +1,25 @@
+{
+  "stage": "P5",
+  "status": "REVIEW_REMOTE_DESCRIPTOR_UNRESOLVED",
+  "evidenceKind": "REAL_NATIVE_PROBE_RESULT",
+  "observedDate": "2026-11-05",
+  "detail": {
+    "package": "@local/dsh-financial-services/review-api-v1",
+    "face": "host",
+    "resolution": {
+      "status": "UNRESOLVED",
+      "message": "typert: cannot resolve \"@local/dsh-financial-services/review-api-v1#financeReview/reviewSummary\" — package \"@local/dsh-financial-services/review-api-v1\" is regi"
+    }
+  },
+  "meaning": "The read model is callable as Host methods with strict payloads, but the typert invocation ids cannot be resolved, so no Client dispatch is demonstrated.",
+  "notClaimed": [
+    "Client rendering",
+    "Client invocation of the review read model"
+  ],
+  "nextStep": "Compare against the data remote resolution in the same probe to find the correct contribution shape.",
+  "failureHistory": [
+    "P5-remote-failure-001.json",
+    "P5-remote-failure-002.json",
+    "P5-remote-failure-003.json"
+  ]
+}

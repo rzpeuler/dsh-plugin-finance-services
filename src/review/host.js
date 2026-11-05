@@ -1,10 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import schema from '@deepseek-ai/schemastery'
 import { Service } from '@deepseek-ai/cordis'
+import { TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
 import { EXTERNAL_SIDE_EFFECTS, LOCKED_BOUNDARIES, POLICY_IDS, resolvePolicy } from './policy.js'
 import { ReviewStore } from './store.js'
+import { createReviewRemoteContract } from './remote.js'
 import { assetUrl } from '../asset-location.js'
 
 const Artifact = z.object({ hash: z.string().nullable(), version: z.string().nullable() })
@@ -38,8 +40,8 @@ const Custom = z.record(z.string(), z.record(z.string(), z.boolean()))
  * Host review service: one durable own-domain document, one policy snapshot, no tool or
  * external-side-effect authority. Decisions are recorded; nothing here publishes or posts.
  */
-export default class FinanceReview extends Service {
-  static inject = ['storageDomain']
+export default class FinanceReview extends TypertRemoteService {
+  static inject = ['storageDomain', 'typert']
   static Config = schema.object({
     policyId: schema.string().default('original'),
     customJson: schema.string().default(''),
@@ -71,7 +73,12 @@ export default class FinanceReview extends Service {
       save: async document => { await table.put('root', document) },
     })
     this.opened = await this.store.open()
+    const { remote, schemas } = createReviewRemoteContract(z)
+    this.reviewSchemas = schemas
     this.active = true
+    yield this.ctx.typert.register({ package: remote.package, face: 'host',
+      schemas: Object.entries(schemas).map(([name, value]) => ({ name, create: () => value })),
+      model: { services: [], events: [], objects: [] }, invocations: remote.descriptors })
     yield async () => {
       this.active = false
       await this.tail
@@ -88,6 +95,23 @@ export default class FinanceReview extends Service {
     const run = this.tail.then(operation, operation)
     this.tail = run.then(() => undefined, () => undefined)
     return run
+  }
+
+  /** Remote read model: the queue projection as bounded JSON. Read-only; no decision endpoint. */
+  async reviewSummary(request) {
+    this.reviewSchemas.Empty.parse(request)
+    const projection = await this.queueProjection()
+    const summaryJson = JSON.stringify(projection)
+    if (Buffer.byteLength(summaryJson, 'utf8') > 1900000) {
+      throw Object.assign(new Error('Review summary exceeds the wire limit'), { code: 'REVIEW_SUMMARY_TOO_LARGE' })
+    }
+    return this.reviewSchemas.Summary.parse({ summaryJson })
+  }
+
+  /** Remote read model: the pinned policy identity and requirement matrix. */
+  reviewPolicy(request) {
+    this.reviewSchemas.Empty.parse(request)
+    return this.reviewSchemas.Policy.parse({ policyJson: JSON.stringify(this.policy()) })
   }
 
   /** The resolved snapshot is fixed at service start; a new policy needs a new service lifetime. */

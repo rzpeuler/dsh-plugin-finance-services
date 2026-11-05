@@ -29,3 +29,4 @@ tests/p5-boundary/latest.json
 tests/p5-boundary/sentinel.json
 tests/p5-boundary/marker.json
 tests/p5-queue/latest.json
+tests/p5-remote/latest.json
