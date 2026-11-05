@@ -5,7 +5,7 @@
 ## 实际可用与未发现的内容
 
 - 安装包确实包含原生`@deepseek-ai/dsh-mcp-client`。发行版[README](<C:/Users/Administrator/AppData/Local/Programs/DeepSeek Harness/resources/app.asar/dsh/node_modules/@deepseek-ai/dsh-mcp-client/README.md#L26-L69>)声明每entry一个server，支持stdio和streamable-http、连接重试及超时；工具登记到原生ctx.tools。不能据此说“DSH没有MCP”。
-- 本轮原生Config查询中，该client与`@deepseek-ai/dsh-mcp-manager`均无已挂entry（total=0）。前者仅表示没有启用的服务器，不表示包不存在。
+- 最初预检的原生Config查询中，该client与`@deepseek-ai/dsh-mcp-manager`均无已挂entry（total=0）；后续TEST_ONLY连接期间client实际新增1条，收尾移除。前者仅表示没有启用的服务器，不表示包不存在。
 - 对安装包中`dsh-mcp-manager/package.json`的实际读取返回not found；当前未取得可用的公开动态register/connection/restart/probe/watch Manager服务合同。不能猜名字、调用私有connection supervisor或改Core来补出Manager。
 - 原生client的声明式配置不是一个可从金融UI声称已具备的管理API；现有env/header示例也不是已验证的原生credential引用/OAuth流程。
 
@@ -19,4 +19,10 @@
 
 ## P3判定
 
-P3-MCP-NATIVE目前保留为`DECLARED_RELEASE_INTERFACE_GAP / NOT_VERIFIED`。其余契约、Adapter扩展、规范化与权限可以独立实现和验证，但不得用TEST_ONLY结果把这个缺口改为PASS，也不据此宣称P3已完成。
+P3-MCP-NATIVE现为`SUPPORTED_NATIVE_TRANSPORT_VERIFIED / MANAGER_AND_SAFE_BRIDGE_GAP`，不是整体PASS。新增[7项真实stdio检查](../acceptance/P3-native-mcp-pass-003.json)及[2项卸载审计](../acceptance/P3-native-mcp-unload-pass-003.json)：使用发行版原生Client实际握手、ping/读取同进程TOY财报、公开dispatcher守卫拒绝、错误后观察恢复、金融角色看不到也不能调用raw MCP、卸载后工具定义和schemas撤销。未注册假Harness工具，未触碰来源策略、凭据或模型。
+
+最初两个探针分别误把源允许的限定`read`列为禁止、误认拒绝结果必含`error.info.code=UNKNOWN_TOOL`；[失败001](../acceptance/P3-native-mcp-failure-001.json)与[失败002](../acceptance/P3-native-mcp-failure-002.json)保留。重试只修测试：仍同时断言raw MCP schema/definition缺席、实际分派失败，未放宽产品权限。
+
+**尚不能完成金融Adapter的原生MCP桥接。** 真实金融角色的单调权限层会拒绝raw MCP；当前未取得能保留原Agent工具审批/沙箱边界的公开MCP Manager连接调用或委派契约。不能在Adapter中通过删去Agent、替换身份、直接调用definition.execute或私有连接来绕过。独立Host授权的连接测试不等于金融角色数据访问，更不是商业许可或OAuth。
+
+其余契约、Adapter扩展、模型工具和真实Client链已独立验证；此宿主接口缺口仍保留，不能据此宣称P3已完成。

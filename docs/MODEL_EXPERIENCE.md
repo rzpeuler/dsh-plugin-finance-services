@@ -34,6 +34,17 @@ The two source Bash exceptions now use one progressive `finance_model_calculate`
 
 [Native before/after comparison](../acceptance/P2-controlled-compute-token-comparison.json) uses public `tokenMeter` on the same measured sections. It excludes pre-step Skill messages and subsequent context; **not a complete first-turn or provider-reported usage comparison**. This is the measured cost of extra capability, not claimed token savings. The native supplement verified all four fixed profiles and permissions without invoking any model.
 
+## P3 progressive financial query: measured header cost
+
+`finance_data_query` keeps the same admitted roles and tool count, but replaces the free-text placeholder with `describe/query`, a capability ID and deferred bounded Query JSON. `describe` returns the structural schema, runtime rules, TEST_ONLY example and only the current scope's explicitly granted Provider coverage; it does not assert authorization from a schema. Queries carry no model-supplied Agent/role/credential identity.
+
+| Role | Assembled system before→after | Tool header before→after | Header-tool change |
+|---|---:|---:|---:|
+| finance-pitch-agent-modeler | 2041→2040 | 636→754 | +118 |
+| finance-model-builder-builder | 2075→2075 | 848→848 | 0 |
+
+[Actual native comparison](../acceptance/P3-role-query-token-comparison.json) uses the same public meter and route, with zero model calls. These are heuristic assembled-system/header estimates, excluding pre-step Skill catalogue and other first-turn contributions or provider usage. One-token prompt variance is not claimed savings. The writer gets no query tool; native dispatcher, post-await revocation and malformed-request checks are recorded separately from financial/commercial E2E.
+
 ## Stability and limits
 
 Persona text and tool definitions are stable for a retained preset revision. Workspace paths, Session identities and source observations are Session-specific context; they can change a provider's cache prefix. One within-Worker cached step was observed above; latency improvements, cross-Session reuse and any causal cache benefit from this implementation have not been established.

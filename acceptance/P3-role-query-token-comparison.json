@@ -1,0 +1,39 @@
+{
+  "classification": "NATIVE_HEURISTIC_ASSEMBLED_SYSTEM_AND_TOOL_HEADER_NOT_COMPLETE_FIRST_TURN",
+  "beforeRunId": "ece8054a-89bc-4e1b-82f5-c30260956571",
+  "afterRunId": "9826c9af-4143-4847-b54c-c67386df1772",
+  "rows": [
+    {
+      "roleId": "finance-pitch-agent-modeler",
+      "promptBefore": 2041,
+      "promptAfter": 2040,
+      "toolBefore": 636,
+      "toolAfter": 754,
+      "promptDelta": -1,
+      "toolDelta": 118,
+      "totalDelta": 117
+    },
+    {
+      "roleId": "finance-model-builder-builder",
+      "promptBefore": 2075,
+      "promptAfter": 2075,
+      "toolBefore": 848,
+      "toolAfter": 848,
+      "promptDelta": 0,
+      "toolDelta": 0,
+      "totalDelta": 0
+    }
+  ],
+  "modelCalls": 0,
+  "providerUsage": "NOT_MEASURED",
+  "excluded": [
+    "pre-step Skill catalogue",
+    "user input",
+    "other pre-step contributions",
+    "provider-reported usage"
+  ],
+  "limits": [
+    "One-token prompt variance is sample/context variation, not claimed savings",
+    "The query tool adds capability and deferred discovery; increased header cost is reported without causal performance claims"
+  ]
+}

@@ -6,6 +6,8 @@ import { Context, Service } from '@deepseek-ai/cordis'
 import { createScope, scopeOf, scopeChainOf, scopeTarget, ScopedLayers, NamedEntries, AnonymousEntries } from '@deepseek-ai/dsh-scope'
 import * as rolePlugin from '../src/role.js'
 import * as floorPlugin from '../src/floor.js'
+import { makeQuery } from './data-fixtures.js'
+const queryArgs = () => ({ action: 'query', capability: 'financial.statements', query_json: JSON.stringify(makeQuery()) })
 
 const manifest = JSON.parse(await readFile(new URL('../assets/agent-manifest.json', import.meta.url), 'utf8'))
 const roles = manifest.roles.map(role => ({ ...role, skillRoots: [resolve('assets', role.skillRoot)] }))
@@ -159,7 +161,7 @@ test('actual Cordis plus scope stubs isolate main/Worker schemas and actual disp
   assert.equal(f.ctx.tools.get('skill', main), mainComposition.native.get('skill'), 'native catalog identity must survive own-layer rehang')
   for (const agent of [main, reader, writer]) for (const name of ['pwsh', 'subagent_fork', 'workflow', 'web_fetch']) assert.equal((await f.dispatch(agent, name)).isError, true)
   for (const name of ['write', 'edit']) assert.equal((await f.dispatch(main, name)).isError, true)
-  assert.equal((await f.dispatch(writer, 'finance_data_query', { source: 'capiq', query: 'x' })).isError, true)
+  assert.equal((await f.dispatch(writer, 'finance_data_query', queryArgs())).isError, true)
   assert.equal((await f.dispatch(reader, 'ask_user_question')).isError, true)
   assert.equal((await f.dispatch(reader, 'subagent')).isError, true)
   const ordinary = { id: 'ordinary-user' }
@@ -178,7 +180,7 @@ test('real Cordis Service facades with one backing grant admit query and native 
   const expected = { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 }
   assert.equal(first.isRoleRuntimeActive(agent, role.id, expected), true)
   assert.equal(second.isRoleRuntimeActive(agent, role.id, expected), true)
-  const result = await f.dispatch(agent, 'finance_data_query', { source: role.allowedMcpServers[0], query: 'TEST_ONLY request' })
+  const result = await f.dispatch(agent, 'finance_data_query', queryArgs())
   assert.equal(result.isError, false)
   assert.equal(result.value.status, 'NOT_CONFIGURED')
   assert.equal((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).isError, false)
@@ -190,7 +192,7 @@ test('captured executors recheck current Agent grant/source and closed root even
   const composition = await f.compose(role)
   const agent = await f.create(composition)
   const query = f.ctx.tools.get('finance_data_query', agent)
-  const args = { source: role.allowedMcpServers[0], query: 'TEST_ONLY request' }
+  const args = queryArgs()
   const exec = { agent, signal: new AbortController().signal }
   assert.equal((await query.execute(args, exec)).status, 'NOT_CONFIGURED')
   f.byId.set(role.id, { ...role, prompt: { ...role.prompt, adaptedSha256: '0'.repeat(64) } })
@@ -217,7 +219,7 @@ test('replacement Cordis root without a grant cannot authorize a retained native
   await assert.rejects(async () => { await composition.fiber }, /root is closed/)
   assert.equal(replacementGrants.has(agent), false)
   assert.match((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
-  await assert.rejects(query.execute({ source: role.allowedMcpServers[0], query: 'x' }, { agent, signal: new AbortController().signal }), /ROLE_AGENT_REQUIRED|ROLE_AUTHORITY_UNAVAILABLE/)
+  await assert.rejects(query.execute(queryArgs(), { agent, signal: new AbortController().signal }), /ROLE_AGENT_REQUIRED|ROLE_AUTHORITY_UNAVAILABLE/)
 })
 
 test('dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow', async t => {
@@ -318,7 +320,7 @@ test('floor source/prompt revision checks refuse an active grant when trusted so
   f.byId.set(role.id, { ...role, source: { ...role.source, sha256: '0'.repeat(64) } })
   assert.equal(f.grants.has(agent), true)
   assert.match((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
-  assert.match((await f.dispatch(agent, 'finance_data_query', { source: role.allowedMcpServers[0], query: 'x' })).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
+  assert.match((await f.dispatch(agent, 'finance_data_query', queryArgs())).error.message, /ROLE_AUTHORITY_UNAVAILABLE/)
 })
 
 test('same role ID in separate retained composition scopes does not share effects or runtime grants', async t => {

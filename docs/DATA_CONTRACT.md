@@ -40,4 +40,4 @@ ctx.effect(() => ctx.financeData.registerAdapter(definition), 'my financial adap
 
 [26项原生服务检查](../acceptance/P3-foundation-native-pass-001.json)及[6项卸载审计](../acceptance/P3-adapter-unload-audit.json)通过：两个独立TEST_ONLY Adapter、来源回退/单位/PIT/许可状态、同角色跨Session拒绝、原生持久CAS与清理。原卸载审计遗漏await的失败独立保留。
 
-模型查询工具与Data Sources前端尚未接入；真实MCP/商业许可/视觉均未验证。参见[MCP兼容边界](MCP_COMPATIBILITY.md)和[P3预设标准](../acceptance/P3.md)。
+模型查询工具已通过33项原生检查，Data Sources生产callback与真实resource通过15项检查；实际原生MCP transport亦已独立验证，但安全金融桥接/Manager/真实凭据接口缺口保留。商业许可、鼠标/视觉均未验证。参见[MCP兼容边界](MCP_COMPATIBILITY.md)和[P3预设标准](../acceptance/P3.md)。

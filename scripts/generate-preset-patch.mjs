@@ -6,11 +6,14 @@ import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const manifest = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'), 'utf8'))
+const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
+const dataModule = pkg.exports['./data-runtime-2'] ? '@local/dsh-financial-services/data-runtime-2' : '@local/dsh-financial-services/data'
+const roleModule = pkg.exports['./role-data-1'] ? '@local/dsh-financial-services/role-data-1' : '@local/dsh-financial-services/role-numeric-1'
 assert.equal(manifest.roles.length, 40)
 assert.equal(new Set(manifest.roles.map(role => role.id)).size, 40)
 const lines = ['# Generated from audited financial assets. Do not edit the declarations by hand.', '- insert:',
   '    - id: financial-services', "      name: '@local/dsh-financial-services'",
-  '    - id: finance-data', "      name: '@local/dsh-financial-services/data'",
+  '    - id: finance-data', `      name: '${dataModule}'`,
   '      config:', '        requestTimeoutMs: 10000', '        maxConcurrentQueries: 32']
 const quoted = value => JSON.stringify(value)
 let order = 1000
@@ -46,7 +49,7 @@ for (const role of manifest.roles) {
   } else {
     assert.deepEqual(role.workerPresetIds, [])
   }
-  lines.push('          - id: finance-role', "            name: '@local/dsh-financial-services/role-numeric-1'", '            config:', `              roleId: ${role.id}`)
+  lines.push('          - id: finance-role', `            name: '${roleModule}'`, '            config:', `              roleId: ${role.id}`)
 }
 const patch = lines.join('\n') + '\n'
 await writeFile(join(root, 'cordis.patch.yml'), patch, 'utf8')

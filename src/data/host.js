@@ -92,13 +92,21 @@ export default class FinanceData extends TypertRemoteService {
     return operation
   }
 
+  async contextForAgent(agent) {
+    const roleId = this.ctx.agentPresets.composedPreset(agent.ctx)
+    const role = await this.ctx.financeOperations.roleDefinition(roleId)
+    return { agent, roleId, scopeId: agent.id,
+      expectedRevision: { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 } }
+  }
+
+  async describeForAgent(agent, capability) {
+    return this.requireRegistry().describeCapability(capability, await this.contextForAgent(agent))
+  }
+
   /** Only an existing exact-role Agent creates this query context; it is never a Remote/model parameter. */
   async queryForAgent(agent, request, signal) {
     const registry = this.requireRegistry()
-    const roleId = this.ctx.agentPresets.composedPreset(agent.ctx)
-    const role = await this.ctx.financeOperations.roleDefinition(roleId)
-    const context = { agent, roleId, scopeId: agent.id,
-      expectedRevision: { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 } }
+    const context = await this.contextForAgent(agent)
     const controller = new AbortController()
     const controllers = this.queries.get(agent) ?? new Set()
     this.queries.set(agent, controllers)

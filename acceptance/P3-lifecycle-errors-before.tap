@@ -1,0 +1,131 @@
+﻿TAP version 13
+# Subtest: throwing provider unsubscribe cannot retain a registered capability; repeat disposal is idempotent
+not ok 1 - throwing provider unsubscribe cannot retain a registered capability; repeat disposal is idempotent
+  ---
+  duration_ms: 5.385
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\data-lifecycle-errors.test.js:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "api_key=DO_NOT_EXPORT"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'api_key=DO_NOT_EXPORT'
+  stack: |-
+    Object.disposeState (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:13:201)
+    file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/data/registry.js:70:14
+    getActual (node:assert:611:5)
+    strict.doesNotThrow (node:assert:779:32)
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:19:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:19:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: registry disposal cleans every owned subscription even if the first provider throws
+not ok 2 - registry disposal cleans every owned subscription even if the first provider throws
+  ---
+  duration_ms: 1.2709
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\data-lifecycle-errors.test.js:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "api_key=DO_NOT_EXPORT"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'api_key=DO_NOT_EXPORT'
+  stack: |-
+    Object.disposeState (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:13:201)
+    FinancialDataRegistry.dispose (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/data/registry.js:201:131)
+    file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:33:38
+    getActual (node:assert:611:5)
+    strict.doesNotThrow (node:assert:779:32)
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:33:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:33:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: late callbacks from an old registration cannot invalidate its same-ID successor
+not ok 3 - late callbacks from an old registration cannot invalidate its same-ID successor
+  ---
+  duration_ms: 1.1399
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\data-lifecycle-errors.test.js:45:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:53:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: unregister aborts a held query even if provider cleanup throws and its late response arrives
+not ok 4 - unregister aborts a held query even if provider cleanup throws and its late response arrives
+  ---
+  duration_ms: 4.4455
+  type: 'test'
+  location: 'C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\data-lifecycle-errors.test.js:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "api_key=DO_NOT_EXPORT"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'api_key=DO_NOT_EXPORT'
+  stack: |-
+    Object.disposeState (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:13:201)
+    file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/src/data/registry.js:70:14
+    getActual (node:assert:611:5)
+    strict.doesNotThrow (node:assert:779:32)
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:73:10)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/data-lifecycle-errors.test.js:73:10)
+    async Test.run (node:internal/test_runner/test:1409:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 0
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 155.5905

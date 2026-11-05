@@ -1,0 +1,7 @@
+{
+  "identity": "ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1",
+  "serverName": "finance_p3_test_ff5bad1d0b2a",
+  "nativeEntryId": "finance-p3-native-mcp-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only",
+  "testRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp",
+  "evidenceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\runs\\ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1"
+}

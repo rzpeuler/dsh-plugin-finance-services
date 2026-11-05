@@ -1,0 +1,4 @@
+- insert:
+    - id: finance-p3-native-mcp-probe-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only
+      name: '@local/dsh-finance-p3-native-mcp-probe-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only'
+      config: {}

@@ -1,0 +1,7 @@
+# Disposable TEST_ONLY renderless fixture. Parent alone installs.
+- insert:
+    - id: finance-p3-client-147f3eff-d377-425e-83c7-08a205245a49-test-only
+      name: '@local/dsh-finance-p3-client-147f3eff-d377-425e-83c7-08a205245a49-test-only'
+      config:
+        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"
+        packageName: "@local/dsh-finance-p3-client-147f3eff-d377-425e-83c7-08a205245a49-test-only"

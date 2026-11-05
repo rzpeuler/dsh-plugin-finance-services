@@ -1,0 +1,5 @@
+- insert:
+    - id: finance-p3-template-audit-test-only
+      name: '@local/finance-p3-template-audit-test-only'
+      config:
+        bundleRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle'

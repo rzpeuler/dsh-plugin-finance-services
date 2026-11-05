@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { calculateModel, describeCalculation } from './calculation.js'
+import { dataQueryInput, dataQueryParameters, dataQueryOutput, dataQueryDescription, executeDataQuery } from './data-query.js'
 
 /** Source Bash exceptions receive fixed arithmetic only, never an execution language. */
 export function calculationModels(role) {
@@ -19,7 +20,7 @@ const inputs = {
   grep: z.object({ pattern: z.string().min(1).max(256), path: textPath.default('.') }).strict(),
   write: z.object({ file_path: textPath, content: z.string().max(250000).refine(s => !s.includes('\0'), 'NUL is not supported in text artifacts').refine(s => Buffer.byteLength(s, 'utf8') <= 1024 * 1024, 'UTF-8 content exceeds 1 MiB') }).strict(),
   edit: z.object({ file_path: textPath, old_string: z.string().min(1).max(250000), new_string: z.string().max(250000).refine(s => !s.includes('\0'), 'NUL is not supported in text artifacts'), expected_sha256: z.string().regex(/^[a-f0-9]{64}$/) }).strict(),
-  finance_data_query: z.object({ source: z.string().min(1).max(80), query: z.string().min(1).max(4000) }).strict(),
+  finance_data_query: dataQueryInput,
   finance_model_calculate: z.strictObject({ action: z.enum(['describe', 'calculate']), model: z.enum(['dcf', 'lbo', 'three_statement', 'comps']),
     input_json: z.string().min(2).max(50000).refine(text => Buffer.byteLength(text, 'utf8') <= 50000, 'Input exceeds 50000 UTF-8 bytes').optional() }),
 }
@@ -29,7 +30,7 @@ const parameters = {
   grep: object({ pattern: string('Literal, case-sensitive text (not a regular expression), 1–256 characters.'), path: string('Workspace-relative directory; default .; no symlinks or junctions.') }, ['pattern']),
   write: object({ file_path: string('New workspace-relative file below the artifactDirectory shown in the role runtime context; no overwrite.'), content: string('UTF-8 text, maximum 250000 characters and 1 MiB.') }),
   edit: object({ file_path: string('Existing workspace-relative file below this Session\'s artifactDirectory.'), old_string: string('Exact nonempty text that occurs once; maximum 250000 characters.'), new_string: string('Literal replacement, maximum 250000 characters.'), expected_sha256: string('Current lowercase SHA-256 from read/write/edit; stale edits are rejected.') }),
-  finance_data_query: object({ source: string('Exact source server ID from this role\'s source allowlist; no arbitrary server, URL or write method.'), query: string('Read-only financial information request, 1–4000 characters. P2 has no connected executor.') }),
+  finance_data_query: dataQueryParameters,
 }
 parameters.finance_model_calculate = object({
   action: { type: 'string', enum: ['describe', 'calculate'], description: 'describe returns the exact strict request schema and a TEST_ONLY example. calculate requires input_json.' },
@@ -43,7 +44,7 @@ const outputs = {
   grep: object({ matches: { type: 'array', items: object({ path: string(), line: { type: 'integer' }, text: string() }) }, truncated: { type: 'boolean' }, trust }),
   write: mutationOutput,
   edit: mutationOutput,
-  finance_data_query: object({ status: { type: 'string', const: 'NOT_CONFIGURED' }, source: string(), message: string(), trust }),
+  finance_data_query: dataQueryOutput,
 }
 outputs.finance_model_calculate = object({ action: { type: 'string', enum: ['describe', 'calculate'] }, model: string(), result_json: string() })
 const descriptions = {
@@ -53,7 +54,7 @@ const descriptions = {
   write: 'Create a new UTF-8 text artifact only in this Session\'s artifactDirectory. Creates missing artifact subdirectories; never overwrites an existing file. Returns path and SHA-256. Does not create Office binaries or run scripts.',
   edit: 'Replace one literal text occurrence in this Session\'s own artifact. Requires the current SHA-256; concurrent or stale edits are rejected. Returns updated SHA-256; cannot edit inputs, skill files or another Session\'s artifacts.',
   finance_model_calculate: 'Compute fixed financial model sections from supplied numeric inputs. First call describe for the exact request schema, example and supported profile. Returns intermediate calculations, checks and source method references; no Office files, scripts, network, commercial-source validation or approval.',
-  finance_data_query: 'Request read-only financial data from a source explicitly allowed for this role. P2 returns NOT_CONFIGURED rather than fabricated data; no MCP execution, remote writes, publication, transactions or fallback web search.',
+  finance_data_query: dataQueryDescription,
 }
 
 /** Exact source-authorized capabilities. Bash is deliberately not migrated into a generic shell. */
@@ -62,7 +63,7 @@ export function roleToolNames(role) {
 }
 
 /** Registry definitions use only the DSH JSON subset; Zod enforces tighter execution limits. */
-export function createRoleTools(role, filesystemFor) {
+export function createRoleTools(role, filesystemFor, queryForAgent, describeForAgent) {
   return roleToolNames(role).map(name => ({
     name,
     description: descriptions[name],
@@ -90,8 +91,9 @@ export function createRoleTools(role, filesystemFor) {
         return { action: input.action, model: input.model, result_json }
       }
       if (name === 'finance_data_query') {
-        if (role.writer || !role.allowedMcpServers.includes(input.source)) throw Object.assign(new Error('SOURCE_DENIED: source is not authorized for this role'), { code: 'SOURCE_DENIED' })
-        return { status: 'NOT_CONFIGURED', source: input.source, message: 'P3 financial query adapters are not configured. No data was retrieved or inferred.', trust: 'UNTRUSTED_DATA' }
+        const result = await executeDataQuery(role, input, exec.agent, exec.signal, queryForAgent, describeForAgent)
+        filesystem.check() // A grant revoked during an await cannot disclose a late result.
+        return result
       }
       return filesystem[name](input, exec.signal)
     },

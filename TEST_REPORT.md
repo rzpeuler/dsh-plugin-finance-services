@@ -99,3 +99,10 @@ MCP Manager接口缺失、商业授权未配置、原始标准LBO/comps/Nike示�
 - 两Adapter和所有测试探针已原生移除；financial_data revision2/空绑定，文件和历史不删。
 - 当前发行版确有dsh-mcp-client，但无已挂client/manager Config；Manager包实际读取not found。见[兼容边界](docs/MCP_COMPATIBILITY.md)。不建第二个通用Manager，也不把进程内MCP形状模拟当真实MCP连接。
 - P3仍待FinancialDataTool实际dispatcher、Data Sources Client、原生Manager/凭据兼容及升级/重装矩阵。商业源、Office、Review Gate与视觉依旧不声称完成。
+
+### P3 alpha2最新增量与真实MCP（整阶段仍PARTIAL）
+
+- [217本地回归](acceptance/P3-alpha2-regression-pass-004.tap)0失败；[33原生角色/生命周期](acceptance/P3-role-native-pass-002.json)及[15真实生产Client](acceptance/P3-live-client-pass-003.json)通过。Client实读权威资源，执行真实政策callback→原生Tool查询2m/2.1m与优先级切换；未用DOM/鼠标或视觉验收冒充。
+- [6原生模板检查](acceptance/P3-template-native-smoke.json)确认独立包默认NOT_CONFIGURED且无auto-grant；[9自有Agent卸载审计](acceptance/P3-alpha2-unload-audit.json)通过，策略revision8且无测试scope，原绑定null/19不变。
+- [7真实原生stdio检查](acceptance/P3-native-mcp-pass-003.json)与[2卸载检查](acceptance/P3-native-mcp-unload-pass-003.json)通过：发行版原生client实际握手、同实例ping/read、公开dispatcher守卫、金融角色raw MCP拒绝、工具注销。初两次探针错误假设的失败记录独立保留，产品权限未更改。
+- 原生MCP测试只允许人类授权的固定Host测试，不是金融Adapter桥接。指定Manager包和安全委派/凭据契约尚缺；不通过去掉Agent/换身份/调用私有连接绕过。详细兼容边界保持PARTIAL，P4–P6仍未验收。

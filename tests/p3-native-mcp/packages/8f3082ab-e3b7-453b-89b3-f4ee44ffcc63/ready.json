@@ -1,0 +1,17 @@
+{
+  "identity": "8f3082ab-e3b7-453b-89b3-f4ee44ffcc63",
+  "serverName": "finance_p3_test_8f3082abe3b7",
+  "packageRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\packages\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63",
+  "nativeTarget": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\packages\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63\\native",
+  "probeTarget": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\packages\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63\\probe",
+  "auditTarget": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\packages\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63\\audit",
+  "nativeEntryId": "finance-p3-native-mcp-8f3082ab-e3b7-453b-89b3-f4ee44ffcc63-test-only",
+  "command": "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\node\\bin\\node.exe",
+  "connectionResult": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\runs\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63\\connection-result.json",
+  "unloadResult": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\runs\\8f3082ab-e3b7-453b-89b3-f4ee44ffcc63\\post-unload-result.json",
+  "installed": false,
+  "serverStarted": false,
+  "manager": "NOT_AVAILABLE",
+  "adapterBridge": "UNSUPPORTED_PUBLIC_DELEGATION_CONTRACT",
+  "displayResources": "Original SVG and English/Chinese locales included; rendered inventory not verified."
+}

@@ -1,0 +1,16 @@
+- insert:
+    - id: finance-p3-native-mcp-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: finance_p3_test_ff5bad1d0b2a
+        transport: stdio
+        command: "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\node\\bin\\node.exe"
+        args: ["C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-native-mcp\\packages\\ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1\\native\\server.js"]
+        failOnStartupError: true
+        toolCallTimeoutMs: 3000
+        maxInstructionBytes: 1024
+        reconnect:
+          enabled: true
+          initialDelayMs: 250
+          maxDelayMs: 1000
+          maxAttempts: 2

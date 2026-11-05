@@ -1,0 +1,47 @@
+{
+  "name": "@local/dsh-finance-p3-client-481c9b41-057e-4dc7-acbc-9c87101d2d72-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY P3 connected production callbacks and native Resources; no visual or commercial claim.",
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "exports": {
+    ".": "./host.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "host.js",
+    "contract.js",
+    "client.js",
+    "report-io.js",
+    "TEST_ONLY-fixture.json",
+    "cordis.patch.yml",
+    "README.md",
+    "package.json"
+  ],
+  "dependencies": {
+    "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.5",
+    "zod": "4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@local/dsh-financial-services",
+        "@deepseek-ai/dsh-client-resources",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-cordis-client-runner"
+      ]
+    }
+  }
+}

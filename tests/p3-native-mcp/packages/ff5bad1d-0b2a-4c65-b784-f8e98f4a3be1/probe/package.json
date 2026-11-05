@@ -1,0 +1,33 @@
+{
+  "name": "@local/dsh-finance-p3-native-mcp-probe-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Verifies actual native MCP calls and FinanceRole denial through public dispatch, without model turns or policy changes.",
+  "license": "UNLICENSED",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    ".": "./host-probe.js"
+  },
+  "files": [
+    "icon.svg",
+    "test-config.json",
+    "README.md",
+    "locale/en.json",
+    "locale/zh.json",
+    "host-probe.js",
+    "protocol.js",
+    "connection-state.js",
+    "cordis.patch.yml",
+    "package.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

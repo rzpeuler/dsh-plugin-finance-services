@@ -1,0 +1,32 @@
+{
+  "name": "@local/dsh-finance-p3-native-mcp-native-8f3082ab-e3b7-453b-89b3-f4ee44ffcc63-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Connects a package-owned synthetic TOY stdio MCP server using the shipped native client; not commercial financial data.",
+  "license": "UNLICENSED",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "icon.svg",
+    "test-config.json",
+    "README.md",
+    "locale/en.json",
+    "locale/zh.json",
+    "server.js",
+    "protocol.js",
+    "toy-fixture.json",
+    "cordis.patch.yml",
+    "package.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

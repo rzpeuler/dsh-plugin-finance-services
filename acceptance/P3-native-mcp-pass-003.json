@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "classification": "TEST_ONLY_NOT_REAL_COMMERCIAL",
+  "identity": "8f3082ab-e3b7-453b-89b3-f4ee44ffcc63",
+  "runId": "4f7acd2d-9e13-4fca-a0d7-a504ebdb2557",
+  "startedAt": "2026-11-05T08:02:04.569Z",
+  "status": "PASS",
+  "serverName": "finance_p3_test_8f3082abe3b7",
+  "nativeEntryId": "finance-p3-native-mcp-8f3082ab-e3b7-453b-89b3-f4ee44ffcc63-test-only",
+  "nativePackage": "@deepseek-ai/dsh-mcp-client",
+  "expectedNames": [
+    "mcp__finance_p3_test_8f3082abe3b7__ping",
+    "mcp__finance_p3_test_8f3082abe3b7__financial_statements"
+  ],
+  "checks": [
+    {
+      "id": "native-namespaced-registration-and-exact-wire-schema",
+      "status": "PASS",
+      "detail": {
+        "names": [
+          "mcp__finance_p3_test_8f3082abe3b7__ping",
+          "mcp__finance_p3_test_8f3082abe3b7__financial_statements"
+        ],
+        "schemas": [
+          {
+            "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+            "description": "TEST_ONLY local synthetic MCP connection check.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "challenge": {
+                  "type": "string",
+                  "const": "TEST_ONLY_NATIVE_P3"
+                }
+              },
+              "required": [
+                "challenge"
+              ],
+              "additionalProperties": false
+            }
+          },
+          {
+            "name": "mcp__finance_p3_test_8f3082abe3b7__financial_statements",
+            "description": "Read TEST_ONLY synthetic TOY FY2024 USD statements; not commercial data.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "symbol": {
+                  "type": "string",
+                  "const": "TOY"
+                },
+                "fiscalYear": {
+                  "type": "integer",
+                  "const": 2024
+                }
+              },
+              "required": [
+                "symbol",
+                "fiscalYear"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "localToolDefinitionsRegistered": 0,
+        "nativeLoaderOwnsRegistration": true
+      }
+    },
+    {
+      "id": "actual-stdio-native-ping-and-read-correlation",
+      "status": "PASS",
+      "detail": {
+        "ping": {
+          "classification": "TEST_ONLY_NOT_REAL_COMMERCIAL",
+          "challenge": "TEST_ONLY_NATIVE_P3",
+          "protocolVersion": "2025-06-18",
+          "initialized": true,
+          "instanceId": "004828ab-fc07-4a46-b1f7-4c9ce9bf4208",
+          "calls": 1,
+          "fixtureRevision": "toy-native-r1"
+        },
+        "read": {
+          "classification": "TEST_ONLY_NOT_REAL_COMMERCIAL",
+          "symbol": "TOY",
+          "fiscalYear": 2024,
+          "currency": "USD",
+          "scale": "millions",
+          "revenue": 2.2,
+          "ebitda": 0.44,
+          "license": "TEST_ONLY",
+          "revision": "toy-native-r1",
+          "instanceId": "004828ab-fc07-4a46-b1f7-4c9ce9bf4208",
+          "calls": 2
+        },
+        "connectionStatus": {
+          "state": "READY",
+          "verifiedAt": "2026-11-05T08:02:04.575Z"
+        },
+        "financialObservationAdapter": false
+      }
+    },
+    {
+      "id": "public-dispatch-retains-monotonic-policy-denial",
+      "status": "PASS",
+      "detail": {
+        "nativePublicDispatcherUsed": true,
+        "deniedWhileGuardOwned": true,
+        "restoredByExactDisposer": true,
+        "approvalBypassImplemented": false
+      }
+    },
+    {
+      "id": "observed-native-call-failure-unavailable-and-real-read-recovery",
+      "status": "PASS",
+      "detail": {
+        "unavailable": {
+          "state": "UNAVAILABLE",
+          "verifiedAt": "2026-11-05T08:02:04.578Z",
+          "code": "MCP_UNAVAILABLE"
+        },
+        "recovered": {
+          "state": "READY",
+          "verifiedAt": "2026-11-05T08:02:04.581Z"
+        },
+        "failureType": "actual_native_MCP_tool_isError_not_transport_outage",
+        "probeLocalStateOnly": true
+      }
+    },
+    {
+      "id": "exact-native-finance-role-created-without-model-turn",
+      "status": "PASS",
+      "detail": {
+        "sessionId": "p3-native-mcp-ce2189d5-69d8-4c84-80fd-45d7d32293d2",
+        "preset": "finance-pitch-agent-modeler"
+      }
+    },
+    {
+      "id": "finance-role-raw-native-mcp-and-general-execution-remain-blocked",
+      "status": "PASS",
+      "detail": {
+        "tools": [
+          "read",
+          "finance_data_query",
+          "finance_model_calculate",
+          "skill"
+        ],
+        "rawMcpDenied": true,
+        "identitySubstitution": false,
+        "scopeGrantExpanded": false
+      }
+    },
+    {
+      "id": "owned-marker-fenced-agent-cleanup-zero-turns",
+      "status": "PASS",
+      "detail": {
+        "disposed": "p3-native-mcp-ce2189d5-69d8-4c84-80fd-45d7d32293d2",
+        "modelTurns": 0,
+        "sessionHistoryRetained": true,
+        "filesRetained": true
+      }
+    }
+  ],
+  "dispatches": [
+    {
+      "callId": "p3-native-mcp-ba59ce4f-9f7a-4152-b953-f7b9ae1bc4cd",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": false,
+      "errorCode": null
+    },
+    {
+      "callId": "p3-native-mcp-96c732e9-d88a-49e9-bd0d-9e2ae27e95b3",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__financial_statements",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": false,
+      "errorCode": null
+    },
+    {
+      "callId": "p3-native-mcp-85378356-02ba-4cb3-b162-fe3443a226da",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": true,
+      "errorCode": "TOOL_ERROR"
+    },
+    {
+      "callId": "p3-native-mcp-1b7f1141-5ba3-4056-9389-9064c3c2ad11",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": false,
+      "errorCode": null
+    },
+    {
+      "callId": "p3-native-mcp-9cb52455-16ef-4189-a3f6-a34d15db68a1",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__financial_statements",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": true,
+      "errorCode": "TOOL_ERROR"
+    },
+    {
+      "callId": "p3-native-mcp-950f1bee-3048-4a08-b8f4-8f687b0d458f",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": false,
+      "errorCode": null
+    },
+    {
+      "callId": "p3-native-mcp-2ea9914f-028f-4f43-a485-928ac764ea89",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__financial_statements",
+      "origin": "DIRECT_AUTHORIZED_TEST_HOST",
+      "isError": false,
+      "errorCode": null
+    },
+    {
+      "callId": "p3-native-mcp-d4e96c60-fadc-4969-8725-60fbe6e1cfeb",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__ping",
+      "origin": "EXACT_FINANCE_ROLE_NEGATIVE_TEST",
+      "isError": true,
+      "errorCode": "TOOL_ERROR"
+    },
+    {
+      "callId": "p3-native-mcp-991faaa7-a73c-4197-9e51-f6fd5c428f79",
+      "name": "mcp__finance_p3_test_8f3082abe3b7__financial_statements",
+      "origin": "EXACT_FINANCE_ROLE_NEGATIVE_TEST",
+      "isError": true,
+      "errorCode": "TOOL_ERROR"
+    }
+  ],
+  "manager": {
+    "status": "NOT_AVAILABLE",
+    "passClaimed": false
+  },
+  "modelCalls": 0,
+  "modelTurns": 0,
+  "networkCalls": 0,
+  "policyTouched": false,
+  "userFilesTouched": false,
+  "historyDeleted": false,
+  "adapterRegistered": false,
+  "bridge": {
+    "status": "UNSUPPORTED_PUBLIC_DELEGATION_CONTRACT",
+    "reason": "FinanceData Adapter receives query plus signal/requestId, not Agent/ToolExecutionToken. FinanceRole raw MCP stays hidden. Omitting Agent or changing identity in a role query would bypass policy; no such bridge is implemented."
+  },
+  "connectionStatus": {
+    "state": "READY",
+    "verifiedAt": "2026-11-05T08:02:04.581Z"
+  },
+  "finishedAt": "2026-11-05T08:02:04.713Z",
+  "checksPassed": 7,
+  "checksFailed": 0
+}

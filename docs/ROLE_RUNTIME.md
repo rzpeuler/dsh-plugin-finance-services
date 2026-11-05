@@ -60,11 +60,11 @@ mutation 先调用 `sandboxPolicy.resolve({ session })`，原生 read-only 一�
 
 DCF遵循源net-debt权重与midyear约定；LBO限定无PIK/分红/复杂再融资的债务水瀑；三表限定无SBC/NOL/递延税的明确年度剖面；Comps仅同币种/单位/期间/asOf观察，NM返回null且不计入分位。支持范围在describe中明示，超范围不静默简化。所有结果标记TEST_ONLY或UNSOURCED、commercialReady=false、reviewRequired=true、NUMERIC_RESULT_NOT_OFFICE；这不是P5强制Gate。
 
-新Preset正常引用`@local/dsh-financial-services/role-numeric-1`；构建保留原role artifact给既有引用，不改宿主缓存或私有符号。0.2.2已原生applied。数字结果无需缺失Office模板，builder仍只能用原write工具新建自己JSON；缺模板和真实工作簿交付按P4单独验收。
+P2的0.2.2正常角色导出为`role-numeric-1`。当前0.3.0-alpha.2的Preset引用`@local/dsh-financial-services/role-data-1`，数据服务引用`data-runtime-2`；旧artifact逐字保留给既有引用，正常新模块版本已原生applied，不改宿主缓存或私有符号。数字结果无需缺失Office模板，builder仍只能用原write工具新建自己JSON；缺模板和真实工作簿交付按P4单独验收。
 
 ## 查询与不可信内容
 
-仅 allowedMcpServers 非空且非 writer 才注册 `finance_data_query`；executor 再验证 exact source 属于本角色源 allowlist。P2 没有查询 adapter，所有获准请求确定性返回 `NOT_CONFIGURED`，不提供 data 字段、不调用 MCP、不推测金融数字、不联网 fallback。源 server enabled/通配配置不是写 API 授权，后续 P3 必须另实现窄 capability/source/session 执行约束。
+仅 allowedMcpServers 非空且非writer才注册`finance_data_query`。P3使用`describe/query + capability + query_json`：先发现严格请求结构、TEST_ONLY例子、运行时限制及仅本Session明确授权的Provider字段/市场/用途，再提交有界查询。不再接收旧自由文本source/query；sourceIds仅选择、不赋权。执行前及await后均重验exact-Agent文件/权限grant；数据服务再按原始source key、角色、Session、capability与实际许可逐请求交集检查。源enabled或配置存在不证明授权。writer仍无查询工具；无Backend/Provider或授权不全时明确NOT_CONFIGURED/NOT_AUTHORIZED，不猜数字或联网替代。真实原生dispatcher、fallback、撤销/清理见[33项检查](../acceptance/P3-role-native-pass-002.json)，均为TEST_ONLY，不是商业MCP或金融E2E。
 
 文件文本、搜索命中和查询结果带 `UNTRUSTED_DATA`；角色 required runtime context 明确其不是工具权限或执行指令。工具参数没有动态 instruction/tool-definition 字段，文本“忽略规则”“调用写 API”等只能作为数据返回，不能修改工具集合、角色或允许源。原生 Skill 方法也不授予额外权限。
 
@@ -77,7 +77,7 @@ DCF遵循源net-debt权重与midyear约定；LBO限定无PIK/分红/复杂再融
 - write/edit 字符输入最多 250000；文件最多 1 MiB，edit 按 native CRLF 恢复的保守上界提交前检查，NUL 在工具校验阶段拒绝。输出不回显完整修改文件，返回 path/hash/artifactDirectory。
 - 不支持通用 Shell/Python、Office 二进制生成、原件编辑、artifact 发布/交易/记账/客户通讯、工作目录迁移或任意父分配目录。Office 仍待 P4；固定纯数值计算不运行任何脚本；P5 确定性人审 Gate 也不在这里伪称完成。
 
-模型预算：新增每角色最多四个自有工具（main 三文件工具+查询，writer 三文件工具，reader按源更少），另复用原生技能/控制定义及一段 required runtime context。两计算角色以原生tokenMeter在相同范围测了前后SystemPrompt/header-tools：modeler增加61/214、builder增加68/221 tokens（总计275/289）。只属启发式header预算，不含pre-step Skill目录，不是完整首轮或provider usage；见[token对照](../acceptance/P2-controlled-compute-token-comparison.json)。
+模型预算：新增每角色最多四个自有工具（main 三文件工具+查询，writer 三文件工具，reader按源更少），另复用原生技能/控制定义及一段 required runtime context。两计算角色以原生tokenMeter在相同范围测了前后SystemPrompt/header-tools：modeler增加61/214、builder增加68/221 tokens（总计275/289）。只属启发式header预算，不含pre-step Skill目录，不是完整首轮或provider usage；见[P2 token对照](../acceptance/P2-controlled-compute-token-comparison.json)。P3渐进式查询的[原生前后对照](../acceptance/P3-role-query-token-comparison.json)中，modeler工具header增加118、writer增加0；system样本差1token不宣称优化，总口径仍非完整首轮。
 
 ## 已运行单测
 

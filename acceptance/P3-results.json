@@ -1,15 +1,17 @@
 {
   "stage": "P3",
-  "status": "IN_PROGRESS_FOUNDATION_NATIVE_SERVICE_PASS",
+  "status": "PARTIAL_SUPPORTED_FEATURES_PASS_HOST_MANAGER_AND_SAFE_MCP_BRIDGE_GAP",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "candidate": {
-    "version": "0.3.0-alpha.1",
+    "version": "0.3.0-alpha.2",
     "installation": "native external directory link",
     "enabled": true,
     "application": "applied",
     "warnings": [],
-    "installLogId": "operation-HMEPFM"
+    "installLogId": "operation-e5I6K7",
+    "roleModule": "@local/dsh-financial-services/role-data-1",
+    "dataModule": "@local/dsh-financial-services/data-runtime-2"
   },
   "contracts": {
     "version": "1.0.0",
@@ -20,9 +22,9 @@
     "otherCapabilitiesAreNotImpliedAvailable": true
   },
   "localRegression": {
-    "passed": 173,
+    "passed": 217,
     "failed": 0,
-    "evidence": "P3-current-regression.tap",
+    "evidence": "P3-alpha2-regression-pass-004.tap",
     "includesAdapterUnitTests": 21,
     "nativeEquivalent": false
   },
@@ -64,7 +66,9 @@
       "removed": true,
       "installLogId": "operation-TOk5Rg",
       "removeLogId": "operation-9J2bDe",
-      "actualMcpConnection": false
+      "actualMcpConnection": false,
+      "reinstalledAndReverifiedInAlpha2": true,
+      "currentlyInstalled": false
     },
     {
       "package": "@local/finance-test-rest-adapter",
@@ -74,7 +78,9 @@
       "removed": true,
       "installLogId": "operation-zQW6E7",
       "removeLogId": "operation-xqmohC",
-      "externalHttpConnection": false
+      "externalHttpConnection": false,
+      "reinstalledAndReverifiedInAlpha2": true,
+      "currentlyInstalled": false
     }
   ],
   "mcpCompatibility": {
@@ -84,9 +90,12 @@
     "managerActiveConfigRows": 0,
     "managerPackageRead": "NOT_FOUND",
     "managerPublicOperationsVerified": false,
-    "nativeExternalConnectionExecuted": false,
+    "nativeExternalConnectionExecuted": true,
     "secondGeneralManagerCreated": false,
-    "evidence": "../docs/MCP_COMPATIBILITY.md"
+    "evidence": "../docs/MCP_COMPATIBILITY.md",
+    "testOnlyNativeServerRemoved": true,
+    "nativeClientActiveConfigRowsAfterCleanup": 0,
+    "safeFinancialAdapterDelegation": "UNSUPPORTED_PUBLIC_CONTRACT_WITH_CURRENT_ROLE_FLOOR"
   },
   "implementedSafety": [
     "registration never grants access",
@@ -101,10 +110,8 @@
     "bounded safe diagnostics without provider exception text"
   ],
   "remainingKeyAcceptance": [
-    "FinancialDataTool actual native dispatcher integration",
-    "Data Sources production Client resource/callback projection and configuration verification",
-    "native MCP manager/credential integration compatibility gap",
-    "full adapter upgrade/reinstall and in-flight native lifecycle matrix"
+    "Specified native MCP Manager registration/status/restart/probe/watch/credential interface is absent from this runtime",
+    "No verified public MCP delegation preserving exact originating FinanceRole tool approval and monotonic floor; no identity omission or private-connection bypass allowed"
   ],
   "limits": [
     "TEST_ONLY observations are invented and differently valued, never commercial-equivalence or financial-E2E evidence",
@@ -118,12 +125,95 @@
     "exportAndDistributionCheck": true,
     "renderedVisual": "NOT_VERIFIED"
   },
-  "staticReviewOpen": [
+  "staticReviewOpen": [],
+  "nativeRoleDispatch": {
+    "passed": 33,
+    "failed": 0,
+    "notRun": 0,
+    "evidence": "P3-role-native-pass-002.json",
+    "modelCalls": 0,
+    "networkCalls": 0,
+    "scope": "REAL_NATIVE_HOST_ROLE_TOOLS_NOT_VISUAL_OR_COMMERCIAL",
+    "policyRevisionAfterOwnedCleanup": 5,
+    "financialBinding": null,
+    "financialRevision": 19
+  },
+  "budget": {
+    "before": "P3-role-budget-before-pass-001.json",
+    "comparison": "P3-role-query-token-comparison.json",
+    "classification": "HEURISTIC_ASSEMBLED_SYSTEM_HEADER_NOT_COMPLETE_FIRST_TURN",
+    "modelerToolDelta": 118,
+    "writerToolDelta": 0
+  },
+  "localFailureRecords": [
+    "P3-lifecycle-errors-before.tap",
+    "P3-role-data-integration-tests-001.tap"
+  ],
+  "staticReviewResolved": [
     {
       "id": "P3-LIFECYCLE-DISPOSER-THROW",
-      "status": "OPEN_STATIC_REVIEW_NOT_RUNTIME_REPRODUCED",
+      "status": "LOCAL_REPRODUCED_FIXED_AND_NATIVE_VERIFIED",
       "finding": "registerAdapter disposer calls provider unsubscribe before deleting its registry entry; a throwing unsubscribe can interrupt projection cleanup. Registry-wide disposal must also complete other owned cleanup after one provider fails.",
-      "next": "Add an explicit failing regression, make map cleanup unconditional and preserve a diagnostic, then validate a fresh native module generation before accepting P3 lifecycle."
+      "next": "Add an explicit failing regression, make map cleanup unconditional and preserve a diagnostic, then validate a fresh native module generation before accepting P3 lifecycle.",
+      "before": "P3-lifecycle-errors-before.tap",
+      "after": "P3-lifecycle-errors-after.tap",
+      "native": "P3-role-native-pass-002.json"
     }
-  ]
+  ],
+  "clientImplementation": {
+    "source": "../src/data/client-panel.js",
+    "localTests": 13,
+    "builtAndInstalled": true,
+    "nativeConnectedVerification": "PASS_15",
+    "actualMouseAndVisual": "NOT_VERIFIED"
+  },
+  "nativeClient": {
+    "passed": 15,
+    "failed": 0,
+    "evidence": "P3-live-client-pass-003.json",
+    "scope": "REAL_CONNECTED_CLIENT_PRODUCTION_CALLBACKS_AND_NATIVE_RESOURCES_NOT_VISUAL",
+    "modelCalls": 0,
+    "userDraftRead": false
+  },
+  "currentPostCleanup": {
+    "evidence": "P3-alpha2-unload-audit.json",
+    "passed": 6,
+    "adapterCount": 0,
+    "policyRevision": 8,
+    "financialRevision": 19,
+    "ownedAgentsChecked": 9,
+    "allTemporaryBundlesRemoved": true
+  },
+  "nativeTemplate": {
+    "passed": 6,
+    "evidence": "P3-template-native-smoke.json",
+    "defaultStatus": "NOT_CONFIGURED",
+    "autoGrantsCreated": false,
+    "temporaryPackageRemoved": true
+  },
+  "nativeMcpTransport": {
+    "passed": 7,
+    "failed": 0,
+    "evidence": "P3-native-mcp-pass-003.json",
+    "unloadEvidence": "P3-native-mcp-unload-pass-003.json",
+    "unloadPassed": 2,
+    "providerKind": "ACTUAL_NATIVE_STDIO_TEST_ONLY",
+    "modelCalls": 0,
+    "networkCalls": 0,
+    "policyTouched": false,
+    "financialAdapterRegistered": false,
+    "managerPassClaimed": false,
+    "financialRoleRawMcpDenied": true
+  },
+  "nativeMcpFailureRecords": [
+    {
+      "evidence": "P3-native-mcp-failure-001.json",
+      "cause": "Probe incorrectly included the role-authorized scoped read tool in its forbidden general-execution regex; no product permission changed"
+    },
+    {
+      "evidence": "P3-native-mcp-failure-002.json",
+      "cause": "Native dispatch correctly denied raw MCP but did not expose the assumed error.info.code serialization; preserved schema absence, definition absence and real failed-dispatch assertions"
+    }
+  ],
+  "pendingDecision": "Keep P3 PARTIAL and seek explicit human authorization before advancing P4 independent work under the declared Host gap"
 }

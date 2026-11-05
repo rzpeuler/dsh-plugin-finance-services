@@ -5,7 +5,7 @@
  * @param {Function} createFinanceContract Bundle-owned, self-contained contract factory.
  * @returns {object} Cordis function-plugin exports for the Client module loader.
  */
-export function createFinanceClient(React, z, createFinanceContract) {
+export function createFinanceClient(React, z, createFinanceContract, dataClient) {
   const h = React.createElement
   const PACKAGE = '@local/dsh-financial-services'
   const PANEL = 'financial-services'
@@ -150,7 +150,8 @@ export function createFinanceClient(React, z, createFinanceContract) {
 .finance-p2 dt { color: var(--dsw-alias-label-secondary); }
 .finance-p2 dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
 .finance-p2__form { display: grid; gap: 10px; margin-top: 20px; }
-.finance-p2 input { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; }
+.finance-p2 input, .finance-p2 select { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; }
+.finance-p2 input[type="checkbox"] { width: auto; min-width: 16px; min-height: 16px; padding: 0; }
 .finance-p2 input::placeholder { color: var(--dsw-alias-label-tertiary); }
 .finance-p2__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .finance-p2 button { min-height: 38px; max-width: 100%; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; padding: 8px 14px; font: inherit; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-button-elevated-fill); cursor: pointer; }
@@ -374,6 +375,7 @@ export function createFinanceClient(React, z, createFinanceContract) {
               h('button', { type: 'submit', disabled: !canBind || draft.trim() === '', className: 'finance-p2__primary' }, t(activity === 'bind' ? 'saving' : 'save'))),
             h(ErrorNotice, { error: actionError, t, id: errorId })),
           h('p', { className: 'finance-p2__hint' }, t('switching'))),
+        dataClient ? h(dataClient.Panel, props) : null,
         h(Catalogue, { t, useResource, startDraft: props.startDraft, ready: resource.status === 'live' && snapshot?.workspaceStatus === 'READY' }),
         h('section', { className: 'finance-p2__card' },
           h('h2', null, t('limits')),
@@ -407,8 +409,10 @@ export function createFinanceClient(React, z, createFinanceContract) {
     inject: ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'],
     async apply(rootCtx) {
       await rootCtx.remote.$mount(createFinanceContract(z).remote)
-      // Mount publishes a separate Cordis service; bare `remote` does not grant namespace access.
-      rootCtx.inject(['remote.financeOperations'], ctx => {
+      if (dataClient) await rootCtx.remote.$mount(dataClient.remote)
+      // Every mounted namespace is explicitly injected before any callback captures it.
+      rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : [])], ctx => {
+      const dataProps = dataClient ? dataClient.install(ctx) : {}
       const lifetime = new AbortController()
       ctx.effect(() => () => lifetime.abort(), 'financial-services: callback lifetime')
       ctx.effect(() => ctx.locale.register(NS, { en, zh }), 'financial-services: dictionaries')
@@ -515,7 +519,7 @@ export function createFinanceClient(React, z, createFinanceContract) {
           }
         },
       }), 'financial-services: catalogue resource')
-      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft })
+      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps })
       ctx.slots.inject('main', () => ctx.slots.register({ name: 'main', key: PANEL, locale: NS, inject }, WorkspacePage))
       ctx.slots.inject('sidebar.panellist', () => ctx.slots.register({
         name: 'sidebar.panellist', id: PANEL, order: 30, label: () => t('title'), locale: NS,

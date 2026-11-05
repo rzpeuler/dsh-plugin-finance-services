@@ -1,0 +1,31 @@
+{
+  "name": "@local/dsh-finance-p3-native-mcp-audit-ff5bad1d-0b2a-4c65-b784-f8e98f4a3be1-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Checks native MCP tool unregistration after parent-managed removal; no manager or restart implementation.",
+  "license": "UNLICENSED",
+  "exports": {
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    ".": "./unload-audit.js"
+  },
+  "files": [
+    "icon.svg",
+    "test-config.json",
+    "README.md",
+    "locale/en.json",
+    "locale/zh.json",
+    "unload-audit.js",
+    "cordis.patch.yml",
+    "package.json"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

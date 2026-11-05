@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "仅测试：原生 MCP 合成连接",
+    "description": "通过已提供的原生客户端连接包内合成 TOY stdio MCP 服务；不是真实商业金融数据。"
+  }
+}

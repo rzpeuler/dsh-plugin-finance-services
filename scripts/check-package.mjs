@@ -58,6 +58,14 @@ for (const entry of ['role', 'floor', ...(pkg.exports['./data'] ? ['data'] : [])
   }
 }
 
+for (const [entry, localeEntry] of [['role-numeric-1', 'role'], ['role-data-1', 'role'], ['data-runtime-2', 'data']]) {
+  if (!pkg.exports[`./${entry}`]) continue;
+  assert.equal(pkg.exports[`./${entry}`], `./lib/${entry}.js`);
+  assert.ok(pkg.files.includes(`lib/${entry}.js`));
+  assert.equal(pkg.exports[`./${entry}/locale/*.json`], `./locale/${localeEntry}/*.json`);
+  assert.equal(pkg.exports[`./${entry}/icon`], './icon.svg');
+  assert.ok(!/from\s+['"]\.\.?\//.test(await readFile(join(root, `lib/${entry}.js`), 'utf8')), `${entry} must be self-contained`);
+}
 const client = await readFile(join(root, 'lib/client.js'), 'utf8');
 new Script(client, { filename: 'lib/client.js' });
 assert.match(client, /window\.__ModuleLoader__\.load/);

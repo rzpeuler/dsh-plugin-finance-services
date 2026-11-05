@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "TEST_ONLY Native MCP Unload Audit",
+    "description": "Checks native MCP tool unregistration after parent-managed removal; no manager or restart implementation."
+  }
+}

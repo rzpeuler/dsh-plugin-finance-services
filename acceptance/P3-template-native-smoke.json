@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "evidence": "REAL_NATIVE_INDEPENDENT_TEMPLATE_REGISTRATION_NOT_QUERY_OR_VISUAL",
+  "checks": [
+    {
+      "id": "independent-template-registered-real-host",
+      "status": "PASS"
+    },
+    {
+      "id": "not-configured-is-not-ready-or-entitled",
+      "status": "PASS"
+    },
+    {
+      "id": "template-retains-test-only-license-and-narrow-coverage",
+      "status": "PASS"
+    },
+    {
+      "id": "registration-did-not-create-any-source-grant",
+      "status": "PASS"
+    },
+    {
+      "id": "own-template-control-registered",
+      "status": "PASS"
+    },
+    {
+      "id": "original-binding-unchanged",
+      "status": "PASS"
+    }
+  ],
+  "policyRevision": 8,
+  "modelCalls": 0
+}

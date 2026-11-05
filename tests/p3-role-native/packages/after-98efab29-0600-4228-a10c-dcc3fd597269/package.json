@@ -1,0 +1,27 @@
+{
+  "name": "@local/dsh-finance-p3-role-native-after-98efab29-0600-4228-a10c-dcc3fd597269-test-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Disposable TEST_ONLY native role integration probe; no models, commercial claims, Client or shell.",
+  "exports": {
+    ".": "./probe.js"
+  },
+  "files": [
+    "probe.js",
+    "report-io.js",
+    "after.js",
+    "inflight.js",
+    "TEST_ONLY-fixture.json",
+    "package.json",
+    "cordis.patch.yml"
+  ],
+  "engines": {
+    "dsh": "0.2.1-rc.5"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

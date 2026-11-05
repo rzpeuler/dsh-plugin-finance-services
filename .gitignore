@@ -13,3 +13,9 @@ tests/p2-client/runs/
 tests/p2-compute/runs/
 tests/p3-native/runs/
 tests/p3-native/latest-foundation.json
+tests/p3-role-native/runs/
+tests/p3-role-native/latest-before.json
+tests/p3-role-native/latest-after.json
+tests/p3-client/runs/
+tests/p3-client/latest.json
+tests/p3-native-mcp/runs/

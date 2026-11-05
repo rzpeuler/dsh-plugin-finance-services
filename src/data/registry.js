@@ -34,10 +34,11 @@ export class FinancialDataRegistry {
     this.listeners = new Set()
     this.cachedCatalog = undefined
     this.observerFailures = 0
+    this.disposalFailures = 0
     this.closed = false
   }
 
-  subscribe(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener) }
+  subscribe(listener) { this.ensureOpen(); this.listeners.add(listener); return () => this.listeners.delete(listener) }
   changed() {
     this.cachedCatalog = undefined
     for (const listener of this.listeners) {
@@ -58,19 +59,27 @@ export class FinancialDataRegistry {
     this.adapters.set(metadata.id, record)
     try {
       this.readState(record)
-      record.disposeState = definition.state.subscribe(() => this.changed())
+      record.disposeState = definition.state.subscribe(() => {
+        if (!this.closed && !record.disposed && this.adapters.get(metadata.id) === record) this.changed()
+      })
       if (typeof record.disposeState !== 'function') throw fault('ADAPTER_INVALID', 'Status subscription did not return its disposer')
-    } catch (error) { this.adapters.delete(metadata.id); throw error }
-    this.changed()
-    let disposed = false
-    return () => {
-      if (disposed) return
-      disposed = true
-      record.lifetime.abort(fault('ADAPTER_REMOVED', 'Adapter was unregistered'))
-      record.disposeState()
-      if (this.adapters.get(metadata.id) === record) this.adapters.delete(metadata.id)
+    } catch (error) {
+      this.retireRecord(record, 'ADAPTER_REMOVED')
       this.changed()
+      throw error
     }
+    this.changed()
+    return () => { if (this.retireRecord(record, 'ADAPTER_REMOVED')) this.changed() }
+  }
+
+  /** Revoke our own state before calling foreign cleanup; arbitrary provider errors stay private. */
+  retireRecord(record, code) {
+    if (record.disposed) return false
+    record.disposed = true
+    record.lifetime.abort(fault(code, 'Financial Adapter lifetime ended'))
+    if (this.adapters.get(record.metadata.id) === record) this.adapters.delete(record.metadata.id)
+    try { record.disposeState?.() } catch { this.disposalFailures++ }
+    return true
   }
 
   readState(record) {
@@ -120,8 +129,36 @@ export class FinancialDataRegistry {
       const { credentialRef, ...metadata } = record.metadata
       return { ...clone(metadata), credentialConfigured: Boolean(credentialRef), status: state }
     }).sort((a, b) => a.id.localeCompare(b.id, 'en'))
-    this.cachedCatalog = { contractVersion: '1.0.0', revision: this.policyRevision, capabilities: [...CAPABILITIES], adapters, bindings: clone(this.bindings), diagnostics: { observerFailures: this.observerFailures }, commercialExecutionVerified: false }
+    this.cachedCatalog = { contractVersion: '1.0.0', revision: this.policyRevision, capabilities: [...CAPABILITIES], adapters, bindings: clone(this.bindings), diagnostics: { observerFailures: this.observerFailures, disposalFailures: this.disposalFailures }, commercialExecutionVerified: false }
     return this.cachedCatalog
+  }
+
+  /** Discover only this scope's explicitly granted Provider coverage; no financial records or credentials. */
+  describeCapability(capabilityValue, context) {
+    this.ensureOpen()
+    const capability = schemas.Capability.parse(capabilityValue)
+    const role = this.roles.get(context?.roleId)
+    let granted = false
+    try { granted = this.authorize(context) === true } catch { /* failed lookup denies discovery */ }
+    if (!granted || !role || role.writer || !role.allowedMcpServers.length) return { status: 'ROLE_QUERY_DENIED', providers: [] }
+    const providers = []
+    for (const record of this.adapters.values()) {
+      const coverage = record.metadata.capabilities.find(item => item.id === capability)
+      if (!coverage) continue
+      const bindings = this.bindings.filter(item => item.enabled && item.adapterId === record.metadata.id && item.roleIds.includes(role.id)
+        && item.scopeIds.includes(context.scopeId) && role.allowedMcpServers.includes(item.sourceAllowlistKey)
+        && item.capabilities.includes(capability) && (!record.metadata.testOnly || item.allowTestOnly) && coverage.quality >= item.minQuality)
+      if (!bindings.length) continue
+      const markets = coverage.markets.filter(market => bindings.some(binding => binding.markets.includes(market)))
+      if (!markets.length || !coverage.pointInTime) continue
+      let state
+      try { state = this.readState(record) } catch { state = { state: 'ERROR', code: 'STATE_INVALID', verifiedAt: this.now() } }
+      providers.push({ adapterId: record.metadata.id, adapterVersion: record.metadata.version, sourceId: record.metadata.sourceId,
+        label: record.metadata.label, testOnly: record.metadata.testOnly, licenseClass: record.metadata.licenseClass,
+        fields: [...coverage.fields], markets, purposes: [...new Set(bindings.flatMap(binding => binding.purposes))],
+        pointInTime: coverage.pointInTime, quality: coverage.quality, status: state, licenseUse: 'PER_REQUEST_VALIDATION_REQUIRED' })
+    }
+    return { status: !this.adapters.size ? 'NOT_CONFIGURED' : providers.length ? 'EXPLICIT_SCOPE_GRANTS_FOUND' : 'NOT_AUTHORIZED', providers }
   }
 
   /** Query context is created by the Host from the exact Agent, never accepted in model JSON. */
@@ -198,7 +235,7 @@ export class FinancialDataRegistry {
     if (this.closed) return
     this.closed = true
     this.policyLifetime.abort(fault('REGISTRY_DISPOSED', 'Registry disposed'))
-    for (const record of this.adapters.values()) { record.lifetime.abort(fault('REGISTRY_DISPOSED', 'Registry disposed')); record.disposeState() }
+    for (const record of this.adapters.values()) this.retireRecord(record, 'REGISTRY_DISPOSED')
     this.adapters.clear()
     this.changed()
     this.listeners.clear()

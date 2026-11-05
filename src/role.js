@@ -36,7 +36,14 @@ export async function apply(ctx, config) {
   }
   // The installation is preset-owned. Agent-local re-registration below exempts only the explicitly admitted definitions.
   ctx.tools.restrict({ allow: [] })
-  const definitions = createRoleTools(role, filesystemFor)
+  const definitions = createRoleTools(role, filesystemFor, async (agent, request, signal) => {
+    const backend = ctx.get('financeData')
+    if (!backend) return { status: 'NOT_CONFIGURED', data: null, trace: [] }
+    return backend.queryForAgent(agent, request, signal)
+  }, async (agent, capability) => {
+    const backend = ctx.get('financeData')
+    return backend ? backend.describeForAgent(agent, capability) : { status: 'NOT_CONFIGURED', providers: [] }
+  })
   for (const definition of definitions) ctx.tools.register(definition)
 
   function nativeFor(agent) {
