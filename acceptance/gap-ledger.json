@@ -42,16 +42,16 @@
     {
       "id": "P4-OFFICE-NATIVE",
       "stage": "P4",
-      "title": "In-process authoring works; delivery into the workspace and recalculation are blocked",
+      "title": "Authoring and byte delivery work; workspace write and recalculation are blocked",
       "status": "BLOCKED_HOST_INTERFACE",
-      "blockedBy": "ctx.fs has no binary write and the confined subprocess exits 0xC0000142, so bytes cannot land in the workspace or be recalculated.",
+      "blockedBy": "Bytes can now reach the caller over Remote, but ctx.fs still has no binary write and the confined subprocess still fails.",
       "evidence": [
         "acceptance/P4-inprocess-xlsx-001.json",
-        "acceptance/P4-native-startup-matrix-006.json",
-        "acceptance/P4-office-confinement-read-control-008.json"
+        "acceptance/P4-workbook-over-remote-001.json",
+        "acceptance/P4-native-startup-matrix-006.json"
       ],
-      "notClaimed": "Agent-generated Office files in the workspace, recalculated workbooks, visual layout",
-      "nextStep": "Host supplies a binary artifact write (or a usable confined subprocess); authoring and specification are already proven."
+      "notClaimed": "Bytes written into the workspace, recalculated workbooks, a verified browser download",
+      "nextStep": "A person clicks the download control; the host still needs a binary write for workspace delivery."
     },
     {
       "id": "P4-BUSINESS-RUNS",

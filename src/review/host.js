@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { EXTERNAL_SIDE_EFFECTS, LOCKED_BOUNDARIES, POLICY_IDS, resolvePolicy } from './policy.js'
 import { ReviewStore } from './store.js'
 import { createReviewRemoteContract } from './remote.js'
+import { buildXlsx } from '../office/xlsx.js'
+import { createHash } from 'node:crypto'
 import { assetUrl } from '../asset-location.js'
 
 const Artifact = z.object({ hash: z.string().nullable(), version: z.string().nullable() })
@@ -186,6 +188,40 @@ export default class FinanceReview extends TypertRemoteService {
     this.reviewSchemas.Empty.parse(request)
     const runsJson = JSON.stringify({ runs: this.runs(), deliverableRevision: this.artifacts().revision })
     return this.reviewSchemas.Runs.parse({ runsJson })
+  }
+
+  /**
+   * Remote read model that also carries bytes: a technical workbook built in process.
+   * It names the policy and queue facts it was built from, and never writes to the workspace.
+   */
+  async reviewWorkbook(request) {
+    this.reviewSchemas.Empty.parse(request)
+    const projection = await this.queueProjection()
+    const policy = this.policy()
+    const bytes = buildXlsx({ sheets: [
+      { name: 'Review state', rows: [
+        [{ s: 'Field' }, { s: 'Value' }],
+        [{ s: 'Policy' }, { s: policy.policyId }],
+        [{ s: 'Policy version' }, { s: policy.version }],
+        [{ s: 'Policy digest' }, { s: policy.digest }],
+        [{ s: 'Document revision' }, { v: projection.revision }],
+        [{ s: 'Sessions' }, { v: projection.totals.sessions }],
+        [{ s: 'Checkpoints' }, { v: projection.totals.items }],
+        [{ s: 'Pending' }, { v: projection.totals.pending }],
+        [{ s: 'Decided' }, { v: projection.totals.decided }],
+        [{ s: 'Ratio' }, { f: 'B8/MAX(1,B7+B8)', cached: projection.totals.pending + projection.totals.decided === 0 ? 0 : Number((projection.totals.pending / (projection.totals.pending + projection.totals.decided)).toFixed(6)) }],
+      ] },
+      { name: 'Notes', rows: [
+        [{ s: 'Source' }, { s: 'financeReview queue projection' }],
+        [{ s: 'Trust' }, { s: 'TECHNICAL_TEST_ONLY' }],
+        [{ s: 'Delivery' }, { s: 'base64 over Remote; the caller decides where it lands' }],
+      ] },
+    ] })
+    const base64 = Buffer.from(bytes).toString('base64')
+    return this.reviewSchemas.Workbook.parse({
+      filename: 'financial-review-technical.xlsx', bytes: bytes.length,
+      sha256: createHash('sha256').update(bytes).digest('hex'), base64,
+    })
   }
 
   /** Remote read model: the deliverable index as bounded JSON. */

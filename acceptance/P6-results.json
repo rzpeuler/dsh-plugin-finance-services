@@ -272,5 +272,18 @@
       "focus order in a browser",
       "zoom and reflow"
     ]
+  },
+  "workbookDownload": {
+    "status": "BUILT_NOT_CLICKED",
+    "nativeEvidence": "P4-workbook-over-remote-001.json",
+    "clientTests": "tests/workbench-client-panel.test.js (decodeWorkbook, saveWorkbook, one download control)",
+    "guards": {
+      "filename": "^[A-Za-z0-9._-]+\\.xlsx$",
+      "maxBytes": 8388608,
+      "zipSignature": "PK",
+      "payloadLength": "must equal declared bytes",
+      "dom": "exactly one document.body.appendChild and one .click() in the whole client artifact"
+    },
+    "clicked": false
   }
 }

@@ -182,3 +182,50 @@ test('the panel renders four cards, the degraded warning and the read-only note'
   assert.ok(degradedLines.includes('degraded'))
   assert.ok(degradedLines.includes('gateway/refused'))
 })
+
+test('a delivered workbook is validated before the browser sees it', () => {
+  const bytes = Uint8Array.from([0x50, 0x4b, 0x03, 0x04, 1, 2, 3, 4])
+  const base64 = Buffer.from(bytes).toString('base64')
+  const payload = { ok: true, value: { filename: 'review.xlsx', bytes: bytes.length, sha256: 'a'.repeat(64), base64 } }
+  const decoded = client.decodeWorkbook(payload)
+  assert.equal(decoded.ok, true)
+  assert.equal(decoded.value.bytes.length, bytes.length)
+  assert.equal(decoded.value.filename, 'review.xlsx')
+  assert.equal(client.decodeWorkbook({ ...payload, value: { ...payload.value, filename: 'evil.html' } }).code, 'gateway/bad-filename')
+  assert.equal(client.decodeWorkbook({ ...payload, value: { ...payload.value, bytes: 99 } }).code, 'gateway/bad-payload')
+  assert.equal(client.decodeWorkbook({ ...payload, value: { ...payload.value, sha256: 'nope' } }).code, 'gateway/bad-hash')
+  const notZip = Buffer.from('nope')
+  assert.equal(client.decodeWorkbook({ ok: true, value: { ...payload.value, bytes: notZip.length, base64: notZip.toString('base64') } }).code, 'gateway/not-a-zip')
+  assert.equal(client.decodeWorkbook({ ok: false, error: { code: 'gateway/refused' } }).code, 'gateway/refused')
+})
+
+test('saving a workbook uses one anchor, then revokes the object URL', () => {
+  const calls = []
+  const anchor = { clicks: 0, click() { this.clicks += 1; calls.push('click') }, remove() { calls.push('remove') } }
+  const env = {
+    Blob: class { constructor(parts, options) { this.parts = parts; this.options = options } },
+    URL: { createObjectURL: () => { calls.push('create'); return 'blob:test' }, revokeObjectURL: () => calls.push('revoke') },
+    document: { body: { appendChild: () => calls.push('append') }, createElement: () => { calls.push('createElement'); return anchor } },
+  }
+  const saved = client.saveWorkbook(env, { filename: 'review.xlsx', bytes: new Uint8Array([1, 2, 3]) })
+  assert.equal(saved.ok, true)
+  assert.deepEqual(calls, ['create', 'createElement', 'append', 'click', 'remove', 'revoke'])
+  assert.equal(anchor.clicks, 1)
+  assert.equal(client.saveWorkbook({}, { filename: 'x.xlsx', bytes: new Uint8Array([1]) }).code, 'gateway/download-unsupported')
+})
+
+test('the panel offers one download control and reports its state', async () => {
+  const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+  const loadWorkbook = async () => ({ ok: false, code: 'gateway/refused' })
+  stub.reset()
+  client.Panel({ workbenchT: key => key, loadOverview: load, loadWorkbook })
+  await new Promise(resolve => setImmediate(resolve))
+  await new Promise(resolve => setImmediate(resolve))
+  stub.flush(); stub.rewind()
+  const tree = client.Panel({ workbenchT: key => key, loadOverview: load, loadWorkbook })
+  const buttons = flatten(tree).filter(node => node && node.type === 'button')
+  assert.equal(buttons.length, 2, 'refresh plus download')
+  assert.ok(buttons.some(button => texts(button).join(' ').includes('download')))
+})

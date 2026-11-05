@@ -5,6 +5,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
   const messages = {
     en: {
       title: 'Financial workbench', loading: 'Reading workspace state…', refresh: 'Refresh',
+      download: 'Download workbook', downloading: 'Building the workbook…', downloaded: 'Workbook downloaded.',
+      downloadFailed: 'The workbook could not be delivered.',
       workspace: 'Workspace', binding: 'Binding', unbound: 'Unbound', bound: 'Bound', revision: 'Revision',
       roles: 'Roles', agents: 'Main agents', workers: 'Workers', dataSources: 'Data sources',
       adapters: 'Registered adapters', policy: 'Source policy', reviews: 'Review queue',
@@ -18,6 +20,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     },
     zh: {
       title: '金融工作台', loading: '正在读取工作区状态…', refresh: '刷新',
+      download: '下载工作簿', downloading: '正在生成工作簿…', downloaded: '工作簿已下载。',
+      downloadFailed: '工作簿未能交付。',
       workspace: '工作区', binding: '绑定', unbound: '未绑定', bound: '已绑定', revision: '修订',
       roles: '角色', agents: '主 Agent', workers: 'Worker', dataSources: '数据源',
       adapters: '已注册适配器', policy: '来源策略', reviews: '审核队列',
@@ -120,6 +124,58 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     return ok({ items, revision: Number.isInteger(parsed.revision) ? parsed.revision : 0 }, 'financeReview.reviewDeliverables')
   }
 
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+
+  /** Portable base64 decoder: the browser and the test runner disagree about atob/Buffer availability. */
+  function decodeBase64(text) {
+    if (typeof text !== 'string' || !/^[A-Za-z0-9+/]*={0,2}$/.test(text) || text.length % 4 !== 0) return null
+    const output = []
+    let buffer = 0
+    let bits = 0
+    for (const character of text) {
+      if (character === '=') break
+      const value = ALPHABET.indexOf(character)
+      if (value < 0) return null
+      buffer = (buffer << 6) | value
+      bits += 6
+      if (bits >= 8) { bits -= 8; output.push((buffer >> bits) & 0xff) }
+    }
+    return new Uint8Array(output)
+  }
+
+  /** Validate the delivered bytes before anything touches the DOM. */
+  function decodeWorkbook(payload) {
+    if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable')
+    const value = payload.value
+    if (!value || typeof value.filename !== 'string' || !/^[A-Za-z0-9._-]+\.xlsx$/.test(value.filename)) return fail('gateway/bad-filename')
+    if (!Number.isInteger(value.bytes) || value.bytes < 1 || value.bytes > 8 * 1024 * 1024) return fail('gateway/bad-size')
+    if (!/^[a-f0-9]{64}$/.test(String(value.sha256))) return fail('gateway/bad-hash')
+    const bytes = decodeBase64(value.base64)
+    if (!bytes || bytes.length !== value.bytes) return fail('gateway/bad-payload')
+    if (bytes[0] !== 0x50 || bytes[1] !== 0x4b) return fail('gateway/not-a-zip')
+    return ok({ filename: value.filename, bytes, sha256: value.sha256 }, 'financeReview.reviewWorkbook')
+  }
+
+  /** Hand the bytes to the browser; the caller's browser decides where the file lands. */
+  function saveWorkbook(env, file) {
+    const { Blob, URL, document } = env
+    if (!Blob || !URL || !document) return fail('gateway/download-unsupported')
+    const blob = new Blob([file.bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    const url = URL.createObjectURL(blob)
+    try {
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = file.filename
+      anchor.rel = 'noopener'
+      document.body.appendChild(anchor)
+      anchor.click()
+      anchor.remove()
+      return ok({ filename: file.filename, bytes: file.bytes.length }, 'browser-download')
+    } finally {
+      URL.revokeObjectURL(url)
+    }
+  }
+
   const shortId = value => (value ? String(value).slice(0, 18) : '—')
   const isOk = card => card?.ok === true
   const cardValue = card => (isOk(card) ? card.value : null)
@@ -131,8 +187,20 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       h('p', { className: 'finance-p2__meta' }, `${t('source')}: ${state.source}`))
   }
 
-  function Panel({ workbenchT: t, loadOverview }) {
+  function Panel({ workbenchT: t, loadOverview, loadWorkbook }) {
     const [state, setState] = React.useState({ status: 'loading', cards: null, error: null })
+    const [download, setDownload] = React.useState({ status: 'idle', error: null })
+    const startDownload = () => {
+      if (!loadWorkbook) { setDownload({ status: 'error', error: 'gateway/unavailable' }); return }
+      setDownload({ status: 'working', error: null })
+      Promise.resolve().then(() => loadWorkbook())
+        .then(result => {
+          if (!result?.ok) { setDownload({ status: 'error', error: result?.code ?? 'gateway/unavailable' }); return }
+          const saved = saveWorkbook(globalThis, result.value)
+          setDownload(saved.ok ? { status: 'done', error: null } : { status: 'error', error: saved.code })
+        })
+        .catch(error => setDownload({ status: 'error', error: error?.code ?? 'gateway/failed' }))
+    }
     const refresh = () => {
       setState(previous => ({ ...previous, status: 'loading' }))
       Promise.resolve().then(() => loadOverview())
@@ -178,6 +246,11 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
         h('button', { type: 'button', onClick: refresh, disabled: state.status === 'loading' }, t('refresh'))),
       loading, degraded, list,
       state.status === 'error' ? h('p', { className: 'finance-p2__error' }, `${t('unavailable')} (${state.error})`) : null,
+      h('p', null,
+        h('button', { type: 'button', onClick: startDownload, disabled: download.status === 'working' }, t('download')),
+        download.status === 'working' ? ` ${t('downloading')}` : null,
+        download.status === 'done' ? ` ${t('downloaded')}` : null,
+        download.status === 'error' ? ` ${t('downloadFailed')} (${download.error})` : null),
       h('p', { className: 'finance-p2__meta' }, t('readOnly')))
   }
 
@@ -203,8 +276,12 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
         : fail('NOT_CONFIGURED', 'financeReview.reviewDeliverables')
       return { workspace, roles: catalogue, dataSources: data, reviews, runs, deliverables }
     }
-    return { workbenchT, loadOverview }
+    const loadWorkbook = ctx.remote.financeReview?.reviewWorkbook
+      ? async () => decodeWorkbook(await ctx.remote.financeReview.reviewWorkbook({}))
+      : null
+    return { workbenchT, loadOverview, loadWorkbook }
   }
 
-  return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns, decodeDeliverables }
+  return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns,
+    decodeDeliverables, decodeWorkbook, decodeBase64, saveWorkbook }
 }

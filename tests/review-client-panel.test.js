@@ -63,7 +63,7 @@ test('the factory exposes a remote contract, a panel, an installer and pure deco
   assert.equal(typeof client.Panel, 'function')
   assert.ok(client.remote && Array.isArray(client.remote.descriptors))
   assert.deepEqual(client.remote.descriptors.map(item => item.method).sort(),
-    ['reviewDeliverables', 'reviewPolicy', 'reviewRuns', 'reviewSummary'])
+    ['reviewDeliverables', 'reviewPolicy', 'reviewRuns', 'reviewSummary', 'reviewWorkbook'])
   assert.equal(typeof client.decodeSummary, 'function')
 })
 

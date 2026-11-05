@@ -10,6 +10,12 @@ export function createReviewRemoteContract(z) {
     Policy: z.strictObject({ policyJson: JsonText }),
     Runs: z.strictObject({ runsJson: JsonText }),
     Deliverables: z.strictObject({ deliverablesJson: JsonText }),
+    Workbook: z.strictObject({
+      filename: z.string().min(1).max(128).regex(/^[A-Za-z0-9._-]+\.xlsx$/),
+      bytes: z.number().int().min(1).max(8 * 1024 * 1024),
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+      base64: z.string().min(1).max(11 * 1024 * 1024),
+    }),
   }
   const method = (name, input, output, description) => ({
     id: `${owner}#financeReview/${name}`, service: 'financeReview', namespace: 'financeReview', method: name,
@@ -21,6 +27,7 @@ export function createReviewRemoteContract(z) {
     method('reviewSummary', 'Empty', 'Summary', 'Read the review queue projection: per-session groups, decisions and pending counts derived from the persisted review document. Read-only.'),
     method('reviewPolicy', 'Empty', 'Policy', 'Read the pinned review policy identity: policy id, version, digest, locked boundaries and its requirement matrix. Read-only.'),
     method('reviewRuns', 'Empty', 'Runs', 'Read the run projection derived from persisted stage and review facts: per-run agent, sessions, checkpoint states, classification and deliverable count. Read-only.'),
+    method('reviewWorkbook', 'Empty', 'Workbook', 'Build a technical XLSX from the current review facts and return its bytes as base64. Read-only in process: no subprocess, no workspace write.'),
     method('reviewDeliverables', 'Empty', 'Deliverables', 'Read the deliverable index: recorded artifacts with session, run, content hash, classification and linked review. Read-only.'),
   ]
   return { schemas, remote: { package: owner, descriptors } }

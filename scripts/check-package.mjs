@@ -79,7 +79,11 @@ new Script(client, { filename: 'lib/client.js' });
 assert.match(client, /window\.__ModuleLoader__\.load/);
 assert.match(client, /@local\/dsh-financial-services/);
 assert.ok(!/require\(['"]@deepseek-ai\/dsh-client-/.test(client));
-assert.ok(!/document\.body|localStorage|iframe|useSyncExternalStore/.test(client));
+// Layout must render through React; the single allowed exception is the workbook download anchor.
+assert.ok(!/localStorage|iframe|useSyncExternalStore|document\.body\.innerHTML|document\.querySelector/.test(client));
+assert.equal((client.match(/document\.body\.appendChild/g) ?? []).length, 1, 'only the download helper may touch document.body');
+assert.equal((client.match(/\.click\(\)/g) ?? []).length, 1, 'only the download helper may synthesise a click');
+assert.match(client, /revokeObjectURL/, 'the download helper must release its object URL');
 const build = JSON.parse(await readFile(join(root, 'lib/build-manifest.json'), 'utf8'));
 assert.equal(build.version, pkg.version);
 assert.equal(build.hostSha256, createHash('sha256').update(host).digest('hex'));

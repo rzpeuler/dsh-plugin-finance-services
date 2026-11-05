@@ -239,5 +239,16 @@
       "formula recalculation",
       "agent-driven or business artefacts"
     ]
+  },
+  "workbookOverRemote": {
+    "status": "PASS_NATIVE_BYTES_OPENPYXL_READABLE",
+    "evidence": "P4-workbook-over-remote-001.json",
+    "nativeReport": "P6-workbook-native-001.json",
+    "artifact": {
+      "path": "samples\\p4\\inprocess-xlsx\\review-workbook-from-native-remote.xlsx",
+      "bytes": 5747,
+      "sha256": "83df8a7bc06f2e79e29cce35c58933e36cae1a2943ff10cc9e302a7eb7a63173"
+    },
+    "clientDownload": "BUILT_NOT_CLICKED"
   }
 }

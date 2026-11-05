@@ -145,7 +145,7 @@ test('when every read fails the page still renders four unavailable cards and a 
   assert.ok((lines.match(/unavailable/g) ?? []).length >= 6)
   assert.match(lines, /degraded/)
   const buttons = flatten(tree).filter(node => node && node.type === 'button')
-  assert.equal(buttons.length, 1)
+  assert.equal(buttons.length, 2, 'refresh and download stay available')
 })
 
 test('an empty review queue renders the empty state rather than a blank panel', async () => {

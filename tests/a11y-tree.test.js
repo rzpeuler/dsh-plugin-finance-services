@@ -142,7 +142,10 @@ test('a degraded workbench keeps the same structural guarantees', async () => {
   const { region, buttons, headings } = audit('degraded', await renderedWorkbench(false))
   assert.equal(region?.props['aria-live'], 'polite')
   assert.ok(headings.every(heading => heading.type !== 'h1'))
-  assert.equal(buttons.length, 1, 'exactly one refresh control')
+  assert.equal(buttons.length, 2, 'refresh plus the workbook download control')
+  const labels = buttons.map(button => textOf(button))
+  assert.ok(labels.some(label => label.includes('refresh')))
+  assert.ok(labels.some(label => label.includes('download')))
 })
 
 test('no interactive element is removed from the tab order', async () => {
