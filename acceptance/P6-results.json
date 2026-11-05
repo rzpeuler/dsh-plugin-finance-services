@@ -40,11 +40,11 @@
     "P6-NAV": "PARTIAL_NATIVE_SLOT_CHECK",
     "P6-I18N": "PARTIAL_STATIC_COVERAGE",
     "P6-RESPONSIVE": "NOT_RUN",
-    "P6-PERMISSION": "NOT_RUN",
+    "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
     "P6-LIFECYCLE": "NOT_RUN",
-    "P6-OFFLINE": "NOT_RUN",
+    "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
     "P6-A11Y": "NOT_RUN",
-    "P6-NO-FAKE": "PARTIAL_DOC_AND_PANEL_GUARDRAILS"
+    "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE"
   },
   "browserRendered": false,
   "notClaimed": [
@@ -172,6 +172,24 @@
     ],
     "evidenceLinksChecked": "all relative and absolute links in stage documents resolve",
     "knownGapsNamed": true,
+    "rendered": false
+  },
+  "clientScenarios": {
+    "status": "PASS_EXECUTABLE_SCENARIO_COVERAGE",
+    "evidence": "P6-client-scenarios.tap",
+    "checksPassed": 9,
+    "checksFailed": 0,
+    "scenarios": [
+      "unbound workspace renders as unbound",
+      "bound workspace names the bound state",
+      "zero roles render as zero",
+      "missing data namespace shows NOT_CONFIGURED and degraded",
+      "permission denial surfaces its own code with no success wording",
+      "every read failing still renders six unavailable cards plus one refresh",
+      "empty review queue renders the empty state",
+      "review permission denial replaces rows with the refusal",
+      "review rows are withheld when the policy read failed"
+    ],
     "rendered": false
   }
 }
