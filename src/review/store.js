@@ -208,6 +208,11 @@ export class ReviewStore {
     return Object.freeze({ runId, status: 'IN_PROGRESS', stages: stages.length })
   }
 
+  /** Read-only stage records, used to project run progress without a second store. */
+  stageRecords() {
+    return Object.freeze(Object.values(this.#document.stages).map(record => Object.freeze({ ...record })))
+  }
+
   /** Read-only snapshot of the persisted document for diagnostics and evidence. */
   inspect() {
     return Object.freeze({ revision: this.#document.revision, documentDigest: digestOf(this.#document),

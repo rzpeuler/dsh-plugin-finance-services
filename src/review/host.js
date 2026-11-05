@@ -30,6 +30,25 @@ const Document = z.object({
   version: z.literal(1), revision: z.number().int().min(0),
   reviews: z.array(Review), stages: z.record(z.string(), Stage), savedAt: z.string().max(40).optional(),
 })
+const Deliverable = z.object({
+  deliverableId: z.string().min(1).max(96), sessionId: z.string().min(1).max(128),
+  runId: z.string().min(1).max(128), agentId: z.string().min(1).max(128),
+  path: z.string().min(1).max(512), sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  bytes: z.number().int().min(0).max(1073741824),
+  classification: z.enum(['TEST_ONLY', 'USER_PROVIDED', 'UNSOURCED', 'LICENSED']),
+  reviewId: z.string().max(96).nullable(), recordedAt: z.string().min(1).max(40),
+})
+const ArtifactDocument = z.object({
+  version: z.literal(1), revision: z.number().int().min(0),
+  deliverables: z.array(Deliverable).max(2000), savedAt: z.string().max(40).optional(),
+})
+const DeliverableInput = z.strictObject({
+  sessionId: z.string().min(1).max(128), runId: z.string().min(1).max(128), agentId: z.string().min(1).max(128),
+  path: z.string().min(1).max(512).refine(value => !value.startsWith('/') && !value.includes('..') && !/^[a-z]:/i.test(value), 'path must be a relative workspace path'),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/), bytes: z.number().int().min(0).max(1073741824),
+  classification: z.enum(['TEST_ONLY', 'USER_PROVIDED', 'UNSOURCED', 'LICENSED']),
+  reviewId: z.string().min(1).max(96).nullable().default(null),
+})
 const ConfigInput = z.strictObject({
   policyId: z.enum(POLICY_IDS).default('original'),
   customJson: z.string().max(20000).default(''),
@@ -72,6 +91,10 @@ export default class FinanceReview extends TypertRemoteService {
       },
       save: async document => { await table.put('root', document) },
     })
+    this.artifactsDomain = await this.ctx.storageDomain.open(defineDomain({
+      name: 'financial_artifacts', version: 1, tables: { index: domainTable(ArtifactDocument) },
+    }))
+    this.artifactsTable = this.artifactsDomain.table('index')
     this.opened = await this.store.open()
     const { remote, schemas } = createReviewRemoteContract(z)
     this.reviewSchemas = schemas
@@ -83,6 +106,7 @@ export default class FinanceReview extends TypertRemoteService {
       this.active = false
       await this.tail
       await this.domain.close()
+      await this.artifactsDomain.close()
     }
   }
 
@@ -95,6 +119,69 @@ export default class FinanceReview extends TypertRemoteService {
     const run = this.tail.then(operation, operation)
     this.tail = run.then(() => undefined, () => undefined)
     return run
+  }
+
+  artifacts() {
+    const document = this.artifactsTable?.get('root')
+    if (!document) return { revision: 0, deliverables: [] }
+    return document
+  }
+
+  /** Record one deliverable. Duplicates by run, path and hash are refused, never merged. */
+  registerDeliverable(request) {
+    this.requireStore()
+    const input = DeliverableInput.parse(request)
+    const document = this.artifacts()
+    if (document.deliverables.length >= 2000) return Object.freeze({ status: 'LIMIT', revision: document.revision })
+    const duplicate = document.deliverables.find(item => item.runId === input.runId && item.path === input.path && item.sha256 === input.sha256)
+    if (duplicate) return Object.freeze({ status: 'DUPLICATE', revision: document.revision, deliverableId: duplicate.deliverableId })
+    const record = { ...input, deliverableId: `deliverable-${document.revision + 1}-${input.sha256.slice(0, 12)}`,
+      recordedAt: new Date().toISOString() }
+    const next = { version: 1, revision: document.revision + 1,
+      deliverables: [...document.deliverables, record], savedAt: new Date().toISOString() }
+    // Persist before publish, like the review store: a failed save cannot leave a phantom index entry.
+    const table = this.artifactsTable
+    return table.put('root', next).then(() => Object.freeze({ status: 'RECORDED', revision: next.revision, deliverableId: record.deliverableId }))
+  }
+
+  /** Run projection from persisted stage and review facts, joined with the deliverable index. */
+  runs() {
+    this.requireStore()
+    const stages = this.store.stageRecords()
+    const deliverables = this.artifacts().deliverables
+    const grouped = new Map()
+    for (const stage of stages) {
+      if (!grouped.has(stage.runId)) grouped.set(stage.runId, { runId: stage.runId, agents: new Set(), sessions: new Set(), checkpoints: {}, deliverableCount: 0 })
+      const run = grouped.get(stage.runId)
+      run.agents.add(stage.agentId)
+      if (stage.sessionId) run.sessions.add(stage.sessionId)
+      run.checkpoints[stage.checkpointId] = stage.status
+    }
+    for (const item of deliverables) {
+      const run = grouped.get(item.runId)
+      if (run) run.deliverableCount += 1
+    }
+    const runsList = [...grouped.values()].map(run => ({
+      runId: run.runId, agents: [...run.agents].sort(), sessions: [...run.sessions].sort(),
+      checkpoints: run.checkpoints, classification: this.store.classify(run.runId).status,
+      deliverableCount: run.deliverableCount,
+    })).sort((a, b) => (a.runId < b.runId ? -1 : 1)).slice(0, 200)
+    return Object.freeze(runsList.map(run => Object.freeze({ ...run })))
+  }
+
+  /** Remote read model: the run projection as bounded JSON. */
+  reviewRuns(request) {
+    this.reviewSchemas.Empty.parse(request)
+    const runsJson = JSON.stringify({ runs: this.runs(), deliverableRevision: this.artifacts().revision })
+    return this.reviewSchemas.Runs.parse({ runsJson })
+  }
+
+  /** Remote read model: the deliverable index as bounded JSON. */
+  reviewDeliverables(request) {
+    this.reviewSchemas.Empty.parse(request)
+    const document = this.artifacts()
+    const items = [...document.deliverables].sort((a, b) => (a.recordedAt < b.recordedAt ? 1 : -1)).slice(0, 200)
+    return this.reviewSchemas.Deliverables.parse({ deliverablesJson: JSON.stringify({ revision: document.revision, deliverables: items }) })
   }
 
   /** Remote read model: the queue projection as bounded JSON. Read-only; no decision endpoint. */

@@ -32,8 +32,8 @@
   "criteriaResults": {
     "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-AGENTS": "NOT_RUN",
-    "P6-RUNS": "NOT_RUN",
-    "P6-DELIVERABLES": "NOT_RUN",
+    "P6-RUNS": "PARTIAL_NATIVE_INDEX_NOT_RENDERED",
+    "P6-DELIVERABLES": "PARTIAL_NATIVE_INDEX_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-SETTINGS": "NOT_RUN",
@@ -75,5 +75,30 @@
       "evidence": "P6-workbench-tests-001.tap"
     },
     "rendered": false
-  }
+  },
+  "runsAndDeliverablesIndex": {
+    "status": "PASS_NATIVE_INDEX_NOT_RENDERED",
+    "evidence": "P6-index-native-pass-001.json",
+    "domain": "financial_artifacts",
+    "checksPassed": 7,
+    "checksFailed": 0,
+    "deliverableIdentity": "unique per run + relative path + sha256; duplicates refused, never merged",
+    "pathGuards": "absolute, drive-letter and traversing paths refused at the schema",
+    "runProjection": "joins persisted stage states, review classification and deliverable counts",
+    "dispatch": [
+      "reviewRuns",
+      "reviewDeliverables"
+    ],
+    "decisionEndpoints": "UNAVAILABLE",
+    "readOnly": true,
+    "clientSections": "NOT_BUILT"
+  },
+  "remainingKeyAcceptance": [
+    "Client sections that render runs and the deliverable index",
+    "Browser rendering and interaction for every section",
+    "Settings via the native bundle configuration surface",
+    "Navigation, i18n coverage, responsive and accessibility checks",
+    "Install/upgrade/restart/disable/reinstall lifecycle for the UI",
+    "Offline and permission-denied states"
+  ]
 }

@@ -1,0 +1,95 @@
+{
+  "evidence": "REAL_NATIVE_DELIVERABLE_INDEX_AND_RUN_PROJECTION_NOT_RENDERED",
+  "status": "PASS",
+  "package": "@local/dsh-financial-services/review-api-v1",
+  "domain": "financial_artifacts",
+  "checks": [
+    {
+      "id": "artifact-domain-is-separate-and-empty-at-start",
+      "status": "PASS",
+      "detail": {
+        "present": false,
+        "deliverables": 0
+      }
+    },
+    {
+      "id": "a-deliverable-is-recorded-once-and-duplicates-are-refused",
+      "status": "PASS",
+      "detail": {
+        "first": "deliverable-1-aaaaaaaaaaaa",
+        "duplicate": "DUPLICATE",
+        "second": 2
+      }
+    },
+    {
+      "id": "absolute-and-traversing-paths-are-refused",
+      "status": "PASS",
+      "detail": {
+        "refusedWith": "ZodError"
+      }
+    },
+    {
+      "id": "runs-projection-joins-stages-reviews-and-deliverables",
+      "status": "PASS",
+      "detail": {
+        "runId": "run-p6-3c07db92",
+        "agents": [
+          "finance-model-builder"
+        ],
+        "sessions": [
+          "session-p6-23baa1dd"
+        ],
+        "checkpoints": {
+          "model_build_complete": "COMPLETED"
+        },
+        "classification": "IN_PROGRESS",
+        "deliverableCount": 2
+      }
+    },
+    {
+      "id": "client-dispatch-of-runs-and-deliverables-works",
+      "status": "PASS",
+      "detail": {
+        "runs": 12,
+        "deliverables": 2,
+        "revision": 2
+      }
+    },
+    {
+      "id": "index-reads-do-not-write",
+      "status": "PASS",
+      "detail": {
+        "revision": 2
+      }
+    },
+    {
+      "id": "no-decision-or-publish-method-is-dispatchable",
+      "status": "PASS",
+      "detail": {
+        "attempts": [
+          {
+            "method": "settle",
+            "status": "REFUSED",
+            "code": "gateway/invocation-unavailable"
+          },
+          {
+            "method": "publish",
+            "status": "REFUSED",
+            "code": "gateway/invocation-unavailable"
+          },
+          {
+            "method": "post",
+            "status": "REFUSED",
+            "code": "gateway/invocation-unavailable"
+          },
+          {
+            "method": "deleteDeliverable",
+            "status": "REFUSED",
+            "code": "gateway/invocation-unavailable"
+          }
+        ]
+      }
+    }
+  ],
+  "modelCalls": 0
+}

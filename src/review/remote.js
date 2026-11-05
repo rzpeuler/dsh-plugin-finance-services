@@ -8,6 +8,8 @@ export function createReviewRemoteContract(z) {
     Empty: z.strictObject({}),
     Summary: z.strictObject({ summaryJson: JsonText }),
     Policy: z.strictObject({ policyJson: JsonText }),
+    Runs: z.strictObject({ runsJson: JsonText }),
+    Deliverables: z.strictObject({ deliverablesJson: JsonText }),
   }
   const method = (name, input, output, description) => ({
     id: `${owner}#financeReview/${name}`, service: 'financeReview', namespace: 'financeReview', method: name,
@@ -18,6 +20,8 @@ export function createReviewRemoteContract(z) {
   const descriptors = [
     method('reviewSummary', 'Empty', 'Summary', 'Read the review queue projection: per-session groups, decisions and pending counts derived from the persisted review document. Read-only.'),
     method('reviewPolicy', 'Empty', 'Policy', 'Read the pinned review policy identity: policy id, version, digest, locked boundaries and its requirement matrix. Read-only.'),
+    method('reviewRuns', 'Empty', 'Runs', 'Read the run projection derived from persisted stage and review facts: per-run agent, sessions, checkpoint states, classification and deliverable count. Read-only.'),
+    method('reviewDeliverables', 'Empty', 'Deliverables', 'Read the deliverable index: recorded artifacts with session, run, content hash, classification and linked review. Read-only.'),
   ]
   return { schemas, remote: { package: owner, descriptors } }
 }
