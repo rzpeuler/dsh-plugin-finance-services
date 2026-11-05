@@ -1,0 +1,70 @@
+﻿TAP version 13
+# Subtest: a decision survives a reload and stays once-only across restarts
+ok 1 - a decision survives a reload and stays once-only across restarts
+  ---
+  duration_ms: 2.1427
+  type: 'test'
+  ...
+# Subtest: a failed save never leaves an approval that only exists in memory
+ok 2 - a failed save never leaves an approval that only exists in memory
+  ---
+  duration_ms: 0.5709
+  type: 'test'
+  ...
+# Subtest: a stage that was running at shutdown becomes an unknown termination, not a resume
+ok 3 - a stage that was running at shutdown becomes an unknown termination, not a resume
+  ---
+  duration_ms: 0.4244
+  type: 'test'
+  ...
+# Subtest: open reports how many stages were classified as interrupted
+ok 4 - open reports how many stages were classified as interrupted
+  ---
+  duration_ms: 0.2984
+  type: 'test'
+  ...
+# Subtest: a failed stage and a changed artifact both demand a rerun
+ok 5 - a failed stage and a changed artifact both demand a rerun
+  ---
+  duration_ms: 0.3279
+  type: 'test'
+  ...
+# Subtest: a run with every required approval and terminal stage is completed
+ok 6 - a run with every required approval and terminal stage is completed
+  ---
+  duration_ms: 0.3232
+  type: 'test'
+  ...
+# Subtest: a run waiting on a required review is pending, not completed
+ok 7 - a run waiting on a required review is pending, not completed
+  ---
+  duration_ms: 0.2564
+  type: 'test'
+  ...
+# Subtest: an unknown run is distinguished from an empty queue
+ok 8 - an unknown run is distinguished from an empty queue
+  ---
+  duration_ms: 0.4428
+  type: 'test'
+  ...
+# Subtest: the queue keeps two sessions apart and reflects their own decisions
+ok 9 - the queue keeps two sessions apart and reflects their own decisions
+  ---
+  duration_ms: 0.5954
+  type: 'test'
+  ...
+# Subtest: the persisted document is versioned, monotonic and rejects corruption
+ok 10 - the persisted document is versioned, monotonic and rejects corruption
+  ---
+  duration_ms: 0.4057
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 74.0641
