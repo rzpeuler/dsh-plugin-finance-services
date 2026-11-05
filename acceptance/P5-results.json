@@ -101,10 +101,10 @@
     "The side-effect surface is asserted three ways: a service method allowlist, a scan for side-effecting tool names, and an import-specifier scan of the built finance modules.",
     "Sandbox policy is per-session, so the matrix compares mode and workspace root and separately proves the approval override and tool set are unchanged; comparing the whole object would fail on a fresh session id.",
     "The queue projection adds only session liveness and preset identity to rows derived from the persisted document; it stores nothing itself, so it cannot become a second approval fact.",
-    "The review read model returns bounded JSON through strict schemas and exposes no decision endpoint; Client dispatch remains unproven because the descriptor ids do not resolve."
+    "The review read model returns bounded JSON through strict schemas and exposes no decision endpoint; Client dispatch remains unproven because the descriptor ids do not resolve.",
+    "Invocation ids are not schema keys: typert.resolve covers schemas, while dispatch goes through typertGateway.invoke with the descriptor's named wire argument."
   ],
   "remainingKeyAcceptance": [
-    "Resolve the typert invocation ids so a Client can call the review read model",
     "Client UI that renders the projection and jumps to the exact Session or native question card",
     "Operating-system process restart comparison",
     "A native comparison of fast versus original policy instances",
@@ -256,15 +256,22 @@
     "leakageCheck": "invalid record returned REVIEW_RECORD_INVALID without echoing the sentinel value"
   },
   "reviewRemote": {
-    "status": "PARTIAL_DESCRIPTOR_UNRESOLVED",
-    "evidence": "P5-remote-pass-004.json",
-    "gap": "P5-remote-gap-001.json",
+    "status": "PASS_NATIVE_DISPATCH",
+    "evidence": "P5-remote-dispatch-pass-006.json",
     "checksPassed": 6,
     "checksFailed": 0,
-    "hostMethodsStrict": true,
+    "clientEquivalentDispatch": true,
+    "transport": "typertGateway.invoke with a connection-created owner peer",
     "readOnly": true,
-    "decisionEndpointExposed": false,
-    "descriptorResolution": "UNRESOLVED",
-    "clientDispatch": "NOT_DEMONSTRATED"
+    "decisionEndpoints": "UNAVAILABLE",
+    "browserRendered": false,
+    "failureHistory": [
+      "P5-remote-failure-001.json",
+      "P5-remote-failure-002.json",
+      "P5-remote-failure-003.json",
+      "P5-remote-failure-004.json",
+      "P5-remote-failure-005.json"
+    ],
+    "gap": "P5-remote-gap-001.json (resolved)"
   }
 }

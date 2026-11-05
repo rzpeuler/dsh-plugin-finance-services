@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "REVIEW_REMOTE_DESCRIPTOR_UNRESOLVED",
+  "status": "RESOLVED_BY_NEW_EVIDENCE",
   "evidenceKind": "REAL_NATIVE_PROBE_RESULT",
   "observedDate": "2026-11-05",
   "detail": {
@@ -21,5 +21,17 @@
     "P5-remote-failure-001.json",
     "P5-remote-failure-002.json",
     "P5-remote-failure-003.json"
-  ]
+  ],
+  "resolvedBy": "P5-remote-dispatch-pass-006.json",
+  "resolution": {
+    "cause": "The probe resolved invocation ids through typert.resolve(), which only resolves schema keys, and it sent an empty args object instead of the descriptor's single `request` argument.",
+    "correction": "Resolve schema keys for registration proof, then dispatch through typertGateway.invoke with a connection-created owner peer and { request } as the wire arguments.",
+    "confirmed": [
+      "client-equivalent dispatch of reviewSummary",
+      "client-equivalent dispatch of reviewPolicy",
+      "read-only dispatch",
+      "decision methods unavailable",
+      "strict input rejection"
+    ]
+  }
 }
