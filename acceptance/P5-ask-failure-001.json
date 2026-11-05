@@ -1,0 +1,37 @@
+{
+  "evidence": "REAL_NATIVE_QUESTION_HANDOVER_AND_OWNERSHIP_REFUSAL_NOT_UI_VISUAL",
+  "status": "FAIL",
+  "policy": {
+    "id": "original",
+    "version": "p5-policy-v1",
+    "digest": "55ee42703c75f53b736c24aa3c8329cc2deef22414b4633b29be751bc5c2d018"
+  },
+  "agentsDisposed": [
+    true,
+    true
+  ],
+  "checks": [
+    {
+      "id": "native-agents-created-with-expected-presets",
+      "status": "PASS",
+      "detail": {
+        "mainPreset": "finance-pitch-agent",
+        "workerPreset": "finance-pitch-agent-modeler"
+      }
+    },
+    {
+      "id": "ownership-boundary-visible-through-roots",
+      "status": "FAIL",
+      "error": "Error"
+    },
+    {
+      "id": "fatal",
+      "status": "FAIL",
+      "error": "agent \"p5-ask-3edcd523-ba57-4711-bafc-0915fbd5d6a8\" is already registered"
+    }
+  ],
+  "modelCalls": 0,
+  "modelTurns": 0,
+  "questionsAnswered": 0,
+  "approvalsFromQuestions": 0
+}

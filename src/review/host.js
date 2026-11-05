@@ -1,9 +1,11 @@
+import { readFile } from 'node:fs/promises'
 import schema from '@deepseek-ai/schemastery'
 import { Service } from '@deepseek-ai/cordis'
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
 import { EXTERNAL_SIDE_EFFECTS, LOCKED_BOUNDARIES, POLICY_IDS, resolvePolicy } from './policy.js'
 import { ReviewStore } from './store.js'
+import { assetUrl } from '../asset-location.js'
 
 const Artifact = z.object({ hash: z.string().nullable(), version: z.string().nullable() })
 const Review = z.object({
@@ -50,6 +52,8 @@ export default class FinanceReview extends Service {
   }
 
   async* [Service.init]() {
+    const manifest = JSON.parse(await readFile(assetUrl('agent-manifest.json'), 'utf8'))
+    this.roleKinds = new Map(manifest.roles.map(role => [role.id, role.kind]))
     const custom = this.config.customJson ? Custom.parse(JSON.parse(this.config.customJson)) : undefined
     this.snapshot = resolvePolicy({ bundle: { policyId: this.config.policyId, ...(custom ? { custom } : {}) } })
     this.domain = await this.ctx.storageDomain.open(defineDomain({
@@ -100,6 +104,58 @@ export default class FinanceReview extends Service {
   evaluate(request) { return this.requireStore().evaluate(request) }
   classify(request) { return this.requireStore().classify(request?.runId) }
   async queue() { return this.requireStore().queue() }
+
+  requirementOf({ agentId, checkpointId } = {}) { return this.requireStore().requirementOf(agentId, checkpointId) }
+
+  /**
+   * Ask a human through the native question service about a required checkpoint.
+   *
+   * The runtime ownership boundary decides who may ask: an owned child has no human answerer, so
+   * it is refused before the question is raised. An answer never becomes an approval; the caller
+   * must still record an explicit decision.
+   */
+  async requestReview(request = {}) {
+    const store = this.requireStore()
+    const agents = this.ctx.get('agents')
+    const questions = this.ctx.get('userQuestions')
+    if (!agents || !questions) return Object.freeze({ status: 'NOT_CONFIGURED' })
+    const { sessionId, runId, agentId, checkpointId } = request
+    for (const [name, value] of Object.entries({ sessionId, runId, agentId, checkpointId })) {
+      if (typeof value !== 'string' || !value || value.length > 128) {
+        throw Object.assign(new Error(`REVIEW_REQUEST_INVALID: ${name} is required`), { code: 'REVIEW_REQUEST_INVALID' })
+      }
+    }
+    const agent = agents.get(sessionId)
+    if (!agent) return Object.freeze({ status: 'CALLER_NOT_LIVE', agentId })
+    const preset = this.ctx.get('agentPresets')?.composedPreset(agent.ctx)
+    if (!preset || this.roleKinds.get(preset) !== 'main') {
+      return Object.freeze({ status: 'WORKER_CANNOT_ASK', agentId, reason: 'ONLY_MAIN_AGENT', role: preset ?? null })
+    }
+    if (!agents.roots().includes(agent)) {
+      return Object.freeze({ status: 'WORKER_CANNOT_ASK', agentId, reason: 'OWNED_CHILD', role: preset })
+    }
+    if (!store.requirementOf(agentId, checkpointId)) return Object.freeze({ status: 'NOT_REQUIRED_BY_POLICY', agentId, checkpointId })
+    const timeoutMs = Math.min(Math.max(Number.isInteger(request.timeoutMs) ? request.timeoutMs : 5000, 250), 60000)
+    const callId = `finance-review-${this.snapshot.digest.slice(0, 8)}-${checkpointId}`.slice(0, 96)
+    const question = {
+      id: checkpointId,
+      header: 'Financial review',
+      question: request.question ?? `Approve the ${checkpointId.replaceAll('_', ' ')} checkpoint for ${agentId}?`,
+      options: [{ label: 'Approve' }, { label: 'Reject' }],
+      multiSelect: false,
+    }
+    try {
+      const result = await questions.askTimed({ agent, questions: [question], wait: { callId, timed: true } }, callId, timeoutMs)
+      if (result?.pending) return Object.freeze({ status: 'PENDING', callId, timeoutMs })
+      return Object.freeze({ status: 'ANSWERED', callId, answers: result?.answers ?? [], approvalCreated: false })
+    } catch (error) {
+      const code = error?.code
+      if (code === 'DELEGATED_CALLER') return Object.freeze({ status: 'WORKER_CANNOT_ASK', agentId, nativeCode: code })
+      if (code === 'CALLER_NOT_LIVE') return Object.freeze({ status: 'CALLER_NOT_LIVE', agentId, nativeCode: code })
+      if (code === 'ASK_ABORTED') return Object.freeze({ status: 'CANCELLED', agentId, nativeCode: code })
+      return Object.freeze({ status: 'QUESTION_FAILED', agentId, nativeCode: typeof code === 'string' ? code.slice(0, 64) : 'UNKNOWN' })
+    }
+  }
 
   /** Diagnostics for evidence: persisted revision, document digest and replay counts. */
   inspect() {

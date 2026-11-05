@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "NATIVE_GATE_SEPARATION_AND_SERVICE_RESTART_VERIFIED_UI_AND_ASK_HANDOVER_PENDING",
+  "status": "NATIVE_GATE_SEPARATION_RESTART_AND_ASK_VERIFIED_UI_PROJECTION_PENDING",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -80,7 +80,7 @@
     "P5-INVALIDATE": "PASS_LOCAL_KERNEL",
     "P5-QUEUE": "PARTIAL_NATIVE",
     "P5-RESTART": "PASS_NATIVE_SERVICE_RESTART",
-    "P5-ASK": "NOT_RUN",
+    "P5-ASK": "PASS_NATIVE",
     "P5-SEPARATION": "PARTIAL_NATIVE_SEPARATION",
     "P5-NOSIDE": "NOT_RUN",
     "P5-PERSIST": "PARTIAL_NATIVE",
@@ -95,12 +95,13 @@
     "A run is never COMPLETED while a required checkpoint has no stage record; the probe exposed and fixed the weaker earlier rule.",
     "Cordis service proxies cannot dispatch ECMAScript private methods; the service uses module-internal helper names instead (#private threw 'Receiver must be an instance of class FinanceReview' on the first native install).",
     "The separation probe spies on the tool registry and approval service; an approval produced zero calls to register/guard/restrict/execute/request/setPolicy and left the tool-schema hash identical.",
-    "Restart evidence comes from a real bundle remove and reinstall, which starts a new financeReview epoch over the same durable domain."
+    "Restart evidence comes from a real bundle remove and reinstall, which starts a new financeReview epoch over the same durable domain.",
+    "A review question is refused unless the live caller is a runtime root whose composed preset is a main Agent; the role check runs before the ownership check so a worker never reaches the question service.",
+    "requestReview uses askTimed, so an unanswered card returns PENDING instead of blocking the stage forever; an answer never becomes an approval record."
   ],
   "remainingKeyAcceptance": [
-    "Cross-session host projection and UI jump to the exact Session",
+    "Cross-session host projection and a UI jump to the exact Session or native question card",
     "Operating-system process restart comparison",
-    "Native ask_user_question handover with child Agents refused",
     "Sandbox mode and approval-mode matrix around an approval",
     "Disable/enable boundary and a negative test that user files are never deleted"
   ],
@@ -151,5 +152,20 @@
     "failureHistory": [
       "P5-separation-failure-001.json"
     ]
+  },
+  "nativeAsk": {
+    "evidence": "P5-ask-pass-003.json",
+    "checksPassed": 10,
+    "checksFailed": 0,
+    "failureHistory": [
+      "P5-ask-failure-001.json"
+    ],
+    "mainAgent": "bounded 400 ms askTimed returned PENDING; gate stayed HOLD; no review fact created",
+    "workerRole": "refused with ONLY_MAIN_AGENT even when mounted as a runtime root",
+    "ownedChild": "refused; a worker-preset child hits ONLY_MAIN_AGENT, a main-preset child hits OWNED_CHILD",
+    "nativeBoundary": "userQuestions.ask on the owned child returned DELEGATED_CALLER",
+    "agentsDisposed": true,
+    "modelCalls": 0,
+    "questionsAnswered": 0
   }
 }

@@ -119,6 +119,11 @@ export class ReviewStore {
     }
   }
 
+  /** Requirement tier for one checkpoint, or null when the policy does not require it. */
+  requirementOf(agentId, checkpointId) {
+    return this.#snapshot.requirements?.[agentId]?.[checkpointId] ?? null
+  }
+
   /** Approve-only projection shared by the queue and the recovery view. */
   #requirementOf(agentId, checkpointId) {
     return this.#snapshot.requirements?.[agentId]?.[checkpointId] ?? null
