@@ -271,5 +271,11 @@
     "cases": 8,
     "checks": 10,
     "correctedTieCases": true
+  },
+  "glBoundary": {
+    "status": "PASS_CROSS_MODEL_BOUNDARY",
+    "evidence": "P4-gl-boundary-001.json",
+    "cases": 12,
+    "checks": 16
   }
 }

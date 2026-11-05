@@ -1,0 +1,751 @@
+{
+  "note": "Expectations computed by an independent Python model of the documented bucket rules; TEST_ONLY fixtures.",
+  "cases": [
+    {
+      "id": "amount-at-tolerance",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.01",
+              "baseAmount": "100.01",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "MATCHED",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "amount-over-tolerance",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.02",
+              "baseAmount": "100.02",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "AMOUNT_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "zero-tolerance-exact",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "MATCHED",
+      "tolerance": {
+        "amount": "0",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "zero-tolerance-one-cent",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.01",
+              "baseAmount": "100.01",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "AMOUNT_BREAK",
+      "tolerance": {
+        "amount": "0",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "quantity-at-tolerance",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10.5",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0.5"
+        }
+      },
+      "expectedBucket": "MATCHED",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0.5"
+      }
+    },
+    {
+      "id": "quantity-over-tolerance",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "11",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0.5"
+        }
+      },
+      "expectedBucket": "QUANTITY_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0.5"
+      }
+    },
+    {
+      "id": "quantity-outranks-amount",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.50",
+              "baseAmount": "100.50",
+              "quantity": "11",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "QUANTITY_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "fx-differs-amounts-equal",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1.0000"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1.0001"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "AMOUNT_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "timing-only",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-30",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "TIMING_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "gl-only",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": []
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "GL_ONLY",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "subledger-only",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": []
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "SUBLEDGER_ONLY",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    },
+    {
+      "id": "sign-flip",
+      "inputs": {
+        "classification": "TEST_ONLY",
+        "scope": {
+          "entity": "ENTITY-GL",
+          "tradeDate": "2026-03-31",
+          "asOf": "2026-03-31",
+          "assetClasses": [
+            "EQ"
+          ]
+        },
+        "gl": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "100.00",
+              "baseAmount": "100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "subledger": {
+          "asOf": "2026-03-31",
+          "records": [
+            {
+              "entity": "ENTITY-GL",
+              "tradeDate": "2026-03-31",
+              "assetClass": "EQ",
+              "currency": "USD",
+              "baseCurrency": "USD",
+              "amountScale": "ONES",
+              "quantityScale": "ONES",
+              "quantityUnit": "UNITS",
+              "commonKey": "K1",
+              "localAmount": "-100.00",
+              "baseAmount": "-100.00",
+              "quantity": "10",
+              "postingDate": "2026-03-31",
+              "fxRate": "1"
+            }
+          ]
+        },
+        "tolerances": {
+          "amount": "0.01",
+          "quantity": "0"
+        }
+      },
+      "expectedBucket": "AMOUNT_BREAK",
+      "tolerance": {
+        "amount": "0.01",
+        "quantity": "0"
+      }
+    }
+  ]
+}

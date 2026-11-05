@@ -1,0 +1,38 @@
+{
+  "stage": "P4",
+  "id": "P4_GL_BOUNDARY_CROSS_CHECK",
+  "status": "PASS_CROSS_MODEL_BOUNDARY",
+  "observedDate": "2026-11-06",
+  "fixture": {
+    "path": "samples/p4/b06-recon/gl-boundary-cases.json",
+    "sha256": "2c1ea046237f9505817f971cc3dae3c09c69242a482a26da1b5927077567c979",
+    "cases": 12,
+    "classification": "TEST_ONLY"
+  },
+  "method": "An independent Python model of the documented rules predicts the bucket per case; the shipped kernel must agree.",
+  "agreement": "all twelve cases land in the predicted bucket and the summary counts them once",
+  "hazardsCovered": [
+    "amount exactly at tolerance",
+    "amount one cent above tolerance",
+    "zero tolerance equality",
+    "zero tolerance one cent",
+    "quantity at and above tolerance",
+    "quantity outranking amount",
+    "FX difference with equal amounts",
+    "timing-only difference",
+    "GL only",
+    "subledger only",
+    "sign flip with a doubled delta"
+  ],
+  "semanticsRecorded": {
+    "comparison": "inclusive at the tolerance boundary",
+    "deltaSign": "GL minus subledger, so a higher subledger amount reads negative",
+    "precedence": "quantity, then amount/FX, then timing, then matched"
+  },
+  "correction": "The first sign-flip case also flipped quantity, so it exercised precedence rather than the sign rule; quantity now stays equal and the case isolates the doubling of the amount delta.",
+  "notClaimed": [
+    "commercial data",
+    "root-cause inference",
+    "native tool exposure"
+  ]
+}
