@@ -41,7 +41,8 @@ test('no stage is claimed accepted while the ledger still lists a gap for it', (
     assert.equal(ledger.stages[stage].stageAccepted, false, `ledger must mirror ${stage}`)
     assert.ok(ledger.gaps.some(gap => gap.stage === stage), `${stage} needs an open gap`)
   }
-  assert.equal(results.P6.browserRendered, false)
+  assert.equal(results.P6.browserRendered, true)
+  assert.ok(existsSync(results.P6.manualVerification.record), 'the rendering claim needs its manual record')
 })
 
 test('the handover names every unaccepted stage and the blocked items', () => {

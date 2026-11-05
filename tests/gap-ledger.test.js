@@ -7,7 +7,8 @@ import { dirname, join, normalize } from 'node:path'
 // These checks keep it honest and keep the manual checklist pointing at it.
 const ledger = JSON.parse(readFileSync('acceptance/gap-ledger.json', 'utf8'))
 const stageResults = JSON.parse(readFileSync('acceptance/P6-results.json', 'utf8'))
-const STATUSES = new Set(['BLOCKED_HOST_INTERFACE', 'NOT_RUN', 'NOT_IMPLEMENTED', 'PARTIAL'])
+const STATUSES = new Set(['BLOCKED_HOST_INTERFACE', 'NOT_RUN', 'NOT_IMPLEMENTED', 'PARTIAL', 'CLOSED_BY_HUMAN_OBSERVATION'])
+const OPEN = status => !String(status).startsWith('CLOSED_')
 
 test('the ledger is unique, well-formed and every gap names an existing evidence file', () => {
   assert.ok(Array.isArray(ledger.gaps) && ledger.gaps.length >= 6)
@@ -27,13 +28,17 @@ test('the ledger is unique, well-formed and every gap names an existing evidence
 })
 
 test('every stage that is not accepted has at least one open gap', () => {
-  const open = new Set(ledger.gaps.map(gap => gap.stage))
+  const open = new Set(ledger.gaps.filter(gap => OPEN(gap.status)).map(gap => gap.stage))
   for (const [stage, result] of Object.entries(ledger.stages)) {
     if (result.stageAccepted) assert.ok(!open.has(stage), `${stage} is accepted but still lists gaps`)
     else assert.ok(open.has(stage), `${stage} is not accepted but lists no gap`)
   }
   assert.equal(ledger.stages.P6.stageAccepted, false)
-  assert.equal(stageResults.browserRendered, false, 'no browser rendering is claimed yet')
+  // Rendering is now claimed, so the claim must rest on an existing manual record.
+  assert.equal(stageResults.browserRendered, true, 'rendering is claimed after the human observation')
+  for (const path of stageResults.manualVerification ? [stageResults.manualVerification.record] : []) {
+    assert.ok(existsSync(path), `missing manual record ${path}`)
+  }
 })
 
 test('the manual checklist covers rendering, lifecycle and accessibility gaps', () => {

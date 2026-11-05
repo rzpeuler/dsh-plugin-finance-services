@@ -30,23 +30,24 @@
     "workbenchOverview": "read-only aggregate with per-card degradation"
   },
   "criteriaResults": {
-    "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-AGENTS": "PARTIAL_ROLE_MATRIX_AND_UI_NOT_RENDERED",
-    "P6-RUNS": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-WORKBENCH": "PASS_USER_OBSERVED",
+    "P6-AGENTS": "PASS_USER_OBSERVED",
+    "P6-RUNS": "PASS_USER_OBSERVED",
+    "P6-DELIVERABLES": "PASS_USER_OBSERVED",
+    "P6-REVIEWQUEUE": "PASS_USER_OBSERVED",
+    "P6-DATASOURCES": "PASS_USER_OBSERVED",
     "P6-SETTINGS": "PARTIAL_NATIVE_CONFIG_SURFACE_AND_LIVE_VIEW_NOT_RENDERED",
-    "P6-NAV": "PASS_LIVE_REGISTRATION_NOT_RENDERED",
+    "P6-NAV": "PASS_USER_OBSERVED",
     "P6-I18N": "PARTIAL_STATIC_COVERAGE",
-    "P6-RESPONSIVE": "NOT_RUN",
+    "P6-RESPONSIVE": "PASS_USER_OBSERVED",
     "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
     "P6-LIFECYCLE": "PARTIAL_RESTART_CONFIRMED",
     "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-A11Y": "PARTIAL_STRUCTURE_ONLY",
-    "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE"
+    "P6-A11Y": "PARTIAL_USER_OBSERVED_NARROW_DARK_FOCUS",
+    "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE",
+    "P6-BROWSER-RENDERING": "PASS_USER_OBSERVED"
   },
-  "browserRendered": false,
+  "browserRendered": true,
   "notClaimed": [
     "P6 complete",
     "P3/P4/P5 complete",
@@ -393,7 +394,7 @@
     }
   },
   "uiAcceptancePlan": {
-    "status": "AWAITING_HUMAN_OBSERVATION",
+    "status": "COMPLETED_USER_OBSERVED",
     "plan": "P6-manual-plan-001.json",
     "checks": [
       "UI-1 workbench sections",
@@ -404,5 +405,23 @@
     "restartPending": 2,
     "evidence": "P6-manual-plan-tests.tap",
     "note": "Four checks were agreed with the user; rendering stays unclaimed until their report arrives."
+  },
+  "manualVerification": {
+    "status": "PASS_USER_OBSERVED",
+    "record": "acceptance/P6-manual-2026-11-06-001.md",
+    "observedAt": "2026-11-06",
+    "scope": [
+      "workbench seven sections render with data and no error codes",
+      "review panel is read-only, policy original, 3 pending, no approve button",
+      "workbook download works: 5747 bytes, opens, sheets Review state and Notes",
+      "minimum width has no horizontal scroll, text readable, focus visible"
+    ],
+    "notCovered": [
+      "plugin config and activation pages",
+      "disable/enable/uninstall UI flow",
+      "screen-reader output and formal contrast measurement",
+      "deliverable open or back-to-session",
+      "offline case"
+    ]
   }
 }

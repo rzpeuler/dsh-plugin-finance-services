@@ -82,16 +82,16 @@
     {
       "id": "P6-BROWSER-RENDERING",
       "stage": "P6",
-      "title": "Every client page is unverified in a browser",
-      "status": "NOT_RUN",
-      "blockedBy": "No browser automation in this session; code, build, install and dispatch are verified instead.",
+      "title": "The workbench, review panel, download and narrow layout were confirmed by a person",
+      "status": "CLOSED_BY_HUMAN_OBSERVATION",
+      "blockedBy": "None for these four items; the remaining UI surfaces are tracked separately.",
       "evidence": [
-        "acceptance/P6-workbench-tests-002.tap",
-        "acceptance/P6-client-scenarios.tap",
-        "acceptance/P6-i18n-coverage.tap"
+        "acceptance/P6-manual-2026-11-06-001.md"
       ],
-      "notClaimed": "Visual acceptance, responsive layout, contrast, keyboard reachability",
-      "nextStep": "Follow acceptance/MANUAL_CHECKLIST.md and save the observation."
+      "notClaimed": "Settings pages, lifecycle UI, screen-reader output, formal contrast",
+      "nextStep": "Closed for the observed scope; other UI gaps stay open.",
+      "closedAt": "2026-11-06",
+      "closedBy": "P6-manual-2026-11-06-001.md"
     },
     {
       "id": "P6-DELIVERABLE-OPEN",
@@ -121,15 +121,15 @@
     {
       "id": "P6-ACCESSIBILITY",
       "stage": "P6",
-      "title": "Element-tree structure is checked; contrast, focus order and reflow are not",
+      "title": "Narrow layout, dark theme readability and focus visibility were observed; screen-reader output and formal contrast were not",
       "status": "PARTIAL",
-      "blockedBy": "Only a rendered page can show contrast, screen-reader output and focus behaviour.",
+      "blockedBy": "Screen-reader announcement and measured contrast still need a dedicated review.",
       "evidence": [
-        "acceptance/P6-a11y-tree.tap",
-        "tests/i18n-coverage.test.js"
+        "acceptance/P6-manual-2026-11-06-001.md",
+        "acceptance/P6-a11y-tree.tap"
       ],
-      "notClaimed": "WCAG conformance, narrow-screen acceptance, screen-reader output",
-      "nextStep": "Inspect contrast, focus ring and a 520px viewport in the browser."
+      "notClaimed": "WCAG conformance or screen-reader behaviour",
+      "nextStep": "Run a screen reader and measure contrast tokens."
     },
     {
       "id": "P5-ERROR-LINEAGE",
@@ -143,6 +143,31 @@
       ],
       "notClaimed": "Per-source error lineage",
       "nextStep": "Group codes by source and adapter once business runs exist."
+    },
+    {
+      "id": "P6-SETTINGS-UI",
+      "stage": "P6",
+      "title": "The bundle configuration and activation views were never opened",
+      "status": "NOT_RUN",
+      "blockedBy": "The slots are registered but no one has opened the plugin detail page.",
+      "evidence": [
+        "acceptance/P6-live-client-registration-001.json",
+        "acceptance/P6-settings-config-surface-001.json"
+      ],
+      "notClaimed": "Settings page rendering, edit and save behaviour",
+      "nextStep": "Open the bundle page and record what the configuration view shows."
+    },
+    {
+      "id": "P6-OFFLINE-CASE",
+      "stage": "P6",
+      "title": "An offline or permission-denied UI case was not run in the browser",
+      "status": "NOT_RUN",
+      "blockedBy": "Needs a deliberately broken connection or denied Remote while the page is open.",
+      "evidence": [
+        "acceptance/P6-client-scenarios.tap"
+      ],
+      "notClaimed": "Rendered offline behaviour",
+      "nextStep": "Block the Remote and observe the degraded panels in the browser."
     }
   ]
 }

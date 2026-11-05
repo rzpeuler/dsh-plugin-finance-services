@@ -28,7 +28,9 @@ test('the report format forces specifics rather than a general "looks fine"', ()
     assert.ok(plan.reportFormat.required.some(item => item.includes(field.split(' ')[0]) || item === field), `missing ${field}`)
   }
   assert.match(plan.reportFormat.file, /P6-manual-<date>-<seq>\.md/)
-  assert.ok(plan.notClaimed.includes('rendering'))
+  assert.ok(plan.notClaimed.length >= 3)
+  assert.ok(plan.notClaimed.some(item => /settings/i.test(item)))
+  assert.ok(plan.notClaimed.some(item => /offline/i.test(item)))
 })
 
 test('the manual checklist carries the same four checks and keeps the no-claim sentence', () => {

@@ -10,7 +10,8 @@ import { fileURLToPath } from 'node:url'
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const data = JSON.parse(await readFile(join(root, 'acceptance/traceability.json'), 'utf8'))
 
-const PASSING = new Set(['PASS_NATIVE', 'PASS_STATIC'])
+const PASSING = new Set(['PASS_NATIVE', 'PASS_STATIC', 'PASS_USER_OBSERVED'])
+const MANUAL = /acceptance\/P6-manual-\d{4}-\d{2}-\d{2}-\d{3}\.md$/
 const results = []
 const problems = []
 
@@ -45,6 +46,9 @@ for (const group of ['stageGates', 'mandatoryAcceptance']) {
     }
     const machine = entries.filter(entry => entry.verdict === 'MACHINE_CHECKED').length
     if (item.status === 'PASS_NATIVE' && machine === 0) problems.push(`${item.id}: PASS_NATIVE without machine-checked evidence`)
+    if (item.status === 'PASS_USER_OBSERVED' && !item.evidence.some(path => MANUAL.test(path))) {
+      problems.push(`${item.id}: PASS_USER_OBSERVED without a manual observation record`)
+    }
     if (item.status === 'PASS_STATIC' && entries.every(entry => entry.verdict === 'DOCUMENT')) {
       // A static claim may rest on documents, but the map must still be explicit about it.
       entries.push({ note: 'static claim rests on documents only' })

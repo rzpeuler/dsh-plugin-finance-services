@@ -5,7 +5,10 @@
   "decision": "restart first to finish removing the probe packages, then perform four UI checks",
   "restartPending": {
     "reason": "the two probe packages were removed while the manager reported restart-required (unmanaged-plugin)",
-    "packages": ["@local/dsh-finance-p6-post-restart-test-only", "@local/dsh-finance-p6-post-restart-persist-test-only"],
+    "packages": [
+      "@local/dsh-finance-p6-post-restart-test-only",
+      "@local/dsh-finance-p6-post-restart-persist-test-only"
+    ],
     "afterRestart": "confirm both are absent from the plugin list and that the three services are mounted again"
   },
   "checks": [
@@ -14,38 +17,87 @@
       "title": "工作台七段是否都出现",
       "open": "侧栏 Financial Services 入口",
       "expect": "工作区、角色、数据源、任务、Runs、成果、审核队列七段同时出现；每段标题可读，空数据时显示空态而不是空白",
-      "records": ["七段是否齐全（逐段写有/无）", "任一段是否显示错误码或 NOT_CONFIGURED", "页面是否整页报错"],
-      "covers": ["P6-WORKBENCH", "P6-RUNS", "P6-DELIVERABLES", "P6-AGENTS", "P6-DATASOURCES"]
+      "records": [
+        "七段是否齐全（逐段写有/无）",
+        "任一段是否显示错误码或 NOT_CONFIGURED",
+        "页面是否整页报错"
+      ],
+      "covers": [
+        "P6-WORKBENCH",
+        "P6-RUNS",
+        "P6-DELIVERABLES",
+        "P6-AGENTS",
+        "P6-DATASOURCES"
+      ],
+      "result": "PASS"
     },
     {
       "id": "UI-2",
       "title": "审核面板是否只读并显示策略与待审项",
       "open": "审核队列面板",
       "expect": "顶部显示策略 id、版本、锁定边界数、外部副作用 DISABLED；待审项按会话列出；页面上不存在任何批准/拒绝按钮",
-      "records": ["策略 id 与版本的实际文字", "是否有待审项、几条", "是否出现批准/拒绝按钮（应为无）"],
-      "covers": ["P6-REVIEWQUEUE", "P6-PERMISSION"]
+      "records": [
+        "策略 id 与版本的实际文字",
+        "是否有待审项、几条",
+        "是否出现批准/拒绝按钮（应为无）"
+      ],
+      "covers": [
+        "P6-REVIEWQUEUE",
+        "P6-PERMISSION"
+      ],
+      "result": "PASS"
     },
     {
       "id": "UI-3",
       "title": "点一次下载工作簿",
       "open": "工作台底部下载按钮",
       "expect": "按钮可点；点击后浏览器保存 financial-review-technical.xlsx；文件能在表格软件中打开且含 Review state 与 Notes 两表",
-      "records": ["按钮是否可点", "文件名与大致大小", "能否打开、表名是什么", "若失败，页面显示的错误码"],
-      "covers": ["P6-DELIVERABLES"]
+      "records": [
+        "按钮是否可点",
+        "文件名与大致大小",
+        "能否打开、表名是什么",
+        "若失败，页面显示的错误码"
+      ],
+      "covers": [
+        "P6-DELIVERABLES"
+      ],
+      "result": "PASS"
     },
     {
       "id": "UI-4",
       "title": "窄屏或深色主题下是否可读",
       "open": "把窗口缩到约 520px 宽，并切换深色主题",
       "expect": "不出现横向滚动条，卡片纵向堆叠；深色下文字与错误提示仍可读，无白底白字",
-      "records": ["是否出现横向滚动", "最深色主题下最差可读的一处文字", "刷新按钮是否仍可聚焦"],
-      "covers": ["P6-RESPONSIVE", "P6-A11Y"]
+      "records": [
+        "是否出现横向滚动",
+        "最深色主题下最差可读的一处文字",
+        "刷新按钮是否仍可聚焦"
+      ],
+      "covers": [
+        "P6-RESPONSIVE",
+        "P6-A11Y"
+      ],
+      "result": "PASS"
     }
   ],
   "reportFormat": {
     "file": "acceptance/P6-manual-<date>-<seq>.md",
-    "required": ["逐项 PASS/FAIL/BLOCKED", "实际看到的文字或数值", "与预期的具体差异", "若 BLOCKED，写清缺什么"],
+    "required": [
+      "逐项 PASS/FAIL/BLOCKED",
+      "实际看到的文字或数值",
+      "与预期的具体差异",
+      "若 BLOCKED，写清缺什么"
+    ],
     "then": "把四份结论告诉我；我据此更新 P6-results.json 的 browserRendered 与 criteriaResults，并把缺口台账同步收窄"
   },
-  "notClaimed": ["rendering", "interaction", "responsiveness until reported"]
+  "notClaimed": [
+    "settings pages",
+    "lifecycle UI",
+    "screen reader",
+    "contrast measurement",
+    "deliverable open",
+    "offline case"
+  ],
+  "status": "COMPLETED",
+  "record": "P6-manual-2026-11-06-001.md"
 }

@@ -4,7 +4,8 @@ import { existsSync, readFileSync } from 'node:fs'
 
 // Same rule as scripts/audit-claims.mjs, enforced in the regression suite.
 const data = JSON.parse(readFileSync('acceptance/traceability.json', 'utf8'))
-const PASSING = new Set(['PASS_NATIVE', 'PASS_STATIC'])
+const PASSING = new Set(['PASS_NATIVE', 'PASS_STATIC', 'PASS_USER_OBSERVED'])
+const MANUAL = /acceptance\/P6-manual-\d{4}-\d{2}-\d{2}-\d{3}\.md$/
 
 const inspect = path => {
   if (!existsSync(path)) return { path, verdict: 'MISSING' }
@@ -38,6 +39,9 @@ test('every passing claim cites at least one machine-checked result', () => {
       }
       const machine = entries.filter(entry => entry.verdict === 'MACHINE_CHECKED').length
       if (item.status === 'PASS_NATIVE' && machine === 0) offenders.push({ id: item.id, reason: 'no machine-checked evidence', entries })
+      if (item.status === 'PASS_USER_OBSERVED' && !item.evidence.some(path => MANUAL.test(path))) {
+        offenders.push({ id: item.id, reason: 'user-observed claim without a manual record' })
+      }
     }
   }
   assert.deepEqual(offenders, [])
@@ -47,10 +51,12 @@ test('the audit report matches the current state', () => {
   const report = JSON.parse(readFileSync('acceptance/P6-claim-audit-001.json', 'utf8'))
   assert.equal(report.status, 'PASS_CLAIMS_BACKED')
   assert.equal(report.problems.length, 0)
-  assert.equal(report.audited, 10)
+  assert.equal(report.audited, 11)
   const native = report.results.filter(entry => entry.status === 'PASS_NATIVE')
   assert.ok(native.length >= 5)
   for (const entry of native) assert.ok(entry.machineChecked >= 1, `${entry.id} lacks machine-checked evidence`)
+  const observed = report.results.filter(entry => entry.status === 'PASS_USER_OBSERVED')
+  assert.ok(observed.length >= 1, 'the user-observed claim must appear in the audit')
 })
 
 test('a static claim says so instead of borrowing native strength', () => {

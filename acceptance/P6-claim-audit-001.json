@@ -4,7 +4,7 @@
   "observedDate": "2026-11-05",
   "status": "PASS_CLAIMS_BACKED",
   "rule": "Every PASS entry must cite at least one machine-checked result; documents alone cannot carry a native claim.",
-  "audited": 10,
+  "audited": 11,
   "problems": [],
   "results": [
     {
@@ -143,6 +143,30 @@
           "verdict": "MACHINE_CHECKED",
           "checks": 10,
           "status": "PASS"
+        }
+      ]
+    },
+    {
+      "group": "mandatoryAcceptance",
+      "id": "A7",
+      "status": "PASS_USER_OBSERVED",
+      "machineChecked": 0,
+      "entries": [
+        {
+          "path": "acceptance/P6-manual-2026-11-06-001.md",
+          "verdict": "DOCUMENT"
+        },
+        {
+          "path": "acceptance/P6-live-client-registration-001.json",
+          "verdict": "STATUS_ONLY",
+          "checks": 0,
+          "status": "PASS_LIVE_REGISTRATION_NOT_RENDERED"
+        },
+        {
+          "path": "acceptance/P6-settings-config-surface-001.json",
+          "verdict": "STATUS_ONLY",
+          "checks": 0,
+          "status": "PASS_NATIVE_CONFIG_SURFACE_NOT_RENDERED"
         }
       ]
     },
