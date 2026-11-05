@@ -1,0 +1,5 @@
+- insert:
+    - id: finance-p6-post-restart-test-only
+      name: '@local/dsh-finance-p6-post-restart-test-only'
+      config:
+        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\acceptance\P6-post-restart-001.json'

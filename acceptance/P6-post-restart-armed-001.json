@@ -1,0 +1,43 @@
+{
+  "stage": "P6",
+  "id": "P6_POST_RESTART_ARMED",
+  "observedDate": "2026-11-06",
+  "status": "ARMED_PENDING_RESTART",
+  "loaderRows": [
+    {
+      "entry": "include:financial-services",
+      "name": "@local/dsh-financial-services",
+      "config": "absent"
+    },
+    {
+      "entry": "include:finance-data",
+      "name": "@local/dsh-financial-services/data-runtime-2",
+      "config": "schema"
+    },
+    {
+      "entry": "include:finance-review",
+      "name": "@local/dsh-financial-services/review",
+      "config": "schema"
+    }
+  ],
+  "serviceInstances": 0,
+  "probe": {
+    "package": "@local/dsh-finance-p6-post-restart-test-only",
+    "path": "../tests/p6-post-restart",
+    "install": {
+      "application": "restart-required",
+      "restartReason": "unmanaged-plugin"
+    },
+    "reportPath": "acceptance/P6-post-restart-001.json",
+    "checks": [
+      "three services mounted",
+      "review policy is original with eight locked boundaries",
+      "workspace binding readable",
+      "workbook bytes carry a matching sha256 and PK signature",
+      "run projection readable",
+      "no side-effecting method on the review service"
+    ],
+    "cleanup": "remove this probe package after the report is read"
+  },
+  "meaning": "The rows are registered and the probe is armed; only a restart can create the service instances and run the probe."
+}

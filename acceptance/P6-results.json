@@ -323,9 +323,11 @@
     "notBooted": "Cordis loader lifecycle is still not exercised here."
   },
   "runtimeState": {
-    "status": "NOT_LOADED",
+    "status": "ROWS_REGISTERED_SERVICES_ABSENT",
     "evidence": "P6-runtime-not-loaded-001.json",
-    "servicesPresent": [],
-    "reason": "install pending restart (unmanaged-plugin)"
+    "loaderRows": 3,
+    "serviceInstances": 0,
+    "reason": "install pending restart (unmanaged-plugin)",
+    "armed": "P6-post-restart-armed-001.json"
   }
 }
