@@ -1,0 +1,79 @@
+{
+  "stage": "P6",
+  "status": "CRITERIA_ESTABLISHED_IMPLEMENTATION_STARTED",
+  "stageAccepted": false,
+  "observedDate": "2026-11-05",
+  "previousStages": [
+    {
+      "stage": "P3",
+      "status": "PARTIAL_HOST_INTERFACE_GAP",
+      "stageAccepted": false
+    },
+    {
+      "stage": "P4",
+      "status": "PARTIAL",
+      "stageAccepted": false
+    },
+    {
+      "stage": "P5",
+      "status": "ALL_NATIVE_CRITERIA_EXERCISED",
+      "stageAccepted": false
+    }
+  ],
+  "criteriaEstablishedBeforeImplementation": true,
+  "criteria": "P6.md",
+  "clientCapabilitiesAlreadyBuilt": {
+    "workspacePanel": "finance-p2 workspace binding and draft intent",
+    "catalogue": "finance-p2 catalogue view",
+    "dataSources": "read plus scoped source policy editing with Host-authoritative projection",
+    "reviewQueue": "read-only review panel over the dispatched review read model",
+    "workbenchOverview": "read-only aggregate with per-card degradation"
+  },
+  "criteriaResults": {
+    "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-AGENTS": "NOT_RUN",
+    "P6-RUNS": "NOT_RUN",
+    "P6-DELIVERABLES": "NOT_RUN",
+    "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-SETTINGS": "NOT_RUN",
+    "P6-NAV": "NOT_RUN",
+    "P6-I18N": "NOT_RUN",
+    "P6-RESPONSIVE": "NOT_RUN",
+    "P6-PERMISSION": "NOT_RUN",
+    "P6-LIFECYCLE": "NOT_RUN",
+    "P6-OFFLINE": "NOT_RUN",
+    "P6-A11Y": "NOT_RUN",
+    "P6-NO-FAKE": "NOT_RUN"
+  },
+  "browserRendered": false,
+  "notClaimed": [
+    "P6 complete",
+    "P3/P4/P5 complete",
+    "Visual acceptance",
+    "Commercial financial E2E"
+  ],
+  "workbench": {
+    "status": "BUILT_INSTALLED_NOT_RENDERED",
+    "source": "../src/workbench/client-panel.js",
+    "cards": [
+      "workspace binding and status",
+      "role catalogue counts",
+      "data source adapters and policy",
+      "review queue totals"
+    ],
+    "degradation": "each card fails independently; a missing namespace reports NOT_CONFIGURED; partial failures show a degraded warning",
+    "readsOnly": [
+      "financeOperations.snapshot",
+      "financeOperations.catalog",
+      "financeData.catalog",
+      "financeReview.reviewSummary"
+    ],
+    "localTests": {
+      "passed": 6,
+      "failed": 0,
+      "evidence": "P6-workbench-tests-001.tap"
+    },
+    "rendered": false
+  }
+}

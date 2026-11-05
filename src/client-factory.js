@@ -5,7 +5,7 @@
  * @param {Function} createFinanceContract Bundle-owned, self-contained contract factory.
  * @returns {object} Cordis function-plugin exports for the Client module loader.
  */
-export function createFinanceClient(React, z, createFinanceContract, dataClient, reviewClient) {
+export function createFinanceClient(React, z, createFinanceContract, dataClient, reviewClient, workbenchClient) {
   const h = React.createElement
   const PACKAGE = '@local/dsh-financial-services'
   const PANEL = 'financial-services'
@@ -375,6 +375,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
               h('button', { type: 'submit', disabled: !canBind || draft.trim() === '', className: 'finance-p2__primary' }, t(activity === 'bind' ? 'saving' : 'save'))),
             h(ErrorNotice, { error: actionError, t, id: errorId })),
           h('p', { className: 'finance-p2__hint' }, t('switching'))),
+        workbenchClient ? h(workbenchClient.Panel, props) : null,
         dataClient ? h(dataClient.Panel, props) : null,
         reviewClient ? h(reviewClient.Panel, props) : null,
         h(Catalogue, { t, useResource, startDraft: props.startDraft, ready: resource.status === 'live' && snapshot?.workspaceStatus === 'READY' }),
@@ -416,6 +417,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
       rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : []), ...(reviewClient ? ['remote.financeReview'] : [])], ctx => {
       const dataProps = dataClient ? dataClient.install(ctx) : {}
       const reviewProps = reviewClient ? reviewClient.install(ctx) : {}
+      const workbenchProps = workbenchClient ? workbenchClient.install(ctx) : {}
       const lifetime = new AbortController()
       ctx.effect(() => () => lifetime.abort(), 'financial-services: callback lifetime')
       ctx.effect(() => ctx.locale.register(NS, { en, zh }), 'financial-services: dictionaries')
@@ -522,7 +524,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
           }
         },
       }), 'financial-services: catalogue resource')
-      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps, ...reviewProps })
+      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps, ...reviewProps, ...workbenchProps })
       ctx.slots.inject('main', () => ctx.slots.register({ name: 'main', key: PANEL, locale: NS, inject }, WorkspacePage))
       ctx.slots.inject('sidebar.panellist', () => ctx.slots.register({
         name: 'sidebar.panellist', id: PANEL, order: 30, label: () => t('title'), locale: NS,
