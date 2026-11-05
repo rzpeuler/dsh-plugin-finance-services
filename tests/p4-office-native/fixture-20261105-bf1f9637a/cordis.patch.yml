@@ -1,0 +1,8 @@
+- insert:
+    - id: p4-office-native-20261105-bf1f9637a-technical-only
+      name: '@local/dsh-p4-office-native-20261105-bf1f9637a-technical-only'
+      config:
+        authorSessionId: session-d8bb3257-edd6-400b-91f5-764c05e96dc6
+        primaryRuntimeSource: 'C:\Users\Administrator\.dsh\dsh-runtimes\dsh-primary-runtime'
+        runRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p4-office-native\runs\20261105-bf1f9637a'
+        acceptNativeProviderPrivateTempAndPartial: true

@@ -7,7 +7,7 @@
 - 独立代码位置：当前workspace的 `financial-services-bundle`；分支 `feat/financial-services`。未修改其他业务项目、DSH Core、Session、Subagent或Client内核。
 - 上游：本地 `C:/Users/Administrator/Downloads/financial-services-main`，363文件，SHA256 `1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b`。无.git，Git commit未知；不以远端HEAD冒充。
 - DSH：`0.2.1-rc.5`，Profile `desktop`，现有GUI `http://127.0.0.1:60820`。审计参照为同版本tag，commit `b830ec950faba0a46dda564be3e2d854afed94f1`；实际运行时exports与Inspect优先。
-- 当前候选：`@local/dsh-financial-services@0.3.0-alpha.2`，原生链接安装enabled/applied、warnings空，唯一导航ID不变。217本地、33原生角色/生命周期、15真实Client、6独立模板、7真实原生MCP transport及2卸载检查通过。Manager和保持金融角色原权限的安全MCP桥接/凭据接口缺失，P3整体仍PARTIAL。P2历史587/141/12/46/10及真实Worker/started锁证据保留，004总IO失败不改绿。所有临时包已移除，默认绑定null/revision19。
+- 当前候选：`@local/dsh-financial-services@0.4.0-alpha.1`，原生链接安装enabled/applied、warnings空，唯一导航ID不变。P3：217本地、33原生角色/生命周期、15真实Client、6独立模板、7真实原生MCP transport及2卸载检查通过；Manager和安全MCP桥接/凭据接口仍缺失。P4：338本地回归、10业务源映射、10种输入模板SDK、GL/LP本地数值库及6项安装后原生检查通过，但无业务Worker运行或Office交付，原生Windows沙箱下进程启动失败，Office链未通过。P2历史587/141/12/46/10证据保留，004总IO失败不改绿。所有临时包已移除，默认绑定null/revision19、数据策略revision8。
 - 安装目标：当前workspace中的本项目根目录；只用原生Plugin Manager，不手改Profile。
 - P1已验收tarball `0.1.2`：26565 bytes、17文件、SHA256 `39bbc90e78bb5faac6f5a69f5485d69cf64707cba9922f8b73de2346c72e4fcd`，历史验收保持，不冒充P2成品。
 - P2候选 `0.2.0` payload：1000文件、2805818 bytes、SHA256 `04705fbd7527807e4fb7e3284a371d80d723d9fc7eb0e5746aeb3e9cff3a86bb`，包内源码/资源完整，但原生角色验收失败，不能作为工作成品交付。所有363源件及两个被pnpm普通树忽略的.gitignore均在完整只读源ZIP保留。无凭据或商业数据。

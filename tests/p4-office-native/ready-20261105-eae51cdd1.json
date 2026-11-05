@@ -1,0 +1,7 @@
+{
+  "runId": "20261105-eae51cdd1",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\fixture-20261105-eae51cdd1",
+  "reportPath": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1\\report.json",
+  "diagnosticOnly": true,
+  "scope": "TWO_FIXED_NATIVE_CONFINED_VERSION_CALLS"
+}

@@ -1,0 +1,1 @@
+{"name":"@local/dsh-finance-p4-health-test-only","version":"0.0.1","private":true,"type":"module","description":"Disposable read-only native candidate/SDK audit, not a business workflow; display metadata deliberately omitted.","engines":{"dsh":"0.2.1-rc.5"},"exports":{".":"./probe.js"},"dsh":{"bundle":{"patch":"./cordis.patch.yml"}}}

@@ -1,0 +1,199 @@
+{
+  "runId": "20261105-eae51cdd1",
+  "trust": "TECHNICAL_TEST_ONLY",
+  "businessE2E": false,
+  "financeRolePermissionsTested": false,
+  "publicLibraryResolutionProved": false,
+  "bindingRoute": "EXPLICIT_AUTHOR_LOCAL_TOOL_AND_SKILL_FACTS",
+  "diagnosticOnly": "FIXED_NATIVE_STARTUP_MATRIX_NO_OFFICE_OR_MODEL",
+  "status": "FAILED_OR_NOT_RUN",
+  "startedAt": "2026-11-05T13:34:07.024Z",
+  "operations": {
+    "author": {
+      "status": "PASSED",
+      "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6",
+      "nativeHeaderCwd": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace",
+      "effectiveCwd": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace",
+      "originalPolicy": {
+        "mode": "danger-full-access",
+        "workspaceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace",
+        "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6"
+      }
+    },
+    "root": {
+      "status": "PASSED",
+      "root": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+      "policy": {
+        "mode": "workspace-write",
+        "workspaceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+        "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6"
+      }
+    },
+    "authorRuntimeBinding": {
+      "status": "PASSED",
+      "resolved": {
+        "python": "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\python\\python.exe",
+        "node": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\runtime\\primary-runtime\\dependencies\\node\\bin\\node.exe"
+      },
+      "bindingSource": "CREATOR_TOOL_AND_SKILL_SUPPLIED",
+      "publicPackageResolverVerified": false,
+      "payloadDigest": "e2cef445c262ce6e8d28480b5ebecc8b0c54c06bea7183374debfcf02f30eb7d"
+    },
+    "authorKitBinding": {
+      "status": "PASSED",
+      "cliPath": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar.unpacked\\dsh\\node_modules\\@deepseek-ai\\libreoffice-kit\\lib\\cli.js",
+      "bindingSource": "OFFICE_RECALCULATE_SKILL_EXACT_PATH",
+      "discoverRuntimeVerified": false
+    },
+    "pythonVersion": {
+      "status": "FAILED",
+      "error": "Error: Native process exit 3221225794; inspect inherited native logs\n    at requireThat (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:12:61)\n    at spawn (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:103:7)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:158:52\n    at async operation (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:74:27)\n    at async run (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:158:5)"
+    },
+    "nodeVersion": {
+      "status": "FAILED",
+      "error": "Error: Native process exit 3221225794; inspect inherited native logs\n    at requireThat (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:12:61)\n    at spawn (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:103:7)\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:159:50\n    at async operation (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:74:27)\n    at async run (file:///C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-eae51cdd1/index.js:159:5)"
+    }
+  },
+  "outputs": [
+    {
+      "path": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1\\RUN_ROOT.json",
+      "bytes": 330,
+      "sha256": "736b85aac573b05871a7f67a42eaaf1459158788990abf0e5e20bbac22ed775d"
+    }
+  ],
+  "nativeBoundary": {
+    "enforcement": "partial",
+    "strictOnlyRunRootProved": false,
+    "residual": "Native Windows ACL: provider-owned private temp, standing workspace ACE, hardlink aliases/read caveats; no extra caller grants."
+  },
+  "processes": [
+    {
+      "argv": [
+        "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\python\\python.exe",
+        "--version"
+      ],
+      "confinedArgv": [
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\DeepSeek Harness.exe",
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar\\dsh\\node_modules\\@deepseek-ai\\dsh-sandbox-windows-acl\\lib\\runner.js",
+        "--workspace",
+        "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+        "--temp",
+        "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-EZmfyK",
+        "--mode",
+        "workspace-write",
+        "--write-sid",
+        "S-1-4-731685240-789360964",
+        "--temp-write-sid",
+        "S-1-4-1020962499-629871844-1",
+        "--",
+        "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\python\\python.exe",
+        "--version"
+      ],
+      "policy": {
+        "mode": "workspace-write",
+        "workspaceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+        "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6"
+      },
+      "enforcement": "partial",
+      "denialSignatures": [
+        "access is denied",
+        "access to the path",
+        "permission denied",
+        "operation not permitted"
+      ],
+      "runnerFailureRules": [
+        {
+          "allowedExitCodes": [
+            127
+          ],
+          "fatalSignatures": [
+            "windows-acl-run: "
+          ]
+        }
+      ],
+      "outcome": {
+        "exitCode": 3221225794,
+        "signal": null
+      },
+      "stdout": {
+        "text": "",
+        "nextOffset": 0,
+        "lossy": false
+      },
+      "stderr": {
+        "text": "",
+        "nextOffset": 0,
+        "lossy": false
+      }
+    },
+    {
+      "argv": [
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\runtime\\primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "--version"
+      ],
+      "confinedArgv": [
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\DeepSeek Harness.exe",
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\app.asar\\dsh\\node_modules\\@deepseek-ai\\dsh-sandbox-windows-acl\\lib\\runner.js",
+        "--workspace",
+        "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+        "--temp",
+        "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\dsh-EZmfyK",
+        "--mode",
+        "workspace-write",
+        "--write-sid",
+        "S-1-4-731685240-789360964",
+        "--temp-write-sid",
+        "S-1-4-1020962499-629871844-1",
+        "--",
+        "C:\\Users\\Administrator\\AppData\\Local\\Programs\\DeepSeek Harness\\resources\\runtime\\primary-runtime\\dependencies\\node\\bin\\node.exe",
+        "--version"
+      ],
+      "policy": {
+        "mode": "workspace-write",
+        "workspaceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-eae51cdd1",
+        "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6"
+      },
+      "enforcement": "partial",
+      "denialSignatures": [
+        "access is denied",
+        "access to the path",
+        "permission denied",
+        "operation not permitted"
+      ],
+      "runnerFailureRules": [
+        {
+          "allowedExitCodes": [
+            127
+          ],
+          "fatalSignatures": [
+            "windows-acl-run: "
+          ]
+        }
+      ],
+      "outcome": {
+        "exitCode": 3221225794,
+        "signal": null
+      },
+      "stdout": {
+        "text": "",
+        "nextOffset": 0,
+        "lossy": false
+      },
+      "stderr": {
+        "text": "",
+        "nextOffset": 0,
+        "lossy": false
+      }
+    }
+  ],
+  "finishedAt": "2026-11-05T13:34:10.376Z",
+  "authorAfter": {
+    "liveExact": true,
+    "effectiveCwd": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace",
+    "policy": {
+      "mode": "danger-full-access",
+      "workspaceRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace",
+      "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6"
+    }
+  }
+}

@@ -215,5 +215,11 @@
       "cause": "Native dispatch correctly denied raw MCP but did not expose the assumed error.info.code serialization; preserved schema absence, definition absence and real failed-dispatch assertions"
     }
   ],
-  "pendingDecision": "Keep P3 PARTIAL and seek explicit human authorization before advancing P4 independent work under the declared Host gap"
+  "pendingDecision": "APPROVED_KEEP_P3_PARTIAL_AND_ADVANCE_ONLY_INDEPENDENT_P4",
+  "humanStageException": {
+    "approved": true,
+    "evidence": "P3-stage-exception-approved.md",
+    "p3RemainsAccepted": false,
+    "permissionsExpanded": false
+  }
 }

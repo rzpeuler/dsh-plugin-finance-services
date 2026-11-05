@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "document": "docs/P4_BUSINESS_MAP.md",
+  "documentSha256": "8755f54268d2da354272e346d2d7a7da61712cef6ffb78508d069c9ee73fe1bd",
+  "status": "SOURCE_MAP_DRAFT",
+  "stageAccepted": false,
+  "p3Status": "PARTIAL_HOST_INTERFACE_GAP",
+  "p4ExecutionStatus": "NOT_RUN",
+  "p5GateImplemented": false,
+  "scope": "Documentation and read-only source verification only; no model, vendor, Office, Profile, installation or upstream-script execution.",
+  "inventoryVerification": {
+    "basis": "assets/agent-manifest.json sourceArchive.files and roles",
+    "sourceTreeSha256": "1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b",
+    "archiveFilesChecked": 363,
+    "archiveFileHashMismatches": 0,
+    "roleSourceHashesChecked": 40,
+    "roleSourceHashMismatches": 0,
+    "mainWorkerOwnershipEdgesChecked": 30,
+    "mainWorkerOwnershipMismatches": 0,
+    "mainRoles": 10,
+    "workers": 30,
+    "skillsInventoryUnchanged": 63,
+    "commandsInventoryUnchanged": 41,
+    "originalBoundUniqueSkillBodiesRead": 31,
+    "financialCommandBodiesRead": 41,
+    "method": "Read original archived source via read; PowerShell Get-FileHash compared existing manifest-listed bytes. No archived scripts executed."
+  },
+  "documentValidation": {
+    "lines": 156,
+    "existingFileLinksChecked": 141,
+    "missingLinkedFiles": 0,
+    "outOfRangeLineAnchors": 0
+  },
+  "criticalFindings": [
+    "statement-auditor is LP capital-account statement batch versus authoritative fund NAV pack, not generic financial-statement audit",
+    "valuation-reviewer is quarter-end GP marks, policy comparison, NAV/carry/LP allocations and LP reporting, not deal-time DCF",
+    "direct DCF method is narrower than the original dcf command, which first builds 4-6 trading comps",
+    "source DCF, LBO, three-statement, comps and selected deck methods retain distinct sequential human confirmations",
+    "headless Office fallback does not authorize one universal business template or only three sample checks",
+    "current public role contract has no calculateProfile argument; discover the actual fixed calculation schema",
+    "source reader schemas can omit fields required by their business Skills; schema-valid does not prove complete business provenance",
+    "reader and auditor currently lack a supported Office-binary inspection route; bounded read-only projections require explicit P4 adaptation"
+  ],
+  "missingSourceAssets": [
+    "examples/LBO_Model.xlsx",
+    "examples/comps_example.xlsx",
+    "examples/Nike_Strip_Profile_Example.pptx"
+  ],
+  "missingSourceAssetStatus": "MISSING_SOURCE_ASSET",
+  "testProposalsOnly": true,
+  "proposedInputDirectoriesCreated": false,
+  "actualWorkerCallsPerformed": 0,
+  "officeArtifactsGenerated": 0
+}

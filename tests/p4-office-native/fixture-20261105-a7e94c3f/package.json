@@ -1,0 +1,16 @@
+{
+  "name": "@local/dsh-p4-office-native-20261105-a7e94c3f-technical-only",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Unique TECHNICAL_TEST_ONLY native bundled Office capability fixture; no Finance role tools, models or business acceptance.",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": ["index.js", "technical_producer.py", "cordis.patch.yml", "locale/*.json", "icon.svg", "README.md"],
+  "engines": { "node": "^22.19.0 || >=24", "dsh": "0.2.1-rc.5" },
+  "peerDependencies": { "@deepseek-ai/cordis": "~4.0.5" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

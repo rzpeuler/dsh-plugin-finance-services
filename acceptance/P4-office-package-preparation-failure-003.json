@@ -1,0 +1,20 @@
+{
+  "stage": "P4",
+  "status": "FAILED_PACKAGE_PREPARATION_NOT_OFFICE_EXECUTION",
+  "observedDate": "2026-11-05",
+  "evidenceKind": "TRANSCRIBED_NATIVE_PLUGIN_MANAGER_RESULT_WITH_ORIGINAL_LOG_REFERENCE",
+  "operationId": "operation-WQiLZD",
+  "target": "file:C:/Users/Administrator/Documents/deepseek-harness/default-workspace/financial-services-bundle/tests/p4-office-native/fixture-20261105-b56638319",
+  "application": "failed",
+  "changed": false,
+  "packageExitCode": 1,
+  "timeoutReported": true,
+  "causeEstablished": "pnpm produced no output for 600000ms and was terminated by the native manager; underlying reason was not established",
+  "progressBeforeTimeout": {"resolved":54,"reused":8,"downloaded":20,"added":28,"plannedAdds":29},
+  "originalLog": "C:/Users/Administrator/.dsh/profiles/desktop/.plugin-manager/logs/operation-WQiLZD/pnpm.log",
+  "pendingBuilds": [],
+  "followup": "Native list_bundles returned baseline total23 and no installed Office fixture; no Profile file or pnpm command was manually used",
+  "nativeOfficeExecuted": false,
+  "financialRolePermissionsChanged": false,
+  "noInventedRootCause": true
+}

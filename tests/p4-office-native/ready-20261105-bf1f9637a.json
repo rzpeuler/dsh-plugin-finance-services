@@ -1,0 +1,10 @@
+{
+  "status": "READY_NOT_INSTALLED",
+  "runId": "20261105-bf1f9637a",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\fixture-20261105-bf1f9637a",
+  "package": "@local/dsh-p4-office-native-20261105-bf1f9637a-technical-only",
+  "reportPath": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-bf1f9637a\\report.json",
+  "priorFailure": "acceptance/P4-office-native-failure-001.json",
+  "change": "Explicit ordinary ESM public-library dependencies, not additional mounted providers",
+  "technicalOnly": true
+}

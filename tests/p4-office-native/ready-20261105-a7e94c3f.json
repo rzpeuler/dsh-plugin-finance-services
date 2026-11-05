@@ -1,0 +1,32 @@
+{
+  "status": "READY_FOR_PARENT_NATIVE_INSTALL_NOT_RUN",
+  "trust": "TECHNICAL_TEST_ONLY",
+  "runId": "20261105-a7e94c3f",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\fixture-20261105-a7e94c3f",
+  "package": "@local/dsh-p4-office-native-20261105-a7e94c3f-technical-only",
+  "rowId": "p4-office-native-20261105-a7e94c3f-technical-only",
+  "reportPath": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-a7e94c3f\\report.json",
+  "runRoot": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-a7e94c3f",
+  "authorSessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6",
+  "authorSessionEvidence": "Parent explicitly sampled managed DSH_SESSION_ID and supplied the value; native ctx.agents.get must still resolve exact live Agent. No fallback identity.",
+  "primaryRuntimeSource": "C:\\Users\\Administrator\\.dsh\\dsh-runtimes\\dsh-primary-runtime",
+  "sourceEvidence": "Creator dependency tool returned bundled interpreter/library paths; matching selected payload runtime.json was read. Fixture calls public resolvePrimaryRuntime in place, never installPrimaryRuntime.",
+  "producerSha256": "001bcd435acc63db72fc795be66c5fac3ae8a7d4940be813fecefb3583b58002",
+  "staticValidation": {
+    "javascriptSyntax": "PASSED_NODE_CHECK_ONLY",
+    "pythonSyntax": "PASSED_AST_PARSE_ONLY",
+    "jsonMetadata": "PASSED_PARSE_ONLY",
+    "originalSvg": "PASSED_XML_PARSE_NOT_VISUAL",
+    "mainFixtureLines": 236,
+    "pythonProducerLines": 88
+  },
+  "nativeExecution": "NOT_RUN_PARENT_INSTALL_REQUIRED",
+  "nativePartialBoundaryAcceptedByParent": true,
+  "sandboxCaveat": "Public Windows native sandbox reports partial and owns separate private temp/standing workspace ACEs/hardlink residual. Parent expressly accepted this only for technical capability evidence; strict kernel-only-runRoot is not claimed. Fixed fixture outputs remain under own marked runRoot; no caller-chosen outside write grants or unconfined fallback.",
+  "roleToolsRegistered": false,
+  "modelsOrServersStarted": false,
+  "businessE2E": false,
+  "p4BusinessAcceptance": "NOT_RUN",
+  "preserveFailureHistory": true,
+  "nextStep": "Parent native Plugin Manager installs target; retain application/dependency errors, then read reportPath or Host diagnostic if author/root admission prevents a safe report target. Existing runRoot cannot be reused. No manual installs, widening, or guessed executables."
+}

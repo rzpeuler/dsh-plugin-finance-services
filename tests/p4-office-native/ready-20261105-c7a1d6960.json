@@ -1,0 +1,10 @@
+{
+  "runId": "20261105-c7a1d6960",
+  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\fixture-20261105-c7a1d6960",
+  "package": "@local/dsh-p4-office-native-20261105-c7a1d6960-technical-only",
+  "reportPath": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p4-office-native\\runs\\20261105-c7a1d6960\\report.json",
+  "technicalOnly": true,
+  "publicPackageResolutionProved": false,
+  "source": "ACTUAL_CREATOR_DEPENDENCY_TOOL_AND_OFFICE_SKILL_PATHS",
+  "status": "READY_NOT_INSTALLED"
+}

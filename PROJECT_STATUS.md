@@ -1,6 +1,6 @@
 # Financial Services 实施状态
 
-当前阶段：P0–P2关键验收通过，P3为PARTIAL_HOST_INTERFACE_GAP。0.3.0-alpha.2已原生启用：217本地、33角色/生命周期、15真实Client、6独立模板、7实际原生MCP transport及2卸载检查通过。所有临时包移除；默认绑定null/revision19，来源策略revision8。指定Manager与安全金融MCP委派/凭据接口缺失，不能去掉Agent或私调连接绕过，也不把P3标完成。是否在保持P3为PARTIAL的前提下推进P4独立工作待用户确认。详见[P3记录](acceptance/P3.md)。
+当前阶段：P0–P2关键验收通过，P3为PARTIAL_HOST_INTERFACE_GAP，P4为PARTIAL_IMPLEMENTATION_NOT_ACCEPTED。0.4.0-alpha.1已原生applied：P3的217本地/33角色生命周期/15真实Client/7原生MCP等证据保持；P4新增10业务源映射、10种输入模板SDK、GL与LP数值库、338本地回归与6项安装后原生检查。仍无业务Worker运行或Office产物；原生Windows沙箱下固定`--version`即无法启动子进程，Office链阻断原因未确立，未改用无沙箱执行。默认绑定null/revision19，数据策略revision8且无测试Adapter/grant，所有临时包已移除。见[P3记录](acceptance/P3.md)与[P4记录](acceptance/P4.md)。
 
 P2历史验收基线 `@local/dsh-financial-services@0.2.2` 当时原生链接安装并enabled/applied，无新增重启要求。P2证据：115本地测试、587原生能力、12原生Client草稿链、141原生数值/权限补验、10禁用底线通过；真实只读Worker及started-root改绑锁通过。004收尾IO失败仍保留，46项独立恢复确认清理，不改失败为PASS。两源Bash角色使用固定数值剖面代替脚本，恰两角色获工具、modeler不写，builder只写自己JSON，不冒称Excel。当前默认绑定null/revision19、用户导航/草稿恢复、所有临时包已移除。缺模板、商业数据授权、Office业务成品、P5强制Gate及视觉/实际鼠标仍明确未完成；没有金融业务E2E成功宣称。详见[阶段记录](acceptance/P2.md)。
 
