@@ -23,3 +23,5 @@ tests/p4-office-native/runs/
 tests/p5-native/latest.json
 tests/p5-separation/latest.json
 tests/p5-ask/latest.json
+tests/p5-persist/latest.json
+tests/p5-persist/sentinel.json

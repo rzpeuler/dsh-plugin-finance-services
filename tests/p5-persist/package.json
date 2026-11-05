@@ -1,0 +1,1 @@
+{"name":"@local/dsh-finance-p5-persist-test-only","version":"0.0.1","private":true,"type":"module","description":"Disposable native side-effect and disable/enable durability probe; display metadata deliberately omitted.","engines":{"dsh":"0.2.1-rc.5"},"exports":{".":"./probe.js"},"dsh":{"bundle":{"patch":"./cordis.patch.yml"}}}

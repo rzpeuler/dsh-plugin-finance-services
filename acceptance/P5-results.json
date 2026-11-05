@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "NATIVE_GATE_SEPARATION_RESTART_AND_ASK_VERIFIED_UI_PROJECTION_PENDING",
+  "status": "NATIVE_GATE_SEPARATION_RESTART_ASK_NOSIDE_AND_PERSIST_VERIFIED_UI_PROJECTION_PENDING",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -82,8 +82,8 @@
     "P5-RESTART": "PASS_NATIVE_SERVICE_RESTART",
     "P5-ASK": "PASS_NATIVE",
     "P5-SEPARATION": "PARTIAL_NATIVE_SEPARATION",
-    "P5-NOSIDE": "NOT_RUN",
-    "P5-PERSIST": "PARTIAL_NATIVE",
+    "P5-NOSIDE": "PASS_NATIVE_SURFACE",
+    "P5-PERSIST": "PASS_NATIVE",
     "P5-ERRORS": "NOT_RUN"
   },
   "designDecisions": [
@@ -97,13 +97,14 @@
     "The separation probe spies on the tool registry and approval service; an approval produced zero calls to register/guard/restrict/execute/request/setPolicy and left the tool-schema hash identical.",
     "Restart evidence comes from a real bundle remove and reinstall, which starts a new financeReview epoch over the same durable domain.",
     "A review question is refused unless the live caller is a runtime root whose composed preset is a main Agent; the role check runs before the ownership check so a worker never reaches the question service.",
-    "requestReview uses askTimed, so an unanswered card returns PENDING instead of blocking the stage forever; an answer never becomes an approval record."
+    "requestReview uses askTimed, so an unanswered card returns PENDING instead of blocking the stage forever; an answer never becomes an approval record.",
+    "The side-effect surface is asserted three ways: a service method allowlist, a scan for side-effecting tool names, and an import-specifier scan of the built finance modules."
   ],
   "remainingKeyAcceptance": [
     "Cross-session host projection and a UI jump to the exact Session or native question card",
     "Operating-system process restart comparison",
     "Sandbox mode and approval-mode matrix around an approval",
-    "Disable/enable boundary and a negative test that user files are never deleted"
+    "A negative test that an uninstall never deletes user files (disable/enable is proven)"
   ],
   "notClaimed": [
     "P5 complete",
@@ -167,5 +168,42 @@
     "agentsDisposed": true,
     "modelCalls": 0,
     "questionsAnswered": 0
+  },
+  "nativeSideEffectAndPersistence": {
+    "phaseA": {
+      "evidence": "P5-persist-phase-a.json",
+      "checksPassed": 5,
+      "checksFailed": 0
+    },
+    "phaseB": {
+      "evidence": "P5-persist-phase-b.json",
+      "checksPassed": 7,
+      "checksFailed": 0,
+      "cycle": "bundle disabled then re-enabled between phases",
+      "rowAbsentWhileDisabled": "Config query for @local/dsh-financial-services/review returned total 0",
+      "sentinelBytes": 119,
+      "sentinelSha256": "788f5a446af2e075226a84f2ee000d35432e45876f2fbbb20bdd3fb9f5d403c3",
+      "approvalAfterCycle": "APPROVED",
+      "policyDigestUnchanged": true
+    },
+    "sideEffectSurface": {
+      "reviewServiceMethods": [
+        "constructor",
+        "requireStore",
+        "serialize",
+        "policy",
+        "settle",
+        "recordStage",
+        "evaluate",
+        "classify",
+        "queue",
+        "requirementOf",
+        "requestReview",
+        "inspect"
+      ],
+      "registeredTools": 4,
+      "forbiddenImports": 0,
+      "externalSideEffects": "DISABLED"
+    }
   }
 }
