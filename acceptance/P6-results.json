@@ -36,8 +36,8 @@
     "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-SETTINGS": "PARTIAL_NATIVE_CONFIG_SURFACE_NOT_RENDERED",
-    "P6-NAV": "PARTIAL_NATIVE_SLOT_CHECK",
+    "P6-SETTINGS": "PARTIAL_NATIVE_CONFIG_SURFACE_AND_LIVE_VIEW_NOT_RENDERED",
+    "P6-NAV": "PASS_LIVE_REGISTRATION_NOT_RENDERED",
     "P6-I18N": "PARTIAL_STATIC_COVERAGE",
     "P6-RESPONSIVE": "NOT_RUN",
     "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
@@ -329,5 +329,32 @@
     "runs": 14,
     "restartedAt": "2026-11-05T16:08:49.195Z",
     "catalogueCaveat": "The Inspect Service catalogue omits this bundle; use a probe or the client, not the catalogue."
+  },
+  "liveRegistration": {
+    "main": {
+      "occupants": [
+        "plugins",
+        "conversation",
+        "schedules",
+        "financial-services"
+      ],
+      "ourKeyActive": true
+    },
+    "sidebar.panellist": {
+      "occupants": [
+        "plugins@0",
+        "schedules@10",
+        "financial-services@30"
+      ],
+      "ourKeyActive": true
+    },
+    "plugins.bundle.config": {
+      "occupant": "@local/dsh-financial-services",
+      "active": true
+    },
+    "plugins.bundle.activation": {
+      "occupant": "@local/dsh-financial-services",
+      "active": true
+    }
   }
 }
