@@ -100,12 +100,11 @@
     "clientSections": "NOT_BUILT"
   },
   "remainingKeyAcceptance": [
-    "Browser rendering and interaction for every section",
-    "Editable settings through the native configuration surface, with restart-scoped policy",
-    "Deliverable open and back-to-session navigation",
-    "Responsive, contrast and keyboard-focus checks",
-    "Install/upgrade/restart/disable/reinstall lifecycle for the UI",
-    "Offline and permission-denied states"
+    "Manual browser acceptance per MANUAL_CHECKLIST.md",
+    "Deliverable open and back-to-session entry point",
+    "Operating-system process restart comparison",
+    "Per-business error and source lineage",
+    "Native Office delivery and safe MCP delegation (host interface blocked)"
   ],
   "settingsSurface": {
     "status": "PASS_NATIVE_CONFIG_SURFACE_NOT_RENDERED",
@@ -191,5 +190,15 @@
       "review rows are withheld when the policy read failed"
     ],
     "rendered": false
+  },
+  "gapLedger": {
+    "status": "PASS_CONSISTENCY",
+    "evidence": "P6-gap-ledger.tap",
+    "ledger": "gap-ledger.json",
+    "manualChecklist": "MANUAL_CHECKLIST.md",
+    "openGaps": 9,
+    "checksPassed": 4,
+    "checksFailed": 0,
+    "rule": "A gap closes only with a new native or browser observation saved under acceptance/."
   }
 }
