@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "NATIVE_GATE_SEPARATION_RESTART_ASK_NOSIDE_PERSIST_AND_UNINSTALL_VERIFIED_UI_AND_OS_RESTART_PENDING",
+  "status": "ALL_NATIVE_P5_CRITERIA_EXERCISED_UI_PROJECTION_AND_OS_RESTART_PENDING",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -78,13 +78,13 @@
     "P5-RECORD": "PASS_LOCAL_KERNEL",
     "P5-IDEMPOTENT": "PASS_LOCAL_KERNEL",
     "P5-INVALIDATE": "PASS_LOCAL_KERNEL",
-    "P5-QUEUE": "PARTIAL_NATIVE",
+    "P5-QUEUE": "PASS_NATIVE_PROJECTION",
     "P5-RESTART": "PASS_NATIVE_SERVICE_RESTART",
     "P5-ASK": "PASS_NATIVE",
     "P5-SEPARATION": "PASS_NATIVE_MATRIX",
     "P5-NOSIDE": "PASS_NATIVE_SURFACE",
     "P5-PERSIST": "PASS_NATIVE",
-    "P5-ERRORS": "NOT_RUN"
+    "P5-ERRORS": "PARTIAL_NATIVE"
   },
   "designDecisions": [
     "Approvals bind both the policy version string and the snapshot digest, so a decision taken under one requirement set cannot unlock another snapshot with the same version label.",
@@ -99,12 +99,14 @@
     "A review question is refused unless the live caller is a runtime root whose composed preset is a main Agent; the role check runs before the ownership check so a worker never reaches the question service.",
     "requestReview uses askTimed, so an unanswered card returns PENDING instead of blocking the stage forever; an answer never becomes an approval record.",
     "The side-effect surface is asserted three ways: a service method allowlist, a scan for side-effecting tool names, and an import-specifier scan of the built finance modules.",
-    "Sandbox policy is per-session, so the matrix compares mode and workspace root and separately proves the approval override and tool set are unchanged; comparing the whole object would fail on a fresh session id."
+    "Sandbox policy is per-session, so the matrix compares mode and workspace root and separately proves the approval override and tool set are unchanged; comparing the whole object would fail on a fresh session id.",
+    "The queue projection adds only session liveness and preset identity to rows derived from the persisted document; it stores nothing itself, so it cannot become a second approval fact."
   ],
   "remainingKeyAcceptance": [
-    "Cross-session host projection and a UI jump to the exact Session or native question card",
+    "Client UI that renders the projection and jumps to the exact Session or native question card",
     "Operating-system process restart comparison",
-    "A native comparison of fast versus original policy instances"
+    "A native comparison of fast versus original policy instances",
+    "Per-business error and source lineage"
   ],
   "notClaimed": [
     "P5 complete",
@@ -234,5 +236,21 @@
       "P5-boundary-phase-b-failure-001.json",
       "P5-boundary-phase-b-failure-002.json"
     ]
+  },
+  "nativeQueue": {
+    "evidence": "P5-queue-pass-002.json",
+    "checksPassed": 8,
+    "checksFailed": 0,
+    "failureHistory": [
+      "P5-queue-failure-001.json"
+    ],
+    "groups": 2,
+    "liveSessions": 2,
+    "disposedSessionStatus": "SESSION_NOT_LIVE",
+    "revisionBefore": 30,
+    "revisionAfterNewDecision": 31,
+    "singleSource": "financial_review.domain/state",
+    "readOnlyProjection": true,
+    "leakageCheck": "invalid record returned REVIEW_RECORD_INVALID without echoing the sentinel value"
   }
 }

@@ -17,6 +17,7 @@ const Review = z.object({
   artifactRef: Artifact,
 })
 const Stage = z.object({
+  sessionId: z.string().min(1).max(128).optional(),
   runId: z.string().min(1).max(128), agentId: z.string().min(1).max(128), checkpointId: z.string().min(1).max(96),
   status: z.enum(['RUNNING', 'COMPLETED', 'FAILED', 'UNKNOWN_TERMINATED']),
   updatedAt: z.string().min(1).max(40), artifact: Artifact.optional(),
@@ -106,6 +107,44 @@ export default class FinanceReview extends Service {
   async queue() { return this.requireStore().queue() }
 
   requirementOf({ agentId, checkpointId } = {}) { return this.requireStore().requirementOf(agentId, checkpointId) }
+
+  /**
+   * Host projection for a cross-session review queue. Every row comes from the persisted review
+   * facts; the projection only adds whether the owning native Session is still live.
+   */
+  async queueProjection() {
+    const store = this.requireStore()
+    const rows = await store.queue()
+    const agents = this.ctx.get('agents')
+    const presets = this.ctx.get('agentPresets')
+    const groups = new Map()
+    for (const row of rows) {
+      const key = row.sessionId ?? 'UNSCOPED'
+      if (!groups.has(key)) {
+        const agent = row.sessionId && agents ? agents.get(row.sessionId) : undefined
+        groups.set(key, {
+          sessionId: row.sessionId, live: !!agent,
+          preset: agent && presets ? presets.composedPreset(agent.ctx) ?? null : null,
+          status: row.sessionId ? (agent ? 'LIVE_SESSION' : 'SESSION_NOT_LIVE') : 'UNSCOPED_RUN',
+          items: [],
+        })
+      }
+      groups.get(key).items.push(row)
+    }
+    const list = [...groups.values()].map(group => ({
+      ...group,
+      pending: group.items.filter(item => item.decision === 'HOLD').length,
+      decided: group.items.filter(item => item.decision === 'ALLOW').length,
+    })).sort((a, b) => (a.sessionId ?? '') < (b.sessionId ?? '') ? -1 : 1)
+    const inspected = store.inspect()
+    return Object.freeze({
+      source: 'financial_review.domain/state', revision: inspected.revision, documentDigest: inspected.documentDigest,
+      groups: Object.freeze(list.map(group => Object.freeze({ ...group, items: Object.freeze(group.items) }))),
+      totals: Object.freeze({ sessions: list.length, items: rows.length,
+        pending: rows.filter(row => row.decision === 'HOLD').length,
+        decided: rows.filter(row => row.decision === 'ALLOW').length }),
+    })
+  }
 
   /**
    * Ask a human through the native question service about a required checkpoint.

@@ -104,11 +104,12 @@ export class ReviewStore {
   evaluate(request) { return this.#gate.evaluate(request) }
 
   /** Record a stage transition. `RUNNING` is only meaningful within one process lifetime. */
-  async recordStage({ runId, agentId, checkpointId, status, artifact }) {
+  async recordStage({ sessionId, runId, agentId, checkpointId, status, artifact }) {
     if (!runId || !agentId || !checkpointId) fail('STAGE_RECORD_INVALID', 'runId, agentId and checkpointId are required')
     if (!STAGE_STATES.has(status)) fail('STAGE_RECORD_INVALID', 'status must be RUNNING, COMPLETED or FAILED')
     const key = stageKey({ runId, agentId, checkpointId })
     const record = { runId, agentId, checkpointId, status, updatedAt: this.#now() }
+    if (typeof sessionId === 'string' && sessionId) record.sessionId = sessionId
     if (artifact) record.artifact = { hash: artifact.hash ?? null, version: artifact.version ?? null }
     const candidate = { ...this.#document, stages: { ...this.#document.stages, [key]: record } }
     try {
@@ -149,7 +150,7 @@ export class ReviewStore {
           const decision = this.#gate.evaluate({ sessionId: review?.sessionId ?? stage.sessionId ?? '', runId: stage.runId,
             agentId, checkpointId, artifact: stage.artifact ?? { version: 'unrecorded' } })
           rows.push(Object.freeze({
-            sessionId: review?.sessionId ?? null, runId: stage.runId, agentId, checkpointId, requirement,
+            sessionId: review?.sessionId ?? stage.sessionId ?? null, runId: stage.runId, agentId, checkpointId, requirement,
             reviewId: review?.reviewId ?? null, decision: decision.decision, reason: decision.reason,
             stageStatus: stage.status, updatedAt: stage.updatedAt,
           }))

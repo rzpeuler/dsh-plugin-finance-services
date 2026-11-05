@@ -1,0 +1,85 @@
+{
+  "evidence": "REAL_NATIVE_QUEUE_PROJECTION_AND_ERROR_DISCIPLINE_NOT_UI_VISUAL",
+  "status": "PASS",
+  "policy": {
+    "id": "original",
+    "version": "p5-policy-v1",
+    "digest": "55ee42703c75f53b736c24aa3c8329cc2deef22414b4633b29be751bc5c2d018"
+  },
+  "agentsDisposed": [
+    true,
+    true
+  ],
+  "checks": [
+    {
+      "id": "two-sessions-produce-two-live-groups",
+      "status": "PASS",
+      "detail": {
+        "groups": 2,
+        "presets": [
+          "finance-market-researcher",
+          "finance-pitch-agent"
+        ]
+      }
+    },
+    {
+      "id": "decisions-and-pending-counts-come-from-persisted-facts",
+      "status": "PASS",
+      "detail": {
+        "pitchDecided": 1,
+        "researchPending": 1,
+        "reason": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "id": "projection-reads-the-single-persisted-revision",
+      "status": "PASS",
+      "detail": {
+        "revision": 34,
+        "frozen": true
+      }
+    },
+    {
+      "id": "a-new-decision-moves-the-projection-revision",
+      "status": "PASS",
+      "detail": {
+        "before": 34,
+        "after": 35
+      }
+    },
+    {
+      "id": "a-disposed-session-stays-listed-as-not-live",
+      "status": "PASS",
+      "detail": {
+        "status": "SESSION_NOT_LIVE",
+        "items": 1
+      }
+    },
+    {
+      "id": "invalid-records-return-a-code-without-leaking-values",
+      "status": "PASS",
+      "detail": {
+        "code": "REVIEW_RECORD_INVALID",
+        "message": "REVIEW_RECORD_INVALID: actor must be a nonempty string of at most 128 characters"
+      }
+    },
+    {
+      "id": "unknown-session-and-missing-artifact-fail-closed-with-codes",
+      "status": "PASS",
+      "detail": {
+        "notLive": "CALLER_NOT_LIVE",
+        "missingArtifact": "ARTIFACT_IDENTITY_REQUIRED"
+      }
+    },
+    {
+      "id": "all-observed-codes-are-in-the-expected-catalogue",
+      "status": "PASS",
+      "detail": {
+        "observed": [
+          "REVIEW_RECORD_INVALID"
+        ]
+      }
+    }
+  ],
+  "modelCalls": 0
+}
