@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "NATIVE_GATE_AND_PERSISTENCE_VERIFIED_REMAINING_RESTART_UI_AND_ASK_HANDOVER",
+  "status": "NATIVE_GATE_SEPARATION_AND_SERVICE_RESTART_VERIFIED_UI_AND_ASK_HANDOVER_PENDING",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -79,9 +79,9 @@
     "P5-IDEMPOTENT": "PASS_LOCAL_KERNEL",
     "P5-INVALIDATE": "PASS_LOCAL_KERNEL",
     "P5-QUEUE": "PARTIAL_NATIVE",
-    "P5-RESTART": "PARTIAL_NATIVE",
+    "P5-RESTART": "PASS_NATIVE_SERVICE_RESTART",
     "P5-ASK": "NOT_RUN",
-    "P5-SEPARATION": "PARTIAL_NATIVE",
+    "P5-SEPARATION": "PARTIAL_NATIVE_SEPARATION",
     "P5-NOSIDE": "NOT_RUN",
     "P5-PERSIST": "PARTIAL_NATIVE",
     "P5-ERRORS": "NOT_RUN"
@@ -93,14 +93,16 @@
     "Stage records exist only to classify interrupted work: on open, any RUNNING stage becomes UNKNOWN_TERMINATED with a reason, so the product never implies an in-place resume.",
     "A review is written to the document before it can satisfy the gate; a failed save rebuilds the gate from the persisted document.",
     "A run is never COMPLETED while a required checkpoint has no stage record; the probe exposed and fixed the weaker earlier rule.",
-    "Cordis service proxies cannot dispatch ECMAScript private methods; the service uses module-internal helper names instead (#private threw 'Receiver must be an instance of class FinanceReview' on the first native install)."
+    "Cordis service proxies cannot dispatch ECMAScript private methods; the service uses module-internal helper names instead (#private threw 'Receiver must be an instance of class FinanceReview' on the first native install).",
+    "The separation probe spies on the tool registry and approval service; an approval produced zero calls to register/guard/restrict/execute/request/setPolicy and left the tool-schema hash identical.",
+    "Restart evidence comes from a real bundle remove and reinstall, which starts a new financeReview epoch over the same durable domain."
   ],
   "remainingKeyAcceptance": [
     "Cross-session host projection and UI jump to the exact Session",
-    "Real process-restart comparison and four-state recovery view",
+    "Operating-system process restart comparison",
     "Native ask_user_question handover with child Agents refused",
-    "Sandbox/MCP/approval-policy matrix proving separation beyond the tool surface",
-    "Install/disable/uninstall persistence boundaries"
+    "Sandbox mode and approval-mode matrix around an approval",
+    "Disable/enable boundary and a negative test that user files are never deleted"
   ],
   "notClaimed": [
     "P5 complete",
@@ -122,6 +124,32 @@
     "failureHistory": [
       "P5-native-gate-failure-001.json",
       "P5-native-gate-failure-002.json"
+    ]
+  },
+  "nativeSeparation": {
+    "phaseA": {
+      "evidence": "P5-separation-phase-a.json",
+      "checksPassed": 6,
+      "checksFailed": 0,
+      "toolServiceCallsDuringReview": 0,
+      "approvalServiceCalls": 0,
+      "toolSchemaHashUnchanged": true,
+      "mcpToolSetUnchanged": true
+    },
+    "phaseB": {
+      "evidence": "P5-separation-phase-b-002.json",
+      "checksPassed": 5,
+      "checksFailed": 0,
+      "restartMethod": "bundle remove then reinstall, which restarts the financeReview service epoch",
+      "persistedApprovalStillApplies": true,
+      "classification": "COMPLETED",
+      "documentRevision": 21,
+      "totalReviews": 8,
+      "policyDigestStable": true,
+      "crossRunIsolation": "another run id still returns REVIEW_REQUIRED"
+    },
+    "failureHistory": [
+      "P5-separation-failure-001.json"
     ]
   }
 }

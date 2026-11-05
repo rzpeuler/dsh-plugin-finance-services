@@ -1,0 +1,72 @@
+{
+  "evidence": "REAL_NATIVE_REVIEW_SERVICE_SEPARATION_AND_RESTART_DURABILITY_NOT_COMMERCIAL",
+  "phase": "A",
+  "status": "PASS",
+  "policy": {
+    "id": "original",
+    "version": "p5-policy-v1",
+    "digest": "55ee42703c75f53b736c24aa3c8329cc2deef22414b4633b29be751bc5c2d018"
+  },
+  "checks": [
+    {
+      "id": "policy-pinned-with-locked-boundaries",
+      "status": "PASS",
+      "detail": {
+        "policyId": "original",
+        "digest": "55ee42703c75f53b736c24aa3c8329cc2deef22414b4633b29be751bc5c2d018"
+      }
+    },
+    {
+      "id": "gate-holds-before-decision",
+      "status": "PASS",
+      "detail": {
+        "decision": "HOLD",
+        "reason": "REVIEW_REQUIRED",
+        "agentId": "finance-pitch-agent",
+        "checkpointId": "valuation_complete"
+      }
+    },
+    {
+      "id": "review-operations-touch-no-tool-or-approval-service",
+      "status": "PASS",
+      "detail": {
+        "register": 0,
+        "guard": 0,
+        "restrict": 0,
+        "execute": 0,
+        "approvalRequest": 0,
+        "approvalSetPolicy": 0,
+        "toPdf": 0
+      }
+    },
+    {
+      "id": "tool-surface-identical-across-approval",
+      "status": "PASS",
+      "detail": {
+        "tools": 4,
+        "schemaHash": "d28d7ea0840d540a40ef6bb26cb907be2fb438e5af6f51d3becef4cd8b73a720",
+        "mcpTools": 0
+      }
+    },
+    {
+      "id": "approved-run-classifies-completed",
+      "status": "PASS",
+      "detail": {
+        "runId": "run-p5-separation-fixed",
+        "status": "COMPLETED",
+        "stages": 2
+      }
+    },
+    {
+      "id": "document-records-the-approval-for-the-next-epoch",
+      "status": "PASS",
+      "detail": {
+        "revision": 21,
+        "reviews": 8
+      }
+    }
+  ],
+  "modelCalls": 0,
+  "workerCalls": 0,
+  "externalSideEffects": "DISABLED"
+}

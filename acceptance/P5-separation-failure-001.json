@@ -1,0 +1,12 @@
+{
+  "stage": "P5",
+  "status": "INSTALL_REJECTED_PACKAGE_METADATA",
+  "evidenceKind": "TRANSCRIBED_NATIVE_PLUGIN_MANAGER_RESULT",
+  "observedDate": "2026-11-05",
+  "target": "tests/p5-separation",
+  "cause": "The probe package.json was written with a UTF-8 BOM, so native installation validation rejected it: SyntaxError: Unexpected token '\uFEFF'",
+  "hostBehaviour": "The manager restored package.json, pnpm-lock.yaml and node_modules; nothing was left half-installed",
+  "fix": "Rewrote package.json and cordis.patch.yml as BOM-less UTF-8 and re-installed",
+  "productChange": false,
+  "note": "Authoring error in a disposable test package, not a defect in the review service"
+}
