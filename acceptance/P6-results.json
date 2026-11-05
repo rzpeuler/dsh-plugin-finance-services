@@ -380,5 +380,16 @@
       "a non-passing entry must name a ledgered gap",
       "P3 to P6 remain unaccepted in the matrix and in the stage records"
     ]
+  },
+  "claimAudit": {
+    "status": "PASS_CLAIMS_BACKED",
+    "evidence": "P6-claim-audit-001.json",
+    "audited": 10,
+    "problems": 0,
+    "rule": "Every PASS entry must cite at least one machine-checked result; documents alone cannot carry a native claim.",
+    "machineCheckedTotals": {
+      "checks": 841,
+      "passingEntriesWithNativeEvidence": 7
+    }
   }
 }
