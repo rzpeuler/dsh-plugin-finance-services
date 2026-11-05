@@ -218,5 +218,18 @@
     ],
     "bounds": "20 mains, 8 tools, 8 sources per row",
     "rendered": false
+  },
+  "handover": {
+    "status": "PASS_CONSISTENCY",
+    "document": "HANDOVER.md",
+    "evidence": "P6-handover-consistency.tap",
+    "checksPassed": 4,
+    "checksFailed": 0,
+    "verified": [
+      "single version across package/build/README/handover",
+      "each local bundle row resolves to an exported entry",
+      "no stage accepted while its ledger gap is open",
+      "handover names every unaccepted stage and the blockers"
+    ]
   }
 }
