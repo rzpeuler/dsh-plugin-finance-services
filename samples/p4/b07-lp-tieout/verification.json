@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "evidence": "JAVASCRIPT_KERNEL_VS_PYTHON_DECIMAL_ON_THE_SAME_FIXTURE_TECHNICAL_TEST_ONLY",
+  "fixture": "inputs.json",
+  "input_classification": "TEST_ONLY",
+  "checks": [
+    {
+      "id": "kernel-returned-a-result",
+      "status": "PASS"
+    },
+    {
+      "id": "no-validation-flags",
+      "status": "PASS",
+      "detail": {
+        "flags": []
+      }
+    },
+    {
+      "id": "kernel-recommends-pass",
+      "status": "PASS",
+      "detail": {
+        "recommendation": "PASS"
+      }
+    },
+    {
+      "id": "fund-status-pass",
+      "status": "PASS",
+      "detail": {
+        "fund": "PASS"
+      }
+    },
+    {
+      "id": "all-lps-reported",
+      "status": "PASS",
+      "detail": {
+        "lps": [
+          "LP-ALPHA",
+          "LP-BETA",
+          "LP-GAMMA"
+        ]
+      }
+    },
+    {
+      "id": "every-allocation-and-ending-agrees",
+      "status": "PASS"
+    },
+    {
+      "id": "recomputed-fund-sum-matches-python-total",
+      "status": "PASS",
+      "detail": {
+        "kernel": "4670000.00",
+        "python": "4670000.00"
+      }
+    }
+  ],
+  "lps": 3,
+  "fund_nav": "4670000.00"
+}

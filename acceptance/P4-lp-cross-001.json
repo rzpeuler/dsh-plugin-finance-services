@@ -1,0 +1,41 @@
+{
+  "stage": "P4",
+  "id": "P4_LP_TIEOUT_CROSS_IMPLEMENTATION",
+  "status": "PASS_CROSS_IMPLEMENTATION_TECHNICAL_TEST_ONLY",
+  "observedDate": "2026-11-06",
+  "method": "The JavaScript kernel (BigInt) and an independent Python Decimal implementation compute the same pro-rata allocation on one fixture; every field is compared.",
+  "fixture": {
+    "path": "samples/p4/b07-lp-tieout/inputs.json",
+    "sha256": "d295a7124dff8a7e45eb5aad7cb93bb31058de0aa829df57bf9968a7d6692ad9",
+    "classification": "TEST_ONLY / SIMULATED_FIXTURE",
+    "lps": 3
+  },
+  "kernelOutput": {
+    "path": "samples/p4/b07-lp-tieout/kernel-result.json",
+    "sha256": "f94bc66ea82866c499929cfa0bd86c1b613e2794ca8e0d01a0b5c2ebf8472315",
+    "recommendation": "PASS",
+    "fund": "PASS",
+    "flags": 0
+  },
+  "pythonExpectations": {
+    "path": "samples/p4/b07-lp-tieout/expected.json",
+    "sha256": "4ca2424fa669f684536e9e1d2cfd09bb7df0a7f50ae0ad165cebd2ae9f3e2643"
+  },
+  "comparison": {
+    "path": "samples/p4/b07-lp-tieout/verification.json",
+    "sha256": "4aece789ca744f7a5228df7a1c0d48f690b025154f1bb98124383244ed04a34d",
+    "checks": 7,
+    "failed": 0
+  },
+  "agreement": "realized, unrealized, management_fee, expenses, allocated_net_income and ending agree on all three LPs; the fund NAV sum agrees with the Python total",
+  "toleranceBehaviour": {
+    "lineTolerance": "0.01 inclusive",
+    "observed": "a one-cent difference passes; a two-cent difference holds the run"
+  },
+  "notClaimed": [
+    "commercial data",
+    "native tool exposure",
+    "audit opinion or sign-off",
+    "waterfall validation"
+  ]
+}

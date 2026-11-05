@@ -1,0 +1,52 @@
+﻿TAP version 13
+# Subtest: the stored kernel output is exactly what the shipped kernel produces now
+ok 1 - the stored kernel output is exactly what the shipped kernel produces now
+  ---
+  duration_ms: 3.199
+  type: 'test'
+  ...
+# Subtest: the fixture is a technical simulation, never commercial data
+ok 2 - the fixture is a technical simulation, never commercial data
+  ---
+  duration_ms: 0.1545
+  type: 'test'
+  ...
+# Subtest: the Python cross-check agrees with the kernel on every field
+ok 3 - the Python cross-check agrees with the kernel on every field
+  ---
+  duration_ms: 0.0952
+  type: 'test'
+  ...
+# Subtest: every allocation and ending agrees with the independent Decimal computation
+ok 4 - every allocation and ending agrees with the independent Decimal computation
+  ---
+  duration_ms: 0.2187
+  type: 'test'
+  ...
+# Subtest: a one-cent difference stays inside the documented line tolerance
+ok 5 - a one-cent difference stays inside the documented line tolerance
+  ---
+  duration_ms: 1.2443
+  type: 'test'
+  ...
+# Subtest: a difference above tolerance holds the run instead of passing
+ok 6 - a difference above tolerance holds the run instead of passing
+  ---
+  duration_ms: 0.5598
+  type: 'test'
+  ...
+# Subtest: no result field claims approval or official status
+ok 7 - no result field claims approval or official status
+  ---
+  duration_ms: 0.3051
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 67.6859

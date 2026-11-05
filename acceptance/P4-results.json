@@ -257,5 +257,12 @@
       "sha256": "83df8a7bc06f2e79e29cce35c58933e36cae1a2943ff10cc9e302a7eb7a63173"
     },
     "clientDownload": "BUILT_NOT_CLICKED"
+  },
+  "lpCrossCheck": {
+    "status": "PASS_CROSS_IMPLEMENTATION_TECHNICAL_TEST_ONLY",
+    "evidence": "P4-lp-cross-001.json",
+    "checks": 7,
+    "fixture": "samples/p4/b07-lp-tieout/inputs.json",
+    "agreement": "realized, unrealized, management_fee, expenses, allocated_net_income and ending agree on all three LPs; the fund NAV sum agrees with the Python total"
   }
 }
