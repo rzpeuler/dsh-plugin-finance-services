@@ -391,5 +391,18 @@
       "checks": 841,
       "passingEntriesWithNativeEvidence": 7
     }
+  },
+  "uiAcceptancePlan": {
+    "status": "AWAITING_HUMAN_OBSERVATION",
+    "plan": "P6-manual-plan-001.json",
+    "checks": [
+      "UI-1 workbench sections",
+      "UI-2 review panel read-only",
+      "UI-3 workbook download",
+      "UI-4 narrow screen and dark theme"
+    ],
+    "restartPending": 2,
+    "evidence": "P6-manual-plan-tests.tap",
+    "note": "Four checks were agreed with the user; rendering stays unclaimed until their report arrives."
   }
 }

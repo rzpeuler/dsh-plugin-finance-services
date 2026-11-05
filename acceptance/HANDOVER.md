@@ -40,7 +40,8 @@
 
 ## 下一步（按依赖顺序）
 
-0. ~~重启 DSH~~：已完成，服务在新进程中挂载并有原生证据。
+0. **重启一次**：完成两个探针包的卸载（上次卸载为 `restart-required`），并让服务重新挂载；随后确认插件列表里两个探针包已消失。
+1. **界面四项验收**：[计划](P6-manual-plan-001.json) 与 [手册](MANUAL_CHECKLIST.md) 的 UI-1…UI-4（工作台七段、审核面板只读、下载工作簿、窄屏与深色）。
 1. **界面验收**：按 [MANUAL_CHECKLIST](MANUAL_CHECKLIST.md) 走 A–G，把结果写入新的 `acceptance/P6-manual-<日期>-*.md`，再更新 `P6-results.json` 的 `browserRendered` 与各项状态。
 2. **OS 级重启**：记录一次审核 → 重启应用 → 重读队列投影，补 `P5-OS-RESTART`。
 3. **宿主接口**：若宿主提供可用的受限子进程或二进制产物写接口，P4 的 Office 与业务交付即可恢复；否则维持 `BLOCKED_HOST_INTERFACE`。
