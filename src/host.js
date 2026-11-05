@@ -7,6 +7,7 @@ import { TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol'
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 import { z } from 'zod'
 import { createFinanceContract } from './contract.js'
+import { createBusinessTaskTemplates } from './business/task-templates.js'
 import { WorkspaceBindingOperations } from './workspace-binding.js'
 import { financeReflection } from './host/reflection.js'
 import { createWorkspaceTool } from './host/tool.js'
@@ -110,6 +111,24 @@ export default class FinanceOperations extends TypertRemoteService {
   }
 
   /** @param roleId - A trusted preset Config identity. @returns Validated role and its permitted Skill resource roots. */
+  /** Declared intake templates only: no file access, no authorization, no started run. */
+  taskTemplates(request) {
+    this.requireOperations()
+    this.schemas.EmptyRequest.parse(request)
+    const library = createBusinessTaskTemplates(z)
+    const templates = library.list().templates.map(header => {
+      const detail = library.describe(header.presetId)
+      // Publish the declared reference identities only; the schema itself stays behind describe().
+      const checkpoints = Array.isArray(detail.sourceCheckpoints)
+        ? detail.sourceCheckpoints.map(item => String(item.id ?? item.label ?? item)).slice(0, 16) : []
+      const sourceRefs = Array.isArray(detail.sourceRefs)
+        ? detail.sourceRefs.map(item => String(item.path ?? item.id ?? item)).slice(0, 16) : []
+      return { presetId: header.presetId, title: header.title, templateVersion: detail.templateVersion, checkpoints, sourceRefs }
+    })
+    const payload = JSON.stringify({ templateVersion: library.list().templateVersion, templates })
+    return this.schemas.TaskTemplates.parse({ templatesJson: payload.slice(0, 200000) })
+  }
+
   async roleDefinition(roleId) {
     this.requireOperations()
     return this.catalogData.role(roleId)

@@ -40,13 +40,20 @@
     "sourceCommandsRead": 41
   },
   "taskTemplates": {
-    "status": "LOCAL_LIBRARY_ONLY_NOT_NATIVE_TOOL",
-    "evidence": "../docs/P4_TASK_TEMPLATES.md",
-    "localTests": 17,
-    "tap": "P4-task-template-tests.tap",
+    "status": "PASS_NATIVE_READ_MODEL",
+    "evidence": "P4-templates-native-001.json",
+    "checksPassed": 4,
+    "checksFailed": 0,
     "templates": 10,
-    "validIntakeIsNotAuthorizationOrRead": true,
-    "regressionIncludedIn": "P4-regression-002.tap"
+    "templateVersion": "1.0.0",
+    "surface": "financeOperations.taskTemplates over the Remote gateway",
+    "reportsDeclarationsOnly": true,
+    "notClaimed": [
+      "authorization",
+      "file access",
+      "a started run",
+      "approval"
+    ]
   },
   "localCheckLibraries": [
     {

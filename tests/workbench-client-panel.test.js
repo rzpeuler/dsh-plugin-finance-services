@@ -40,6 +40,10 @@ const catalogue = { ok: true, value: {
 const data = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviews = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }
+const templates = { ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [
+  { presetId: 'finance-pitch-agent', title: 'Bank pitch first draft', templateVersion: '1.0.0', checkpoints: ['a', 'b'], sourceRefs: [] },
+  { presetId: 'finance-gl-reconciler', title: 'GL reconciliation', templateVersion: '1.0.0', checkpoints: ['c'], sourceRefs: [] },
+] }) } }
 const runs = { ok: true, value: { runsJson: JSON.stringify({ deliverableRevision: 2, runs: [
   { runId: 'run-a', agents: ['finance-model-builder'], sessions: ['session-a'],
     checkpoints: { model_build_complete: 'COMPLETED' }, classification: 'IN_PROGRESS', deliverableCount: 2 }] }) } }
@@ -52,6 +56,9 @@ test('every card decodes from its own source and reports that source', () => {
   assert.equal(workspace.ok, true)
   assert.equal(workspace.source, 'financeOperations.snapshot')
   assert.equal(workspace.value.binding, null)
+  const taskView = client.decodeTemplates(templates)
+  assert.equal(taskView.value.templates.length, 2)
+  assert.equal(taskView.value.templates[0].checkpoints, 2)
   const roles = client.decodeCatalogue(catalogue)
   assert.equal(roles.value.agents, 10)
   assert.equal(roles.value.workers, 30)
@@ -96,6 +103,11 @@ test('the loader reads four sources and keeps per-card failures', async () => {
         async catalog(request) { calls.push(['catalog', request]); return { ok: false, error: { code: 'gateway/refused' } } },
       },
       financeData: { async catalog() { calls.push(['data']); return data } },
+      financeOperations: {
+        async snapshot() { calls.push(['snapshot']); return { ok: true, value: { binding: null, workspaceStatus: 'UNBOUND', revision: 19 } } },
+        async catalog() { calls.push(['catalog']); return { ok: false, error: { code: 'gateway/refused' } } },
+        async taskTemplates() { calls.push(['taskTemplates']); return templates },
+      },
       financeReview: { async reviewSummary() { calls.push(['reviews']); return reviews },
         async reviewRuns() { calls.push(['runs']); return runs },
         async reviewDeliverables() { calls.push(['deliverables']); return deliverables } },
@@ -103,12 +115,13 @@ test('the loader reads four sources and keeps per-card failures', async () => {
   }
   const props = client.install(ctx)
   const cards = await props.loadOverview()
-  assert.deepEqual(calls.map(item => item[0]), ['snapshot', 'catalog', 'data', 'reviews', 'runs', 'deliverables'])
+  assert.deepEqual(calls.map(item => item[0]).sort(), ['catalog', 'data', 'deliverables', 'reviews', 'runs', 'snapshot', 'taskTemplates'])
   assert.equal(cards.workspace.ok, true)
   assert.equal(cards.roles.ok, false)
   assert.equal(cards.roles.code, 'gateway/refused')
   assert.equal(cards.dataSources.ok, true)
   assert.equal(cards.reviews.ok, true)
+  assert.equal(cards.tasks.ok, true)
   assert.equal(cards.runs.ok, true)
   assert.equal(cards.deliverables.ok, true)
 })
@@ -125,6 +138,7 @@ test('missing namespaces are reported as NOT_CONFIGURED rather than crashing', a
   assert.equal(cards.roles.ok, true)
   assert.equal(cards.dataSources.code, 'NOT_CONFIGURED')
   assert.equal(cards.reviews.code, 'NOT_CONFIGURED')
+  assert.equal(cards.tasks.code, 'NOT_CONFIGURED')
   assert.equal(cards.runs.code, 'NOT_CONFIGURED')
   assert.equal(cards.deliverables.code, 'NOT_CONFIGURED')
 })
@@ -136,7 +150,7 @@ test('the loader never writes: no decision, binding or policy call is made', asy
     effect(register) { register() },
     locale: { register() {}, bind() { return key => key } },
     remote: {
-      financeOperations: { snapshot: track('snapshot'), catalog: track('catalog'),
+      financeOperations: { snapshot: track('snapshot'), catalog: track('catalog'), taskTemplates: track('taskTemplates'),
         bindWorkspace: track('bindWorkspace'), prepareDraft: track('prepareDraft') },
       financeData: { catalog: track('dataCatalog'), setBindings: track('setBindings') },
       financeReview: { reviewSummary: track('reviewSummary'), settle: track('settle'), reviewPolicy: track('reviewPolicy'),
@@ -145,12 +159,13 @@ test('the loader never writes: no decision, binding or policy call is made', asy
   }
   const props = client.install(ctx)
   await props.loadOverview()
-  assert.deepEqual(calls.sort(), ['catalog', 'dataCatalog', 'reviewDeliverables', 'reviewRuns', 'reviewSummary', 'snapshot'])
+  assert.deepEqual(calls.sort(), ['catalog', 'dataCatalog', 'reviewDeliverables', 'reviewRuns', 'reviewSummary', 'snapshot', 'taskTemplates'])
 })
 
 test('the panel renders four cards, the degraded warning and the read-only note', async () => {
   const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
     dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
     runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
   stub.reset()
   client.Panel({ workbenchT: key => key, loadOverview: load })
@@ -160,6 +175,7 @@ test('the panel renders four cards, the degraded warning and the read-only note'
   const tree = client.Panel({ workbenchT: key => key, loadOverview: load })
   const lines = texts(tree).join('\n')
   for (const expected of ['agents: 10', 'workers: 30', 'skills: 63', 'flagged: 1', 'adapters: 0', 'policy: 0', 'pending: 0',
+    'finance-pitch-agent', 'Bank pitch first draft',
     'finance-pitch-agent', 'sources: capiq', 'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
     assert.ok(lines.includes(expected), `${expected} missing from ${lines}`)
   }
@@ -171,6 +187,7 @@ test('the panel renders four cards, the degraded warning and the read-only note'
     const degradedLoad = async () => ({ workspace: client.decodeWorkspace(snapshot),
       roles: { ok: false, code: 'gateway/refused', source: 'financeOperations.catalog' },
       dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+      tasks: client.decodeTemplates(templates),
       runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
     client.Panel({ workbenchT: key => key, loadOverview: degradedLoad })
     await new Promise(resolve => setImmediate(resolve))
@@ -217,6 +234,7 @@ test('saving a workbook uses one anchor, then revokes the object URL', () => {
 test('the panel offers one download control and reports its state', async () => {
   const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
     dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
     runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
   const loadWorkbook = async () => ({ ok: false, code: 'gateway/refused' })
   stub.reset()

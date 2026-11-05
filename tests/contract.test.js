@@ -11,7 +11,7 @@ const snapshot = () => ({ version: '1', stage: 'P1', revision: 0, onboardingVers
 test('Client-embedded factory has no module closure dependencies', () => {
   const embedded = Function(`return (${createFinanceContract.toString()})`)()(z)
   assert.equal(embedded.remote.package, '@local/dsh-financial-services')
-  assert.deepEqual(embedded.remote.descriptors.map(item => item.method), ['snapshot', 'bindWorkspace', 'unbindWorkspace', 'catalog', 'prepareDraft', 'follow'])
+  assert.deepEqual(embedded.remote.descriptors.map(item => item.method), ['snapshot', 'bindWorkspace', 'unbindWorkspace', 'catalog', 'taskTemplates', 'prepareDraft', 'follow'])
   assert.deepEqual(embedded.schemas.Snapshot.parse(snapshot()), snapshot())
 })
 
@@ -27,11 +27,12 @@ test('all public descriptors are direct, strict and uniquely identified; follow 
     assert.deepEqual(Object.keys(descriptor.parameters[0]).sort(), ['codec', 'name', 'source', 'wire'])
     assert.equal(descriptor.parameters[0].codec.mode, 'strict')
     assert.equal(descriptor.result.mode, 'strict')
-    const resultNames = { snapshot: 'Snapshot', bindWorkspace: 'BindResult', unbindWorkspace: 'BindResult', catalog: 'Catalog', prepareDraft: 'PreparedDraft', follow: 'Snapshot' }
+    const resultNames = { snapshot: 'Snapshot', bindWorkspace: 'BindResult', unbindWorkspace: 'BindResult', catalog: 'Catalog',
+      taskTemplates: 'TaskTemplates', prepareDraft: 'PreparedDraft', follow: 'Snapshot' }
     assert.equal(descriptor.result.create(), schemas[resultNames[descriptor.method]])
     assert.equal(descriptor.result.create().safeParse({ fake: true }).success, false)
   }
-  assert.equal(ids.size, 6)
+  assert.equal(ids.size, 7)
   const stream = remote.descriptors.find(item => item.method === 'follow')
   assert.equal(stream.mode, 'stream')
   assert.deepEqual(stream.cancellation, { parameter: 'signal' })

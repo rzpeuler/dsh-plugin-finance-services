@@ -75,6 +75,8 @@ async function renderedWorkbench(ok = true) {
     roles: workbench.decodeCatalogue(catalogue),
     dataSources: ok ? workbench.decodeDataSources({ ok: true, value: { catalogJson: JSON.stringify({ revision: 1, adapters: [], bindings: [] }) } })
       : { ok: false, code: 'NOT_CONFIGURED', source: 'financeData.catalog' },
+    tasks: workbench.decodeTemplates({ ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [
+      { presetId: 'finance-pitch-agent', title: 'Pitch', templateVersion: '1.0.0', checkpoints: ['a'] }] }) } }),
     reviews: workbench.decodeReviews({ ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state',
       revision: 1, groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }),
     runs: workbench.decodeRuns({ ok: true, value: { runsJson: JSON.stringify({ deliverableRevision: 0, runs: [] }) } }),

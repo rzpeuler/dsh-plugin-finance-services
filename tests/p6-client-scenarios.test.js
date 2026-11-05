@@ -76,6 +76,7 @@ async function workbenchTree(overrides = {}) {
     workspace: workbench.decodeWorkspace(overrides.workspace ?? snapshot(null)),
     roles: workbench.decodeCatalogue(overrides.roles ?? catalogue(10, 30)),
     dataSources: overrides.dataSources ?? workbench.decodeDataSources(dataPayload),
+    tasks: overrides.tasks ?? workbench.decodeTemplates({ ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [] }) } }),
     reviews: overrides.reviews ?? workbench.decodeReviews({ ...reviewsPayload }),
     runs: overrides.runs ?? workbench.decodeRuns(runsPayload),
     deliverables: overrides.deliverables ?? workbench.decodeDeliverables(deliverablesPayload),
@@ -134,12 +135,13 @@ test('when every read fails the page still renders four unavailable cards and a 
   const failed = source => ({ ok: false, code: 'gateway/failed', source })
   const tree = await workbenchTree({
     workspace: failed('financeOperations.snapshot'), roles: failed('financeOperations.catalog'),
-    dataSources: failed('financeData.catalog'), reviews: failed('financeReview.reviewSummary'),
+    dataSources: failed('financeData.catalog'), tasks: failed('financeOperations.taskTemplates'),
+    reviews: failed('financeReview.reviewSummary'),
     runs: failed('financeReview.reviewRuns'), deliverables: failed('financeReview.reviewDeliverables'),
   })
   const lines = texts(tree)
   for (const source of ['financeOperations.snapshot', 'financeOperations.catalog', 'financeData.catalog',
-    'financeReview.reviewSummary', 'financeReview.reviewRuns', 'financeReview.reviewDeliverables']) {
+    'financeOperations.taskTemplates', 'financeReview.reviewSummary', 'financeReview.reviewRuns', 'financeReview.reviewDeliverables']) {
     assert.ok(lines.includes(source), `missing unavailable card for ${source}`)
   }
   assert.ok((lines.match(/unavailable/g) ?? []).length >= 6)

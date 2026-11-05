@@ -1,0 +1,36 @@
+{
+  "evidence": "REAL_NATIVE_TASK_TEMPLATE_READ_MODEL_NOT_EXECUTION",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "ten-templates-are-dispatchable",
+      "status": "PASS",
+      "detail": {
+        "templates": 10,
+        "version": "1.0.0"
+      }
+    },
+    {
+      "id": "every-template-names-a-main-preset-and-its-references",
+      "status": "PASS",
+      "detail": {
+        "mains": 10
+      }
+    },
+    {
+      "id": "templates-carry-declared-checkpoints-not-approvals",
+      "status": "PASS",
+      "detail": {
+        "withCheckpoints": 10
+      }
+    },
+    {
+      "id": "reading-templates-writes-nothing",
+      "status": "PASS",
+      "detail": {
+        "bytes": 4039
+      }
+    }
+  ],
+  "modelCalls": 0
+}

@@ -5,7 +5,8 @@ export function financeReflection() {
     { kind: 'method', name: 'bindWorkspace', signature: 'bindWorkspace(request: { path: string; expectedRevision: number }): Promise<BindResult>', summary: 'CAS-bind an existing fully qualified directory for new tasks only.' },
     { kind: 'method', name: 'unbindWorkspace', signature: 'unbindWorkspace(request: { expectedRevision: number }): Promise<BindResult>', summary: 'CAS-clear the default, retaining onboarding, Workspace registrations, files and Session history.' },
     { kind: 'method', name: 'catalog', signature: 'catalog(request: {}): Promise<Catalog>', summary: 'Read ten source-backed main roles, thirty internal Workers, sixty-three Skills and draft templates with native preset diagnostics.' },
-    { kind: 'method', name: 'prepareDraft', signature: 'prepareDraft(request: PrepareDraftRequest): Promise<PreparedDraft>', summary: 'Validate a main role, template and bound Workspace; return an unsent draft intent without creating or executing a Session.' },
+    { kind: 'method', name: 'taskTemplates', signature: 'taskTemplates(request: {}): Promise<TaskTemplates>', summary: 'Read the ten declared task-intake templates with their version and checkpoints. It reports declarations, not authorization or a started run.' },
+  { kind: 'method', name: 'prepareDraft', signature: 'prepareDraft(request: PrepareDraftRequest): Promise<PreparedDraft>', summary: 'Validate a main role, template and bound Workspace; return an unsent draft intent without creating or executing a Session.' },
     { kind: 'method', name: 'follow', signature: 'follow(request: {}, signal: AbortSignal): AsyncIterable<Snapshot>', summary: 'Initial full snapshot and latest observed changes; cancellation/disposal closes the stream. No polling.' },
   ]
   const types = [

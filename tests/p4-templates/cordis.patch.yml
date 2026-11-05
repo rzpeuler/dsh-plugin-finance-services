@@ -1,0 +1,5 @@
+- insert:
+    - id: finance-p4-templates-test-only
+      name: '@local/dsh-finance-p4-templates-test-only'
+      config:
+        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p4-templates\latest.json'

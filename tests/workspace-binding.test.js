@@ -358,7 +358,7 @@ test('actual Cordis Service initialization owns strict/tool effects and closes t
   await fiber
   const service = ctx.financeOperations
   assert.equal((await service.snapshot({})).workspaceStatus, 'UNBOUND')
-  assert.equal(contributed.invocations.length, 6)
+  assert.equal(contributed.invocations.length, 7)
   assert.equal(registrations.get('tool').name, 'finance_workspace')
   const actor = { id: 'TEST_ONLY_actor_identity' }
   const role = await service.roleDefinition('finance-pitch-agent')

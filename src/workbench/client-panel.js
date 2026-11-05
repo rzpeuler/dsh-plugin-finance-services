@@ -5,6 +5,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
   const messages = {
     en: {
       title: 'Financial workbench', loading: 'Reading workspace state…', refresh: 'Refresh',
+      tasksTitle: 'Tasks', templates: 'templates', checkpoints: 'checkpoints', startsNothing: 'Declarations only — no run is started here.',
       download: 'Download workbook', downloading: 'Building the workbook…', downloaded: 'Workbook downloaded.',
       downloadFailed: 'The workbook could not be delivered.',
       workspace: 'Workspace', binding: 'Binding', unbound: 'Unbound', bound: 'Bound', revision: 'Revision',
@@ -20,6 +21,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     },
     zh: {
       title: '金融工作台', loading: '正在读取工作区状态…', refresh: '刷新',
+      tasksTitle: '任务', templates: '个模板', checkpoints: '检查点', startsNothing: '仅声明：此处不会启动任何运行。',
       download: '下载工作簿', downloading: '正在生成工作簿…', downloaded: '工作簿已下载。',
       downloadFailed: '工作簿未能交付。',
       workspace: '工作区', binding: '绑定', unbound: '未绑定', bound: '已绑定', revision: '修订',
@@ -108,6 +110,21 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     return ok({ runs, revision: Number.isInteger(parsed.deliverableRevision) ? parsed.deliverableRevision : 0 }, 'financeReview.reviewRuns')
   }
 
+  function decodeTemplates(payload) {
+    if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable', 'financeOperations.taskTemplates')
+    let parsed
+    try { parsed = JSON.parse(payload.value.templatesJson) } catch { return fail('gateway/bad-json', 'financeOperations.taskTemplates') }
+    if (!parsed || !Array.isArray(parsed.templates) || parsed.templates.length > 20) return fail('gateway/bad-templates', 'financeOperations.taskTemplates')
+    const templates = []
+    for (const item of parsed.templates) {
+      if (!item || typeof item.presetId !== 'string' || typeof item.title !== 'string') return fail('gateway/bad-template', 'financeOperations.taskTemplates')
+      if (!Array.isArray(item.checkpoints)) return fail('gateway/bad-template', 'financeOperations.taskTemplates')
+      templates.push({ presetId: item.presetId, title: item.title, version: String(item.templateVersion ?? ''),
+        checkpoints: item.checkpoints.length })
+    }
+    return ok({ templates, version: String(parsed.templateVersion ?? '') }, 'financeOperations.taskTemplates')
+  }
+
   function decodeDeliverables(payload) {
     if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable', 'financeReview.reviewDeliverables')
     let parsed
@@ -183,7 +200,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
   function card(t, title, body, state) {
     return h('li', { key: title, className: 'finance-p2__card' },
       h('strong', null, title),
-      state.ok ? body : h('p', { className: 'finance-p2__error' }, `${t('unavailable')} (${state.code ?? 'unknown'})`),
+      state?.ok === true ? body : h('p', { className: 'finance-p2__error' }, `${t('unavailable')} (${state?.code ?? 'unknown'})`),
       h('p', { className: 'finance-p2__meta' }, `${t('source')}: ${state.source}`))
   }
 
@@ -210,12 +227,13 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     React.useEffect(refresh, [])
     const cards = state.cards
     const loading = state.status === 'loading' && !cards ? h('p', null, t('loading')) : null
-    const degraded = cards && [cards.workspace, cards.roles, cards.dataSources, cards.reviews, cards.runs, cards.deliverables].some(value => !isOk(value))
+    const degraded = cards && [cards.workspace, cards.roles, cards.dataSources, cards.tasks, cards.reviews, cards.runs, cards.deliverables].some(value => !isOk(value))
       ? h('p', { className: 'finance-p2__error' }, t('degraded')) : null
     const workspace = cardValue(cards?.workspace)
     const roles = cardValue(cards?.roles)
     const data = cardValue(cards?.dataSources)
     const reviews = cardValue(cards?.reviews)
+    const tasks = cardValue(cards?.tasks)
     const runs = cardValue(cards?.runs)
     const deliverables = cardValue(cards?.deliverables)
     const list = cards ? h('ul', { className: 'finance-p2__list' }, [
@@ -230,6 +248,10 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       card(t, t('dataSources'), data ? h('p', null,
         `${t('adapters')}: ${data.adapters} · ${t('policy')}: ${data.bindings} · ${t('revision')}: ${data.revision}`)
         : null, cards.dataSources),
+      card(t, t('tasksTitle'), tasks ? h('div', null,
+        h('p', null, `${tasks.templates.length} ${t('templates')} · ${t('startsNothing')}`),
+        h('ul', { className: 'finance-p2__list' }, tasks.templates.slice(0, 10).map(template => h('li', { key: template.presetId },
+          `${template.presetId} · ${template.title} · ${t('checkpoints')}: ${template.checkpoints}`)))) : null, cards.tasks),
       card(t, t('runsTitle'), runs ? (runs.runs.length === 0 ? h('p', null, t('noRuns'))
         : h('ul', { className: 'finance-p2__list' }, runs.runs.slice(0, 10).map(run => h('li', { key: run.runId },
           `${shortId(run.runId)} · ${run.classification} · ${t('checkpoints')}: ${Object.entries(run.checkpoints).map(([id, state]) => `${id}=${state}`).join(', ')} · ${t('deliverablesTitle')}: ${run.deliverableCount}`)))) : null, cards.runs),
@@ -268,13 +290,16 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
           ? ctx.remote.financeReview.reviewSummary({}).then(payload => decodeReviews(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewSummary'))
           : Promise.resolve(fail('NOT_CONFIGURED', 'financeReview.reviewSummary')),
       ])
+      const tasks = ctx.remote.financeOperations?.taskTemplates
+        ? await ctx.remote.financeOperations.taskTemplates({}).then(payload => decodeTemplates(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeOperations.taskTemplates'))
+        : fail('NOT_CONFIGURED', 'financeOperations.taskTemplates')
       const runs = ctx.remote.financeReview
         ? await ctx.remote.financeReview.reviewRuns({}).then(payload => decodeRuns(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewRuns'))
         : fail('NOT_CONFIGURED', 'financeReview.reviewRuns')
       const deliverables = ctx.remote.financeReview
         ? await ctx.remote.financeReview.reviewDeliverables({}).then(payload => decodeDeliverables(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewDeliverables'))
         : fail('NOT_CONFIGURED', 'financeReview.reviewDeliverables')
-      return { workspace, roles: catalogue, dataSources: data, reviews, runs, deliverables }
+      return { workspace, roles: catalogue, dataSources: data, tasks, reviews, runs, deliverables }
     }
     const loadWorkbook = ctx.remote.financeReview?.reviewWorkbook
       ? async () => decodeWorkbook(await ctx.remote.financeReview.reviewWorkbook({}))
@@ -283,5 +308,5 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
   }
 
   return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns,
-    decodeDeliverables, decodeWorkbook, decodeBase64, saveWorkbook }
+    decodeDeliverables, decodeTemplates, decodeWorkbook, decodeBase64, saveWorkbook }
 }
