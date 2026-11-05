@@ -105,7 +105,7 @@
     "Invocation ids are not schema keys: typert.resolve covers schemas, while dispatch goes through typertGateway.invoke with the descriptor's named wire argument."
   ],
   "remainingKeyAcceptance": [
-    "Client UI that renders the projection and jumps to the exact Session or native question card",
+    "Browser rendering and interaction of the review panel",
     "Operating-system process restart comparison",
     "A native comparison of fast versus original policy instances",
     "Per-business error and source lineage"
@@ -273,5 +273,24 @@
       "P5-remote-failure-005.json"
     ],
     "gap": "P5-remote-gap-001.json (resolved)"
+  },
+  "reviewClientPanel": {
+    "status": "IMPLEMENTED_BUILT_INSTALLED_NOT_RENDERED",
+    "source": "../src/review/client-panel.js",
+    "localTests": {
+      "passed": 7,
+      "failed": 0,
+      "evidence": "P5-review-client-tests-001.tap"
+    },
+    "reads": [
+      "reviewSummary",
+      "reviewPolicy"
+    ],
+    "decoders": "structural validation with bounded groups/items and fixed decision vocabulary",
+    "writes": "none: no settle, recordStage, publish or tool call on any path",
+    "built": true,
+    "installed": true,
+    "rendered": false,
+    "slot": "existing financial-services main panel; no new navigation entry"
   }
 }

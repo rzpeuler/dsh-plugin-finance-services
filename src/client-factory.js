@@ -5,7 +5,7 @@
  * @param {Function} createFinanceContract Bundle-owned, self-contained contract factory.
  * @returns {object} Cordis function-plugin exports for the Client module loader.
  */
-export function createFinanceClient(React, z, createFinanceContract, dataClient) {
+export function createFinanceClient(React, z, createFinanceContract, dataClient, reviewClient) {
   const h = React.createElement
   const PACKAGE = '@local/dsh-financial-services'
   const PANEL = 'financial-services'
@@ -376,6 +376,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient)
             h(ErrorNotice, { error: actionError, t, id: errorId })),
           h('p', { className: 'finance-p2__hint' }, t('switching'))),
         dataClient ? h(dataClient.Panel, props) : null,
+        reviewClient ? h(reviewClient.Panel, props) : null,
         h(Catalogue, { t, useResource, startDraft: props.startDraft, ready: resource.status === 'live' && snapshot?.workspaceStatus === 'READY' }),
         h('section', { className: 'finance-p2__card' },
           h('h2', null, t('limits')),
@@ -410,9 +411,11 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient)
     async apply(rootCtx) {
       await rootCtx.remote.$mount(createFinanceContract(z).remote)
       if (dataClient) await rootCtx.remote.$mount(dataClient.remote)
+      if (reviewClient) await rootCtx.remote.$mount(reviewClient.remote)
       // Every mounted namespace is explicitly injected before any callback captures it.
-      rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : [])], ctx => {
+      rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : []), ...(reviewClient ? ['remote.financeReview'] : [])], ctx => {
       const dataProps = dataClient ? dataClient.install(ctx) : {}
+      const reviewProps = reviewClient ? reviewClient.install(ctx) : {}
       const lifetime = new AbortController()
       ctx.effect(() => () => lifetime.abort(), 'financial-services: callback lifetime')
       ctx.effect(() => ctx.locale.register(NS, { en, zh }), 'financial-services: dictionaries')
@@ -519,7 +522,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient)
           }
         },
       }), 'financial-services: catalogue resource')
-      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps })
+      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps, ...reviewProps })
       ctx.slots.inject('main', () => ctx.slots.register({ name: 'main', key: PANEL, locale: NS, inject }, WorkspacePage))
       ctx.slots.inject('sidebar.panellist', () => ctx.slots.register({
         name: 'sidebar.panellist', id: PANEL, order: 30, label: () => t('title'), locale: NS,
