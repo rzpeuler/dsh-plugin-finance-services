@@ -1,0 +1,27 @@
+- insert:
+    - id: finance-policy-matrix-fast
+      name: '@local/dsh-financial-services/review'
+      config:
+        policyId: fast
+        serviceKey: financeReviewFast
+        domainSuffix: _fast
+        remote: false
+    - id: finance-policy-matrix-strict
+      name: '@local/dsh-financial-services/review'
+      config:
+        policyId: strict
+        serviceKey: financeReviewStrict
+        domainSuffix: _strict
+        remote: false
+    - id: finance-policy-matrix-custom
+      name: '@local/dsh-financial-services/review'
+      config:
+        policyId: custom
+        customJson: '{"finance-pitch-agent":{"deck_complete":true}}'
+        serviceKey: financeReviewCustom
+        domainSuffix: _custom
+        remote: false
+    - id: finance-p5-policy-matrix-test-only
+      name: '@local/dsh-finance-p5-policy-matrix-test-only'
+      config:
+        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-policy-matrix\latest.json'

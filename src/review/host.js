@@ -52,6 +52,9 @@ const DeliverableInput = z.strictObject({
 const ConfigInput = z.strictObject({
   policyId: z.enum(POLICY_IDS).default('original'),
   customJson: z.string().max(20000).default(''),
+  serviceKey: z.string().min(1).max(64).regex(/^[A-Za-z][A-Za-z0-9_]*$/).default('financeReview'),
+  domainSuffix: z.string().max(32).regex(/^[A-Za-z0-9_]*$/).default(''),
+  remote: z.boolean().default(true),
 })
 const Custom = z.record(z.string(), z.record(z.string(), z.boolean()))
 
@@ -64,11 +67,16 @@ export default class FinanceReview extends TypertRemoteService {
   static Config = schema.object({
     policyId: schema.string().default('original'),
     customJson: schema.string().default(''),
+    serviceKey: schema.string().default('financeReview'),
+    domainSuffix: schema.string().default(''),
+    remote: schema.boolean().default(true),
   })
 
   constructor(ctx, config) {
-    super(ctx, 'financeReview')
-    this.config = ConfigInput.parse(config ?? {})
+    const parsed = ConfigInput.parse(config ?? {})
+    // A separate instance (for example a strict policy check) uses its own service key and domain.
+    super(ctx, parsed.serviceKey)
+    this.config = parsed
     this.active = false
     this.tail = Promise.resolve()
   }
@@ -79,7 +87,7 @@ export default class FinanceReview extends TypertRemoteService {
     const custom = this.config.customJson ? Custom.parse(JSON.parse(this.config.customJson)) : undefined
     this.snapshot = resolvePolicy({ bundle: { policyId: this.config.policyId, ...(custom ? { custom } : {}) } })
     this.domain = await this.ctx.storageDomain.open(defineDomain({
-      name: 'financial_review', version: 1, tables: { state: domainTable(Document) },
+      name: `financial_review${this.config.domainSuffix}`, version: 1, tables: { state: domainTable(Document) },
     }))
     const table = this.domain.table('state')
     this.table = table
@@ -92,16 +100,18 @@ export default class FinanceReview extends TypertRemoteService {
       save: async document => { await table.put('root', document) },
     })
     this.artifactsDomain = await this.ctx.storageDomain.open(defineDomain({
-      name: 'financial_artifacts', version: 1, tables: { index: domainTable(ArtifactDocument) },
+      name: `financial_artifacts${this.config.domainSuffix}`, version: 1, tables: { index: domainTable(ArtifactDocument) },
     }))
     this.artifactsTable = this.artifactsDomain.table('index')
     this.opened = await this.store.open()
     const { remote, schemas } = createReviewRemoteContract(z)
     this.reviewSchemas = schemas
     this.active = true
-    yield this.ctx.typert.register({ package: remote.package, face: 'host',
-      schemas: Object.entries(schemas).map(([name, value]) => ({ name, create: () => value })),
-      model: { services: [], events: [], objects: [] }, invocations: remote.descriptors })
+    if (this.config.remote) {
+      yield this.ctx.typert.register({ package: remote.package, face: 'host',
+        schemas: Object.entries(schemas).map(([name, value]) => ({ name, create: () => value })),
+        model: { services: [], events: [], objects: [] }, invocations: remote.descriptors })
+    }
     yield async () => {
       this.active = false
       await this.tail

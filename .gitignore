@@ -31,3 +31,4 @@ tests/p5-boundary/marker.json
 tests/p5-queue/latest.json
 tests/p5-remote/latest.json
 tests/p6-index/latest.json
+tests/p5-policy-matrix/latest.json

@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "ALL_NATIVE_P5_CRITERIA_EXERCISED_UI_PROJECTION_AND_OS_RESTART_PENDING",
+  "status": "ALL_NATIVE_P5_CRITERIA_EXERCISED_EXCEPT_OS_RESTART_AND_UI",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -70,7 +70,7 @@
     }
   },
   "criteriaResults": {
-    "P5-POLICY": "PASS_LOCAL_KERNEL",
+    "P5-POLICY": "PASS_NATIVE_FOUR_INSTANCES",
     "P5-LOCK": "PASS_LOCAL_KERNEL",
     "P5-SCOPE": "PASS_LOCAL_KERNEL",
     "P5-SNAPSHOT": "PARTIAL_LOCAL_KERNEL",
@@ -105,9 +105,8 @@
     "Invocation ids are not schema keys: typert.resolve covers schemas, while dispatch goes through typertGateway.invoke with the descriptor's named wire argument."
   ],
   "remainingKeyAcceptance": [
-    "Browser rendering and interaction of the review panel",
     "Operating-system process restart comparison",
-    "A native comparison of fast versus original policy instances",
+    "Client UI rendering and interaction for the review and workbench pages",
     "Per-business error and source lineage"
   ],
   "notClaimed": [
@@ -292,5 +291,24 @@
     "installed": true,
     "rendered": false,
     "slot": "existing financial-services main panel; no new navigation entry"
+  },
+  "policyMatrix": {
+    "status": "PASS_NATIVE_FOUR_INSTANCES",
+    "evidence": "P5-policy-matrix-native-pass-002.json",
+    "failureHistory": [
+      "P5-policy-matrix-failure-001.json"
+    ],
+    "instances": [
+      "original",
+      "fast",
+      "strict",
+      "custom"
+    ],
+    "distinctRequirementSets": 4,
+    "fast": "keeps mandatory valuation gate, drops the deck progress pause",
+    "strict": "adds assumption and result reviews",
+    "custom": "enables only the chosen node and keeps mandatory ones",
+    "isolation": "separate domains and decisions; a fast-mode record cannot unlock the original gate",
+    "sideEffects": "DISABLED in all four"
   }
 }
