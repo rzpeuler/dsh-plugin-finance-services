@@ -1,0 +1,6 @@
+- insert:
+    - id: finance-p5-boundary-test-only
+      name: '@local/dsh-finance-p5-boundary-test-only'
+      config:
+        workspace: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-boundary'
+        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-boundary\latest.json'

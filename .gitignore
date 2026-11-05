@@ -25,3 +25,6 @@ tests/p5-separation/latest.json
 tests/p5-ask/latest.json
 tests/p5-persist/latest.json
 tests/p5-persist/sentinel.json
+tests/p5-boundary/latest.json
+tests/p5-boundary/sentinel.json
+tests/p5-boundary/marker.json

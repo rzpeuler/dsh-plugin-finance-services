@@ -1,6 +1,6 @@
 {
   "stage": "P5",
-  "status": "NATIVE_GATE_SEPARATION_RESTART_ASK_NOSIDE_AND_PERSIST_VERIFIED_UI_PROJECTION_PENDING",
+  "status": "NATIVE_GATE_SEPARATION_RESTART_ASK_NOSIDE_PERSIST_AND_UNINSTALL_VERIFIED_UI_AND_OS_RESTART_PENDING",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
   "previousStages": [
@@ -81,7 +81,7 @@
     "P5-QUEUE": "PARTIAL_NATIVE",
     "P5-RESTART": "PASS_NATIVE_SERVICE_RESTART",
     "P5-ASK": "PASS_NATIVE",
-    "P5-SEPARATION": "PARTIAL_NATIVE_SEPARATION",
+    "P5-SEPARATION": "PASS_NATIVE_MATRIX",
     "P5-NOSIDE": "PASS_NATIVE_SURFACE",
     "P5-PERSIST": "PASS_NATIVE",
     "P5-ERRORS": "NOT_RUN"
@@ -98,13 +98,13 @@
     "Restart evidence comes from a real bundle remove and reinstall, which starts a new financeReview epoch over the same durable domain.",
     "A review question is refused unless the live caller is a runtime root whose composed preset is a main Agent; the role check runs before the ownership check so a worker never reaches the question service.",
     "requestReview uses askTimed, so an unanswered card returns PENDING instead of blocking the stage forever; an answer never becomes an approval record.",
-    "The side-effect surface is asserted three ways: a service method allowlist, a scan for side-effecting tool names, and an import-specifier scan of the built finance modules."
+    "The side-effect surface is asserted three ways: a service method allowlist, a scan for side-effecting tool names, and an import-specifier scan of the built finance modules.",
+    "Sandbox policy is per-session, so the matrix compares mode and workspace root and separately proves the approval override and tool set are unchanged; comparing the whole object would fail on a fresh session id."
   ],
   "remainingKeyAcceptance": [
     "Cross-session host projection and a UI jump to the exact Session or native question card",
     "Operating-system process restart comparison",
-    "Sandbox mode and approval-mode matrix around an approval",
-    "A negative test that an uninstall never deletes user files (disable/enable is proven)"
+    "A native comparison of fast versus original policy instances"
   ],
   "notClaimed": [
     "P5 complete",
@@ -205,5 +205,34 @@
       "forbiddenImports": 0,
       "externalSideEffects": "DISABLED"
     }
+  },
+  "nativeBoundary": {
+    "phaseA": {
+      "evidence": "P5-boundary-phase-a.json",
+      "checksPassed": 2,
+      "checksFailed": 0,
+      "sandboxMode": "workspace-write",
+      "approvalMode": "ask",
+      "toolCount": 10,
+      "unchangedAcrossApproval": true
+    },
+    "uninstallStep": {
+      "method": "plugin_manager remove_bundle of the main bundle, then reinstall",
+      "sentinelHashBefore": "f94ca55033ec4ede1fb064466585f139361ae7ccc93373cde7ed51818a62535b",
+      "sentinelHashWhileUninstalled": "f94ca55033ec4ede1fb064466585f139361ae7ccc93373cde7ed51818a62535b",
+      "markerFileSurvived": true
+    },
+    "phaseB": {
+      "evidence": "P5-boundary-phase-b-003.json",
+      "checksPassed": 3,
+      "checksFailed": 0,
+      "approvalAfterReinstall": "APPROVED",
+      "unrelatedSession": "REVIEW_REQUIRED",
+      "sandboxAndApprovalAndToolsMatchMarker": true
+    },
+    "failureHistory": [
+      "P5-boundary-phase-b-failure-001.json",
+      "P5-boundary-phase-b-failure-002.json"
+    ]
   }
 }
