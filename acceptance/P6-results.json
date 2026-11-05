@@ -356,5 +356,29 @@
       "occupant": "@local/dsh-financial-services",
       "active": true
     }
+  },
+  "traceability": {
+    "status": "PASS_MATRIX_COMPLETE",
+    "matrix": "traceability.json",
+    "document": "TRACEABILITY.md",
+    "generator": "../scripts/check-traceability.mjs",
+    "evidence": "P6-traceability.tap",
+    "stageGates": {
+      "PASS_STATIC": 1,
+      "PASS_NATIVE": 2,
+      "PARTIAL": 3,
+      "BLOCKED": 1
+    },
+    "mandatoryAcceptance": {
+      "PASS_NATIVE": 5,
+      "PASS_STATIC": 2,
+      "PARTIAL": 4
+    },
+    "rules": [
+      "all 7 gates and 11 bullets present once",
+      "every entry has a known status and resolvable evidence",
+      "a non-passing entry must name a ledgered gap",
+      "P3 to P6 remain unaccepted in the matrix and in the stage records"
+    ]
   }
 }

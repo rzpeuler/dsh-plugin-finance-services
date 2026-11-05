@@ -16,6 +16,10 @@
 
 安装形态：`@local/dsh-financial-services@0.4.0-alpha.1`，原生 Plugin Manager 链接安装。**DSH 已重启，Bundle 在新进程中加载成功**：三个服务挂载、策略为 `original`、工作簿字节有效、14 个 run 可读（[证据](P6-post-restart-verified-001.json)）。注意：改动仍需重启生效（`unmanaged-plugin`），且 Inspect 的 Service 目录**不收录本 Bundle**，不要用它判断服务是否存在。三行（`financial-services` / `finance-data` / `finance-review`），无测试夹具残留（探针已移除，卸载待下次重启完成）。
 
+## 逐条追溯
+
+任务书 §11 的 7 个阶段门与 §12 的 11 条强制验收已逐条映射到证据与缺口：[TRACEABILITY.md](TRACEABILITY.md)（由 `scripts/check-traceability.mjs` 生成并校验）。
+
 ## 已证明（有证据链接）
 
 - **契约与数据层**：14 个稳定能力、显式来源策略、时点/单位/口径规范化；两个独立 TEST_ONLY Adapter 的原生注册/查询/卸载（[26 项](P3-foundation-native-pass-001.json)、[6 项审计](P3-adapter-unload-audit.json)）。
