@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "evidence": "OOXML_STRUCTURE_TEXT_AND_CROSS_ARTIFACT_CONSISTENCY_NOT_VISUAL",
+  "artifacts": {
+    "docx": {
+      "path": "samples/p4/b03-earnings-note/B03_EARNINGS_NOTE_TEST_ONLY.docx",
+      "bytes": 39053
+    },
+    "pptx": {
+      "path": "samples/p4/b01-pitch-deck/B01_PITCH_DECK_TEST_ONLY.pptx",
+      "bytes": 37513
+    }
+  },
+  "checks": [
+    {
+      "id": "ooxml-integrity-docx",
+      "status": "PASS",
+      "detail": {
+        "entries": 17,
+        "bytes": 39053
+      }
+    },
+    {
+      "id": "ooxml-integrity-pptx",
+      "status": "PASS",
+      "detail": {
+        "entries": 50,
+        "bytes": 37513
+      }
+    },
+    {
+      "id": "docx-required-sections",
+      "status": "PASS",
+      "detail": [
+        "Quarter at a glance",
+        "What management said",
+        "Guidance and revisions",
+        "Model update — FY2026E",
+        "Thesis and what would change it",
+        "Risks",
+        "Sources, scope and limitations"
+      ]
+    },
+    {
+      "id": "docx-table-count",
+      "status": "PASS",
+      "detail": {
+        "tables": 4
+      }
+    },
+    {
+      "id": "docx-classification-visible",
+      "status": "PASS"
+    },
+    {
+      "id": "docx-no-licensed-data-claim",
+      "status": "PASS"
+    },
+    {
+      "id": "docx-variance-matches-independent-recompute",
+      "status": "PASS",
+      "detail": {
+        "vs_consensus": "+1.9%",
+        "vs_prior": "+2.9%"
+      }
+    },
+    {
+      "id": "docx-estimate-revision-matches-recompute",
+      "status": "PASS",
+      "detail": {
+        "delta": "+2.6%"
+      }
+    },
+    {
+      "id": "docx-margin-variance-in-basis-points",
+      "status": "PASS",
+      "detail": {
+        "recomputed": "+10 bp"
+      }
+    },
+    {
+      "id": "pptx-slide-count",
+      "status": "PASS",
+      "detail": {
+        "slides": 7
+      }
+    },
+    {
+      "id": "pptx-slide-1-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-2-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-3-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-4-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-5-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-6-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-slide-7-has-content",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-per-share-matches-workbook",
+      "status": "PASS",
+      "detail": {
+        "expected": "21.38"
+      }
+    },
+    {
+      "id": "pptx-wacc-and-growth-match-workbook",
+      "status": "PASS",
+      "detail": {
+        "wacc": "7.78%",
+        "growth": "2.00%"
+      }
+    },
+    {
+      "id": "pptx-sensitivity-table-present",
+      "status": "PASS"
+    },
+    {
+      "id": "pptx-sensitivity-matches-workbook",
+      "status": "PASS",
+      "detail": {
+        "mismatches": []
+      }
+    },
+    {
+      "id": "pptx-disclaimer-visible",
+      "status": "PASS"
+    }
+  ]
+}
