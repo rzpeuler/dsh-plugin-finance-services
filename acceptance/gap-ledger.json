@@ -121,14 +121,15 @@
     {
       "id": "P6-ACCESSIBILITY",
       "stage": "P6",
-      "title": "Accessibility and responsive behaviour are only statically plausible",
-      "status": "NOT_RUN",
-      "blockedBy": "Requires a rendered page and keyboard/screen-reader inspection.",
+      "title": "Element-tree structure is checked; contrast, focus order and reflow are not",
+      "status": "PARTIAL",
+      "blockedBy": "Only a rendered page can show contrast, screen-reader output and focus behaviour.",
       "evidence": [
+        "acceptance/P6-a11y-tree.tap",
         "tests/i18n-coverage.test.js"
       ],
-      "notClaimed": "WCAG conformance or narrow-screen acceptance",
-      "nextStep": "Inspect heading order, focus ring, contrast and a 520px viewport."
+      "notClaimed": "WCAG conformance, narrow-screen acceptance, screen-reader output",
+      "nextStep": "Inspect contrast, focus ring and a 520px viewport in the browser."
     },
     {
       "id": "P5-ERROR-LINEAGE",

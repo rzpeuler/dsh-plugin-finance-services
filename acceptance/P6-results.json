@@ -43,7 +43,7 @@
     "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
     "P6-LIFECYCLE": "NOT_RUN",
     "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-A11Y": "NOT_RUN",
+    "P6-A11Y": "PARTIAL_STRUCTURE_ONLY",
     "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE"
   },
   "browserRendered": false,
@@ -251,6 +251,26 @@
       "each main owns exactly three workers",
       "14 capabilities are unique and contract-only",
       "no skill is orphaned"
+    ]
+  },
+  "accessibility": {
+    "status": "PASS_STRUCTURE_ONLY",
+    "evidence": "P6-a11y-tree.tap",
+    "checksPassed": 5,
+    "checksFailed": 0,
+    "checked": [
+      "no page-level heading inside a panel",
+      "buttons are explicitly typed and text-labelled",
+      "status region is aria-live",
+      "every input has a matching label (review panel has none)",
+      "no tabIndex -1",
+      "degraded render keeps the same structure"
+    ],
+    "notChecked": [
+      "colour contrast",
+      "screen-reader announcement",
+      "focus order in a browser",
+      "zoom and reflow"
     ]
   }
 }

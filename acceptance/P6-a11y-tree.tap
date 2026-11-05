@@ -1,0 +1,40 @@
+﻿TAP version 13
+# Subtest: no panel introduces a page-level heading or an untyped button
+ok 1 - no panel introduces a page-level heading or an untyped button
+  ---
+  duration_ms: 4.5168
+  type: 'test'
+  ...
+# Subtest: the status region is announced and every input is labelled
+ok 2 - the status region is announced and every input is labelled
+  ---
+  duration_ms: 0.6743
+  type: 'test'
+  ...
+# Subtest: the review panel announces changes and labels nothing implicitly
+ok 3 - the review panel announces changes and labels nothing implicitly
+  ---
+  duration_ms: 0.4793
+  type: 'test'
+  ...
+# Subtest: a degraded workbench keeps the same structural guarantees
+ok 4 - a degraded workbench keeps the same structural guarantees
+  ---
+  duration_ms: 0.5689
+  type: 'test'
+  ...
+# Subtest: no interactive element is removed from the tab order
+ok 5 - no interactive element is removed from the tab order
+  ---
+  duration_ms: 0.6765
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 106.7925
