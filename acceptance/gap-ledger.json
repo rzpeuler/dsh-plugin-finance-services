@@ -96,16 +96,18 @@
     {
       "id": "P6-DELIVERABLE-OPEN",
       "stage": "P6",
-      "title": "Open-session was clicked and did nothing; the failure is now visible and stale sessions are labelled",
-      "status": "PARTIAL",
-      "blockedBy": "A person must refresh and retry the click; the earlier attempt failed silently.",
+      "title": "A deliverable linked to a live session opens that session through the page native navigation",
+      "status": "CLOSED_BY_HUMAN_OBSERVATION",
+      "blockedBy": "None for navigation; opening the artifact file itself is a separate, unimplemented entry point.",
       "evidence": [
+        "acceptance/P6-manual-2026-11-06-002.md",
         "acceptance/P6-deliverable-open-failure-001.md",
-        "acceptance/P6-seed-deliverable-001.json",
-        "acceptance/P6-manual-plan-001.json"
+        "acceptance/P6-seed-deliverable-001.json"
       ],
-      "notClaimed": "Verified navigation",
-      "nextStep": "Refresh and click the seeded row's open-session button; it is linked to a live session."
+      "notClaimed": "File preview, or navigation from unrelated sessions",
+      "nextStep": "Closed for navigation; a file-open entry point would be a new gap if requested.",
+      "closedAt": "2026-11-06",
+      "closedBy": "P6-manual-2026-11-06-002.md"
     },
     {
       "id": "P6-LIFECYCLE-UI",

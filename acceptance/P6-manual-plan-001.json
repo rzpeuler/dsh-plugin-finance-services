@@ -91,7 +91,8 @@
       ],
       "covers": [
         "P6-DELIVERABLE-OPEN"
-      ]
+      ],
+      "result": "PASS"
     }
   ],
   "reportFormat": {
@@ -111,6 +112,10 @@
     "contrast measurement",
     "offline case"
   ],
-  "status": "PARTIALLY_COMPLETED",
-  "record": "P6-manual-2026-11-06-001.md"
+  "status": "COMPLETED",
+  "record": "P6-manual-2026-11-06-001.md",
+  "records": [
+    "P6-manual-2026-11-06-001.md",
+    "P6-manual-2026-11-06-002.md"
+  ]
 }

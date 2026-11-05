@@ -45,7 +45,8 @@
     "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
     "P6-A11Y": "PARTIAL_USER_OBSERVED_NARROW_DARK_FOCUS",
     "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-BROWSER-RENDERING": "PASS_USER_OBSERVED"
+    "P6-BROWSER-RENDERING": "PASS_USER_OBSERVED",
+    "P6-DELIVERABLE-OPEN": "PASS_USER_OBSERVED"
   },
   "browserRendered": true,
   "notClaimed": [
@@ -425,26 +426,20 @@
     ]
   },
   "deliverableOpen": {
-    "status": "BUILT_INSTALLED_SEEDED_AWAITING_CLICK",
+    "status": "PASS_USER_OBSERVED",
     "failure": "P6-deliverable-open-failure-001.md",
-    "fix": {
-      "visibleOutcome": "a click now renders either the switched session or the refusal code",
-      "staleSession": "when the page exposes a session service, an unknown id renders 'that session no longer exists' instead of a dead button",
-      "noSwallowing": "the handler no longer catches and discards navigation errors"
-    },
-    "clientTests": {
-      "passed": 14,
-      "tap": "P6-workbench-tests-004.tap"
-    },
-    "install": {
-      "application": "applied"
-    },
-    "retriedByUser": false,
+    "record": "acceptance/P6-manual-2026-11-06-002.md",
+    "clicked": true,
+    "observation": "the seeded row opened its session and the workbench still worked after returning",
     "seededRow": {
       "evidence": "P6-seed-deliverable-001.json",
       "sessionId": "session-d8bb3257-edd6-400b-91f5-764c05e96dc6",
       "deliverableId": "deliverable-3-151b25b810cd",
       "why": "the existing rows referenced probe sessions that no longer exist, so a live-linked row was needed to exercise the button"
-    }
+    },
+    "notCovered": [
+      "opening the artifact file itself",
+      "sessions other than the seeded one"
+    ]
   }
 }

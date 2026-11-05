@@ -157,16 +157,14 @@
           "verdict": "DOCUMENT"
         },
         {
+          "path": "acceptance/P6-manual-2026-11-06-002.md",
+          "verdict": "DOCUMENT"
+        },
+        {
           "path": "acceptance/P6-live-client-registration-001.json",
           "verdict": "STATUS_ONLY",
           "checks": 0,
           "status": "PASS_LIVE_REGISTRATION_NOT_RENDERED"
-        },
-        {
-          "path": "acceptance/P6-settings-config-surface-001.json",
-          "verdict": "STATUS_ONLY",
-          "checks": 0,
-          "status": "PASS_NATIVE_CONFIG_SURFACE_NOT_RENDERED"
         }
       ]
     },

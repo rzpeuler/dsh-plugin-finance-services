@@ -92,7 +92,6 @@
         "P6-SETTINGS-UI",
         "P6-LIFECYCLE-UI",
         "P6-ACCESSIBILITY",
-        "P6-DELIVERABLE-OPEN",
         "P6-OFFLINE-CASE"
       ],
       "note": "四项界面判据由人工确认；配置页、生命周期、可访问性、成果打开与离线案例仍打开。"
@@ -177,13 +176,13 @@
       "status": "PASS_USER_OBSERVED",
       "evidence": [
         "acceptance/P6-manual-2026-11-06-001.md",
-        "acceptance/P6-live-client-registration-001.json",
-        "acceptance/P6-settings-config-surface-001.json"
+        "acceptance/P6-manual-2026-11-06-002.md",
+        "acceptance/P6-live-client-registration-001.json"
       ],
       "gaps": [
         "P6-SETTINGS-UI"
       ],
-      "note": "原生侧栏与面板被复用，界面无假状态；插件配置页与激活页未打开，另列为缺口。"
+      "note": "原生侧栏、面板与会话跳转均被复用，界面无假状态；插件配置页与激活页仍未打开。"
     },
     {
       "id": "A8",

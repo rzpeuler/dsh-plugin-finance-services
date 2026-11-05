@@ -2,6 +2,8 @@
 
 独立、仓库外 Financial Services Bundle。当前版本 **0.4.0-alpha.1 / P3与P4均为PARTIAL的候选版**，不是完整金融移植产品。P0–P2关键验收通过；P3有217本地、33原生工具/生命周期、15真实Client、7原生MCP transport及独立模板检查，但Manager与安全MCP金融委派/凭据接口仍缺失。P4已建立逐业务标准并在[TASK_TEMPLATES](docs/P4_TASK_TEMPLATES.md#L1-L6)提供10种输入模板SDK、在[GL](docs/P4_GL_CHECKS.md)与[LP](docs/P4_LP_CHECKS.md)提供两个本地数值检查库，338项本地回归通过；尚无业务Worker运行或Office交付，原生Windows沙箱下固定`--version`即无法启动子进程，故Office链明确未通过。TEST_ONLY不是商业金融E2E。
 
+> 阶段完成情况与证据索引见 [阶段完成报告](acceptance/COMPLETION_REPORT.md)；逐条追溯见 [TRACEABILITY.md](acceptance/TRACEABILITY.md)。
+
 ## 当前范围
 
 - 原生 Plugin Manager 单一安装单元，无 DSH Core 修改。
