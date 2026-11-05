@@ -312,5 +312,14 @@
     "restartReason": "unmanaged-plugin",
     "applied": false,
     "note": "The package directory is current; the running instance is not. Native claims made after this point need a restart."
+  },
+  "artifactLoad": {
+    "status": "PASS_SHAPES_AND_ALIASES",
+    "evidence": "P6-artifact-load.tap",
+    "checksPassed": 6,
+    "checksFailed": 0,
+    "what": "Every rebuilt entry imports; service classes expose their methods; function plugins declare inject/apply/Config; role aliases equal the canonical generation; no side-effecting method exists on the review service; the client artifact still registers its factory.",
+    "why": "The install is pending a restart, so this proves the bytes that will be loaded next, not the running instance.",
+    "notBooted": "Cordis loader lifecycle is still not exercised here."
   }
 }

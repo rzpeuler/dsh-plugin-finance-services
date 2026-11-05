@@ -2,7 +2,7 @@
   "stage": "P1",
   "id": "P1_CLEAN_TREE_REBUILD",
   "observedDate": "2026-11-05",
-  "head": "2718781d28909f05cc92223af8865c5772009d8f",
+  "head": "ab23d67fc0a68b75381361af60ad007475506ae0",
   "status": "PASS_TRACKED_SOURCES_ONLY",
   "artifacts": 11,
   "differences": [],

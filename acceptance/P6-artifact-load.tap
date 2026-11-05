@@ -1,0 +1,46 @@
+﻿TAP version 13
+# Subtest: every compiled entry imports without touching a service runtime
+ok 1 - every compiled entry imports without touching a service runtime
+  ---
+  duration_ms: 84.7088
+  type: 'test'
+  ...
+# Subtest: service entries default to their declared class and declare config where they accept it
+ok 2 - service entries default to their declared class and declare config where they accept it
+  ---
+  duration_ms: 0.4741
+  type: 'test'
+  ...
+# Subtest: function plugins declare Config, apply and the dependencies they inject
+ok 3 - function plugins declare Config, apply and the dependencies they inject
+  ---
+  duration_ms: 0.2385
+  type: 'test'
+  ...
+# Subtest: the role aliases carry exactly the canonical generation
+ok 4 - the role aliases carry exactly the canonical generation
+  ---
+  duration_ms: 0.6292
+  type: 'test'
+  ...
+# Subtest: the artifacts carry their reviewed behaviour, not a placeholder
+ok 5 - the artifacts carry their reviewed behaviour, not a placeholder
+  ---
+  duration_ms: 0.1961
+  type: 'test'
+  ...
+# Subtest: the client artifact still registers a factory that resolves its two modules
+ok 6 - the client artifact still registers a factory that resolves its two modules
+  ---
+  duration_ms: 2.0073
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 194.8392

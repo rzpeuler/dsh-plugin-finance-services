@@ -157,6 +157,8 @@
     "environment": {
       "dependencies": "linked from the pinned install, not reinstalled",
       "python": "bundled runtime"
-    }
+    },
+    "repeatedAtHead": "ab23d67f",
+    "cleanTreeAfterAliasFix": "P1-clean-rebuild-001.json"
   }
 }
