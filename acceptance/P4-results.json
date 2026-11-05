@@ -3,66 +3,204 @@
   "status": "PARTIAL_SOURCE_MAPPING_INTAKE_AND_LOCAL_CHECK_LIBRARIES_NATIVE_OFFICE_PROCESS_START_BLOCKED",
   "stageAccepted": false,
   "observedDate": "2026-11-05",
-  "candidate": {"version": "0.4.0-alpha.1", "installLogId": "operation-z2Gyhm", "application": "applied", "enabled": true, "warnings": []},
-  "previousStage": {"stage": "P3", "status": "PARTIAL_HOST_INTERFACE_GAP", "stageAccepted": false},
-  "humanStageException": {"approved": true, "evidence": "P3-stage-exception-approved.md",
-    "scope": "Only independent P4 business flows and Office deliveries; no privilege bypass and no P3 PASS"},
+  "candidate": {
+    "version": "0.4.0-alpha.1",
+    "installLogId": "operation-z2Gyhm",
+    "application": "applied",
+    "enabled": true,
+    "warnings": []
+  },
+  "previousStage": {
+    "stage": "P3",
+    "status": "PARTIAL_HOST_INTERFACE_GAP",
+    "stageAccepted": false
+  },
+  "humanStageException": {
+    "approved": true,
+    "evidence": "P3-stage-exception-approved.md",
+    "scope": "Only independent P4 business flows and Office deliveries; no privilege bypass and no P3 PASS"
+  },
   "criteriaEstablishedBeforeImplementation": true,
   "criteria": "P4.md",
-  "sourceCatalogue": {"verifiedMainIds": 10, "verifiedWorkers": 30, "workersPerMain": 3, "archivedSourceHashesReverified": 363, "mismatches": 0},
-  "businessMap": {"status": "PASS_SOURCE_MAP_ONLY", "evidence": "../docs/P4_BUSINESS_MAP.md", "machineRecord": "P4-business-source-map.json",
-    "sourceFilesHashed": 363, "sourceHashMismatches": 0, "sourceRoles": 40, "sourceSkillsRead": 31, "sourceCommandsRead": 41},
-  "taskTemplates": {"status": "LOCAL_LIBRARY_ONLY_NOT_NATIVE_TOOL", "evidence": "../docs/P4_TASK_TEMPLATES.md",
-    "localTests": 17, "tap": "P4-task-template-tests.tap", "templates": 10, "validIntakeIsNotAuthorizationOrRead": true,
-    "regressionIncludedIn": "P4-regression-002.tap"},
+  "sourceCatalogue": {
+    "verifiedMainIds": 10,
+    "verifiedWorkers": 30,
+    "workersPerMain": 3,
+    "archivedSourceHashesReverified": 363,
+    "mismatches": 0
+  },
+  "businessMap": {
+    "status": "PASS_SOURCE_MAP_ONLY",
+    "evidence": "../docs/P4_BUSINESS_MAP.md",
+    "machineRecord": "P4-business-source-map.json",
+    "sourceFilesHashed": 363,
+    "sourceHashMismatches": 0,
+    "sourceRoles": 40,
+    "sourceSkillsRead": 31,
+    "sourceCommandsRead": 41
+  },
+  "taskTemplates": {
+    "status": "LOCAL_LIBRARY_ONLY_NOT_NATIVE_TOOL",
+    "evidence": "../docs/P4_TASK_TEMPLATES.md",
+    "localTests": 17,
+    "tap": "P4-task-template-tests.tap",
+    "templates": 10,
+    "validIntakeIsNotAuthorizationOrRead": true,
+    "regressionIncludedIn": "P4-regression-002.tap"
+  },
   "localCheckLibraries": [
-    {"id": "GL_V1", "evidence": "../docs/P4_GL_CHECKS.md", "export": "./business-checks/gl-v1", "status": "LOCAL_LIBRARY_ONLY",
-      "limits": "No retrieval authentication, trusted critic authority, cause inference or posting"},
-    {"id": "LP_V1", "evidence": "../docs/P4_LP_CHECKS.md", "export": "./business-checks/lp-v1", "status": "LOCAL_LIBRARY_ONLY",
-      "limits": "Caller-designated NAV pack is not authenticated; no document extraction, approval or distribution"}
+    {
+      "id": "GL_V1",
+      "evidence": "../docs/P4_GL_CHECKS.md",
+      "export": "./business-checks/gl-v1",
+      "status": "LOCAL_LIBRARY_ONLY",
+      "limits": "No retrieval authentication, trusted critic authority, cause inference or posting"
+    },
+    {
+      "id": "LP_V1",
+      "evidence": "../docs/P4_LP_CHECKS.md",
+      "export": "./business-checks/lp-v1",
+      "status": "LOCAL_LIBRARY_ONLY",
+      "limits": "Caller-designated NAV pack is not authenticated; no document extraction, approval or distribution"
+    }
   ],
-  "localRegression": {"passed": 338, "failed": 0, "evidence": "P4-regression-002.tap", "nativeEquivalent": false},
-  "nativeCandidateHealth": {"passed": 6, "failed": 0, "evidence": "P4-native-candidate-health-001.json",
-    "scope": "REAL_NATIVE_SERVICES_AND_PUBLIC_SDK_IMPORTS_NOT_MODEL_WORKFLOW_OR_OFFICE", "modelCalls": 0, "officeGenerated": false},
-  "officeRuntimeAudit": {"status": "PUBLIC_CONTRACTS_AUDITED", "evidence": "../docs/P4_OFFICE_RUNTIME_AUDIT.md",
-    "nativeWindowsConfinement": "PARTIAL_MUST_NOT_CLAIM_FULL_KERNEL_FENCE", "businessRoleOfficeIntegration": "NOT_RUN"},
-  "officeNativeProbe": {"status": "BLOCKED_NATIVE_CONFINED_PROCESS_START",
-    "sequence": ["P4-office-native-failure-001.json", "P4-office-native-failure-002.json", "P4-office-package-preparation-failure-003.json",
-      "P4-office-native-failure-004.json", "P4-office-native-failure-005.json", "P4-native-startup-matrix-006.json",
-      "P4-office-env-control-007.json", "P4-office-confinement-read-control-008.json"],
-    "established": "Six fixed calls under native confinement (four env-control variants, plus a Windows system cmd.exe and the bundled Python) all exit 0xC0000142 with empty stdout/stderr, before any Office logic",
-    "excludedExplanations": ["fixture environment replacement", "bundled interpreter path unreadable by the restricted token"],
+  "localRegression": {
+    "passed": 338,
+    "failed": 0,
+    "evidence": "P4-regression-002.tap",
+    "nativeEquivalent": false
+  },
+  "nativeCandidateHealth": {
+    "passed": 6,
+    "failed": 0,
+    "evidence": "P4-native-candidate-health-001.json",
+    "scope": "REAL_NATIVE_SERVICES_AND_PUBLIC_SDK_IMPORTS_NOT_MODEL_WORKFLOW_OR_OFFICE",
+    "modelCalls": 0,
+    "officeGenerated": false
+  },
+  "officeRuntimeAudit": {
+    "status": "PUBLIC_CONTRACTS_AUDITED",
+    "evidence": "../docs/P4_OFFICE_RUNTIME_AUDIT.md",
+    "nativeWindowsConfinement": "PARTIAL_MUST_NOT_CLAIM_FULL_KERNEL_FENCE",
+    "businessRoleOfficeIntegration": "NOT_RUN"
+  },
+  "officeNativeProbe": {
+    "status": "BLOCKED_NATIVE_CONFINED_PROCESS_START",
+    "sequence": [
+      "P4-office-native-failure-001.json",
+      "P4-office-native-failure-002.json",
+      "P4-office-package-preparation-failure-003.json",
+      "P4-office-native-failure-004.json",
+      "P4-office-native-failure-005.json",
+      "P4-native-startup-matrix-006.json",
+      "P4-office-env-control-007.json",
+      "P4-office-confinement-read-control-008.json"
+    ],
+    "established": "Six fixed calls under native confinement (four env-control variants, plus a Windows system cmd.exe and the bundled Python) all exit 0xC0000142 with empty stdout/stderr, before any Office logic; in-process authoring now works without either seam",
+    "excludedExplanations": [
+      "fixture environment replacement",
+      "bundled interpreter path unreadable by the restricted token"
+    ],
     "remainingConclusion": "The native restricted-process start path itself does not work on this host",
-    "unconfinedWorkaround": false, "officeArtifactsGenerated": 0},
-  "hostBinaryArtifactGap": {"status": "NO_SUPPORTED_PLUGIN_BINARY_WORKSPACE_WRITE",
+    "unconfinedWorkaround": false,
+    "officeArtifactsGenerated": 0
+  },
+  "hostBinaryArtifactGap": {
+    "status": "NO_SUPPORTED_PLUGIN_BINARY_WORKSPACE_WRITE",
     "evidence": "../docs/P4_OFFICE_RUNTIME_AUDIT.md",
     "detail": "ctx.fs exposes text writes and byte reads only; no writeBytes, allocation or atomic binary publish. ctx.attachments stores attachments, not workspace deliverables. ctx.officeToPdf only converts an existing Office source.",
-    "consequence": "Even with a working producer process, an Agent-driven Office deliverable cannot be persisted by this plugin through the current public contract"},
-  "creatorSideOfficeSample": {"id": "B05_DCF", "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE", "evidence": "P4-b05-dcf-creator-sample.json",
-    "path": "../samples/p4/b05-dcf/README.md", "artifacts": ["xlsx", "pdf"],
-    "workbook": {"liveFormulas": 261, "sensitivityCells": 75, "checksPassed": 11, "recalculatedBy": "LIBREOFFICE_KIT_NATIVE_BACKEND",
-      "independentBaseline": "PYTHON_DECIMAL", "enterpriseValue": 2287.68, "valuePerShare": 21.3768, "wacc": 0.07775},
-    "pdf": {"bytes": 100190, "signatureChecked": "%PDF-"},
-    "notAgentDriven": true, "visualInspection": "NOT_RUN", "p5Gate": "NOT_IMPLEMENTED"},
-  "creatorSideOfficeFormats": {"id": "B03_DOCX_B01_PPTX", "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE",
-    "evidence": "P4-office-docx-pptx-creator-sample.json", "checksPassed": 22, "checksFailed": 0,
-    "docx": {"path": "../samples/p4/b03-earnings-note/README.md", "sections": 6, "tables": 4,
-      "independentRecomputation": ["revenue vs consensus +1.9%", "revenue vs prior +2.9%",
-                                   "FY2026E revenue revision +2.6%", "margin variance +10 bp"]},
-    "pptx": {"path": "../samples/p4/b01-pitch-deck/README.md", "slides": 7, "crossArtifact": "B05 workbook",
-      "sensitivityCellsChecked": 25, "tolerance": 0.01},
-    "notAgentDriven": true, "visualInspection": "NOT_RUN"},
-  "creatorSideReconciliation": {"id": "B06_GL_RECON", "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE",
-    "evidence": "P4-b06-recon-creator-sample.json", "path": "../samples/p4/b06-recon/README.md",
-    "pipeline": ["inputs.json", "shipped GL kernel", "workpaper", "independent Decimal recount"],
-    "checksPassed": 18, "checksFailed": 0, "joinedRows": 16, "breaks": 6,
-    "counts": {"MATCHED": 10, "AMOUNT_BREAK": 2, "QUANTITY_BREAK": 1, "TIMING_BREAK": 1,
-               "GL_ONLY": 1, "SUBLEDGER_ONLY": 1},
+    "consequence": "Even with a working producer process, an Agent-driven Office deliverable cannot be persisted by this plugin through the current public contract"
+  },
+  "creatorSideOfficeSample": {
+    "id": "B05_DCF",
+    "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE",
+    "evidence": "P4-b05-dcf-creator-sample.json",
+    "path": "../samples/p4/b05-dcf/README.md",
+    "artifacts": [
+      "xlsx",
+      "pdf"
+    ],
+    "workbook": {
+      "liveFormulas": 261,
+      "sensitivityCells": 75,
+      "checksPassed": 11,
+      "recalculatedBy": "LIBREOFFICE_KIT_NATIVE_BACKEND",
+      "independentBaseline": "PYTHON_DECIMAL",
+      "enterpriseValue": 2287.68,
+      "valuePerShare": 21.3768,
+      "wacc": 0.07775
+    },
+    "pdf": {
+      "bytes": 100190,
+      "signatureChecked": "%PDF-"
+    },
+    "notAgentDriven": true,
+    "visualInspection": "NOT_RUN",
+    "p5Gate": "NOT_IMPLEMENTED"
+  },
+  "creatorSideOfficeFormats": {
+    "id": "B03_DOCX_B01_PPTX",
+    "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE",
+    "evidence": "P4-office-docx-pptx-creator-sample.json",
+    "checksPassed": 22,
+    "checksFailed": 0,
+    "docx": {
+      "path": "../samples/p4/b03-earnings-note/README.md",
+      "sections": 6,
+      "tables": 4,
+      "independentRecomputation": [
+        "revenue vs consensus +1.9%",
+        "revenue vs prior +2.9%",
+        "FY2026E revenue revision +2.6%",
+        "margin variance +10 bp"
+      ]
+    },
+    "pptx": {
+      "path": "../samples/p4/b01-pitch-deck/README.md",
+      "slides": 7,
+      "crossArtifact": "B05 workbook",
+      "sensitivityCellsChecked": 25,
+      "tolerance": 0.01
+    },
+    "notAgentDriven": true,
+    "visualInspection": "NOT_RUN"
+  },
+  "creatorSideReconciliation": {
+    "id": "B06_GL_RECON",
+    "status": "PASS_WITHIN_CREATOR_SIDE_SCOPE",
+    "evidence": "P4-b06-recon-creator-sample.json",
+    "path": "../samples/p4/b06-recon/README.md",
+    "pipeline": [
+      "inputs.json",
+      "shipped GL kernel",
+      "workpaper",
+      "independent Decimal recount"
+    ],
+    "checksPassed": 18,
+    "checksFailed": 0,
+    "joinedRows": 16,
+    "breaks": 6,
+    "counts": {
+      "MATCHED": 10,
+      "AMOUNT_BREAK": 2,
+      "QUANTITY_BREAK": 1,
+      "TIMING_BREAK": 1,
+      "GL_ONLY": 1,
+      "SUBLEDGER_ONLY": 1
+    },
     "toleranceBoundaryCase": "0.01 difference classified MATCHED (inclusive)",
-    "governance": {"status": "DRAFT_REVIEW_REQUIRED", "posting": false, "publish": false,
-                   "journalEntries": "DRAFT_ONLY_EMPTY", "underlyingTransactions": "NEEDS_EVIDENCE",
-                   "critic": "NOT_PERFORMED", "signoff": "PENDING"},
-    "notAgentDriven": true, "visualInspection": "NOT_RUN"},
+    "governance": {
+      "status": "DRAFT_REVIEW_REQUIRED",
+      "posting": false,
+      "publish": false,
+      "journalEntries": "DRAFT_ONLY_EMPTY",
+      "underlyingTransactions": "NEEDS_EVIDENCE",
+      "critic": "NOT_PERFORMED",
+      "signoff": "PENDING"
+    },
+    "notAgentDriven": true,
+    "visualInspection": "NOT_RUN"
+  },
   "nativeBusinessRuns": [],
   "officeDeliveries": [],
   "modelCalls": 0,
@@ -73,6 +211,33 @@
     "Independent Office-binary inspection for reader/auditor roles",
     "Native Manager / safe MCP financial delegation (P3 gap, unchanged)"
   ],
-  "notClaimed": ["P3 complete", "P4 complete", "Native Office delivery", "Original missing binary templates recovered",
-    "P5 deterministic Gate", "P6 final product acceptance"]
+  "notClaimed": [
+    "P3 complete",
+    "P4 complete",
+    "Native Office delivery",
+    "Original missing binary templates recovered",
+    "P5 deterministic Gate",
+    "P6 final product acceptance"
+  ],
+  "inProcessXlsx": {
+    "status": "PASS_OPENPYXL_READABLE",
+    "evidence": "P4-inprocess-xlsx-001.json",
+    "module": "../src/office/xlsx.js",
+    "why": "The host offers no binary workspace write and no usable confined subprocess, so authoring happens in process.",
+    "unitTests": {
+      "passed": 5,
+      "failed": 0,
+      "tap": "P4-xlsx-writer.tap"
+    },
+    "artifact": {
+      "path": "../samples/p4/inprocess-xlsx/inprocess-xlsx-technology-only.xlsx",
+      "bytes": 4771,
+      "sha256": "442e35afa266e90d61b91a1637818b327ccdcd0eb162ecda81b30fd05b6462e9"
+    },
+    "stillBlocked": [
+      "delivery of bytes into the workspace",
+      "formula recalculation",
+      "agent-driven or business artefacts"
+    ]
+  }
 }

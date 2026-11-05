@@ -42,16 +42,16 @@
     {
       "id": "P4-OFFICE-NATIVE",
       "stage": "P4",
-      "title": "Agent-driven Office delivery is blocked",
+      "title": "In-process authoring works; delivery into the workspace and recalculation are blocked",
       "status": "BLOCKED_HOST_INTERFACE",
-      "blockedBy": "Six fixed calls under the native Windows confinement runner exit 0xC0000142, and ctx.fs exposes no binary workspace write or artifact publication.",
+      "blockedBy": "ctx.fs has no binary write and the confined subprocess exits 0xC0000142, so bytes cannot land in the workspace or be recalculated.",
       "evidence": [
+        "acceptance/P4-inprocess-xlsx-001.json",
         "acceptance/P4-native-startup-matrix-006.json",
-        "acceptance/P4-office-confinement-read-control-008.json",
-        "acceptance/P4-native-candidate-health-001.json"
+        "acceptance/P4-office-confinement-read-control-008.json"
       ],
-      "notClaimed": "Agent-generated Excel, Word, PowerPoint or PDF",
-      "nextStep": "Host supplies a usable confined subprocess or a binary artifact write; a creator-side sample already pins the content specification."
+      "notClaimed": "Agent-generated Office files in the workspace, recalculated workbooks, visual layout",
+      "nextStep": "Host supplies a binary artifact write (or a usable confined subprocess); authoring and specification are already proven."
     },
     {
       "id": "P4-BUSINESS-RUNS",
