@@ -1,0 +1,71 @@
+{
+  "stage": "P6",
+  "id": "P6_POST_RESTART_SMOKE",
+  "status": "PASS_AFTER_APPLICATION_RESTART",
+  "observedAt": "2026-11-05T16:08:49.195Z",
+  "source": "acceptance/P6-post-restart-001.json (written by the armed probe during the restart)",
+  "checks": [
+    {
+      "id": "all-three-services-are-mounted",
+      "status": "PASS",
+      "detail": {
+        "services": [
+          "financeOperations",
+          "financeData",
+          "financeReview"
+        ]
+      }
+    },
+    {
+      "id": "the-review-policy-is-the-default-original",
+      "status": "PASS",
+      "detail": {
+        "version": "p5-policy-v1",
+        "digest": "55ee42703c75f53b"
+      }
+    },
+    {
+      "id": "the-workspace-binding-is-readable",
+      "status": "PASS",
+      "detail": {
+        "status": "UNBOUND"
+      }
+    },
+    {
+      "id": "the-workbook-read-model-returns-valid-bytes",
+      "status": "PASS",
+      "detail": {
+        "bytes": 5747,
+        "filename": "financial-review-technical.xlsx"
+      }
+    },
+    {
+      "id": "the-run-projection-is-readable",
+      "status": "PASS",
+      "detail": {
+        "runs": 14
+      }
+    },
+    {
+      "id": "the-review-service-exposes-no-side-effect",
+      "status": "PASS",
+      "detail": {
+        "methods": 21
+      }
+    }
+  ],
+  "proven": [
+    "the bundle loaded in a fresh application process: financeOperations, financeData and financeReview are all mounted",
+    "the review policy is still the default original with eight locked boundaries and DISABLED side effects",
+    "the workspace binding is readable (UNBOUND) rather than fabricated as ready",
+    "reviewWorkbook still returns 5747 bytes with a valid PK signature and matching sha256",
+    "the run projection is readable and already contains 14 runs, so review state survived the restart",
+    "the review service still exposes no publish/post/trade/transfer/placeOrder method"
+  ],
+  "notProven": [
+    "byte-for-byte equality of the pre-restart and post-restart review document (no pre-restart snapshot was taken for this restart)",
+    "browser rendering of the panels"
+  ],
+  "correction": "Round 38 concluded the bundle was not loaded, based on the Inspect Service catalogue. That catalogue does not list these services; the probe proves they exist. The earlier record is kept and marked as contradicted.",
+  "cleanup": "the probe package is removed; the removal itself is pending the next restart"
+}

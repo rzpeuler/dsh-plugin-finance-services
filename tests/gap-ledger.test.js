@@ -61,6 +61,7 @@ test('the ledger never contradicts the stage records', () => {
   const byStage = stage => ledger.gaps.filter(gap => gap.stage === stage).map(gap => gap.status)
   assert.ok(byStage('P3').includes('BLOCKED_HOST_INTERFACE'))
   assert.ok(byStage('P4').includes('BLOCKED_HOST_INTERFACE'))
-  assert.ok(byStage('P5').includes('NOT_RUN'))
+  // P5 moved from NOT_RUN to PARTIAL once the application restart was observed, but a gap must remain.
+  assert.ok(byStage('P5').some(status => ['NOT_RUN', 'PARTIAL'].includes(status)))
   assert.ok(byStage('P6').includes('NOT_RUN'))
 })

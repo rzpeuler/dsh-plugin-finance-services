@@ -2,7 +2,7 @@
   "stage": "P6",
   "id": "P6_RUNTIME_NOT_LOADED_AFTER_REFRESH",
   "observedDate": "2026-11-06",
-  "status": "CONFIRMED_NOT_LOADED",
+  "status": "CONTRADICTED_BY_NEW_EVIDENCE",
   "method": "Host Service inspect: listService over the live runtime",
   "observations": {
     "financeOperationsPresent": false,
@@ -28,5 +28,11 @@
     "bypassing the plugin manager",
     "editing profile files"
   ],
-  "nextStep": "Restart DSH, then re-run the native smoke probes before any new native claim."
+  "nextStep": "Restart DSH, then re-run the native smoke probes before any new native claim.",
+  "correction": {
+    "date": "2026-11-06",
+    "by": "P6-post-restart-verified-001.json",
+    "why": "The Inspect Service catalogue is not a reliable presence check: it omits this bundle's services. The armed probe injected and called all three after the restart.",
+    "effect": "The claim 'the runtime is not loaded' was wrong at that time; the correct claim is that the catalogue did not list them."
+  }
 }

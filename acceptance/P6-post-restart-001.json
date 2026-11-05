@@ -1,0 +1,60 @@
+{
+  "stage": "P6",
+  "id": "P6_POST_RESTART_SMOKE",
+  "evidence": "REAL_NATIVE_AFTER_RESTART",
+  "startedAt": "2026-11-05T16:08:49.195Z",
+  "finishedAt": "2026-11-05T16:08:49.199Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "all-three-services-are-mounted",
+      "status": "PASS",
+      "detail": {
+        "services": [
+          "financeOperations",
+          "financeData",
+          "financeReview"
+        ]
+      }
+    },
+    {
+      "id": "the-review-policy-is-the-default-original",
+      "status": "PASS",
+      "detail": {
+        "version": "p5-policy-v1",
+        "digest": "55ee42703c75f53b"
+      }
+    },
+    {
+      "id": "the-workspace-binding-is-readable",
+      "status": "PASS",
+      "detail": {
+        "status": "UNBOUND"
+      }
+    },
+    {
+      "id": "the-workbook-read-model-returns-valid-bytes",
+      "status": "PASS",
+      "detail": {
+        "bytes": 5747,
+        "filename": "financial-review-technical.xlsx"
+      }
+    },
+    {
+      "id": "the-run-projection-is-readable",
+      "status": "PASS",
+      "detail": {
+        "runs": 14
+      }
+    },
+    {
+      "id": "the-review-service-exposes-no-side-effect",
+      "status": "PASS",
+      "detail": {
+        "methods": 21
+      }
+    }
+  ],
+  "modelCalls": 0,
+  "note": "This report exists only if the bundle was loaded after a restart."
+}

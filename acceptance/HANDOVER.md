@@ -14,7 +14,7 @@
 | P5 审核与恢复 | 内核与原生能力已验，渲染与重启未验 | 否 |
 | P6 前端整合 | 界面已构建安装，**未在浏览器验收** | 否 |
 
-安装形态：`@local/dsh-financial-services@0.4.0-alpha.1`，原生 Plugin Manager 链接安装。**最近一次工件刷新返回 `application: restart-required`（原因 `unmanaged-plugin`）**：包目录已是新构建，运行实例仍是旧的，验收前需重启 DSH（[证据](P6-install-restart-required-001.json)）。三行（`financial-services` / `finance-data` / `finance-review`），无测试夹具残留。
+安装形态：`@local/dsh-financial-services@0.4.0-alpha.1`，原生 Plugin Manager 链接安装。**DSH 已重启，Bundle 在新进程中加载成功**：三个服务挂载、策略为 `original`、工作簿字节有效、14 个 run 可读（[证据](P6-post-restart-verified-001.json)）。注意：改动仍需重启生效（`unmanaged-plugin`），且 Inspect 的 Service 目录**不收录本 Bundle**，不要用它判断服务是否存在。三行（`financial-services` / `finance-data` / `finance-review`），无测试夹具残留（探针已移除，卸载待下次重启完成）。
 
 ## 已证明（有证据链接）
 
@@ -36,7 +36,7 @@
 
 ## 下一步（按依赖顺序）
 
-0. **重启 DSH**：本轮工件刷新要求重启后才生效；在此之前原生结论只对旧实例成立。
+0. ~~重启 DSH~~：已完成，服务在新进程中挂载并有原生证据。
 1. **界面验收**：按 [MANUAL_CHECKLIST](MANUAL_CHECKLIST.md) 走 A–G，把结果写入新的 `acceptance/P6-manual-<日期>-*.md`，再更新 `P6-results.json` 的 `browserRendered` 与各项状态。
 2. **OS 级重启**：记录一次审核 → 重启应用 → 重读队列投影，补 `P5-OS-RESTART`。
 3. **宿主接口**：若宿主提供可用的受限子进程或二进制产物写接口，P4 的 Office 与业务交付即可恢复；否则维持 `BLOCKED_HOST_INTERFACE`。

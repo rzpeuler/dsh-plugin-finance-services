@@ -41,7 +41,7 @@
     "P6-I18N": "PARTIAL_STATIC_COVERAGE",
     "P6-RESPONSIVE": "NOT_RUN",
     "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-LIFECYCLE": "NOT_RUN",
+    "P6-LIFECYCLE": "PARTIAL_RESTART_CONFIRMED",
     "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
     "P6-A11Y": "PARTIAL_STRUCTURE_ONLY",
     "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE"
@@ -323,11 +323,11 @@
     "notBooted": "Cordis loader lifecycle is still not exercised here."
   },
   "runtimeState": {
-    "status": "ROWS_REGISTERED_SERVICES_ABSENT",
-    "evidence": "P6-runtime-not-loaded-001.json",
-    "loaderRows": 3,
-    "serviceInstances": 0,
-    "reason": "install pending restart (unmanaged-plugin)",
-    "armed": "P6-post-restart-armed-001.json"
+    "status": "LOADED_AFTER_RESTART",
+    "evidence": "P6-post-restart-verified-001.json",
+    "serviceInstances": 3,
+    "runs": 14,
+    "restartedAt": "2026-11-05T16:08:49.195Z",
+    "catalogueCaveat": "The Inspect Service catalogue omits this bundle; use a probe or the client, not the catalogue."
   }
 }

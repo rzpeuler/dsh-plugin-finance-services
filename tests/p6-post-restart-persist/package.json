@@ -1,0 +1,1 @@
+{"name":"@local/dsh-finance-p6-post-restart-persist-test-only","version":"0.0.1","private":true,"type":"module","description":"Disposable post-restart persistence probe; display metadata deliberately omitted.","engines":{"dsh":"0.2.1-rc.5"},"exports":{".":"./probe.js"},"dsh":{"bundle":{"patch":"./cordis.patch.yml"}}}
