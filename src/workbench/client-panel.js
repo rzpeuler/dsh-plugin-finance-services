@@ -11,6 +11,9 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       sessions: 'Sessions', items: 'Checkpoints', pending: 'Pending', decided: 'Decided',
       unavailable: 'Unavailable', degraded: 'Some cards could not be read.', readOnly: 'Read-only overview; actions live in their own sections.',
       source: 'Source', notConfigured: 'Not configured', fingerprint: 'digest',
+      runsTitle: 'Runs', deliverablesTitle: 'Deliverables', classification: 'Classification', bytes: 'Bytes',
+      sha: 'Content hash', noRuns: 'No run has recorded a stage yet.', noDeliverables: 'No deliverable has been indexed yet.',
+      checkpoints: 'Checkpoints', items: 'items',
     },
     zh: {
       title: '金融工作台', loading: '正在读取工作区状态…', refresh: '刷新',
@@ -20,6 +23,9 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       sessions: '会话', items: '检查点', pending: '待审', decided: '已决',
       unavailable: '不可用', degraded: '部分卡片读取失败。', readOnly: '只读概览；操作在各分区内完成。',
       source: '来源', notConfigured: '未配置', fingerprint: '摘要',
+      runsTitle: '运行', deliverablesTitle: '成果', classification: '分类', bytes: '字节',
+      sha: '内容哈希', noRuns: '尚无运行记录阶段。', noDeliverables: '尚无成果被索引。',
+      checkpoints: '检查点', items: '项',
     },
   }
 
@@ -63,6 +69,40 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       revision: Number.isInteger(summary.revision) ? summary.revision : 0 }, 'financeReview.reviewSummary')
   }
 
+  function decodeRuns(payload) {
+    if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable', 'financeReview.reviewRuns')
+    let parsed
+    try { parsed = JSON.parse(payload.value.runsJson) } catch { return fail('gateway/bad-json', 'financeReview.reviewRuns') }
+    if (!parsed || !Array.isArray(parsed.runs) || parsed.runs.length > 200) return fail('gateway/bad-runs', 'financeReview.reviewRuns')
+    const runs = []
+    for (const run of parsed.runs) {
+      if (!run || typeof run.runId !== 'string' || !run.checkpoints || typeof run.checkpoints !== 'object') return fail('gateway/bad-run', 'financeReview.reviewRuns')
+      if (!Array.isArray(run.agents) || !Array.isArray(run.sessions)) return fail('gateway/bad-run', 'financeReview.reviewRuns')
+      runs.push({ runId: run.runId, agents: run.agents.slice(0, 8), sessions: run.sessions.slice(0, 8),
+        checkpoints: Object.fromEntries(Object.entries(run.checkpoints).slice(0, 12)),
+        classification: typeof run.classification === 'string' ? run.classification : 'UNKNOWN',
+        deliverableCount: Number.isInteger(run.deliverableCount) ? run.deliverableCount : 0 })
+    }
+    return ok({ runs, revision: Number.isInteger(parsed.deliverableRevision) ? parsed.deliverableRevision : 0 }, 'financeReview.reviewRuns')
+  }
+
+  function decodeDeliverables(payload) {
+    if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable', 'financeReview.reviewDeliverables')
+    let parsed
+    try { parsed = JSON.parse(payload.value.deliverablesJson) } catch { return fail('gateway/bad-json', 'financeReview.reviewDeliverables') }
+    if (!parsed || !Array.isArray(parsed.deliverables) || parsed.deliverables.length > 200) return fail('gateway/bad-deliverables', 'financeReview.reviewDeliverables')
+    const items = []
+    for (const item of parsed.deliverables) {
+      if (!item || typeof item.path !== 'string' || typeof item.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(item.sha256)) return fail('gateway/bad-deliverable', 'financeReview.reviewDeliverables')
+      if (!Number.isInteger(item.bytes) || typeof item.classification !== 'string') return fail('gateway/bad-deliverable', 'financeReview.reviewDeliverables')
+      items.push({ path: item.path.slice(0, 512), sha256: item.sha256, bytes: item.bytes,
+        classification: item.classification, sessionId: typeof item.sessionId === 'string' ? item.sessionId : null,
+        runId: typeof item.runId === 'string' ? item.runId : null, reviewId: typeof item.reviewId === 'string' ? item.reviewId : null })
+    }
+    return ok({ items, revision: Number.isInteger(parsed.revision) ? parsed.revision : 0 }, 'financeReview.reviewDeliverables')
+  }
+
+  const shortId = value => (value ? String(value).slice(0, 18) : '—')
   const isOk = card => card?.ok === true
   const cardValue = card => (isOk(card) ? card.value : null)
 
@@ -84,12 +124,14 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     React.useEffect(refresh, [])
     const cards = state.cards
     const loading = state.status === 'loading' && !cards ? h('p', null, t('loading')) : null
-    const degraded = cards && [cards.workspace, cards.roles, cards.dataSources, cards.reviews].some(value => !isOk(value))
+    const degraded = cards && [cards.workspace, cards.roles, cards.dataSources, cards.reviews, cards.runs, cards.deliverables].some(value => !isOk(value))
       ? h('p', { className: 'finance-p2__error' }, t('degraded')) : null
     const workspace = cardValue(cards?.workspace)
     const roles = cardValue(cards?.roles)
     const data = cardValue(cards?.dataSources)
     const reviews = cardValue(cards?.reviews)
+    const runs = cardValue(cards?.runs)
+    const deliverables = cardValue(cards?.deliverables)
     const list = cards ? h('ul', { className: 'finance-p2__list' }, [
       card(t, t('workspace'), workspace ? h('p', null,
         `${t('binding')}: ${workspace.binding ? t('bound') : t('unbound')} · ${workspace.workspaceStatus} · ${t('revision')}: ${workspace.revision}`)
@@ -98,6 +140,12 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       card(t, t('dataSources'), data ? h('p', null,
         `${t('adapters')}: ${data.adapters} · ${t('policy')}: ${data.bindings} · ${t('revision')}: ${data.revision}`)
         : null, cards.dataSources),
+      card(t, t('runsTitle'), runs ? (runs.runs.length === 0 ? h('p', null, t('noRuns'))
+        : h('ul', { className: 'finance-p2__list' }, runs.runs.slice(0, 10).map(run => h('li', { key: run.runId },
+          `${shortId(run.runId)} · ${run.classification} · ${t('checkpoints')}: ${Object.entries(run.checkpoints).map(([id, state]) => `${id}=${state}`).join(', ')} · ${t('deliverablesTitle')}: ${run.deliverableCount}`)))) : null, cards.runs),
+      card(t, t('deliverablesTitle'), deliverables ? (deliverables.items.length === 0 ? h('p', null, t('noDeliverables'))
+        : h('ul', { className: 'finance-p2__list' }, deliverables.items.slice(0, 10).map(item => h('li', { key: `${item.runId}:${item.sha256}` },
+          `${item.path} · ${t('bytes')}: ${item.bytes} · ${t('classification')}: ${item.classification} · ${t('sha')}: ${item.sha256.slice(0, 12)}…`)))) : null, cards.deliverables),
       card(t, t('reviews'), reviews ? h('p', null,
         `${t('sessions')}: ${reviews.sessions} · ${t('items')}: ${reviews.items} · ${t('pending')}: ${reviews.pending} · ${t('decided')}: ${reviews.decided}`)
         : null, cards.reviews),
@@ -125,10 +173,16 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
           ? ctx.remote.financeReview.reviewSummary({}).then(payload => decodeReviews(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewSummary'))
           : Promise.resolve(fail('NOT_CONFIGURED', 'financeReview.reviewSummary')),
       ])
-      return { workspace, roles: catalogue, dataSources: data, reviews }
+      const runs = ctx.remote.financeReview
+        ? await ctx.remote.financeReview.reviewRuns({}).then(payload => decodeRuns(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewRuns'))
+        : fail('NOT_CONFIGURED', 'financeReview.reviewRuns')
+      const deliverables = ctx.remote.financeReview
+        ? await ctx.remote.financeReview.reviewDeliverables({}).then(payload => decodeDeliverables(payload)).catch(error => fail(error?.code ?? 'gateway/failed', 'financeReview.reviewDeliverables'))
+        : fail('NOT_CONFIGURED', 'financeReview.reviewDeliverables')
+      return { workspace, roles: catalogue, dataSources: data, reviews, runs, deliverables }
     }
     return { workbenchT, loadOverview }
   }
 
-  return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews }
+  return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns, decodeDeliverables }
 }

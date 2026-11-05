@@ -32,8 +32,8 @@
   "criteriaResults": {
     "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-AGENTS": "NOT_RUN",
-    "P6-RUNS": "PARTIAL_NATIVE_INDEX_NOT_RENDERED",
-    "P6-DELIVERABLES": "PARTIAL_NATIVE_INDEX_NOT_RENDERED",
+    "P6-RUNS": "PARTIAL_BUILT_NOT_RENDERED",
+    "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DATASOURCES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-SETTINGS": "NOT_RUN",
@@ -60,6 +60,8 @@
       "workspace binding and status",
       "role catalogue counts",
       "data source adapters and policy",
+      "runs with checkpoint states",
+      "deliverable index",
       "review queue totals"
     ],
     "degradation": "each card fails independently; a missing namespace reports NOT_CONFIGURED; partial failures show a degraded warning",
@@ -72,9 +74,13 @@
     "localTests": {
       "passed": 6,
       "failed": 0,
-      "evidence": "P6-workbench-tests-001.tap"
+      "evidence": "P6-workbench-tests-002.tap"
     },
-    "rendered": false
+    "rendered": false,
+    "renders": [
+      "runs list (top 10)",
+      "deliverable list (top 10) with bytes, classification and hash prefix"
+    ]
   },
   "runsAndDeliverablesIndex": {
     "status": "PASS_NATIVE_INDEX_NOT_RENDERED",

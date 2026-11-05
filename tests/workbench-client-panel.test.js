@@ -34,6 +34,12 @@ const catalogue = { ok: true, value: { agents: new Array(10).fill({}), workers: 
 const data = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviews = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }
+const runs = { ok: true, value: { runsJson: JSON.stringify({ deliverableRevision: 2, runs: [
+  { runId: 'run-a', agents: ['finance-model-builder'], sessions: ['session-a'],
+    checkpoints: { model_build_complete: 'COMPLETED' }, classification: 'IN_PROGRESS', deliverableCount: 2 }] }) } }
+const deliverables = { ok: true, value: { deliverablesJson: JSON.stringify({ revision: 2, deliverables: [
+  { path: 'artifacts/model.xlsx', sha256: 'a'.repeat(64), bytes: 1234, classification: 'TEST_ONLY',
+    sessionId: 'session-a', runId: 'run-a', reviewId: null }] }) } }
 
 test('every card decodes from its own source and reports that source', () => {
   const workspace = client.decodeWorkspace(snapshot)
@@ -47,6 +53,12 @@ test('every card decodes from its own source and reports that source', () => {
   assert.equal(sources.value.revision, 8)
   const queue = client.decodeReviews(reviews)
   assert.equal(queue.value.revision, 35)
+  const runView = client.decodeRuns(runs)
+  assert.equal(runView.value.runs[0].classification, 'IN_PROGRESS')
+  assert.equal(runView.value.runs[0].deliverableCount, 2)
+  const index = client.decodeDeliverables(deliverables)
+  assert.equal(index.value.items[0].bytes, 1234)
+  assert.equal(index.value.revision, 2)
 })
 
 test('a malformed or failed payload degrades only its own card', () => {
@@ -55,6 +67,11 @@ test('a malformed or failed payload degrades only its own card', () => {
   assert.equal(client.decodeCatalogue({ ok: true, value: { agents: [] } }).code, 'gateway/bad-catalogue')
   assert.equal(client.decodeDataSources({ ok: true, value: { catalogJson: 'nope' } }).code, 'gateway/bad-json')
   assert.equal(client.decodeReviews({ ok: true, value: { summaryJson: '{}' } }).code, 'gateway/bad-totals')
+  assert.equal(client.decodeRuns({ ok: true, value: { runsJson: '{}' } }).code, 'gateway/bad-runs')
+  assert.equal(client.decodeDeliverables({ ok: true, value: { deliverablesJson: '{}' } }).code, 'gateway/bad-deliverables')
+  const badHash = { ok: true, value: { deliverablesJson: JSON.stringify({ revision: 1, deliverables: [
+    { path: 'x', sha256: 'nope', bytes: 1, classification: 'TEST_ONLY' }] }) } }
+  assert.equal(client.decodeDeliverables(badHash).code, 'gateway/bad-deliverable')
 })
 
 test('the loader reads four sources and keeps per-card failures', async () => {
@@ -68,17 +85,21 @@ test('the loader reads four sources and keeps per-card failures', async () => {
         async catalog(request) { calls.push(['catalog', request]); return { ok: false, error: { code: 'gateway/refused' } } },
       },
       financeData: { async catalog() { calls.push(['data']); return data } },
-      financeReview: { async reviewSummary() { calls.push(['reviews']); return reviews } },
+      financeReview: { async reviewSummary() { calls.push(['reviews']); return reviews },
+        async reviewRuns() { calls.push(['runs']); return runs },
+        async reviewDeliverables() { calls.push(['deliverables']); return deliverables } },
     },
   }
   const props = client.install(ctx)
   const cards = await props.loadOverview()
-  assert.deepEqual(calls.map(item => item[0]), ['snapshot', 'catalog', 'data', 'reviews'])
+  assert.deepEqual(calls.map(item => item[0]), ['snapshot', 'catalog', 'data', 'reviews', 'runs', 'deliverables'])
   assert.equal(cards.workspace.ok, true)
   assert.equal(cards.roles.ok, false)
   assert.equal(cards.roles.code, 'gateway/refused')
   assert.equal(cards.dataSources.ok, true)
   assert.equal(cards.reviews.ok, true)
+  assert.equal(cards.runs.ok, true)
+  assert.equal(cards.deliverables.ok, true)
 })
 
 test('missing namespaces are reported as NOT_CONFIGURED rather than crashing', async () => {
@@ -93,6 +114,8 @@ test('missing namespaces are reported as NOT_CONFIGURED rather than crashing', a
   assert.equal(cards.roles.ok, true)
   assert.equal(cards.dataSources.code, 'NOT_CONFIGURED')
   assert.equal(cards.reviews.code, 'NOT_CONFIGURED')
+  assert.equal(cards.runs.code, 'NOT_CONFIGURED')
+  assert.equal(cards.deliverables.code, 'NOT_CONFIGURED')
 })
 
 test('the loader never writes: no decision, binding or policy call is made', async () => {
@@ -105,17 +128,19 @@ test('the loader never writes: no decision, binding or policy call is made', asy
       financeOperations: { snapshot: track('snapshot'), catalog: track('catalog'),
         bindWorkspace: track('bindWorkspace'), prepareDraft: track('prepareDraft') },
       financeData: { catalog: track('dataCatalog'), setBindings: track('setBindings') },
-      financeReview: { reviewSummary: track('reviewSummary'), settle: track('settle'), reviewPolicy: track('reviewPolicy') },
+      financeReview: { reviewSummary: track('reviewSummary'), settle: track('settle'), reviewPolicy: track('reviewPolicy'),
+        reviewRuns: track('reviewRuns'), reviewDeliverables: track('reviewDeliverables') },
     },
   }
   const props = client.install(ctx)
   await props.loadOverview()
-  assert.deepEqual(calls.sort(), ['catalog', 'dataCatalog', 'reviewSummary', 'snapshot'])
+  assert.deepEqual(calls.sort(), ['catalog', 'dataCatalog', 'reviewDeliverables', 'reviewRuns', 'reviewSummary', 'snapshot'])
 })
 
 test('the panel renders four cards, the degraded warning and the read-only note', async () => {
   const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
-    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews) })
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
   stub.reset()
   client.Panel({ workbenchT: key => key, loadOverview: load })
   await new Promise(resolve => setImmediate(resolve))
@@ -123,7 +148,8 @@ test('the panel renders four cards, the degraded warning and the read-only note'
   stub.flush(); stub.rewind()
   const tree = client.Panel({ workbenchT: key => key, loadOverview: load })
   const lines = texts(tree).join('\n')
-  for (const expected of ['agents: 10', 'workers: 30', 'adapters: 0', 'policy: 0', 'pending: 0']) {
+  for (const expected of ['agents: 10', 'workers: 30', 'adapters: 0', 'policy: 0', 'pending: 0',
+    'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
     assert.ok(lines.includes(expected), `${expected} missing from ${lines}`)
   }
   assert.ok(lines.includes('readOnly'))
@@ -131,15 +157,15 @@ test('the panel renders four cards, the degraded warning and the read-only note'
 
   const degradedTree = await (async () => {
     stub.reset()
-    client.Panel({ workbenchT: key => key, loadOverview: async () => ({ workspace: client.decodeWorkspace(snapshot),
+    const degradedLoad = async () => ({ workspace: client.decodeWorkspace(snapshot),
       roles: { ok: false, code: 'gateway/refused', source: 'financeOperations.catalog' },
-      dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews) }) })
+      dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+      runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+    client.Panel({ workbenchT: key => key, loadOverview: degradedLoad })
     await new Promise(resolve => setImmediate(resolve))
     await new Promise(resolve => setImmediate(resolve))
     stub.flush(); stub.rewind()
-    return client.Panel({ workbenchT: key => key, loadOverview: async () => ({ workspace: client.decodeWorkspace(snapshot),
-      roles: { ok: false, code: 'gateway/refused', source: 'financeOperations.catalog' },
-      dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews) }) })
+    return client.Panel({ workbenchT: key => key, loadOverview: degradedLoad })
   })()
   const degradedLines = texts(degradedTree).join('\n')
   assert.ok(degradedLines.includes('degraded'))
