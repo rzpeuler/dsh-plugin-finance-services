@@ -56,9 +56,14 @@ function makeReview() {
 const ok = (fn, value) => ({ ok: true, value })
 const denied = () => ({ ok: false, error: { code: 'gateway/not-authorized' } })
 const snapshot = binding => ({ ok: true, value: { binding, workspaceStatus: binding ? 'READY' : 'UNBOUND', revision: 19 } })
+const roleStub = index => ({ id: `finance-role-${index}`, builtinTools: ['read'], allowedMcpServers: [], workerPresetIds: [],
+  skillNames: [], writer: false, mountStatus: 'AVAILABLE' })
 const catalogue = (agents, workers) => ({ ok: true, value: {
-  agents: new Array(agents).fill({}), workers: new Array(workers).fill({}) } })
-const cataloguePayload = (agents, workers) => ({ agents: new Array(agents).fill({}), workers: new Array(workers).fill({}) })
+  agents: new Array(agents).fill({}).map((_, index) => roleStub(index)),
+  workers: new Array(workers).fill({}), skills: new Array(63).fill({ name: 'x', issues: [] }) } })
+const cataloguePayload = (agents, workers) => ({
+  agents: new Array(agents).fill({}).map((_, index) => roleStub(index)),
+  workers: new Array(workers).fill({}), skills: new Array(63).fill({ name: 'x', issues: [] }) })
 const dataPayload = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviewsPayload = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }

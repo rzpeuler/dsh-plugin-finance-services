@@ -30,7 +30,13 @@ const flatten = node => {
 const texts = tree => flatten(tree).filter(value => typeof value === 'string')
 
 const snapshot = { ok: true, value: { binding: null, workspaceStatus: 'UNBOUND', revision: 19 } }
-const catalogue = { ok: true, value: { agents: new Array(10).fill({}), workers: new Array(30).fill({}) } }
+const role = (id, extra = {}) => ({ id, kind: 'main', writer: false, builtinTools: ['read', 'finance_data_query'],
+  allowedMcpServers: ['capiq'], workerPresetIds: ['w1', 'w2', 'w3'], skillNames: ['a', 'b'], mountStatus: 'AVAILABLE', ...extra })
+const catalogue = { ok: true, value: {
+  agents: [role('finance-pitch-agent'), ...new Array(9).fill({}).map((_, index) => role(`finance-other-${index}`))],
+  workers: new Array(30).fill({}),
+  skills: [{ name: 'dcf-model', issues: [] }, { name: 'comps', issues: ['missing asset'] }, ...new Array(61).fill({ name: 'x', issues: [] })],
+} }
 const data = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviews = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }
@@ -49,6 +55,11 @@ test('every card decodes from its own source and reports that source', () => {
   const roles = client.decodeCatalogue(catalogue)
   assert.equal(roles.value.agents, 10)
   assert.equal(roles.value.workers, 30)
+  assert.equal(roles.value.mains[0].id, 'finance-pitch-agent')
+  assert.equal(roles.value.mains[0].workers, 3)
+  assert.deepEqual(roles.value.mains[0].sources, ['capiq'])
+  assert.equal(roles.value.skills.total, 63)
+  assert.equal(roles.value.skills.flagged, 1)
   const sources = client.decodeDataSources(data)
   assert.equal(sources.value.revision, 8)
   const queue = client.decodeReviews(reviews)
@@ -148,8 +159,8 @@ test('the panel renders four cards, the degraded warning and the read-only note'
   stub.flush(); stub.rewind()
   const tree = client.Panel({ workbenchT: key => key, loadOverview: load })
   const lines = texts(tree).join('\n')
-  for (const expected of ['agents: 10', 'workers: 30', 'adapters: 0', 'policy: 0', 'pending: 0',
-    'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
+  for (const expected of ['agents: 10', 'workers: 30', 'skills: 63', 'flagged: 1', 'adapters: 0', 'policy: 0', 'pending: 0',
+    'finance-pitch-agent', 'sources: capiq', 'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
     assert.ok(lines.includes(expected), `${expected} missing from ${lines}`)
   }
   assert.ok(lines.includes('readOnly'))

@@ -11,7 +11,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       sessions: 'Sessions', items: 'Checkpoints', pending: 'Pending', decided: 'Decided',
       unavailable: 'Unavailable', degraded: 'Some cards could not be read.', readOnly: 'Read-only overview; actions live in their own sections.',
       source: 'Source', notConfigured: 'Not configured', fingerprint: 'digest',
-      runsTitle: 'Runs', deliverablesTitle: 'Deliverables', classification: 'Classification', bytes: 'Bytes',
+      mains: 'Main agents', skills: 'Skills', flagged: 'flagged', writer: 'Writer', sources: 'Sources',
+      mounts: 'Mounts', runsTitle: 'Runs', deliverablesTitle: 'Deliverables', classification: 'Classification', bytes: 'Bytes',
       sha: 'Content hash', noRuns: 'No run has recorded a stage yet.', noDeliverables: 'No deliverable has been indexed yet.',
       checkpoints: 'Checkpoints', items: 'items',
     },
@@ -23,7 +24,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       sessions: '会话', items: '检查点', pending: '待审', decided: '已决',
       unavailable: '不可用', degraded: '部分卡片读取失败。', readOnly: '只读概览；操作在各分区内完成。',
       source: '来源', notConfigured: '未配置', fingerprint: '摘要',
-      runsTitle: '运行', deliverablesTitle: '成果', classification: '分类', bytes: '字节',
+      mains: '主 Agent', skills: '技能', flagged: '有告警', writer: '写权限', sources: '来源',
+      mounts: '挂载', runsTitle: '运行', deliverablesTitle: '成果', classification: '分类', bytes: '字节',
       sha: '内容哈希', noRuns: '尚无运行记录阶段。', noDeliverables: '尚无成果被索引。',
       checkpoints: '检查点', items: '项',
     },
@@ -45,7 +47,23 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     if (!payload || payload.ok !== true) return fail(payload?.error?.code ?? 'gateway/unavailable', 'financeOperations.catalog')
     const catalogue = payload.value
     if (!catalogue || !Array.isArray(catalogue.agents) || !Array.isArray(catalogue.workers)) return fail('gateway/bad-catalogue', 'financeOperations.catalog')
-    return ok({ agents: catalogue.agents.length, workers: catalogue.workers.length }, 'financeOperations.catalog')
+    if (!Array.isArray(catalogue.skills)) return fail('gateway/bad-catalogue', 'financeOperations.catalog')
+    const mains = []
+    for (const role of catalogue.agents.slice(0, 20)) {
+      if (!role || typeof role.id !== 'string') return fail('gateway/bad-catalogue', 'financeOperations.catalog')
+      mains.push({
+        id: role.id,
+        workers: Array.isArray(role.workerPresetIds) ? role.workerPresetIds.length : 0,
+        writer: role.writer === true,
+        tools: Array.isArray(role.builtinTools) ? role.builtinTools.slice(0, 8) : [],
+        sources: Array.isArray(role.allowedMcpServers) ? role.allowedMcpServers.slice(0, 8) : [],
+        skills: Array.isArray(role.skillNames) ? role.skillNames.length : 0,
+        mount: role.mountStatus === 'AVAILABLE' ? 'AVAILABLE' : 'UNAVAILABLE',
+      })
+    }
+    const flaggedSkills = catalogue.skills.filter(skill => skill && Array.isArray(skill.issues) && skill.issues.length > 0).length
+    return ok({ agents: catalogue.agents.length, workers: catalogue.workers.length, mains,
+      skills: { total: catalogue.skills.length, flagged: flaggedSkills } }, 'financeOperations.catalog')
   }
 
   function decodeDataSources(payload) {
@@ -136,7 +154,11 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       card(t, t('workspace'), workspace ? h('p', null,
         `${t('binding')}: ${workspace.binding ? t('bound') : t('unbound')} · ${workspace.workspaceStatus} · ${t('revision')}: ${workspace.revision}`)
         : null, cards.workspace),
-      card(t, t('roles'), roles ? h('p', null, `${t('agents')}: ${roles.agents} · ${t('workers')}: ${roles.workers}`) : null, cards.roles),
+      card(t, t('roles'), roles ? h('div', null,
+        h('p', null, `${t('agents')}: ${roles.agents} · ${t('workers')}: ${roles.workers} · ${t('skills')}: ${roles.skills.total} · ${t('flagged')}: ${roles.skills.flagged}`),
+        h('ul', { className: 'finance-p2__list' }, roles.mains.map(main => h('li', { key: main.id },
+          `${main.id} · ${t('mains')}: ${main.workers} · ${t('writer')}: ${main.writer ? 'yes' : 'no'} · ${t('sources')}: ${main.sources.join(', ') || '—'} · ${t('skills')}: ${main.skills} · ${t('mounts')}: ${main.mount}`)))
+      ) : null, cards.roles),
       card(t, t('dataSources'), data ? h('p', null,
         `${t('adapters')}: ${data.adapters} · ${t('policy')}: ${data.bindings} · ${t('revision')}: ${data.revision}`)
         : null, cards.dataSources),

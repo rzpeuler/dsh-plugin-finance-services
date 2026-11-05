@@ -31,7 +31,7 @@
   },
   "criteriaResults": {
     "P6-WORKBENCH": "PARTIAL_BUILT_NOT_RENDERED",
-    "P6-AGENTS": "NOT_RUN",
+    "P6-AGENTS": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-RUNS": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-DELIVERABLES": "PARTIAL_BUILT_NOT_RENDERED",
     "P6-REVIEWQUEUE": "PARTIAL_BUILT_NOT_RENDERED",
@@ -200,5 +200,23 @@
     "checksPassed": 4,
     "checksFailed": 0,
     "rule": "A gap closes only with a new native or browser observation saved under acceptance/."
+  },
+  "rolesAndSkills": {
+    "status": "BUILT_INSTALLED_NOT_RENDERED",
+    "evidence": "P6-agents-catalogue-tests.tap",
+    "checksPassed": 15,
+    "checksFailed": 0,
+    "source": "financeOperations.catalog (native PublicRole + skills array)",
+    "shows": [
+      "main agent id",
+      "worker count",
+      "writer flag",
+      "allowed sources",
+      "skill count",
+      "mount status",
+      "total skills and flagged skills"
+    ],
+    "bounds": "20 mains, 8 tools, 8 sources per row",
+    "rendered": false
   }
 }
