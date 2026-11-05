@@ -305,5 +305,12 @@
       "declared checkpoint count"
     ],
     "states": "declarations only, no run is started"
+  },
+  "lifecycle": {
+    "status": "RESTART_REQUIRED_AFTER_ARTIFACT_REFRESH",
+    "evidence": "P6-install-restart-required-001.json",
+    "restartReason": "unmanaged-plugin",
+    "applied": false,
+    "note": "The package directory is current; the running instance is not. Native claims made after this point need a restart."
   }
 }

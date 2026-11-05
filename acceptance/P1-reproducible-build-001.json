@@ -1,0 +1,11 @@
+{
+  "stage": "P1",
+  "id": "P1_REPRODUCIBLE_BUILD",
+  "observedDate": "2026-11-05",
+  "status": "PASS_BYTE_IDENTICAL",
+  "artifacts": 11,
+  "differences": [],
+  "added": [],
+  "removed": [],
+  "note": "A second build in the same working tree produced byte-identical artifacts."
+}

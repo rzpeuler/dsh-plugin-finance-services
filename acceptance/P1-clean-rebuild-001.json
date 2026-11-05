@@ -1,0 +1,14 @@
+{
+  "stage": "P1",
+  "id": "P1_CLEAN_TREE_REBUILD",
+  "observedDate": "2026-11-05",
+  "head": "2718781d28909f05cc92223af8865c5772009d8f",
+  "status": "PASS_TRACKED_SOURCES_ONLY",
+  "artifacts": 11,
+  "differences": [],
+  "environment": {
+    "buildPython": "python.exe",
+    "dependencies": "linked from the pinned working install"
+  },
+  "note": "A build in a pristine export of HEAD reproduces the committed artifacts byte for byte; only node_modules is shared because it is pinned by the lockfile."
+}

@@ -1,0 +1,28 @@
+{
+  "stage": "P6",
+  "id": "P6_INSTALL_REQUIRES_RESTART",
+  "observedDate": "2026-11-06",
+  "status": "RESTART_REQUIRED",
+  "observation": {
+    "installResult": {
+      "application": "restart-required",
+      "changed": true,
+      "warnings": [],
+      "restartReason": "unmanaged-plugin",
+      "nextStep": "Tell the user to restart DSH to apply this change: the change reaches a plugin running outside the plugin list."
+    },
+    "packageOnDisk": "current (the review row schema already exposes serviceKey, domainSuffix and remote)",
+    "runtime": "not reloaded in this session"
+  },
+  "whyItMatters": [
+    "Previous rounds recorded application=applied; that is no longer true for this artifact refresh.",
+    "Any native behaviour claim after this point must wait for the restart, or be phrased against the previous runtime.",
+    "The configuration schema being current does not mean the loaded service is."
+  ],
+  "consequenceForAcceptance": {
+    "nativeEvidenceBeforeThisPoint": "observed against the previously loaded runtime and remains valid for that build",
+    "nativeEvidenceAfterThisPoint": "requires a restart before it can be claimed",
+    "clientArtifact": "served from the package directory, so it changes only after the page reloads the new bundle"
+  },
+  "recordedNotFixed": true
+}

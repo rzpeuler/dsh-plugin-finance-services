@@ -14,7 +14,7 @@
 | P5 审核与恢复 | 内核与原生能力已验，渲染与重启未验 | 否 |
 | P6 前端整合 | 界面已构建安装，**未在浏览器验收** | 否 |
 
-安装形态：`@local/dsh-financial-services@0.4.0-alpha.1`，原生 Plugin Manager 链接安装，`application: applied`，三行（`financial-services` / `finance-data` / `finance-review`），无测试夹具残留。
+安装形态：`@local/dsh-financial-services@0.4.0-alpha.1`，原生 Plugin Manager 链接安装。**最近一次工件刷新返回 `application: restart-required`（原因 `unmanaged-plugin`）**：包目录已是新构建，运行实例仍是旧的，验收前需重启 DSH（[证据](P6-install-restart-required-001.json)）。三行（`financial-services` / `finance-data` / `finance-review`），无测试夹具残留。
 
 ## 已证明（有证据链接）
 
@@ -24,6 +24,7 @@
 - **四策略并列实例**：original/fast/strict/custom 同时运行、需求集两两不同、互不串门（[7 项](P5-policy-matrix-native-pass-002.json)）。
 - **P6 工作台**：六段只读聚合（工作区/角色明细/数据源/Runs/成果/审核队列），逐段降级；审核面板只读；Settings 走原生配置行；导航键唯一；i18n 静态覆盖；9 项受限场景可执行验证（见[阶段记录](P6.md)）。
 - **交付文档**：安装/升级/卸载/首次使用/依赖/能力目录/排障齐全，且所有证据链接可解析（[5 项](P6-docs-completeness.tap)）。
+- **构建可复现**：同树两次构建逐字节一致；从 HEAD 干净归档重建的产物与工作区逐字节一致（[1](P1-reproducible-build-001.json)、[2](P1-clean-rebuild-001.json)）。
 
 ## 没有证明（不要在汇报中声称）
 
@@ -35,6 +36,7 @@
 
 ## 下一步（按依赖顺序）
 
+0. **重启 DSH**：本轮工件刷新要求重启后才生效；在此之前原生结论只对旧实例成立。
 1. **界面验收**：按 [MANUAL_CHECKLIST](MANUAL_CHECKLIST.md) 走 A–G，把结果写入新的 `acceptance/P6-manual-<日期>-*.md`，再更新 `P6-results.json` 的 `browserRendered` 与各项状态。
 2. **OS 级重启**：记录一次审核 → 重启应用 → 重读队列投影，补 `P5-OS-RESTART`。
 3. **宿主接口**：若宿主提供可用的受限子进程或二进制产物写接口，P4 的 Office 与业务交付即可恢复；否则维持 `BLOCKED_HOST_INTERFACE`。

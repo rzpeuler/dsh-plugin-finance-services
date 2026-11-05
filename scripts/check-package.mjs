@@ -1,6 +1,6 @@
 /** Check the installable payload without launching another Harness or altering a Profile. */
 import assert from 'node:assert/strict';
-import { readFile, stat } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -84,6 +84,17 @@ assert.ok(!/localStorage|iframe|useSyncExternalStore|document\.body\.innerHTML|d
 assert.equal((client.match(/document\.body\.appendChild/g) ?? []).length, 1, 'only the download helper may touch document.body');
 assert.equal((client.match(/\.click\(\)/g) ?? []).length, 1, 'only the download helper may synthesise a click');
 assert.match(client, /revokeObjectURL/, 'the download helper must release its object URL');
+
+// The shipped artifact set must be exactly what the manifest declares; stale files must not ship.
+{
+  const libManifest = JSON.parse(await readFile(join(root, 'lib/build-manifest.json'), 'utf8'));
+  const expected = new Set(['client.js', 'build-manifest.json', 'preset-patch-manifest.json', ...Object.keys(libManifest.entrySha256)]);
+  const present = (await readdir(join(root, 'lib'))).filter(name => name.endsWith('.js') || name.endsWith('.json'));
+  const unexpected = present.filter(name => !expected.has(name));
+  const missing = [...expected].filter(name => !present.includes(name));
+  assert.deepEqual(unexpected, [], `unexpected artifacts ship from lib: ${unexpected.join(', ')}`);
+  assert.deepEqual(missing, [], `declared artifacts are missing: ${missing.join(', ')}`);
+}
 const build = JSON.parse(await readFile(join(root, 'lib/build-manifest.json'), 'utf8'));
 assert.equal(build.version, pkg.version);
 assert.equal(build.hostSha256, createHash('sha256').update(host).digest('hex'));
@@ -93,7 +104,9 @@ assert.equal(build.sourceSnapshotSha256, createHash('sha256').update(await readF
 assert.equal(build.patchSha256, createHash('sha256').update(patch).digest('hex'));
 for (const [file, expected] of Object.entries(build.entrySha256)) assert.equal(createHash('sha256').update(await readFile(join(root, 'lib', file))).digest('hex'), expected);
 for (const [path, expected] of Object.entries(build.sourceSha256)) {
-  assert.equal(createHash('sha256').update(await readFile(join(root, path))).digest('hex'), expected, `Stale build: ${path}`);
+  // Same normalisation as the build: line endings are not part of a source identity.
+  const text = (await readFile(join(root, path), 'utf8')).replaceAll('\r\n', '\n');
+  assert.equal(createHash('sha256').update(Buffer.from(text, 'utf8')).digest('hex'), expected, `Stale build: ${path}`);
 }
 console.log('PASS: manifest, exports, localized metadata, original SVG safety, patch, native Client syntax and source/build hashes.');
 console.log('Not tested here: live Loader lifecycle, actual browser rendering, Workspace persistence or financial data.');

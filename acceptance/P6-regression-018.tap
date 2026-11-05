@@ -1,0 +1,2632 @@
+﻿TAP version 13
+# Subtest: no panel introduces a page-level heading or an untyped button
+ok 1 - no panel introduces a page-level heading or an untyped button
+  ---
+  duration_ms: 21.4196
+  type: 'test'
+  ...
+# Subtest: the status region is announced and every input is labelled
+ok 2 - the status region is announced and every input is labelled
+  ---
+  duration_ms: 1.3579
+  type: 'test'
+  ...
+# Subtest: the review panel announces changes and labels nothing implicitly
+ok 3 - the review panel announces changes and labels nothing implicitly
+  ---
+  duration_ms: 0.9212
+  type: 'test'
+  ...
+# Subtest: a degraded workbench keeps the same structural guarantees
+ok 4 - a degraded workbench keeps the same structural guarantees
+  ---
+  duration_ms: 1.1846
+  type: 'test'
+  ...
+# Subtest: no interactive element is removed from the tab order
+ok 5 - no interactive element is removed from the tab order
+  ---
+  duration_ms: 1.3054
+  type: 'test'
+  ...
+# Subtest: P0 complete upstream tree remains unchanged, exact 363 files and tree SHA
+ok 6 - P0 complete upstream tree remains unchanged, exact 363 files and tree SHA
+  ---
+  duration_ms: 157.101
+  type: 'test'
+  ...
+# Subtest: schema v1 contains exact stable main and worker IDs with source names
+ok 7 - schema v1 contains exact stable main and worker IDs with source names
+  ---
+  duration_ms: 0.6155
+  type: 'test'
+  ...
+# Subtest: 40 source config/prompt hashes, original bodies and distinct adapted personas are preserved
+ok 8 - 40 source config/prompt hashes, original bodies and distinct adapted personas are preserved
+  ---
+  duration_ms: 18.4137
+  type: 'test'
+  ...
+# Subtest: Managed YAML tool baseline: ten leaf writers, two source shell exceptions, exact server scope
+ok 9 - Managed YAML tool baseline: ten leaf writers, two source shell exceptions, exact server scope
+  ---
+  duration_ms: 0.7544
+  type: 'test'
+  ...
+# Subtest: Worker skills exactly equal source YAML, main-only explicit domain expansion covers all 63
+ok 10 - Worker skills exactly equal source YAML, main-only explicit domain expansion covers all 63
+  ---
+  duration_ms: 1.0803
+  type: 'test'
+  ...
+# Subtest: 63 skills preserve valid first-line frontmatter, exact source body and complete resource files
+ok 11 - 63 skills preserve valid first-line frontmatter, exact source body and complete resource files
+  ---
+  duration_ms: 32.7571
+  type: 'test'
+  ...
+# Subtest: all 111 source skill origins and their complete deduplication tree proofs are traceable
+ok 12 - all 111 source skill origins and their complete deduplication tree proofs are traceable
+  ---
+  duration_ms: 46.3118
+  type: 'test'
+  ...
+# Subtest: every role root exists with direct child skill folders and full regular-file resources, no links
+ok 13 - every role root exists with direct child skill folders and full regular-file resources, no links
+  ---
+  duration_ms: 114.4144
+  type: 'test'
+  ...
+# Subtest: 13 original review nodes and 20 groups / 44 conditional steps preserve exact quotes and source hashes
+ok 14 - 13 original review nodes and 20 groups / 44 conditional steps preserve exact quotes and source hashes
+  ---
+  duration_ms: 17.5456
+  type: 'test'
+  ...
+# Subtest: missing LBO, comps and Nike templates explicitly BLOCKED without invented files
+ok 15 - missing LBO, comps and Nike templates explicitly BLOCKED without invented files
+  ---
+  duration_ms: 2.4819
+  type: 'test'
+  ...
+# Subtest: external runtime paths and recalc scripts retain coordinates and require P4 adaptation
+ok 16 - external runtime paths and recalc scripts retain coordinates and require P4 adaptation
+  ---
+  duration_ms: 15.9901
+  type: 'test'
+  ...
+# Subtest: 41 complete financial command bodies retain hashes, parameters and safe explicit draft routing
+ok 17 - 41 complete financial command bodies retain hashes, parameters and safe explicit draft routing
+  ---
+  duration_ms: 13.7483
+  type: 'test'
+  ...
+# Subtest: 29 steering samples retain original events, titles and source coordinates without auto submission
+ok 18 - 29 steering samples retain original events, titles and source coordinates without auto submission
+  ---
+  duration_ms: 1.8711
+  type: 'test'
+  ...
+# Subtest: all 363 source files including all six licenses and Kensho notices are archived byte-for-byte
+ok 19 - all 363 source files including all six licenses and Kensho notices are archived byte-for-byte
+  ---
+  duration_ms: 122.7921
+  type: 'test'
+  ...
+# Subtest: all static reference evidence retains source and resolved-file SHA provenance
+ok 20 - all static reference evidence retains source and resolved-file SHA provenance
+  ---
+  duration_ms: 85.2231
+  type: 'test'
+  ...
+# Subtest: generator ownership ledger matches assets, excludes runtime edits, and contains no deletion operation
+ok 21 - generator ownership ledger matches assets, excludes runtime edits, and contains no deletion operation
+  ---
+  duration_ms: 53.6643
+  type: 'test'
+  ...
+# Subtest: public package exports resolve the three local P4 components without private imports
+ok 22 - public package exports resolve the three local P4 components without private imports
+  ---
+  duration_ms: 12.0028
+  type: 'test'
+  ...
+# Subtest: source full outer join: six buckets, differences, counts, totals and exact matched percentage
+ok 23 - source full outer join: six buckets, differences, counts, totals and exact matched percentage
+  ---
+  duration_ms: 8.9009
+  type: 'test'
+  ...
+# Subtest: source amount tolerance is inclusive 0.01, not hidden epsilon, and applies to both monetary columns
+ok 24 - source amount tolerance is inclusive 0.01, not hidden epsilon, and applies to both monetary columns
+  ---
+  duration_ms: 2.4143
+  type: 'test'
+  ...
+# Subtest: firm tolerances are explicit and inclusive; quantity default zero is exact to 18 decimals
+ok 25 - firm tolerances are explicit and inclusive; quantity default zero is exact to 18 decimals
+  ---
+  duration_ms: 1.0746
+  type: 'test'
+  ...
+# Subtest: overlapping mismatches retain all flags with quantity then amount then timing precedence
+ok 26 - overlapping mismatches retain all flags with quantity then amount then timing precedence
+  ---
+  duration_ms: 1.1387
+  type: 'test'
+  ...
+# Subtest: explicit FX difference is a monetary comparison exception, never an inferred FX root cause
+ok 27 - explicit FX difference is a monetary comparison exception, never an inferred FX root cause
+  ---
+  duration_ms: 0.9686
+  type: 'test'
+  ...
+# Subtest: normalizes identifiers and explicit multipliers without FX conversion or decimal rounding
+ok 28 - normalizes identifiers and explicit multipliers without FX conversion or decimal rounding
+  ---
+  duration_ms: 0.6626
+  type: 'test'
+  ...
+# Subtest: huge balances, signed money and exact quantity arithmetic remain JSON-safe
+ok 29 - huge balances, signed money and exact quantity arithmetic remain JSON-safe
+  ---
+  duration_ms: 1.2981
+  type: 'test'
+  ...
+# Subtest: negative zero is canonical zero, never missing, and quantities are not rounded
+ok 30 - negative zero is canonical zero, never missing, and quantities are not rounded
+  ---
+  duration_ms: 0.5915
+  type: 'test'
+  ...
+# Subtest: net-zero totals cannot conceal offsetting record breaks
+ok 31 - net-zero totals cannot conceal offsetting record breaks
+  ---
+  duration_ms: 0.8071
+  type: 'test'
+  ...
+# Subtest: per-currency totals never offset currencies; currency belongs to the join key
+ok 32 - per-currency totals never offset currencies; currency belongs to the join key
+  ---
+  duration_ms: 0.7508
+  type: 'test'
+  ...
+# Subtest: different classes or composite key components do not collide
+ok 33 - different classes or composite key components do not collide
+  ---
+  duration_ms: 0.6644
+  type: 'test'
+  ...
+# Subtest: breaks sorted by absolute base delta within currency, with deterministic key ties
+ok 34 - breaks sorted by absolute base delta within currency, with deterministic key ties
+  ---
+  duration_ms: 0.584
+  type: 'test'
+  ...
+# Subtest: empty inputs have zero counts, no totals, null percentage, and still no signoff
+ok 35 - empty inputs have zero counts, no totals, null percentage, and still no signoff
+  ---
+  duration_ms: 0.4344
+  type: 'test'
+  ...
+# Subtest: matching never establishes trusted evidence, licensing, approval, publishing, or a journal plug
+ok 36 - matching never establishes trusted evidence, licensing, approval, publishing, or a journal plug
+  ---
+  duration_ms: 0.9567
+  type: 'test'
+  ...
+# Subtest: repeated and independent calls cannot alter data, defaults or other results
+ok 37 - repeated and independent calls cannot alter data, defaults or other results
+  ---
+  duration_ms: 2.8685
+  type: 'test'
+  ...
+# Subtest: duplicate normalized common keys on either side reject instead of aggregation
+ok 38 - duplicate normalized common keys on either side reject instead of aggregation
+  ---
+  duration_ms: 1.1195
+  type: 'test'
+  ...
+# Subtest: asOf mismatches, scope date/entity/class mismatches, and duplicate normalized scope reject
+ok 39 - asOf mismatches, scope date/entity/class mismatches, and duplicate normalized scope reject
+  ---
+  duration_ms: 1.125
+  type: 'test'
+  ...
+# Subtest: incompatible semantic quantity units and base currencies reject; no FX guess or implicit units
+ok 40 - incompatible semantic quantity units and base currencies reject; no FX guess or implicit units
+  ---
+  duration_ms: 1.8329
+  type: 'test'
+  ...
+# Subtest: finite typed decimals only: reject null, numeric JSON, exponents, overprecision and missing values
+ok 41 - finite typed decimals only: reject null, numeric JSON, exponents, overprecision and missing values
+  ---
+  duration_ms: 14.4554
+  type: 'test'
+  ...
+# Subtest: ISO dates must exist in calendar; no coercion of timestamps or ambiguous dates
+ok 42 - ISO dates must exist in calendar; no coercion of timestamps or ambiguous dates
+  ---
+  duration_ms: 1.7242
+  type: 'test'
+  ...
+# Subtest: strict nested schemas reject authority, credentials, commands, paths, endpoints and provider claims
+ok 43 - strict nested schemas reject authority, credentials, commands, paths, endpoints and provider claims
+  ---
+  duration_ms: 13.3876
+  type: 'test'
+  ...
+# Subtest: object, getter, proxy and cycle arguments are rejected without inspection or serialization
+ok 44 - object, getter, proxy and cycle arguments are rejected without inspection or serialization
+  ---
+  duration_ms: 0.348
+  type: 'test'
+  ...
+# Subtest: prototype keys, malformed JSON and nonfinite tokens reject without pollution
+ok 45 - prototype keys, malformed JSON and nonfinite tokens reject without pollution
+  ---
+  duration_ms: 1.0963
+  type: 'test'
+  ...
+# Subtest: 64 KiB UTF-8 and 256-per-side limits apply before expensive row validation
+ok 46 - 64 KiB UTF-8 and 256-per-side limits apply before expensive row validation
+  ---
+  duration_ms: 3.3189
+  type: 'test'
+  ...
+# Subtest: pure discovery is detached, strict and explicitly not a native Tool
+ok 47 - pure discovery is detached, strict and explicitly not a native Tool
+  ---
+  duration_ms: 2.652
+  type: 'test'
+  ...
+# Subtest: independent full capital-account batch passes only a DRAFT recommendation
+ok 48 - independent full capital-account batch passes only a DRAFT recommendation
+  ---
+  duration_ms: 5.374
+  type: 'test'
+  ...
+# Subtest: absent optional prior/next are NOT_PROVIDED, not continuity success
+ok 49 - absent optional prior/next are NOT_PROVIDED, not continuity success
+  ---
+  duration_ms: 1.7456
+  type: 'test'
+  ...
+# Subtest: deterministic and input remains byte-identical; output decimal strings only
+ok 50 - deterministic and input remains byte-identical; output decimal strings only
+  ---
+  duration_ms: 2.3572
+  type: 'test'
+  ...
+# Subtest: inclusive per-LP 0.01 tolerance: 115.01
+ok 51 - inclusive per-LP 0.01 tolerance: 115.01
+  ---
+  duration_ms: 0.941
+  type: 'test'
+  ...
+# Subtest: inclusive per-LP 0.01 tolerance: 114.99
+ok 52 - inclusive per-LP 0.01 tolerance: 114.99
+  ---
+  duration_ms: 2.213
+  type: 'test'
+  ...
+# Subtest: inclusive per-LP 0.01 tolerance: 115.010001
+ok 53 - inclusive per-LP 0.01 tolerance: 115.010001
+  ---
+  duration_ms: 0.78
+  type: 'test'
+  ...
+# Subtest: inclusive per-LP 0.01 tolerance: 114.989999
+ok 54 - inclusive per-LP 0.01 tolerance: 114.989999
+  ---
+  duration_ms: 0.6663
+  type: 'test'
+  ...
+# Subtest: fund tolerance is explicit, not guessed or widened from line tolerance
+ok 55 - fund tolerance is explicit, not guessed or widened from line tolerance
+  ---
+  duration_ms: 1.3331
+  type: 'test'
+  ...
+# Subtest: unsafe fund rounding threshold -0.01 is rejected
+ok 56 - unsafe fund rounding threshold -0.01 is rejected
+  ---
+  duration_ms: 0.693
+  type: 'test'
+  ...
+# Subtest: unsafe fund rounding threshold 999999.00 is rejected
+ok 57 - unsafe fund rounding threshold 999999.00 is rejected
+  ---
+  duration_ms: 0.6164
+  type: 'test'
+  ...
+# Subtest: one LP wrong ownership detected independently even while ownership sums to one
+ok 58 - one LP wrong ownership detected independently even while ownership sums to one
+  ---
+  duration_ms: 0.6823
+  type: 'test'
+  ...
+# Subtest: authoritative ownership after transfer drives recalculation despite cancelling fund sum
+ok 59 - authoritative ownership after transfer drives recalculation despite cancelling fund sum
+  ---
+  duration_ms: 0.7094
+  type: 'test'
+  ...
+# Subtest: offsetting LP ending errors cannot hide behind a correct fund NAV sum
+ok 60 - offsetting LP ending errors cannot hide behind a correct fund NAV sum
+  ---
+  duration_ms: 2.9792
+  type: 'test'
+  ...
+# Subtest: offset fee errors identify fee cause, not a generic fund-only success
+ok 61 - offset fee errors identify fee cause, not a generic fund-only success
+  ---
+  duration_ms: 1.4174
+  type: 'test'
+  ...
+# Subtest: independent beginning line mismatch held
+ok 62 - independent beginning line mismatch held
+  ---
+  duration_ms: 0.7505
+  type: 'test'
+  ...
+# Subtest: independent contributions line mismatch held
+ok 63 - independent contributions line mismatch held
+  ---
+  duration_ms: 0.5874
+  type: 'test'
+  ...
+# Subtest: independent distributions line mismatch held
+ok 64 - independent distributions line mismatch held
+  ---
+  duration_ms: 0.5222
+  type: 'test'
+  ...
+# Subtest: independent realized line mismatch held
+ok 65 - independent realized line mismatch held
+  ---
+  duration_ms: 0.5263
+  type: 'test'
+  ...
+# Subtest: independent unrealized line mismatch held
+ok 66 - independent unrealized line mismatch held
+  ---
+  duration_ms: 0.4694
+  type: 'test'
+  ...
+# Subtest: independent expenses line mismatch held
+ok 67 - independent expenses line mismatch held
+  ---
+  duration_ms: 0.4522
+  type: 'test'
+  ...
+# Subtest: independent allocated_net_income line mismatch held
+ok 68 - independent allocated_net_income line mismatch held
+  ---
+  duration_ms: 0.4228
+  type: 'test'
+  ...
+# Subtest: independent carry line mismatch held
+ok 69 - independent carry line mismatch held
+  ---
+  duration_ms: 0.4417
+  type: 'test'
+  ...
+# Subtest: independent commitment line mismatch held
+ok 70 - independent commitment line mismatch held
+  ---
+  duration_ms: 0.4817
+  type: 'test'
+  ...
+# Subtest: independent unfunded line mismatch held
+ok 71 - independent unfunded line mismatch held
+  ---
+  duration_ms: 0.9915
+  type: 'test'
+  ...
+# Subtest: independent recallable line mismatch held
+ok 72 - independent recallable line mismatch held
+  ---
+  duration_ms: 0.4802
+  type: 'test'
+  ...
+# Subtest: misaligned contribution/distribution columns do not pass
+ok 73 - misaligned contribution/distribution columns do not pass
+  ---
+  duration_ms: 0.5827
+  type: 'test'
+  ...
+# Subtest: unfunded is compared to independent actual register, not an invented commitment formula
+ok 74 - unfunded is compared to independent actual register, not an invented commitment formula
+  ---
+  duration_ms: 0.8814
+  type: 'test'
+  ...
+# Subtest: missing nav_pack is HOLD, never fabricated
+ok 75 - missing nav_pack is HOLD, never fabricated
+  ---
+  duration_ms: 0.3724
+  type: 'test'
+  ...
+# Subtest: missing commitment_register is HOLD, never fabricated
+ok 76 - missing commitment_register is HOLD, never fabricated
+  ---
+  duration_ms: 0.4546
+  type: 'test'
+  ...
+# Subtest: statements subset cannot establish full-fund PASS
+ok 77 - statements subset cannot establish full-fund PASS
+  ---
+  duration_ms: 0.5527
+  type: 'test'
+  ...
+# Subtest: nav_pack subset cannot establish full-fund PASS
+ok 78 - nav_pack subset cannot establish full-fund PASS
+  ---
+  duration_ms: 0.4827
+  type: 'test'
+  ...
+# Subtest: commitment_register subset cannot establish full-fund PASS
+ok 79 - commitment_register subset cannot establish full-fund PASS
+  ---
+  duration_ms: 0.4702
+  type: 'test'
+  ...
+# Subtest: statements incomplete LP set is HOLD
+ok 80 - statements incomplete LP set is HOLD
+  ---
+  duration_ms: 0.4874
+  type: 'test'
+  ...
+# Subtest: nav_pack incomplete LP set is HOLD
+ok 81 - nav_pack incomplete LP set is HOLD
+  ---
+  duration_ms: 0.7977
+  type: 'test'
+  ...
+# Subtest: commitment_register incomplete LP set is HOLD
+ok 82 - commitment_register incomplete LP set is HOLD
+  ---
+  duration_ms: 0.4713
+  type: 'test'
+  ...
+# Subtest: duplicate LP in statements rejected, not aggregated
+ok 83 - duplicate LP in statements rejected, not aggregated
+  ---
+  duration_ms: 0.4915
+  type: 'test'
+  ...
+# Subtest: duplicate LP in nav_pack rejected, not aggregated
+ok 84 - duplicate LP in nav_pack rejected, not aggregated
+  ---
+  duration_ms: 0.4132
+  type: 'test'
+  ...
+# Subtest: duplicate LP in commitment_register rejected, not aggregated
+ok 85 - duplicate LP in commitment_register rejected, not aggregated
+  ---
+  duration_ms: 0.4344
+  type: 'test'
+  ...
+# Subtest: duplicate LP in prior rejected, not aggregated
+ok 86 - duplicate LP in prior rejected, not aggregated
+  ---
+  duration_ms: 0.4101
+  type: 'test'
+  ...
+# Subtest: duplicate LP in next rejected, not aggregated
+ok 87 - duplicate LP in next rejected, not aggregated
+  ---
+  duration_ms: 0.4181
+  type: 'test'
+  ...
+# Subtest: full statements ownership must sum exactly to one
+ok 88 - full statements ownership must sum exactly to one
+  ---
+  duration_ms: 0.5021
+  type: 'test'
+  ...
+# Subtest: full nav_pack ownership must sum exactly to one
+ok 89 - full nav_pack ownership must sum exactly to one
+  ---
+  duration_ms: 0.4998
+  type: 'test'
+  ...
+# Subtest: NAV entity_id identity mismatch holds
+ok 90 - NAV entity_id identity mismatch holds
+  ---
+  duration_ms: 0.5212
+  type: 'test'
+  ...
+# Subtest: NAV fund_id identity mismatch holds
+ok 91 - NAV fund_id identity mismatch holds
+  ---
+  duration_ms: 1.3952
+  type: 'test'
+  ...
+# Subtest: NAV currency identity mismatch holds
+ok 92 - NAV currency identity mismatch holds
+  ---
+  duration_ms: 0.5011
+  type: 'test'
+  ...
+# Subtest: NAV period_end identity mismatch holds
+ok 93 - NAV period_end identity mismatch holds
+  ---
+  duration_ms: 0.4567
+  type: 'test'
+  ...
+# Subtest: register wrong currency and period are not compared as if interchangeable
+ok 94 - register wrong currency and period are not compared as if interchangeable
+  ---
+  duration_ms: 0.5105
+  type: 'test'
+  ...
+# Subtest: invalid calendar date 2026-02-30 held
+ok 95 - invalid calendar date 2026-02-30 held
+  ---
+  duration_ms: 0.5002
+  type: 'test'
+  ...
+# Subtest: invalid calendar date 2026-13-01 held
+ok 96 - invalid calendar date 2026-13-01 held
+  ---
+  duration_ms: 0.4245
+  type: 'test'
+  ...
+# Subtest: invalid calendar date 2026-00-00 held
+ok 97 - invalid calendar date 2026-00-00 held
+  ---
+  duration_ms: 0.4971
+  type: 'test'
+  ...
+# Subtest: prior continuity mismatch and missing LP are distinct holds
+ok 98 - prior continuity mismatch and missing LP are distinct holds
+  ---
+  duration_ms: 0.6679
+  type: 'test'
+  ...
+# Subtest: next continuity mismatch and missing LP are distinct holds
+ok 99 - next continuity mismatch and missing LP are distinct holds
+  ---
+  duration_ms: 0.6215
+  type: 'test'
+  ...
+# Subtest: provided next draft must be adjacent and same fund/currency, not a false continuity PASS
+ok 100 - provided next draft must be adjacent and same fund/currency, not a false continuity PASS
+  ---
+  duration_ms: 1.1028
+  type: 'test'
+  ...
+# Subtest: prior continuity checks NAV beginning as well as reported beginning
+ok 101 - prior continuity checks NAV beginning as well as reported beginning
+  ---
+  duration_ms: 0.6502
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation null
+ok 102 - money rejects non-exact/unsupported representation null
+  ---
+  duration_ms: 0.511
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 0
+ok 103 - money rejects non-exact/unsupported representation 0
+  ---
+  duration_ms: 0.3251
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 0.5
+ok 104 - money rejects non-exact/unsupported representation 0.5
+  ---
+  duration_ms: 0.2937
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 
+ok 105 - money rejects non-exact/unsupported representation 
+  ---
+  duration_ms: 0.2848
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 1e2
+ok 106 - money rejects non-exact/unsupported representation 1e2
+  ---
+  duration_ms: 0.4535
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation NaN
+ok 107 - money rejects non-exact/unsupported representation NaN
+  ---
+  duration_ms: 0.3109
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation Infinity
+ok 108 - money rejects non-exact/unsupported representation Infinity
+  ---
+  duration_ms: 0.3032
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 1,000.00
+ok 109 - money rejects non-exact/unsupported representation 1,000.00
+  ---
+  duration_ms: 0.2918
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation $100
+ok 110 - money rejects non-exact/unsupported representation $100
+  ---
+  duration_ms: 0.3487
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 0.0000001
+ok 111 - money rejects non-exact/unsupported representation 0.0000001
+  ---
+  duration_ms: 0.3299
+  type: 'test'
+  ...
+# Subtest: money rejects non-exact/unsupported representation 1234567890123456789012345
+ok 112 - money rejects non-exact/unsupported representation 1234567890123456789012345
+  ---
+  duration_ms: 0.3116
+  type: 'test'
+  ...
+# Subtest: unknown fields, identity, commands, credentials, endpoints and approval cannot enter any boundary
+ok 113 - unknown fields, identity, commands, credentials, endpoints and approval cannot enter any boundary
+  ---
+  duration_ms: 6.5289
+  type: 'test'
+  ...
+# Subtest: never accesses object getters, proxies or cycles: only JSON strings accepted
+ok 114 - never accesses object getters, proxies or cycles: only JSON strings accepted
+  ---
+  duration_ms: 0.308
+  type: 'test'
+  ...
+# Subtest: strict JSON rejects malformed data, duplicate keys (including escaped), depth and UTF8 budget
+ok 115 - strict JSON rejects malformed data, duplicate keys (including escaped), depth and UTF8 budget
+  ---
+  duration_ms: 3.8515
+  type: 'test'
+  ...
+# Subtest: per-source classification and independent source checks cannot be replaced by a vendor claim
+ok 116 - per-source classification and independent source checks cannot be replaced by a vendor claim
+  ---
+  duration_ms: 1.6493
+  type: 'test'
+  ...
+# Subtest: TEST_ONLY simulated extracts cannot masquerade as USER_PROVIDED documents
+ok 117 - TEST_ONLY simulated extracts cannot masquerade as USER_PROVIDED documents
+  ---
+  duration_ms: 1.4475
+  type: 'test'
+  ...
+# Subtest: terms must be explicit supported source-bounded allocation/carry/rounding, no guessed waterfall
+ok 118 - terms must be explicit supported source-bounded allocation/carry/rounding, no guessed waterfall
+  ---
+  duration_ms: 2.807
+  type: 'test'
+  ...
+# Subtest: exact positive half-cent HALF_EVEN
+ok 119 - exact positive half-cent HALF_EVEN
+  ---
+  duration_ms: 0.6996
+  type: 'test'
+  ...
+# Subtest: exact positive half-cent HALF_AWAY_FROM_ZERO
+ok 120 - exact positive half-cent HALF_AWAY_FROM_ZERO
+  ---
+  duration_ms: 0.5772
+  type: 'test'
+  ...
+# Subtest: negative half-cent is symmetric, no IEEE rounding or negative-zero artifacts
+ok 121 - negative half-cent is symmetric, no IEEE rounding or negative-zero artifacts
+  ---
+  duration_ms: 0.6431
+  type: 'test'
+  ...
+# Subtest: net rounds once from rational unrounded components, not sum of rounded displayed components
+ok 122 - net rounds once from rational unrounded components, not sum of rounded displayed components
+  ---
+  duration_ms: 0.5375
+  type: 'test'
+  ...
+# Subtest: money beyond IEEE safe integer remains exact
+ok 123 - money beyond IEEE safe integer remains exact
+  ---
+  duration_ms: 0.5974
+  type: 'test'
+  ...
+# Subtest: ownership 12-place rational precision is retained exactly, never percentage-guessing
+ok 124 - ownership 12-place rational precision is retained exactly, never percentage-guessing
+  ---
+  duration_ms: 0.8499
+  type: 'test'
+  ...
+# Subtest: maximum LP and money precision bounds are enforced
+ok 125 - maximum LP and money precision bounds are enforced
+  ---
+  duration_ms: 4.7961
+  type: 'test'
+  ...
+# Subtest: finance-pitch-agent: distinct minimum intake remains unverified
+ok 126 - finance-pitch-agent: distinct minimum intake remains unverified
+  ---
+  duration_ms: 17.2774
+  type: 'test'
+  ...
+# Subtest: finance-market-researcher: distinct minimum intake remains unverified
+ok 127 - finance-market-researcher: distinct minimum intake remains unverified
+  ---
+  duration_ms: 2.2368
+  type: 'test'
+  ...
+# Subtest: finance-earnings-reviewer: distinct minimum intake remains unverified
+ok 128 - finance-earnings-reviewer: distinct minimum intake remains unverified
+  ---
+  duration_ms: 2.0277
+  type: 'test'
+  ...
+# Subtest: finance-meeting-prep-agent: distinct minimum intake remains unverified
+ok 129 - finance-meeting-prep-agent: distinct minimum intake remains unverified
+  ---
+  duration_ms: 1.8325
+  type: 'test'
+  ...
+# Subtest: finance-model-builder: distinct minimum intake remains unverified
+ok 130 - finance-model-builder: distinct minimum intake remains unverified
+  ---
+  duration_ms: 2.3027
+  type: 'test'
+  ...
+# Subtest: finance-gl-reconciler: distinct minimum intake remains unverified
+ok 131 - finance-gl-reconciler: distinct minimum intake remains unverified
+  ---
+  duration_ms: 1.6591
+  type: 'test'
+  ...
+# Subtest: finance-kyc-screener: distinct minimum intake remains unverified
+ok 132 - finance-kyc-screener: distinct minimum intake remains unverified
+  ---
+  duration_ms: 1.5469
+  type: 'test'
+  ...
+# Subtest: finance-valuation-reviewer: distinct minimum intake remains unverified
+ok 133 - finance-valuation-reviewer: distinct minimum intake remains unverified
+  ---
+  duration_ms: 2.4605
+  type: 'test'
+  ...
+# Subtest: finance-month-end-closer: distinct minimum intake remains unverified
+ok 134 - finance-month-end-closer: distinct minimum intake remains unverified
+  ---
+  duration_ms: 1.5414
+  type: 'test'
+  ...
+# Subtest: finance-statement-auditor: distinct minimum intake remains unverified
+ok 135 - finance-statement-auditor: distinct minimum intake remains unverified
+  ---
+  duration_ms: 1.553
+  type: 'test'
+  ...
+# Subtest: business-specific stop cases do not collapse into a common report schema
+ok 136 - business-specific stop cases do not collapse into a common report schema
+  ---
+  duration_ms: 6.8892
+  type: 'test'
+  ...
+# Subtest: all ten reject identity, code, endpoint, credentials and self-reported approval fields
+ok 137 - all ten reject identity, code, endpoint, credentials and self-reported approval fields
+  ---
+  duration_ms: 73.7132
+  type: 'test'
+  ...
+# Subtest: workspace path declarations reject absolute, traversal, device, ADS and encoded targets
+ok 138 - workspace path declarations reject absolute, traversal, device, ADS and encoded targets
+  ---
+  duration_ms: 4.8579
+  type: 'test'
+  ...
+# Subtest: source/entity/period references, classification, units and exact dates are bounded
+ok 139 - source/entity/period references, classification, units and exact dates are bounded
+  ---
+  duration_ms: 6.5952
+  type: 'test'
+  ...
+# Subtest: byte/structure limits reject cycles, sparse arrays and accessors without executing code
+ok 140 - byte/structure limits reject cycles, sparse arrays and accessors without executing code
+  ---
+  duration_ms: 4.0715
+  type: 'test'
+  ...
+# Subtest: discovery is deferred, schema JSON serializable, immutable to callers and self-contained
+ok 141 - discovery is deferred, schema JSON serializable, immutable to callers and self-contained
+  ---
+  duration_ms: 61.4521
+  type: 'test'
+  ...
+# Subtest: exact main IDs, worker ownership and source coordinates agree with unchanged manifest
+ok 142 - exact main IDs, worker ownership and source coordinates agree with unchanged manifest
+  ---
+  duration_ms: 131.012
+  type: 'test'
+  ...
+# Subtest: the committed matrix matches a fresh generation
+ok 143 - the committed matrix matches a fresh generation
+  ---
+  duration_ms: 4.3494
+  type: 'test'
+  ...
+# Subtest: the matrix counts match the audited inventory
+ok 144 - the matrix counts match the audited inventory
+  ---
+  duration_ms: 0.3196
+  type: 'test'
+  ...
+# Subtest: every worker belongs to exactly one main and every main owns three
+ok 145 - every worker belongs to exactly one main and every main owns three
+  ---
+  duration_ms: 0.4366
+  type: 'test'
+  ...
+# Subtest: the 14 capabilities are unique and still contract-only
+ok 146 - the 14 capabilities are unique and still contract-only
+  ---
+  duration_ms: 0.2706
+  type: 'test'
+  ...
+# Subtest: no skill is orphaned and every skill keeps its asset status
+ok 147 - no skill is orphaned and every skill keeps its asset status
+  ---
+  duration_ms: 0.5206
+  type: 'test'
+  ...
+# Subtest: the generated document is what the generator renders and keeps the key sections
+ok 148 - the generated document is what the generator renders and keeps the key sections
+  ---
+  duration_ms: 0.7196
+  type: 'test'
+  ...
+# Subtest: packaged authority-bearing manifest validates 40 roles and exact source ownership
+ok 149 - packaged authority-bearing manifest validates 40 roles and exact source ownership
+  ---
+  duration_ms: 202.7313
+  type: 'test'
+  ...
+# Subtest: asset resolver rejects path traversal and foreign absolute or alternate-data spellings
+ok 150 - asset resolver rejects path traversal and foreign absolute or alternate-data spellings
+  ---
+  duration_ms: 42.5597
+  type: 'test'
+  ...
+# Subtest: catalogue exposes ten main roles, thirty internal workers and true source limitations
+ok 151 - catalogue exposes ten main roles, thirty internal workers and true source limitations
+  ---
+  duration_ms: 137.8865
+  type: 'test'
+  ...
+# Subtest: draft preparation validates workspace and native preset status without creating sessions
+ok 152 - draft preparation validates workspace and native preset status without creating sessions
+  ---
+  duration_ms: 97.5034
+  type: 'test'
+  ...
+# Subtest: all command targets require explicit allowed main identity and ambiguous templates stay explicit
+ok 153 - all command targets require explicit allowed main identity and ambiguous templates stay explicit
+  ---
+  duration_ms: 46.4533
+  type: 'test'
+  ...
+# Subtest: steering drafts preserve role ownership and template selection is strict at the entry
+ok 154 - steering drafts preserve role ownership and template selection is strict at the entry
+  ---
+  duration_ms: 25.7593
+  type: 'test'
+  ...
+# Subtest: the built artifact loads and returns a Cordis client plugin
+ok 155 - the built artifact loads and returns a Cordis client plugin
+  ---
+  duration_ms: 1.6417
+  type: 'test'
+  ...
+# Subtest: apply mounts every remote namespace this bundle owns
+ok 156 - apply mounts every remote namespace this bundle owns
+  ---
+  duration_ms: 6.6135
+  type: 'test'
+  ...
+# Subtest: apply registers one main panel, one sidebar entry and the two plugin pages
+ok 157 - apply registers one main panel, one sidebar entry and the two plugin pages
+  ---
+  duration_ms: 7.2196
+  type: 'test'
+  ...
+# Subtest: the serialized client still registers its dictionary namespaces
+ok 158 - the serialized client still registers its dictionary namespaces
+  ---
+  duration_ms: 3.4307
+  type: 'test'
+  ...
+# Subtest: factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+ok 159 - factory materializes through the parent ModuleLoader wrapper with only React/Zod requests
+  ---
+  duration_ms: 5.2758
+  type: 'test'
+  ...
+# Subtest: mount completes before registering resources, dictionaries or slots
+ok 160 - mount completes before registering resources, dictionaries or slots
+  ---
+  duration_ms: 4.0974
+  type: 'test'
+  ...
+# Subtest: failed mount does not leave partial registrations
+ok 161 - failed mount does not leave partial registrations
+  ---
+  duration_ms: 0.9038
+  type: 'test'
+  ...
+# Subtest: one global sidebar id matches a new main key; config and activation belong only to this package
+ok 162 - one global sidebar id matches a new main key; config and activation belong only to this package
+  ---
+  duration_ms: 0.6504
+  type: 'test'
+  ...
+# Subtest: factory dictionaries have matching bilingual keys and package locale files contain metadata only
+ok 163 - factory dictionaries have matching bilingual keys and package locale files contain metadata only
+  ---
+  duration_ms: 22.9729
+  type: 'test'
+  ...
+# Subtest: binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+ok 164 - binding callback preserves the exact Host request and native RemoteResult without unwrapping failure
+  ---
+  duration_ms: 0.8989
+  type: 'test'
+  ...
+# Subtest: directory selection uses native uiWorkspace and navigation uses layout only
+ok 165 - directory selection uses native uiWorkspace and navigation uses layout only
+  ---
+  duration_ms: 0.4335
+  type: 'test'
+  ...
+# Subtest: resource passes through native result frames, including failures, without inventing Host facts
+ok 166 - resource passes through native result frames, including failures, without inventing Host facts
+  ---
+  duration_ms: 1.1178
+  type: 'test'
+  ...
+# Subtest: native supervisor opener reads a new baseline on every physical generation
+ok 167 - native supervisor opener reads a new baseline on every physical generation
+  ---
+  duration_ms: 0.7173
+  type: 'test'
+  ...
+# Subtest: stream exceptions first produce a failed resource frame and remain visible to native retry classification
+ok 168 - stream exceptions first produce a failed resource frame and remain visible to native retry classification
+  ---
+  duration_ms: 0.806
+  type: 'test'
+  ...
+# Subtest: resource abort closes an active native stream and prevents late frames
+ok 169 - resource abort closes an active native stream and prevents late frames
+  ---
+  duration_ms: 0.6611
+  type: 'test'
+  ...
+# Subtest: pre-aborted and unsupported resource addresses do not call Host methods
+ok 170 - pre-aborted and unsupported resource addresses do not call Host methods
+  ---
+  duration_ms: 0.3313
+  type: 'test'
+  ...
+# Subtest: disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+ok 171 - disposal removes all owned registrations and old callbacks fail closed; re-enable is unique
+  ---
+  duration_ms: 0.6104
+  type: 'test'
+  ...
+# Subtest: a completed bind after plugin disposal cannot report success through the old callback
+ok 172 - a completed bind after plugin disposal cannot report success through the old callback
+  ---
+  duration_ms: 0.2855
+  type: 'test'
+  ...
+# Subtest: catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+ok 173 - catalogue provider preserves exact native RemoteResults and never synthesizes mount diagnostics
+  ---
+  duration_ms: 23.4461
+  type: 'test'
+  ...
+# Subtest: catalogue address guards, resource cancellation and unloading suppress late data
+ok 174 - catalogue address guards, resource cancellation and unloading suppress late data
+  ---
+  duration_ms: 0.6146
+  type: 'test'
+  ...
+# Subtest: catalogue errors remain explicit failed resource frames
+ok 175 - catalogue errors remain explicit failed resource frames
+  ---
+  duration_ms: 0.2903
+  type: 'test'
+  ...
+# Subtest: draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+ok 176 - draft callback distinguishes transport failure and Host business rejection; neither starts a Session
+  ---
+  duration_ms: 0.3592
+  type: 'test'
+  ...
+# Subtest: only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+ok 177 - only DRAFT_READY calls native startSession with Workspace-owned cwd and keep, returning intent not Session ID
+  ---
+  duration_ms: 0.5808
+  type: 'test'
+  ...
+# Subtest: draft preparation throw and native start failure carry distinct errors without reporting execution success
+ok 178 - draft preparation throw and native start failure carry distinct errors without reporting execution success
+  ---
+  duration_ms: 0.6339
+  type: 'test'
+  ...
+# Subtest: unloading during prepareDraft prevents native start; unloading during start cannot report ready
+ok 179 - unloading during prepareDraft prevents native start; unloading during start cannot report ready
+  ---
+  duration_ms: 0.4191
+  type: 'test'
+  ...
+# Subtest: namespace calls use the mounted child injection, never the bare remote parent (guarded callback stub)
+ok 180 - namespace calls use the mounted child injection, never the bare remote parent (guarded callback stub)
+  ---
+  duration_ms: 0.3068
+  type: 'test'
+  ...
+# Subtest: Client-embedded factory has no module closure dependencies
+ok 181 - Client-embedded factory has no module closure dependencies
+  ---
+  duration_ms: 14.7571
+  type: 'test'
+  ...
+# Subtest: all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+ok 182 - all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+  ---
+  duration_ms: 5.2686
+  type: 'test'
+  ...
+# Subtest: request codecs reject missing, wrongly typed, fractional, negative and extra fields
+ok 183 - request codecs reject missing, wrongly typed, fractional, negative and extra fields
+  ---
+  duration_ms: 5.035
+  type: 'test'
+  ...
+# Subtest: Snapshot, nested binding/error, state root and BindResult remain strict
+ok 184 - Snapshot, nested binding/error, state root and BindResult remain strict
+  ---
+  duration_ms: 6.1704
+  type: 'test'
+  ...
+# Subtest: workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+ok 185 - workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+  ---
+  duration_ms: 7.7915
+  type: 'test'
+  ...
+# Subtest: Tool output uses only the native JSON Schema subset while executor retains refinements
+ok 186 - Tool output uses only the native JSON Schema subset while executor retains refinements
+  ---
+  duration_ms: 1.2937
+  type: 'test'
+  ...
+# Subtest: reflection describes the actual public signatures and stream, without business readings
+ok 187 - reflection describes the actual public signatures and stream, without business readings
+  ---
+  duration_ms: 0.5556
+  type: 'test'
+  ...
+# Subtest: self-contained serialized factory and exact parent-owned API/namespace boundary
+ok 188 - self-contained serialized factory and exact parent-owned API/namespace boundary
+  ---
+  duration_ms: 35.1778
+  type: 'test'
+  ...
+# Subtest: unary RemoteResult and raw follow decode exactly once; native supervisor owns acceptance/disposal
+ok 189 - unary RemoteResult and raw follow decode exactly once; native supervisor owns acceptance/disposal
+  ---
+  duration_ms: 14.9977
+  type: 'test'
+  ...
+# Subtest: supervised reopen reads a fresh baseline and preserves failure before a new generation
+ok 190 - supervised reopen reads a fresh baseline and preserves failure before a new generation
+  ---
+  duration_ms: 20.057
+  type: 'test'
+  ...
+# Subtest: strict bounded snapshot rejects malformed JSON, unknown fields, secrets, IDs and incompatible metadata
+ok 191 - strict bounded snapshot rejects malformed JSON, unknown fields, secrets, IDs and incompatible metadata
+  ---
+  duration_ms: 183.6104
+  type: 'test'
+  ...
+# Subtest: Remote failure, raw unary and incorrectly wrapped follow remain failures; optional diagnostics accepted
+ok 192 - Remote failure, raw unary and incorrectly wrapped follow remain failures; optional diagnostics accepted
+  ---
+  duration_ms: 16.2721
+  type: 'test'
+  ...
+# Subtest: production policy callback passes expected revision and complete serialized binding; resource remains sole truth
+ok 193 - production policy callback passes expected revision and complete serialized binding; resource remains sole truth
+  ---
+  duration_ms: 11.3444
+  type: 'test'
+  ...
+# Subtest: policy input outer shape, duplicate grants, wildcards, bounds and credential fields are rejected before RPC
+ok 194 - policy input outer shape, duplicate grants, wildcards, bounds and credential fields are rejected before RPC
+  ---
+  duration_ms: 16.3534
+  type: 'test'
+  ...
+# Subtest: policy Host CONFLICT/REJECTED/DISPOSED and remote NOT_AUTHORIZED are surfaced without success claims
+ok 195 - policy Host CONFLICT/REJECTED/DISPOSED and remote NOT_AUTHORIZED are surfaced without success claims
+  ---
+  duration_ms: 33.5897
+  type: 'test'
+  ...
+# Subtest: pending policy callback becomes CANCELLED after disposal, including remote rejection; old callback never RPCs
+ok 196 - pending policy callback becomes CANCELLED after disposal, including remote rejection; old callback never RPCs
+  ---
+  duration_ms: 17.5099
+  type: 'test'
+  ...
+# Subtest: resource rejects foreign address, aborts exactly owned stream and unregisters on scope disposal
+ok 197 - resource rejects foreign address, aborts exactly owned stream and unregisters on scope disposal
+  ---
+  duration_ms: 9.7674
+  type: 'test'
+  ...
+# Subtest: Panel form filters writers/empty grants and builds one explicit SourceBinding from real catalogue
+ok 198 - Panel form filters writers/empty grants and builds one explicit SourceBinding from real catalogue
+  ---
+  duration_ms: 20.6266
+  type: 'test'
+  ...
+# Subtest: Panel distinguishes loading, unavailable, stale, live-empty and disables every action without live resource
+ok 199 - Panel distinguishes loading, unavailable, stale, live-empty and disables every action without live resource
+  ---
+  duration_ms: 24.8223
+  type: 'test'
+  ...
+# Subtest: existing binding row priority, enable/disable and explicit remove build complete CAS successors
+ok 200 - existing binding row priority, enable/disable and explicit remove build complete CAS successors
+  ---
+  duration_ms: 6.3602
+  type: 'test'
+  ...
+# Subtest: fourteen stable capabilities and self-contained Client schema factory
+ok 201 - fourteen stable capabilities and self-contained Client schema factory
+  ---
+  duration_ms: 22.0252
+  type: 'test'
+  ...
+# Subtest: dates, known offsets, dimensions and strict nested envelopes are validated
+ok 202 - dates, known offsets, dimensions and strict nested envelopes are validated
+  ---
+  duration_ms: 1.0817
+  type: 'test'
+  ...
+# Subtest: unit conversion is deterministic and retains original supplier/version/license provenance
+ok 203 - unit conversion is deterministic and retains original supplier/version/license provenance
+  ---
+  duration_ms: 6.5577
+  type: 'test'
+  ...
+# Subtest: sources and revisions are separate observations, never averaged or deduplicated
+ok 204 - sources and revisions are separate observations, never averaged or deduplicated
+  ---
+  duration_ms: 2.9521
+  type: 'test'
+  ...
+# Subtest: PIT uses original availability, not the later historical retrieval time
+ok 205 - PIT uses original availability, not the later historical retrieval time
+  ---
+  duration_ms: 3.0293
+  type: 'test'
+  ...
+# Subtest: currency, dimension, entity, period and accounting incompatibilities are not silently repaired
+ok 206 - currency, dimension, entity, period and accounting incompatibilities are not silently repaired
+  ---
+  duration_ms: 1.4862
+  type: 'test'
+  ...
+# Subtest: required fields are not guessed or replaced with zero
+ok 207 - required fields are not guessed or replaced with zero
+  ---
+  duration_ms: 2.3415
+  type: 'test'
+  ...
+# Subtest: ratios scale explicitly and conversion overflow is rejected
+ok 208 - ratios scale explicitly and conversion overflow is rejected
+  ---
+  duration_ms: 1.0701
+  type: 'test'
+  ...
+# Subtest: range periods may contain individual observations without erasing their original periods
+ok 209 - range periods may contain individual observations without erasing their original periods
+  ---
+  duration_ms: 0.7382
+  type: 'test'
+  ...
+# Subtest: estimates never masquerade as historical statements or actuals from an unfinished period
+ok 210 - estimates never masquerade as historical statements or actuals from an unfinished period
+  ---
+  duration_ms: 1.4081
+  type: 'test'
+  ...
+# Subtest: capability discovery reveals no Provider merely because it registered
+ok 211 - capability discovery reveals no Provider merely because it registered
+  ---
+  duration_ms: 18.8316
+  type: 'test'
+  ...
+# Subtest: explicit scope discovery exposes allowed field/market/purpose coverage, not credentials or other Session policy
+ok 212 - explicit scope discovery exposes allowed field/market/purpose coverage, not credentials or other Session policy
+  ---
+  duration_ms: 3.8715
+  type: 'test'
+  ...
+# Subtest: removal and unknown capability discovery fail closed rather than retaining stale Provider coverage
+ok 213 - removal and unknown capability discovery fail closed rather than retaining stale Provider coverage
+  ---
+  duration_ms: 3.0219
+  type: 'test'
+  ...
+# Subtest: real Cordis mounts FinanceData, registers only four control-plane schemas, and owns disposers
+ok 214 - real Cordis mounts FinanceData, registers only four control-plane schemas, and owns disposers
+  ---
+  duration_ms: 51.8982
+  type: 'test'
+  ...
+# Subtest: Config rejects out-of-range, fractional and undeclared tunables before service initialization
+ok 215 - Config rejects out-of-range, fractional and undeclared tunables before service initialization
+  ---
+  duration_ms: 38.9123
+  type: 'test'
+  ...
+# Subtest: durable policy ordering is prepare -> table.put -> commit; no catalogue publication before save
+ok 216 - durable policy ordering is prepare -> table.put -> commit; no catalogue publication before save
+  ---
+  duration_ms: 26.101
+  type: 'test'
+  ...
+# Subtest: concurrent revision-CAS requests serialize and stale request never reaches durable put
+ok 217 - concurrent revision-CAS requests serialize and stale request never reaches durable put
+  ---
+  duration_ms: 14.2965
+  type: 'test'
+  ...
+# Subtest: failed durable save preserves prior revision and query grants; write queue recovers
+ok 218 - failed durable save preserves prior revision and query grants; write queue recovers
+  ---
+  duration_ms: 32.2068
+  type: 'test'
+  ...
+# Subtest: initial durable policy and nonzero revision survive service unmount and reload
+ok 219 - initial durable policy and nonzero revision survive service unmount and reload
+  ---
+  duration_ms: 35.9772
+  type: 'test'
+  ...
+# Subtest: policy JSON cannot introduce unknown roles, disallowed sources, writers or extra authority fields
+ok 220 - policy JSON cannot introduce unknown roles, disallowed sources, writers or extra authority fields
+  ---
+  duration_ms: 21.6815
+  type: 'test'
+  ...
+# Subtest: exact Agent authority, real role revisions and Session policy scope guard actual normalization
+ok 221 - exact Agent authority, real role revisions and Session policy scope guard actual normalization
+  ---
+  duration_ms: 30.9294
+  type: 'test'
+  ...
+# Subtest: caller cancellation and exact Agent disposal abort real registry queries and release concurrency
+ok 222 - caller cancellation and exact Agent disposal abort real registry queries and release concurrency
+  ---
+  duration_ms: 19.4514
+  type: 'test'
+  ...
+# Subtest: follow streams initial plain catalog and real adapter state changes, then cancellation unsubscribes
+ok 223 - follow streams initial plain catalog and real adapter state changes, then cancellation unsubscribes
+  ---
+  duration_ms: 19.2105
+  type: 'test'
+  ...
+# Subtest: throwing provider unsubscribe cannot retain a registered capability; repeat disposal is idempotent
+ok 224 - throwing provider unsubscribe cannot retain a registered capability; repeat disposal is idempotent
+  ---
+  duration_ms: 7.2984
+  type: 'test'
+  ...
+# Subtest: registry disposal cleans every owned subscription even if the first provider throws
+ok 225 - registry disposal cleans every owned subscription even if the first provider throws
+  ---
+  duration_ms: 4.5924
+  type: 'test'
+  ...
+# Subtest: late callbacks from an old registration cannot invalidate its same-ID successor
+ok 226 - late callbacks from an old registration cannot invalidate its same-ID successor
+  ---
+  duration_ms: 1.8673
+  type: 'test'
+  ...
+# Subtest: unregister aborts a held query even if provider cleanup throws and its late response arrives
+ok 227 - unregister aborts a held query even if provider cleanup throws and its late response arrives
+  ---
+  duration_ms: 6.9444
+  type: 'test'
+  ...
+# Subtest: registration is not entitlement; explicit exact Session/role/source/capability bindings are required
+ok 228 - registration is not entitlement; explicit exact Session/role/source/capability bindings are required
+  ---
+  duration_ms: 23.6827
+  type: 'test'
+  ...
+# Subtest: the same role in another Session receives no automatic grant; writers and original-source escalation are denied
+ok 229 - the same role in another Session receives no automatic grant; writers and original-source escalation are denied
+  ---
+  duration_ms: 5.2865
+  type: 'test'
+  ...
+# Subtest: selection ranks the requested capability, not another capability or a vendor-global preference
+ok 230 - selection ranks the requested capability, not another capability or a vendor-global preference
+  ---
+  duration_ms: 5.231
+  type: 'test'
+  ...
+# Subtest: status comes from the Adapter source, not credential configuration or registration; failed status falls back
+ok 231 - status comes from the Adapter source, not credential configuration or registration; failed status falls back
+  ---
+  duration_ms: 19.0128
+  type: 'test'
+  ...
+# Subtest: fallback records validation, normalization and safe provider errors without exposing response credentials
+ok 232 - fallback records validation, normalization and safe provider errors without exposing response credentials
+  ---
+  duration_ms: 10.867
+  type: 'test'
+  ...
+# Subtest: market, fields, quality, purposes and TEST_ONLY acceptance are explicit intersecting filters
+ok 233 - market, fields, quality, purposes and TEST_ONLY acceptance are explicit intersecting filters
+  ---
+  duration_ms: 3.8004
+  type: 'test'
+  ...
+# Subtest: unregistration cancels only the removed Adapter and permits a compatible fallback; late results are discarded
+ok 234 - unregistration cancels only the removed Adapter and permits a compatible fallback; late results are discarded
+  ---
+  duration_ms: 4.5627
+  type: 'test'
+  ...
+# Subtest: policy CAS changes abort in-flight work and forbid a late result under the old policy
+ok 235 - policy CAS changes abort in-flight work and forbid a late result under the old policy
+  ---
+  duration_ms: 3.4728
+  type: 'test'
+  ...
+# Subtest: exact-scope revocation after an await discards otherwise valid observations
+ok 236 - exact-scope revocation after an await discards otherwise valid observations
+  ---
+  duration_ms: 2.3702
+  type: 'test'
+  ...
+# Subtest: explicit cancellation, deadlines and concurrency bounds do not synthesize financial observations
+ok 237 - explicit cancellation, deadlines and concurrency bounds do not synthesize financial observations
+  ---
+  duration_ms: 37.9582
+  type: 'test'
+  ...
+# Subtest: disposed registries revoke subscriptions, hide adapters and reject new queries
+ok 238 - disposed registries revoke subscriptions, hide adapters and reject new queries
+  ---
+  duration_ms: 5.6187
+  type: 'test'
+  ...
+# Subtest: non-test sources require explicit license, model-processing and logged-session permission per request
+ok 239 - non-test sources require explicit license, model-processing and logged-session permission per request
+  ---
+  duration_ms: 2.0965
+  type: 'test'
+  ...
+# Subtest: arbitrary provider diagnostics cannot export credential-bearing exception codes
+ok 240 - arbitrary provider diagnostics cannot export credential-bearing exception codes
+  ---
+  duration_ms: 1.8767
+  type: 'test'
+  ...
+# Subtest: distinct Session grants coexist while exact duplicate grants are rejected
+ok 241 - distinct Session grants coexist while exact duplicate grants are rejected
+  ---
+  duration_ms: 5.5099
+  type: 'test'
+  ...
+# Subtest: Remote descriptors expose only strict control-plane request JSON; Agent queries stay same-process
+ok 242 - Remote descriptors expose only strict control-plane request JSON; Agent queries stay same-process
+  ---
+  duration_ms: 12.4391
+  type: 'test'
+  ...
+# Subtest: Remote JSON carriers validate JSON, bound UTF-8 bytes, and reject non-string or extra payloads
+ok 243 - Remote JSON carriers validate JSON, bound UTF-8 bytes, and reject non-string or extra payloads
+  ---
+  duration_ms: 33.7236
+  type: 'test'
+  ...
+# Subtest: Remote result schemas round-trip statuses and refuse unknown status or authority/credential fields
+ok 244 - Remote result schemas round-trip statuses and refuse unknown status or authority/credential fields
+  ---
+  duration_ms: 7.7902
+  type: 'test'
+  ...
+# Subtest: every delivery-list document exists and is non-trivial
+ok 245 - every delivery-list document exists and is non-trivial
+  ---
+  duration_ms: 5.1934
+  type: 'test'
+  ...
+# Subtest: the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+ok 246 - the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+  ---
+  duration_ms: 0.867
+  type: 'test'
+  ...
+# Subtest: the matrices and reports name the known gaps instead of a blanket success
+ok 247 - the matrices and reports name the known gaps instead of a blanket success
+  ---
+  duration_ms: 0.8926
+  type: 'test'
+  ...
+# Subtest: every evidence link in the stage documents resolves to a file that exists
+ok 248 - every evidence link in the stage documents resolves to a file that exists
+  ---
+  duration_ms: 27.2837
+  type: 'test'
+  ...
+# Subtest: the acceptance directory keeps failures and passing evidence for every stage
+ok 249 - the acceptance directory keeps failures and passing evidence for every stage
+  ---
+  duration_ms: 0.7791
+  type: 'test'
+  ...
+# Subtest: the ledger is unique, well-formed and every gap names an existing evidence file
+ok 250 - the ledger is unique, well-formed and every gap names an existing evidence file
+  ---
+  duration_ms: 2.7436
+  type: 'test'
+  ...
+# Subtest: every stage that is not accepted has at least one open gap
+ok 251 - every stage that is not accepted has at least one open gap
+  ---
+  duration_ms: 0.3664
+  type: 'test'
+  ...
+# Subtest: the manual checklist covers rendering, lifecycle and accessibility gaps
+ok 252 - the manual checklist covers rendering, lifecycle and accessibility gaps
+  ---
+  duration_ms: 0.5238
+  type: 'test'
+  ...
+# Subtest: the ledger never contradicts the stage records
+ok 253 - the ledger never contradicts the stage records
+  ---
+  duration_ms: 1.3812
+  type: 'test'
+  ...
+# Subtest: the package, the build artifact and the documentation agree on one version
+ok 254 - the package, the build artifact and the documentation agree on one version
+  ---
+  duration_ms: 2.9315
+  type: 'test'
+  ...
+# Subtest: every declared bundle row resolves to an exported entry
+ok 255 - every declared bundle row resolves to an exported entry
+  ---
+  duration_ms: 2.1447
+  type: 'test'
+  ...
+# Subtest: no stage is claimed accepted while the ledger still lists a gap for it
+ok 256 - no stage is claimed accepted while the ledger still lists a gap for it
+  ---
+  duration_ms: 2.3915
+  type: 'test'
+  ...
+# Subtest: the handover names every unaccepted stage and the blocked items
+ok 257 - the handover names every unaccepted stage and the blocked items
+  ---
+  duration_ms: 0.7664
+  type: 'test'
+  ...
+# Subtest: every literal translation key exists in both dictionaries
+ok 258 - every literal translation key exists in both dictionaries
+  ---
+  duration_ms: 13.7323
+  type: 'test'
+  ...
+# Subtest: the dictionaries declare the same key set in both languages
+ok 259 - the dictionaries declare the same key set in both languages
+  ---
+  duration_ms: 3.8364
+  type: 'test'
+  ...
+# Subtest: mcp: strict metadata/result, raw unit and historical PIT
+ok 260 - mcp: strict metadata/result, raw unit and historical PIT
+  ---
+  duration_ms: 26.4451
+  type: 'test'
+  ...
+# Subtest: mcp: explicit coverage rejection rather than query-shaped fabricated observations
+ok 261 - mcp: explicit coverage rejection rather than query-shaped fabricated observations
+  ---
+  duration_ms: 6.1746
+  type: 'test'
+  ...
+# Subtest: mcp: actual-only measurement filter, no forecasts mixed into statements
+ok 262 - mcp: actual-only measurement filter, no forecasts mixed into statements
+  ---
+  duration_ms: 2.4628
+  type: 'test'
+  ...
+# Subtest: mcp: current verifiedAt, state controls, one-shot failure and abort
+ok 263 - mcp: current verifiedAt, state controls, one-shot failure and abort
+  ---
+  duration_ms: 2.4543
+  type: 'test'
+  ...
+# Subtest: mcp: armed failure belongs to next query, not an already-started query
+ok 264 - mcp: armed failure belongs to next query, not an already-started query
+  ---
+  duration_ms: 0.5661
+  type: 'test'
+  ...
+# Subtest: mcp: direct in-flight query cannot publish results after adapter unload
+ok 265 - mcp: direct in-flight query cannot publish results after adapter unload
+  ---
+  duration_ms: 0.3669
+  type: 'test'
+  ...
+# Subtest: mcp: observer containment reports failures and unload clears callbacks
+ok 266 - mcp: observer containment reports failures and unload clears callbacks
+  ---
+  duration_ms: 0.4333
+  type: 'test'
+  ...
+# Subtest: mcp: fakeCtx effect registration and cleanup (NOT native install)
+ok 267 - mcp: fakeCtx effect registration and cleanup (NOT native install)
+  ---
+  duration_ms: 0.9589
+  type: 'test'
+  ...
+# Subtest: mcp: fakeCtx failed service provision rolls registration back
+ok 268 - mcp: fakeCtx failed service provision rolls registration back
+  ---
+  duration_ms: 0.5038
+  type: 'test'
+  ...
+# Subtest: rest: strict metadata/result, raw unit and historical PIT
+ok 269 - rest: strict metadata/result, raw unit and historical PIT
+  ---
+  duration_ms: 10.4029
+  type: 'test'
+  ...
+# Subtest: rest: explicit coverage rejection rather than query-shaped fabricated observations
+ok 270 - rest: explicit coverage rejection rather than query-shaped fabricated observations
+  ---
+  duration_ms: 6.7384
+  type: 'test'
+  ...
+# Subtest: rest: actual-only measurement filter, no forecasts mixed into statements
+ok 271 - rest: actual-only measurement filter, no forecasts mixed into statements
+  ---
+  duration_ms: 2.8416
+  type: 'test'
+  ...
+# Subtest: rest: current verifiedAt, state controls, one-shot failure and abort
+ok 272 - rest: current verifiedAt, state controls, one-shot failure and abort
+  ---
+  duration_ms: 2.9839
+  type: 'test'
+  ...
+# Subtest: rest: armed failure belongs to next query, not an already-started query
+ok 273 - rest: armed failure belongs to next query, not an already-started query
+  ---
+  duration_ms: 1.4393
+  type: 'test'
+  ...
+# Subtest: rest: direct in-flight query cannot publish results after adapter unload
+ok 274 - rest: direct in-flight query cannot publish results after adapter unload
+  ---
+  duration_ms: 0.9264
+  type: 'test'
+  ...
+# Subtest: rest: observer containment reports failures and unload clears callbacks
+ok 275 - rest: observer containment reports failures and unload clears callbacks
+  ---
+  duration_ms: 0.4469
+  type: 'test'
+  ...
+# Subtest: rest: fakeCtx effect registration and cleanup (NOT native install)
+ok 276 - rest: fakeCtx effect registration and cleanup (NOT native install)
+  ---
+  duration_ms: 0.4074
+  type: 'test'
+  ...
+# Subtest: rest: fakeCtx failed service provision rolls registration back
+ok 277 - rest: fakeCtx failed service provision rolls registration back
+  ---
+  duration_ms: 0.1931
+  type: 'test'
+  ...
+# Subtest: raw interfaces are intentionally different and package-file fixture is actual JSON
+ok 278 - raw interfaces are intentionally different and package-file fixture is actual JSON
+  ---
+  duration_ms: 1.7568
+  type: 'test'
+  ...
+# Subtest: template is independently identified and defaults NOT_CONFIGURED
+ok 279 - template is independently identified and defaults NOT_CONFIGURED
+  ---
+  duration_ms: 2.0644
+  type: 'test'
+  ...
+# Subtest: pure registry integration: no registration grants, atomic fallback, distinct observations (NOT native)
+ok 280 - pure registry integration: no registration grants, atomic fallback, distinct observations (NOT native)
+  ---
+  duration_ms: 28.699
+  type: 'test'
+  ...
+# Subtest: serialized contract closes only over supplied builtin and identity
+ok 281 - serialized contract closes only over supplied builtin and identity
+  ---
+  duration_ms: 11.4329
+  type: 'test'
+  ...
+# Subtest: narrow owned requests are strict and cannot carry identity credentials endpoint
+ok 282 - narrow owned requests are strict and cannot carry identity credentials endpoint
+  ---
+  duration_ms: 6.6285
+  type: 'test'
+  ...
+# Subtest: JSON codecs reject invalid text and UTF8-overlong data
+ok 283 - JSON codecs reject invalid text and UTF8-overlong data
+  ---
+  duration_ms: 2.9634
+  type: 'test'
+  ...
+# Subtest: browser fixture serializes without imported runtime values
+ok 284 - browser fixture serializes without imported runtime values
+  ---
+  duration_ms: 0.7467
+  type: 'test'
+  ...
+# Subtest: Client uses verified public APIs and preserves missing production callback failure
+ok 285 - Client uses verified public APIs and preserves missing production callback failure
+  ---
+  duration_ms: 5.4453
+  type: 'test'
+  ...
+# Subtest: initialization downgrade, notification and tools/list are actual MCP JSON-RPC
+ok 286 - initialization downgrade, notification and tools/list are actual MCP JSON-RPC
+  ---
+  duration_ms: 2.463
+  type: 'test'
+  ...
+# Subtest: tools/call returns bounded canonical MCP text and structured synthetic data
+ok 287 - tools/call returns bounded canonical MCP text and structured synthetic data
+  ---
+  duration_ms: 0.5718
+  type: 'test'
+  ...
+# Subtest: uninitialized, unknown method, endpoint/path injection and unsupported symbol fail closed
+ok 288 - uninitialized, unknown method, endpoint/path injection and unsupported symbol fail closed
+  ---
+  duration_ms: 0.7691
+  type: 'test'
+  ...
+# Subtest: parser handles split UTF-8, CRLF and multiple newline-delimited JSON frames
+ok 289 - parser handles split UTF-8, CRLF and multiple newline-delimited JSON frames
+  ---
+  duration_ms: 1.6988
+  type: 'test'
+  ...
+# Subtest: parser rejects malformed, oversized, invalid UTF-8 and trailing incomplete frames once
+ok 290 - parser rejects malformed, oversized, invalid UTF-8 and trailing incomplete frames once
+  ---
+  duration_ms: 0.5688
+  type: 'test'
+  ...
+# Subtest: connection evidence requires observed ping AND read; any observed failure marks UNAVAILABLE
+ok 291 - connection evidence requires observed ping AND read; any observed failure marks UNAVAILABLE
+  ---
+  duration_ms: 1.2172
+  type: 'test'
+  ...
+# Subtest: all fourteen actual describe schemas accept their examples in independent basic validator
+ok 292 - all fourteen actual describe schemas accept their examples in independent basic validator
+  ---
+  duration_ms: 22.8259
+  type: 'test'
+  ...
+# Subtest: actual model-facing parameter and output schemas use only native presenter JSON subset
+ok 293 - actual model-facing parameter and output schemas use only native presenter JSON subset
+  ---
+  duration_ms: 8.3224
+  type: 'test'
+  ...
+# Subtest: basic example checker rejects type, required and additional-property violations
+ok 294 - basic example checker rejects type, required and additional-property violations
+  ---
+  duration_ms: 1.6614
+  type: 'test'
+  ...
+# Subtest: native result helper uses isError discriminant and value, never guesses content JSON
+ok 295 - native result helper uses isError discriminant and value, never guesses content JSON
+  ---
+  duration_ms: 1.9635
+  type: 'test'
+  ...
+# Subtest: probe sources have no install, shell, network, model invocation or native replacement registration
+ok 296 - probe sources have no install, shell, network, model invocation or native replacement registration
+  ---
+  duration_ms: 7.7485
+  type: 'test'
+  ...
+# Subtest: unbound workspace is shown as unbound, never as a ready workspace
+ok 297 - unbound workspace is shown as unbound, never as a ready workspace
+  ---
+  duration_ms: 7.0707
+  type: 'test'
+  ...
+# Subtest: a bound workspace names the binding state without inventing readiness elsewhere
+ok 298 - a bound workspace names the binding state without inventing readiness elsewhere
+  ---
+  duration_ms: 1.2284
+  type: 'test'
+  ...
+# Subtest: zero roles render as zero rather than a hidden card
+ok 299 - zero roles render as zero rather than a hidden card
+  ---
+  duration_ms: 1.1146
+  type: 'test'
+  ...
+# Subtest: a missing data namespace says NOT_CONFIGURED and marks the page degraded
+ok 300 - a missing data namespace says NOT_CONFIGURED and marks the page degraded
+  ---
+  duration_ms: 1.1758
+  type: 'test'
+  ...
+# Subtest: a permission denial surfaces its own code and does not look like success
+ok 301 - a permission denial surfaces its own code and does not look like success
+  ---
+  duration_ms: 1.3402
+  type: 'test'
+  ...
+# Subtest: when every read fails the page still renders four unavailable cards and a refresh
+ok 302 - when every read fails the page still renders four unavailable cards and a refresh
+  ---
+  duration_ms: 0.9827
+  type: 'test'
+  ...
+# Subtest: an empty review queue renders the empty state rather than a blank panel
+ok 303 - an empty review queue renders the empty state rather than a blank panel
+  ---
+  duration_ms: 10.4077
+  type: 'test'
+  ...
+# Subtest: a review permission denial replaces rows with the refusal and its code
+ok 304 - a review permission denial replaces rows with the refusal and its code
+  ---
+  duration_ms: 4.5382
+  type: 'test'
+  ...
+# Subtest: the review panel refuses to show rows whose policy could not be read
+ok 305 - the review panel refuses to show rows whose policy could not be read
+  ---
+  duration_ms: 3.0695
+  type: 'test'
+  ...
+# Subtest: the factory exposes a remote contract, a panel, an installer and pure decoders
+ok 306 - the factory exposes a remote contract, a panel, an installer and pure decoders
+  ---
+  duration_ms: 2.0587
+  type: 'test'
+  ...
+# Subtest: a valid summary and policy decode into a bounded view model
+ok 307 - a valid summary and policy decode into a bounded view model
+  ---
+  duration_ms: 2.75
+  type: 'test'
+  ...
+# Subtest: the decoders reject anything outside the contract
+ok 308 - the decoders reject anything outside the contract
+  ---
+  duration_ms: 0.5582
+  type: 'test'
+  ...
+# Subtest: install binds a locale namespace and a read-only loader
+ok 309 - install binds a locale namespace and a read-only loader
+  ---
+  duration_ms: 3.4567
+  type: 'test'
+  ...
+# Subtest: the loader never writes: no decision or publication method is called
+ok 310 - the loader never writes: no decision or publication method is called
+  ---
+  duration_ms: 1.1192
+  type: 'test'
+  ...
+# Subtest: the panel renders policy, totals and per-session rows from a ready state
+ok 311 - the panel renders policy, totals and per-session rows from a ready state
+  ---
+  duration_ms: 10.2034
+  type: 'test'
+  ...
+# Subtest: the panel shows the empty state and the failure state
+ok 312 - the panel shows the empty state and the failure state
+  ---
+  duration_ms: 1.4905
+  type: 'test'
+  ...
+# Subtest: a required checkpoint holds until a decision exists
+ok 313 - a required checkpoint holds until a decision exists
+  ---
+  duration_ms: 4.268
+  type: 'test'
+  ...
+# Subtest: a checkpoint the policy does not require allows the stage without any record
+ok 314 - a checkpoint the policy does not require allows the stage without any record
+  ---
+  duration_ms: 0.3221
+  type: 'test'
+  ...
+# Subtest: an approval for the same artifact allows the stage
+ok 315 - an approval for the same artifact allows the stage
+  ---
+  duration_ms: 0.5722
+  type: 'test'
+  ...
+# Subtest: changing the artifact invalidates the earlier approval
+ok 316 - changing the artifact invalidates the earlier approval
+  ---
+  duration_ms: 0.2866
+  type: 'test'
+  ...
+# Subtest: a rejection holds the stage and cannot be overwritten by a second decision
+ok 317 - a rejection holds the stage and cannot be overwritten by a second decision
+  ---
+  duration_ms: 0.3152
+  type: 'test'
+  ...
+# Subtest: only one settlement is accepted per session, run, agent and checkpoint
+ok 318 - only one settlement is accepted per session, run, agent and checkpoint
+  ---
+  duration_ms: 0.2482
+  type: 'test'
+  ...
+# Subtest: concurrent decisions in the same turn settle at most once
+ok 319 - concurrent decisions in the same turn settle at most once
+  ---
+  duration_ms: 0.2403
+  type: 'test'
+  ...
+# Subtest: a decision from another policy version is rejected and not stored
+ok 320 - a decision from another policy version is rejected and not stored
+  ---
+  duration_ms: 0.2415
+  type: 'test'
+  ...
+# Subtest: an approval taken under one snapshot cannot unlock another snapshot of the same version
+ok 321 - an approval taken under one snapshot cannot unlock another snapshot of the same version
+  ---
+  duration_ms: 0.4097
+  type: 'test'
+  ...
+# Subtest: an expired approval no longer opens the gate
+ok 322 - an expired approval no longer opens the gate
+  ---
+  duration_ms: 0.3537
+  type: 'test'
+  ...
+# Subtest: a decision without a usable artifact identity is refused
+ok 323 - a decision without a usable artifact identity is refused
+  ---
+  duration_ms: 0.9075
+  type: 'test'
+  ...
+# Subtest: records missing mandatory fields are refused
+ok 324 - records missing mandatory fields are refused
+  ---
+  duration_ms: 0.5552
+  type: 'test'
+  ...
+# Subtest: settling a checkpoint the policy does not require records nothing
+ok 325 - settling a checkpoint the policy does not require records nothing
+  ---
+  duration_ms: 0.197
+  type: 'test'
+  ...
+# Subtest: the pending projection lists required checkpoints and reflects decisions
+ok 326 - the pending projection lists required checkpoints and reflects decisions
+  ---
+  duration_ms: 0.5809
+  type: 'test'
+  ...
+# Subtest: history is ordered, immutable and carries the record fields the task requires
+ok 327 - history is ordered, immutable and carries the record fields the task requires
+  ---
+  duration_ms: 0.3278
+  type: 'test'
+  ...
+# Subtest: the gate never widens external side effects or tool authority
+ok 328 - the gate never widens external side effects or tool authority
+  ---
+  duration_ms: 1.3067
+  type: 'test'
+  ...
+# Subtest: the catalogue covers exactly the ten main Agents and never invents a worker checkpoint
+ok 329 - the catalogue covers exactly the ten main Agents and never invents a worker checkpoint
+  ---
+  duration_ms: 1.4185
+  type: 'test'
+  ...
+# Subtest: original keeps the source-mandated intermediate and final reviews
+ok 330 - original keeps the source-mandated intermediate and final reviews
+  ---
+  duration_ms: 1.811
+  type: 'test'
+  ...
+# Subtest: fast skips only the declared progress pause and keeps mandatory gates
+ok 331 - fast skips only the declared progress pause and keeps mandatory gates
+  ---
+  duration_ms: 1.4585
+  type: 'test'
+  ...
+# Subtest: strict adds assumption and result reviews on top of the original nodes
+ok 332 - strict adds assumption and result reviews on top of the original nodes
+  ---
+  duration_ms: 0.4262
+  type: 'test'
+  ...
+# Subtest: custom selects per checkpoint but cannot disable a mandatory one
+ok 333 - custom selects per checkpoint but cannot disable a mandatory one
+  ---
+  duration_ms: 0.8856
+  type: 'test'
+  ...
+# Subtest: scope resolves bundle then Agent then run, and records which levels applied
+ok 334 - scope resolves bundle then Agent then run, and records which levels applied
+  ---
+  duration_ms: 0.2848
+  type: 'test'
+  ...
+# Subtest: an invalid level fails loudly instead of silently falling back
+ok 335 - an invalid level fails loudly instead of silently falling back
+  ---
+  duration_ms: 0.3801
+  type: 'test'
+  ...
+# Subtest: locked boundaries and external side effects reject any configuration attempt
+ok 336 - locked boundaries and external side effects reject any configuration attempt
+  ---
+  duration_ms: 0.4413
+  type: 'test'
+  ...
+# Subtest: the snapshot is frozen and its digest identifies the requirement set
+ok 337 - the snapshot is frozen and its digest identifies the requirement set
+  ---
+  duration_ms: 0.5761
+  type: 'test'
+  ...
+# Subtest: checkpoint descriptions explain why a gate exists without implying approval
+ok 338 - checkpoint descriptions explain why a gate exists without implying approval
+  ---
+  duration_ms: 0.5716
+  type: 'test'
+  ...
+# Subtest: a decision survives a reload and stays once-only across restarts
+ok 339 - a decision survives a reload and stays once-only across restarts
+  ---
+  duration_ms: 3.3916
+  type: 'test'
+  ...
+# Subtest: a failed save never leaves an approval that only exists in memory
+ok 340 - a failed save never leaves an approval that only exists in memory
+  ---
+  duration_ms: 1.1194
+  type: 'test'
+  ...
+# Subtest: a stage that was running at shutdown becomes an unknown termination, not a resume
+ok 341 - a stage that was running at shutdown becomes an unknown termination, not a resume
+  ---
+  duration_ms: 0.8165
+  type: 'test'
+  ...
+# Subtest: open reports how many stages were classified as interrupted
+ok 342 - open reports how many stages were classified as interrupted
+  ---
+  duration_ms: 0.4373
+  type: 'test'
+  ...
+# Subtest: a failed stage and a changed artifact both demand a rerun
+ok 343 - a failed stage and a changed artifact both demand a rerun
+  ---
+  duration_ms: 0.5109
+  type: 'test'
+  ...
+# Subtest: a run with every required approval and terminal stage is completed
+ok 344 - a run with every required approval and terminal stage is completed
+  ---
+  duration_ms: 0.5924
+  type: 'test'
+  ...
+# Subtest: a run waiting on a required review is pending, not completed
+ok 345 - a run waiting on a required review is pending, not completed
+  ---
+  duration_ms: 0.4065
+  type: 'test'
+  ...
+# Subtest: an unknown run is distinguished from an empty queue
+ok 346 - an unknown run is distinguished from an empty queue
+  ---
+  duration_ms: 0.886
+  type: 'test'
+  ...
+# Subtest: the queue keeps two sessions apart and reflects their own decisions
+ok 347 - the queue keeps two sessions apart and reflects their own decisions
+  ---
+  duration_ms: 0.8204
+  type: 'test'
+  ...
+# Subtest: a required stage that never started keeps the run in progress rather than completed
+ok 348 - a required stage that never started keeps the run in progress rather than completed
+  ---
+  duration_ms: 0.5128
+  type: 'test'
+  ...
+# Subtest: the persisted document is versioned, monotonic and rejects corruption
+ok 349 - the persisted document is versioned, monotonic and rejects corruption
+  ---
+  duration_ms: 0.409
+  type: 'test'
+  ...
+# Subtest: a failed stage may carry a whitelisted diagnostic code and keep it across a reload
+ok 350 - a failed stage may carry a whitelisted diagnostic code and keep it across a reload
+  ---
+  duration_ms: 0.3462
+  type: 'test'
+  ...
+# Subtest: diagnostic codes are restricted and only valid on a failed stage
+ok 351 - diagnostic codes are restricted and only valid on a failed stage
+  ---
+  duration_ms: 0.3591
+  type: 'test'
+  ...
+# Subtest: all descriptions expose bounded exact strict JSON schemas and valid TEST_ONLY examples
+ok 352 - all descriptions expose bounded exact strict JSON schemas and valid TEST_ONLY examples
+  ---
+  duration_ms: 20.3112
+  type: 'test'
+  ...
+# Subtest: DCF independent flat five-year midyear valuation oracle and equity bridge
+ok 353 - DCF independent flat five-year midyear valuation oracle and equity bridge
+  ---
+  duration_ms: 1.956
+  type: 'test'
+  ...
+# Subtest: DCF uses negative source net-debt weights, never gross debt or a clamp
+ok 354 - DCF uses negative source net-debt weights, never gross debt or a clamp
+  ---
+  duration_ms: 1.918
+  type: 'test'
+  ...
+# Subtest: DCF annual growth, delta revenue NWC, exit multiple and warning flags
+ok 355 - DCF annual growth, delta revenue NWC, exit multiple and warning flags
+  ---
+  duration_ms: 4.4337
+  type: 'test'
+  ...
+# Subtest: DCF all three 5x5 sensitivities recalculate center and driver effects independently
+ok 356 - DCF all three 5x5 sensitivities recalculate center and driver effects independently
+  ---
+  duration_ms: 5.3421
+  type: 'test'
+  ...
+# Subtest: LBO independent beginning-balance interest, cash waterfall, MOIC and IRR oracle
+ok 357 - LBO independent beginning-balance interest, cash waterfall, MOIC and IRR oracle
+  ---
+  duration_ms: 0.9449
+  type: 'test'
+  ...
+# Subtest: LBO multiple-priority mandatory/sweep waterfall caps principal and retains surplus cash
+ok 358 - LBO multiple-priority mandatory/sweep waterfall caps principal and retains surplus cash
+  ---
+  duration_ms: 1.0452
+  type: 'test'
+  ...
+# Subtest: LBO 5x5 sensitivity reruns entry funding and exit returns with true center
+ok 359 - LBO 5x5 sensitivity reruns entry funding and exit returns with true center
+  ---
+  duration_ms: 1.184
+  type: 'test'
+  ...
+# Subtest: LBO loss cases are explicit and do not fabricate an XIRR
+ok 360 - LBO loss cases are explicit and do not fabricate an XIRR
+  ---
+  duration_ms: 1.6713
+  type: 'test'
+  ...
+# Subtest: three statements hand-calculated IS, WC, financing and balance-sheet ties
+ok 361 - three statements hand-calculated IS, WC, financing and balance-sheet ties
+  ---
+  duration_ms: 1.2978
+  type: 'test'
+  ...
+# Subtest: three statements annual rollforwards, negative earnings tax floor and rejected plugs
+ok 362 - three statements annual rollforwards, negative earnings tax floor and rejected plugs
+  ---
+  duration_ms: 3.481
+  type: 'test'
+  ...
+# Subtest: comps ratio oracles, QUARTILE.INC interpolation and NM exclusion n
+ok 363 - comps ratio oracles, QUARTILE.INC interpolation and NM exclusion n
+  ---
+  duration_ms: 1.4709
+  type: 'test'
+  ...
+# Subtest: comps all-NM and single-point statistics are explicit
+ok 364 - comps all-NM and single-point statistics are explicit
+  ---
+  duration_ms: 0.7503
+  type: 'test'
+  ...
+# Subtest: comps rejects all silent currency/unit/asOf/period mixing and duplicate peers
+ok 365 - comps rejects all silent currency/unit/asOf/period mixing and duplicate peers
+  ---
+  duration_ms: 2.1879
+  type: 'test'
+  ...
+# Subtest: strict validation rejects unknown code/path/URL, unsupported sections, classifications and units
+ok 366 - strict validation rejects unknown code/path/URL, unsupported sections, classifications and units
+  ---
+  duration_ms: 18.405
+  type: 'test'
+  ...
+# Subtest: finite bounded numbers, no coercion, array caps and plain JSON only
+ok 367 - finite bounded numbers, no coercion, array caps and plain JSON only
+  ---
+  duration_ms: 7.8388
+  type: 'test'
+  ...
+# Subtest: hash is deterministic across property order, changes on inputs, and caller data is untouched
+ok 368 - hash is deterministic across property order, changes on inputs, and caller data is untouched
+  ---
+  duration_ms: 1.6041
+  type: 'test'
+  ...
+# Subtest: only exact source Bash exception roles with assigned financial skills acquire bounded computation
+ok 369 - only exact source Bash exception roles with assigned financial skills acquire bounded computation
+  ---
+  duration_ms: 2.4205
+  type: 'test'
+  ...
+# Subtest: progressive contracts and fixed numeric results remain bounded and role-attributed
+ok 370 - progressive contracts and fixed numeric results remain bounded and role-attributed
+  ---
+  duration_ms: 21.1736
+  type: 'test'
+  ...
+# Subtest: modeler cannot calculate unassigned models or inject code/path fields
+ok 371 - modeler cannot calculate unassigned models or inject code/path fields
+  ---
+  duration_ms: 3.4894
+  type: 'test'
+  ...
+# Subtest: both describe and calculate require the existing exact Agent admission even through a held definition
+ok 372 - both describe and calculate require the existing exact Agent admission even through a held definition
+  ---
+  duration_ms: 2.7939
+  type: 'test'
+  ...
+# Subtest: all fourteen deferred descriptions give parseable TEST_ONLY examples without claiming Provider coverage
+ok 373 - all fourteen deferred descriptions give parseable TEST_ONLY examples without claiming Provider coverage
+  ---
+  duration_ms: 21.9688
+  type: 'test'
+  ...
+# Subtest: query delegates only the exact Agent, validated request and native cancellation signal
+ok 374 - query delegates only the exact Agent, validated request and native cancellation signal
+  ---
+  duration_ms: 0.6769
+  type: 'test'
+  ...
+# Subtest: an absent backend reports NOT_CONFIGURED without invented observations
+ok 375 - an absent backend reports NOT_CONFIGURED without invented observations
+  ---
+  duration_ms: 0.2736
+  type: 'test'
+  ...
+# Subtest: old free-form source requests and model-supplied identity/permission fields are rejected
+ok 376 - old free-form source requests and model-supplied identity/permission fields are rejected
+  ---
+  duration_ms: 2.259
+  type: 'test'
+  ...
+# Subtest: held definitions cannot disclose data across Agent identity, role source removal or Writer promotion
+ok 377 - held definitions cannot disclose data across Agent identity, role source removal or Writer promotion
+  ---
+  duration_ms: 0.9871
+  type: 'test'
+  ...
+# Subtest: a grant revoked while the backend awaits prevents disclosure of its late result
+ok 378 - a grant revoked while the backend awaits prevents disclosure of its late result
+  ---
+  duration_ms: 0.6588
+  type: 'test'
+  ...
+# Subtest: UTF-8 request/result budgets reject rather than silently truncate
+ok 379 - UTF-8 request/result budgets reject rather than silently truncate
+  ---
+  duration_ms: 1.2763
+  type: 'test'
+  ...
+# Subtest: pre-aborted execution never contacts the backend
+ok 380 - pre-aborted execution never contacts the backend
+  ---
+  duration_ms: 0.5568
+  type: 'test'
+  ...
+# Subtest: all 40 actual manifest roles retain distinct source file/query allowlists and never expose Bash
+ok 381 - all 40 actual manifest roles retain distinct source file/query allowlists and never expose Bash
+  ---
+  duration_ms: 10.4171
+  type: 'test'
+  ...
+# Subtest: every source-authorized query role requires structured input and an actual backend, never invented data
+ok 382 - every source-authorized query role requires structured input and an actual backend, never invented data
+  ---
+  duration_ms: 17.1189
+  type: 'test'
+  ...
+# Subtest: invalid trusted roles fail before capability registration
+ok 383 - invalid trusted roles fail before capability registration
+  ---
+  duration_ms: 1.6414
+  type: 'test'
+  ...
+# Subtest: workspace and assigned skill resources are read-only data, bounded and hashed
+ok 384 - workspace and assigned skill resources are read-only data, bounded and hashed
+  ---
+  duration_ms: 23.8443
+  type: 'test'
+  ...
+# Subtest: relative path validation rejects traversal, absolute, UNC, drive-relative, ADS and Windows aliases
+ok 385 - relative path validation rejects traversal, absolute, UNC, drive-relative, ADS and Windows aliases
+  ---
+  duration_ms: 0.7633
+  type: 'test'
+  ...
+# Subtest: writer creates independent artifact directories; original and cross-Session writes fail at the executor
+ok 386 - writer creates independent artifact directories; original and cross-Session writes fail at the executor
+  ---
+  duration_ms: 17.0501
+  type: 'test'
+  ...
+# Subtest: source readonly or no-Read roles cannot gain write/edit/Read through direct runtime calls
+ok 387 - source readonly or no-Read roles cannot gain write/edit/Read through direct runtime calls
+  ---
+  duration_ms: 9.1237
+  type: 'test'
+  ...
+# Subtest: concurrent create never overwrites, and hash plus native version CAS rejects stale/concurrent edits
+ok 388 - concurrent create never overwrites, and hash plus native version CAS rejects stale/concurrent edits
+  ---
+  duration_ms: 20.5947
+  type: 'test'
+  ...
+# Subtest: real junction ancestors and linked files cannot expose or mutate other directories
+ok 389 - real junction ancestors and linked files cannot expose or mutate other directories
+  ---
+  duration_ms: 19.3975
+  type: 'test'
+  ...
+# Subtest: glob and literal grep are bounded and do not interpret content as commands
+ok 390 - glob and literal grep are bounded and do not interpret content as commands
+  ---
+  duration_ms: 22.9504
+  type: 'test'
+  ...
+# Subtest: text bounds hold at exact line limit and oversized/NUL edits reject before any mutation
+ok 391 - text bounds hold at exact line limit and oversized/NUL edits reject before any mutation
+  ---
+  duration_ms: 17.2944
+  type: 'test'
+  ...
+# Subtest: native cwd changes, lost authority and disposal revoke actual file access
+ok 392 - native cwd changes, lost authority and disposal revoke actual file access
+  ---
+  duration_ms: 5.8278
+  type: 'test'
+  ...
+# Subtest: actual-dispatch guard enforces explicit worker allowlist, absolute depth, cwd and blocks alternate tools
+ok 393 - actual-dispatch guard enforces explicit worker allowlist, absolute depth, cwd and blocks alternate tools
+  ---
+  duration_ms: 0.5726
+  type: 'test'
+  ...
+# Subtest: actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+ok 394 - actual Cordis plus scope stubs isolate main/Worker schemas and actual dispatch from ambient tools
+  ---
+  duration_ms: 33.8741
+  type: 'test'
+  ...
+# Subtest: real Cordis Service facades with one backing grant admit query and native calls despite distinct proxy references
+ok 395 - real Cordis Service facades with one backing grant admit query and native calls despite distinct proxy references
+  ---
+  duration_ms: 15.1344
+  type: 'test'
+  ...
+# Subtest: captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched
+ok 396 - captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched
+  ---
+  duration_ms: 6.6814
+  type: 'test'
+  ...
+# Subtest: replacement Cordis root without a grant cannot authorize a retained native own subagent or held executor
+ok 397 - replacement Cordis root without a grant cannot authorize a retained native own subagent or held executor
+  ---
+  duration_ms: 8.9499
+  type: 'test'
+  ...
+# Subtest: dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+ok 398 - dispatch guards deny a same-scope alternate tool and cannot be overwritten by a pre-policy allow
+  ---
+  duration_ms: 8.7647
+  type: 'test'
+  ...
+# Subtest: missing local native definitions never borrow same-name globals; missing declared module fails creation
+ok 399 - missing local native definitions never borrow same-name globals; missing declared module fails creation
+  ---
+  duration_ms: 8.9863
+  type: 'test'
+  ...
+# Subtest: Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+ok 400 - Agent disposal removes own tools/masks/guards; another Agent and the original preset registrations remain independent
+  ---
+  duration_ms: 8.1566
+  type: 'test'
+  ...
+# Subtest: role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+ok 401 - role plugin disposal removes its Agent contributions without lifting independent retained floor or leaking ordinary tools
+  ---
+  duration_ms: 5.6996
+  type: 'test'
+  ...
+# Subtest: global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+ok 402 - global authority removal unloads hard-dependent role effects while independent floor keeps retained Workers closed
+  ---
+  duration_ms: 5.5424
+  type: 'test'
+  ...
+# Subtest: independent native floor denies retained main-own subagent after role unmount or global owner removal
+ok 403 - independent native floor denies retained main-own subagent after role unmount or global owner removal
+  ---
+  duration_ms: 15.5253
+  type: 'test'
+  ...
+# Subtest: floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+ok 404 - floor source/prompt revision checks refuse an active grant when trusted source identity drifts
+  ---
+  duration_ms: 7.5213
+  type: 'test'
+  ...
+# Subtest: same role ID in separate retained composition scopes does not share effects or runtime grants
+ok 405 - same role ID in separate retained composition scopes does not share effects or runtime grants
+  ---
+  duration_ms: 9.9373
+  type: 'test'
+  ...
+# Subtest: entry validates Config strictly and requires a genuine composition scope
+ok 406 - entry validates Config strictly and requires a genuine composition scope
+  ---
+  duration_ms: 3.6409
+  type: 'test'
+  ...
+# Subtest: every card decodes from its own source and reports that source
+ok 407 - every card decodes from its own source and reports that source
+  ---
+  duration_ms: 2.9478
+  type: 'test'
+  ...
+# Subtest: a malformed or failed payload degrades only its own card
+ok 408 - a malformed or failed payload degrades only its own card
+  ---
+  duration_ms: 0.2837
+  type: 'test'
+  ...
+# Subtest: the loader reads four sources and keeps per-card failures
+ok 409 - the loader reads four sources and keeps per-card failures
+  ---
+  duration_ms: 0.5992
+  type: 'test'
+  ...
+# Subtest: missing namespaces are reported as NOT_CONFIGURED rather than crashing
+ok 410 - missing namespaces are reported as NOT_CONFIGURED rather than crashing
+  ---
+  duration_ms: 0.2589
+  type: 'test'
+  ...
+# Subtest: the loader never writes: no decision, binding or policy call is made
+ok 411 - the loader never writes: no decision, binding or policy call is made
+  ---
+  duration_ms: 0.2793
+  type: 'test'
+  ...
+# Subtest: the panel renders four cards, the degraded warning and the read-only note
+ok 412 - the panel renders four cards, the degraded warning and the read-only note
+  ---
+  duration_ms: 7.1766
+  type: 'test'
+  ...
+# Subtest: a delivered workbook is validated before the browser sees it
+ok 413 - a delivered workbook is validated before the browser sees it
+  ---
+  duration_ms: 0.7641
+  type: 'test'
+  ...
+# Subtest: saving a workbook uses one anchor, then revokes the object URL
+ok 414 - saving a workbook uses one anchor, then revokes the object URL
+  ---
+  duration_ms: 0.4268
+  type: 'test'
+  ...
+# Subtest: the panel offers one download control and reports its state
+ok 415 - the panel offers one download control and reports its state
+  ---
+  duration_ms: 1.6431
+  type: 'test'
+  ...
+# Subtest: fully qualified path check rejects Windows current-drive/root paths
+ok 416 - fully qualified path check rejects Windows current-drive/root paths
+  ---
+  duration_ms: 1.61
+  type: 'test'
+  ...
+# Subtest: cold root is singular and unbound; actual methods validate before side effects
+ok 417 - cold root is singular and unbound; actual methods validate before side effects
+  ---
+  duration_ms: 12.8235
+  type: 'test'
+  ...
+# Subtest: bind persists native-returned canonical path/id and onboarding after durability; switch retains old registration
+ok 418 - bind persists native-returned canonical path/id and onboarding after durability; switch retains old registration
+  ---
+  duration_ms: 12.7074
+  type: 'test'
+  ...
+# Subtest: directory alias resolves through native-create substitute; saved spelling is canonical
+ok 419 - directory alias resolves through native-create substitute; saved spelling is canonical
+  ---
+  duration_ms: 5.4317
+  type: 'test'
+  ...
+# Subtest: relative, missing, file and permission failures reject and preserve the existing root
+ok 420 - relative, missing, file and permission failures reject and preserve the existing root
+  ---
+  duration_ms: 7.0775
+  type: 'test'
+  ...
+# Subtest: concurrent same-revision binds serialize and late work cannot overwrite the winner
+ok 421 - concurrent same-revision binds serialize and late work cannot overwrite the winner
+  ---
+  duration_ms: 4.8797
+  type: 'test'
+  ...
+# Subtest: persisted CAS is rechecked after asynchronous native registration, not only at request admission
+ok 422 - persisted CAS is rechecked after asynchronous native registration, not only at request admission
+  ---
+  duration_ms: 3.257
+  type: 'test'
+  ...
+# Subtest: storage failure leaves old state untouched and does not publish a successful change
+ok 423 - storage failure leaves old state untouched and does not publish a successful change
+  ---
+  duration_ms: 5.9384
+  type: 'test'
+  ...
+# Subtest: publication waits for storage acknowledgment and persists before follow receives a binding
+ok 424 - publication waits for storage acknowledgment and persists before follow receives a binding
+  ---
+  duration_ms: 4.2083
+  type: 'test'
+  ...
+# Subtest: root survives helper reconstruction; native registry missing is explicit
+ok 425 - root survives helper reconstruction; native registry missing is explicit
+  ---
+  duration_ms: 5.8026
+  type: 'test'
+  ...
+# Subtest: status differentiates missing directory, path drift and simulated permission failures without rewriting state
+ok 426 - status differentiates missing directory, path drift and simulated permission failures without rewriting state
+  ---
+  duration_ms: 4.4121
+  type: 'test'
+  ...
+# Subtest: follow has an initial baseline, observes events without polling, suppresses duplicate values and aborts pending next
+ok 427 - follow has an initial baseline, observes events without polling, suppresses duplicate values and aborts pending next
+  ---
+  duration_ms: 3.9182
+  type: 'test'
+  ...
+# Subtest: filesystem event reconciliation publishes a real missing-directory observation
+ok 428 - filesystem event reconciliation publishes a real missing-directory observation
+  ---
+  duration_ms: 5.0364
+  type: 'test'
+  ...
+# Subtest: follow subscribe/bind race never loses the latest durable revision; pre-abort and return release listeners
+ok 429 - follow subscribe/bind race never loses the latest durable revision; pre-abort and return release listeners
+  ---
+  duration_ms: 3.6404
+  type: 'test'
+  ...
+# Subtest: unbind CAS clears only the default and retains onboarding, files and native registrations
+ok 430 - unbind CAS clears only the default and retains onboarding, files and native registrations
+  ---
+  duration_ms: 3.9244
+  type: 'test'
+  ...
+# Subtest: dispose drains in-flight commit, ends streams and prevents post-dispose publication or registration
+ok 431 - dispose drains in-flight commit, ends streams and prevents post-dispose publication or registration
+  ---
+  duration_ms: 3.4749
+  type: 'test'
+  ...
+# Subtest: actual Cordis Service initialization owns strict/tool effects and closes the injected domain on unload (substituted services)
+ok 432 - actual Cordis Service initialization owns strict/tool effects and closes the injected domain on unload (substituted services)
+  ---
+  duration_ms: 38.9563
+  type: 'test'
+  ...
+# Subtest: the writer produces a readable stored ZIP with every required part
+ok 433 - the writer produces a readable stored ZIP with every required part
+  ---
+  duration_ms: 1.4133
+  type: 'test'
+  ...
+# Subtest: every entry carries a matching CRC32 and the sheet XML holds the cells
+ok 434 - every entry carries a matching CRC32 and the sheet XML holds the cells
+  ---
+  duration_ms: 0.5455
+  type: 'test'
+  ...
+# Subtest: sheet names and workbook relations are consistent
+ok 435 - sheet names and workbook relations are consistent
+  ---
+  duration_ms: 0.264
+  type: 'test'
+  ...
+# Subtest: the writer refuses unsafe sheet structures
+ok 436 - the writer refuses unsafe sheet structures
+  ---
+  duration_ms: 0.7461
+  type: 'test'
+  ...
+# Subtest: text is escaped so a value cannot break the sheet XML
+ok 437 - text is escaped so a value cannot break the sheet XML
+  ---
+  duration_ms: 0.5182
+  type: 'test'
+  ...
+1..437
+# tests 437
+# suites 0
+# pass 437
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 928.2726
