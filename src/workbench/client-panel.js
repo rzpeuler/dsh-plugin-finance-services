@@ -6,7 +6,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     en: {
       title: 'Financial workbench', loading: 'Reading workspace state…', refresh: 'Refresh',
       tasksTitle: 'Tasks', templates: 'templates', checkpoints: 'checkpoints', startsNothing: 'Declarations only — no run is started here.',
-      backToSession: 'Open session', noSessionLinked: 'No session linked',
+      backToSession: 'Open session', noSessionLinked: 'No session linked', sessionGone: 'That session no longer exists',
+      sessionOpened: 'Switched to the session', sessionOpenFailed: 'The session could not be opened',
       download: 'Download workbook', downloading: 'Building the workbook…', downloaded: 'Workbook downloaded.',
       downloadFailed: 'The workbook could not be delivered.',
       workspace: 'Workspace', binding: 'Binding', unbound: 'Unbound', bound: 'Bound', revision: 'Revision',
@@ -23,7 +24,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     zh: {
       title: '金融工作台', loading: '正在读取工作区状态…', refresh: '刷新',
       tasksTitle: '任务', templates: '个模板', checkpoints: '检查点', startsNothing: '仅声明：此处不会启动任何运行。',
-      backToSession: '打开会话', noSessionLinked: '未关联会话',
+      backToSession: '打开会话', noSessionLinked: '未关联会话', sessionGone: '该会话已不存在',
+      sessionOpened: '已切换到该会话', sessionOpenFailed: '无法打开该会话',
       download: '下载工作簿', downloading: '正在生成工作簿…', downloaded: '工作簿已下载。',
       downloadFailed: '工作簿未能交付。',
       workspace: '工作区', binding: '绑定', unbound: '未绑定', bound: '已绑定', revision: '修订',
@@ -206,8 +208,9 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       h('p', { className: 'finance-p2__meta' }, `${t('source')}: ${state.source}`))
   }
 
-  function Panel({ workbenchT: t, loadOverview, loadWorkbook, openSession }) {
+  function Panel({ workbenchT: t, loadOverview, loadWorkbook, openSession, sessionGone }) {
     const [state, setState] = React.useState({ status: 'loading', cards: null, error: null })
+    const [navigation, setNavigation] = React.useState({ sessionId: null, status: 'idle', error: null })
     const [download, setDownload] = React.useState({ status: 'idle', error: null })
     const startDownload = () => {
       if (!loadWorkbook) { setDownload({ status: 'error', error: 'gateway/unavailable' }); return }
@@ -260,9 +263,19 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       card(t, t('deliverablesTitle'), deliverables ? (deliverables.items.length === 0 ? h('p', null, t('noDeliverables'))
         : h('ul', { className: 'finance-p2__list' }, deliverables.items.slice(0, 10).map(item => h('li', { key: `${item.runId}:${item.sha256}` },
           `${item.path} · ${t('bytes')}: ${item.bytes} · ${t('classification')}: ${item.classification} · ${t('sha')}: ${item.sha256.slice(0, 12)}…`,
-          item.sessionId && openSession
-            ? h('button', { type: 'button', onClick: () => openSession(item.sessionId) }, t('backToSession'))
-            : h('span', { className: 'finance-p2__meta' }, item.sessionId ? ` ${t('noSessionLinked')}` : ''))))) : null, cards.deliverables),
+          item.sessionId && sessionGone?.(item.sessionId)
+            ? h('span', { className: 'finance-p2__meta' }, ` ${t('sessionGone')}`)
+            : item.sessionId && openSession
+              ? h('button', { type: 'button', onClick: () => {
+                try {
+                  openSession(item.sessionId)
+                  setNavigation({ sessionId: item.sessionId, status: 'done', error: null })
+                } catch (error) {
+                  // A refusal must be visible: silence here is what made the first attempt undiagnosable.
+                  setNavigation({ sessionId: item.sessionId, status: 'error', error: error?.code ?? error?.name ?? 'navigation/refused' })
+                }
+              } }, t('backToSession'))
+              : h('span', { className: 'finance-p2__meta' }, item.sessionId ? ` ${t('noSessionLinked')}` : ''))))) : null, cards.deliverables),
       card(t, t('reviews'), reviews ? h('p', null,
         `${t('sessions')}: ${reviews.sessions} · ${t('items')}: ${reviews.items} · ${t('pending')}: ${reviews.pending} · ${t('decided')}: ${reviews.decided}`)
         : null, cards.reviews),
@@ -273,6 +286,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
         h('button', { type: 'button', onClick: refresh, disabled: state.status === 'loading' }, t('refresh'))),
       loading, degraded, list,
       state.status === 'error' ? h('p', { className: 'finance-p2__error' }, `${t('unavailable')} (${state.error})`) : null,
+      navigation.status === 'done' ? h('p', { className: 'finance-p2__meta' }, `${t('sessionOpened')} (${shortId(navigation.sessionId)})`) : null,
+      navigation.status === 'error' ? h('p', { className: 'finance-p2__error' }, `${t('sessionOpenFailed')} (${navigation.error})`) : null,
       h('p', null,
         h('button', { type: 'button', onClick: startDownload, disabled: download.status === 'working' }, t('download')),
         download.status === 'working' ? ` ${t('downloading')}` : null,
@@ -310,10 +325,18 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       ? async () => decodeWorkbook(await ctx.remote.financeReview.reviewWorkbook({}))
       : null
     // Native navigation only: the page's own uiWorkspace selects the Session and shows its Conversation.
+    // Navigation stays native, but a refusal must reach the panel instead of disappearing.
     const openSession = typeof ctx.uiWorkspace?.openSession === 'function'
-      ? sessionId => { try { ctx.uiWorkspace.openSession(sessionId) } catch { /* navigation refused; the page keeps its selection */ } }
+      ? sessionId => ctx.uiWorkspace.openSession(sessionId)
       : null
-    return { workbenchT, loadOverview, loadWorkbook, openSession }
+    // The page's own session service is optional: when present it tells us a stale id from a live one.
+    const sessions = typeof ctx.get === 'function' ? ctx.get('sessions') : undefined
+    const sessionGone = typeof sessions?.binding === 'function' || typeof sessions?.scope === 'function'
+      ? sessionId => {
+        try { return !(sessions.binding?.(sessionId) ?? sessions.scope?.(sessionId)) } catch { return true }
+      }
+      : null
+    return { workbenchT, loadOverview, loadWorkbook, openSession, sessionGone }
   }
 
   return { Panel, install, decodeWorkspace, decodeCatalogue, decodeDataSources, decodeReviews, decodeRuns,

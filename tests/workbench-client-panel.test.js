@@ -299,3 +299,52 @@ test('the installer exposes the session handle only when the page provides one',
   })
   assert.equal(withoutNav.openSession, null)
 })
+
+test('a stale session is labelled instead of rendering a dead button', async () => {
+  const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+  stub.reset()
+  const gone = id => id === 'session-a'
+  client.Panel({ workbenchT: key => key, loadOverview: load, openSession: () => {}, sessionGone: gone })
+  await new Promise(resolve => setImmediate(resolve))
+  await new Promise(resolve => setImmediate(resolve))
+  stub.flush(); stub.rewind()
+  const tree = client.Panel({ workbenchT: key => key, loadOverview: load, openSession: () => {}, sessionGone: gone })
+  const buttons = flatten(tree).filter(node => node && node.type === 'button')
+  assert.equal(buttons.filter(button => texts(button).join(' ').includes('backToSession')).length, 0)
+  assert.ok(texts(tree).join(' ').includes('sessionGone'))
+})
+
+test('clicking always produces a visible outcome, success or refusal', async () => {
+  const load = async () => ({ workspace: client.decodeWorkspace(snapshot), roles: client.decodeCatalogue(catalogue),
+    dataSources: client.decodeDataSources(data), reviews: client.decodeReviews(reviews),
+    tasks: client.decodeTemplates(templates),
+    runs: client.decodeRuns(runs), deliverables: client.decodeDeliverables(deliverables) })
+  const render = async openSession => {
+    stub.reset()
+    client.Panel({ workbenchT: key => key, loadOverview: load, openSession })
+    await new Promise(resolve => setImmediate(resolve))
+    await new Promise(resolve => setImmediate(resolve))
+    stub.flush()
+    const tree = client.Panel({ workbenchT: key => key, loadOverview: load, openSession })
+    return tree
+  }
+  const successTree = await render(() => {})
+  const successButton = flatten(successTree).filter(node => node && node.type === 'button' && texts(node).join(' ').includes('backToSession'))[0]
+  assert.ok(successButton, 'the session button must exist for a live session')
+  successButton.props.onClick()
+  stub.rewind()
+  const afterSuccess = client.Panel({ workbenchT: key => key, loadOverview: load, openSession: () => {} })
+  assert.ok(texts(afterSuccess).join(' ').includes('sessionOpened'))
+
+  const failureTree = await render(() => { const error = new Error('refused'); error.code = 'navigation/refused'; throw error })
+  const failureButton = flatten(failureTree).filter(node => node && node.type === 'button' && texts(node).join(' ').includes('backToSession'))[0]
+  failureButton.props.onClick()
+  stub.rewind()
+  const afterFailure = client.Panel({ workbenchT: key => key, loadOverview: load, openSession: () => { throw Object.assign(new Error('refused'), { code: 'navigation/refused' }) } })
+  const failureText = texts(afterFailure).join(' ')
+  assert.ok(failureText.includes('sessionOpenFailed'), failureText)
+  assert.ok(failureText.includes('navigation/refused'), failureText)
+})

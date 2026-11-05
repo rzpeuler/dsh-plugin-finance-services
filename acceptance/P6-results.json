@@ -425,13 +425,20 @@
     ]
   },
   "deliverableOpen": {
-    "status": "BUILT_INSTALLED_AWAITING_CLICK",
-    "implementation": "deliverable rows call the page's own uiWorkspace.openSession(sessionId); no new navigation service",
-    "clientTests": "tests/workbench-client-panel.test.js (3 new checks: button, handler, installer guard)",
+    "status": "BUILT_INSTALLED_CLICK_FAILED_FIXED_AWAITING_RETRY",
+    "failure": "P6-deliverable-open-failure-001.md",
+    "fix": {
+      "visibleOutcome": "a click now renders either the switched session or the refusal code",
+      "staleSession": "when the page exposes a session service, an unknown id renders 'that session no longer exists' instead of a dead button",
+      "noSwallowing": "the handler no longer catches and discards navigation errors"
+    },
+    "clientTests": {
+      "passed": 14,
+      "tap": "P6-workbench-tests-004.tap"
+    },
     "install": {
       "application": "applied"
     },
-    "clicked": false,
-    "check": "UI-5 in P6-manual-plan-001.json"
+    "retriedByUser": false
   }
 }

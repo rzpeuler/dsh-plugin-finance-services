@@ -96,15 +96,15 @@
     {
       "id": "P6-DELIVERABLE-OPEN",
       "stage": "P6",
-      "title": "Deliverables now offer the native open-session action; the click itself is unverified",
+      "title": "Open-session was clicked and did nothing; the failure is now visible and stale sessions are labelled",
       "status": "PARTIAL",
-      "blockedBy": "A person must refresh the page, open a deliverable's session and confirm the switch.",
+      "blockedBy": "A person must refresh and retry the click; the earlier attempt failed silently.",
       "evidence": [
-        "acceptance/P6-manual-plan-001.json",
-        "acceptance/P6-index-native-pass-001.json"
+        "acceptance/P6-deliverable-open-failure-001.md",
+        "acceptance/P6-manual-plan-001.json"
       ],
-      "notClaimed": "Verified navigation, or opening the file itself",
-      "nextStep": "Perform UI-5 and record the outcome."
+      "notClaimed": "Verified navigation",
+      "nextStep": "Retry UI-5 and report whether it switches or shows a refusal code."
     },
     {
       "id": "P6-LIFECYCLE-UI",
