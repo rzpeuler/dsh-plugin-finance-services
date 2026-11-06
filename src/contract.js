@@ -51,7 +51,16 @@ export function createFinanceContract(z) {
     'Choose a free-form prompt, command or steering example, not several at once')
   const PreparedDraft = z.strictObject({ status: z.enum(['DRAFT_READY', 'REJECTED']), workspaceId: z.string().nullable(), agentPreset: z.string().nullable(),
     prompt: z.string(), whenDraftExists: z.literal('keep'), autoSubmit: z.literal(false), error: ErrorInfo.nullable() })
-  const schemas = { EmptyRequest, BindRequest, UnbindRequest, Snapshot, BindResult, StateRoot, ToolRequest, Catalog, PrepareDraftRequest, PreparedDraft, TaskTemplates, TaskTemplate }
+  const ConfigRowId = z.enum(['finance-data', 'finance-review'])
+  const RowConfigRequest = z.strictObject({ rowId: ConfigRowId })
+  const RowConfigSnapshot = z.strictObject({ status: z.enum(['READY', 'UNAVAILABLE']), rowId: ConfigRowId,
+    configJson: z.string().max(20000), error: ErrorInfo.nullable() })
+  const SaveRowConfigRequest = z.strictObject({ rowId: ConfigRowId, expectedJson: z.string().max(20000), configJson: z.string().max(20000) })
+  const SaveRowConfigResult = z.strictObject({ status: z.enum(['APPLIED', 'CONFLICT', 'UNAVAILABLE', 'REJECTED']),
+    rowId: ConfigRowId, error: ErrorInfo.nullable() })
+  const schemas = { EmptyRequest, BindRequest, UnbindRequest, Snapshot, BindResult, StateRoot, ToolRequest, Catalog,
+    PrepareDraftRequest, PreparedDraft, TaskTemplates, TaskTemplate, ConfigRowId, RowConfigRequest, RowConfigSnapshot,
+    SaveRowConfigRequest, SaveRowConfigResult }
   const codec = name => ({ mode: 'strict', typeSymbol: `${packageName}#${name}`, create: () => schemas[name] })
   const descriptor = (method, input, output, description) => ({
     id: `${packageName}#financeOperations/${method}`,
@@ -67,6 +76,8 @@ export function createFinanceContract(z) {
     descriptor('catalog', 'EmptyRequest', 'Catalog', 'Read the installed main roles, internal Workers, scoped Skills and draft templates with native preset diagnostics.'),
     descriptor('taskTemplates', 'EmptyRequest', 'TaskTemplates', 'Read the ten declared task-intake templates with their version and required checkpoints. It reports declarations, not authorization, files or a started run.'),
     descriptor('prepareDraft', 'PrepareDraftRequest', 'PreparedDraft', 'Validate a main role, template and bound Workspace; return an unsent draft intent without creating a Session or executing it.'),
+    descriptor('rowConfig', 'RowConfigRequest', 'RowConfigSnapshot', 'Read the active native finance-data or finance-review Loader configuration for the Plugin Manager row form.'),
+    descriptor('saveRowConfig', 'SaveRowConfigRequest', 'SaveRowConfigResult', 'Validate and persist whitelisted finance-data or finance-review fields through the native Config Editor; reject stale values.'),
     {
       ...descriptor('follow', 'EmptyRequest', 'Snapshot', 'Follow the initial snapshot and subsequent observed changes until cancellation or service disposal.'),
       mode: 'stream', cancellation: { parameter: 'signal' },

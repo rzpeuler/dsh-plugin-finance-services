@@ -1,0 +1,124 @@
+﻿TAP version 13
+# Subtest: a decision survives a reload and stays once-only across restarts
+ok 1 - a decision survives a reload and stays once-only across restarts
+  ---
+  duration_ms: 1.599
+  type: 'test'
+  ...
+# Subtest: a failed save never leaves an approval that only exists in memory
+ok 2 - a failed save never leaves an approval that only exists in memory
+  ---
+  duration_ms: 0.6205
+  type: 'test'
+  ...
+# Subtest: a stage that was running at shutdown becomes an unknown termination, not a resume
+ok 3 - a stage that was running at shutdown becomes an unknown termination, not a resume
+  ---
+  duration_ms: 0.4878
+  type: 'test'
+  ...
+# Subtest: open reports how many stages were classified as interrupted
+ok 4 - open reports how many stages were classified as interrupted
+  ---
+  duration_ms: 0.2608
+  type: 'test'
+  ...
+# Subtest: a failed stage and a changed artifact both demand a rerun
+ok 5 - a failed stage and a changed artifact both demand a rerun
+  ---
+  duration_ms: 0.3054
+  type: 'test'
+  ...
+# Subtest: a run with every required approval and terminal stage is completed
+ok 6 - a run with every required approval and terminal stage is completed
+  ---
+  duration_ms: 0.3501
+  type: 'test'
+  ...
+# Subtest: a run waiting on a required review is pending, not completed
+ok 7 - a run waiting on a required review is pending, not completed
+  ---
+  duration_ms: 0.2478
+  type: 'test'
+  ...
+# Subtest: an unknown run is distinguished from an empty queue
+ok 8 - an unknown run is distinguished from an empty queue
+  ---
+  duration_ms: 0.33
+  type: 'test'
+  ...
+# Subtest: the queue keeps two sessions apart and reflects their own decisions
+ok 9 - the queue keeps two sessions apart and reflects their own decisions
+  ---
+  duration_ms: 0.4334
+  type: 'test'
+  ...
+# Subtest: a required stage that never started keeps the run in progress rather than completed
+ok 10 - a required stage that never started keeps the run in progress rather than completed
+  ---
+  duration_ms: 0.3384
+  type: 'test'
+  ...
+# Subtest: a policy switch preserves historical decisions but never reauthorizes them under the new snapshot
+ok 11 - a policy switch preserves historical decisions but never reauthorizes them under the new snapshot
+  ---
+  duration_ms: 0.9373
+  type: 'test'
+  ...
+# Subtest: the persisted document is versioned, monotonic and rejects corruption
+ok 12 - the persisted document is versioned, monotonic and rejects corruption
+  ---
+  duration_ms: 0.212
+  type: 'test'
+  ...
+# Subtest: a failed stage may carry a whitelisted diagnostic code and keep it across a reload
+ok 13 - a failed stage may carry a whitelisted diagnostic code and keep it across a reload
+  ---
+  duration_ms: 0.2174
+  type: 'test'
+  ...
+# Subtest: diagnostic codes are restricted and only valid on a failed stage
+ok 14 - diagnostic codes are restricted and only valid on a failed stage
+  ---
+  duration_ms: 0.2166
+  type: 'test'
+  ...
+# Subtest: rowConfig reads live ConfigEditor values for the exact finance-data row
+ok 15 - rowConfig reads live ConfigEditor values for the exact finance-data row
+  ---
+  duration_ms: 3.0582
+  type: 'test'
+  ...
+# Subtest: saveRowConfig updates only whitelisted fields and preserves hidden review instance settings
+ok 16 - saveRowConfig updates only whitelisted fields and preserves hidden review instance settings
+  ---
+  duration_ms: 1.5296
+  type: 'test'
+  ...
+# Subtest: stale edits conflict, invalid custom policy is rejected, and absent rows are unavailable
+ok 17 - stale edits conflict, invalid custom policy is rejected, and absent rows are unavailable
+  ---
+  duration_ms: 0.686
+  type: 'test'
+  ...
+# Subtest: policy lifecycle failures expose a sanitized history diagnostic, not raw paths
+ok 18 - policy lifecycle failures expose a sanitized history diagnostic, not raw paths
+  ---
+  duration_ms: 0.3874
+  type: 'test'
+  ...
+# Subtest: row config cannot target another Loader entry or write when ConfigEditor is absent
+ok 19 - row config cannot target another Loader entry or write when ConfigEditor is absent
+  ---
+  duration_ms: 0.6276
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 149.6723

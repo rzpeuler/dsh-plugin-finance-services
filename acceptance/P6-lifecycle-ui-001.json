@@ -1,0 +1,31 @@
+{
+  "stage": "P6",
+  "id": "P6_LIFECYCLE_UI_001",
+  "observedAt": "2026-11-06T16:06:36+08:00[Asia/Shanghai]",
+  "status": "USER_CONFIRMED_DISABLE_REENABLE_PASS",
+  "humanObservation": "用户回报：‘已经完成测试，测试顺利通过’。此回复针对本次请求的 Plugin Manager UI 禁用/重新启用测试。",
+  "testedScope": {
+    "pluginManagerDisableAndReenableUI": true,
+    "bundlePanelHiddenThenRestored": true,
+    "hostRowsUnloadAndReturn": true,
+    "userDataPersistenceThroughToggle": true,
+    "installUpgradeOrReinstallUI": false
+  },
+  "notTranscribed": [
+    "intermediate disabled-state screenshot or exact UI text",
+    "specific persisted record/value compared"
+  ],
+  "postReenableInspect": {
+    "clientRowConfigKeysActive": [
+      "@local/dsh-financial-services#finance-data",
+      "@local/dsh-financial-services#finance-review"
+    ],
+    "hostConfigSchemasPresent": [
+      "include:finance-data",
+      "include:finance-review"
+    ],
+    "configEditorServiceAvailable": true
+  },
+  "remainingLifecycleScope": ["Plugin Manager install", "upgrade", "uninstall/reinstall UI flows"],
+  "scope": "Closes only the disable/re-enable UI portion. The broader lifecycle gap remains partial until install, upgrade and uninstall/reinstall UI flows are separately observed."
+}

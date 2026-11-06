@@ -24,8 +24,8 @@ test('the report states the version, the installation shape and no false complet
 })
 
 test('the reported gap counts match the ledger', () => {
-  assert.equal(open.length, 9)
-  assert.equal(closed.length, 2)
+  assert.equal(open.length, 8)
+  assert.equal(closed.length, 3)
   assert.ok(report.includes(`未闭合缺口（${open.length}）`), 'the report heading must carry the real count')
   for (const gap of open) assert.ok(report.includes(gap.id), `report must list ${gap.id}`)
 })

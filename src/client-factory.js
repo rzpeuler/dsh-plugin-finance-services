@@ -74,6 +74,13 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     required: 'Enter or choose an existing absolute directory path.',
     requestFailed: 'The request failed. Check the error below before trying again.',
     cancelled: 'Financial Services was unloaded. Check any pending binding save or native draft after re-enabling the bundle.',
+    configDataTitle: 'Finance data runtime', configReviewTitle: 'Finance review policy',
+    configTimeout: 'Request timeout (ms)', configConcurrency: 'Maximum concurrent queries',
+    configPolicy: 'Review policy', configCustomJson: 'Custom policy JSON',
+    configSave: 'Save configuration', configSaving: 'Saving configuration…', configSaved: 'Configuration saved through the Host Config Editor.',
+    configLoading: 'Loading current Host configuration…', configUnavailable: 'Current configuration values are not available from the Host.',
+    configConflict: 'Configuration changed elsewhere. Reload this page before saving.',
+    configSaveFailed: 'The Host refused this configuration update.', configInvalid: 'Enter values within the documented range and policy rules.',
   }
   const zh = {
     title: 'Financial Services',
@@ -136,6 +143,13 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     required: '请输入或选择真实存在目录的绝对路径。',
     requestFailed: '请求失败，请查看下方错误后重试。',
     cancelled: 'Financial Services 已卸载；如有在途绑定保存或原生草稿，请重新启用后核对其最终状态。',
+    configDataTitle: '财务数据运行时', configReviewTitle: '财务审核策略',
+    configTimeout: '请求超时（毫秒）', configConcurrency: '最大并发查询数',
+    configPolicy: '审核策略', configCustomJson: '自定义策略 JSON',
+    configSave: '保存配置', configSaving: '正在保存配置…', configSaved: '已通过 Host 原生配置编辑器保存。',
+    configLoading: '正在读取 Host 当前配置…', configUnavailable: 'Host 当前配置值不可用。',
+    configConflict: '配置已被其他操作修改，请重新载入此页后再保存。',
+    configSaveFailed: 'Host 拒绝了此配置更新。', configInvalid: '请输入符合范围与策略规则的值。',
   }
   const CSS = `
 .finance-p2 { box-sizing: border-box; color: var(--dsw-alias-label-primary); font: inherit; line-height: 1.55; min-width: 0; }
@@ -150,20 +164,20 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
 .finance-p2 dt { color: var(--dsw-alias-label-secondary); }
 .finance-p2 dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
 .finance-p2__form { display: grid; gap: 10px; margin-top: 20px; }
-.finance-p2 input, .finance-p2 select { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; }
+.finance-p2 input, .finance-p2 select { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--dsw-alias-label-tertiary); border-radius: 8px; background: var(--dsw-alias-bg-base); color: var(--dsw-alias-label-primary); font: inherit; }
 .finance-p2 input[type="checkbox"] { width: auto; min-width: 16px; min-height: 16px; padding: 0; }
-.finance-p2 input::placeholder { color: var(--dsw-alias-label-tertiary); }
+.finance-p2 input::placeholder { color: var(--dsw-alias-label-secondary); }
 .finance-p2__actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.finance-p2 button { min-height: 38px; max-width: 100%; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; padding: 8px 14px; font: inherit; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-button-elevated-fill); cursor: pointer; }
+.finance-p2 button { min-height: 38px; max-width: 100%; border: 1px solid var(--dsw-alias-label-tertiary); border-radius: 8px; padding: 8px 14px; font: inherit; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-button-elevated-fill); cursor: pointer; }
 .finance-p2 button:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
 .finance-p2 button.finance-p2__primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-inverted); }
 .finance-p2 button:disabled, .finance-p2 input:disabled { opacity: .55; cursor: not-allowed; }
 .finance-p2 :focus-visible { outline: 2px solid var(--dsw-alias-state-business-primary); outline-offset: 3px; }
-.finance-p2__error { color: var(--dsw-alias-state-error-primary); overflow-wrap: anywhere; }
+.finance-p2__error { color: color-mix(in srgb, var(--dsw-alias-state-error-primary) 95%, var(--dsw-alias-label-primary)); overflow-wrap: anywhere; }
 .finance-p2__badge { display: inline-block; border: 1px solid var(--dsw-alias-border-l2); border-radius: 6px; padding: 2px 8px; font-size: 13px; }
 .finance-p2 ul { margin: 8px 0; padding-inline-start: 22px; }
 .finance-p2 li { overflow-wrap: anywhere; }
-.finance-p2 textarea { box-sizing: border-box; width: 100%; min-height: 90px; padding: 10px; border: 1px solid var(--dsw-alias-border-l3); border-radius: 8px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); font: inherit; resize: vertical; }
+.finance-p2 textarea { box-sizing: border-box; width: 100%; min-height: 90px; padding: 10px; border: 1px solid var(--dsw-alias-label-tertiary); border-radius: 8px; color: var(--dsw-alias-label-primary); background: var(--dsw-alias-bg-base); font: inherit; resize: vertical; }
 .finance-p2 details { border-top: 1px solid var(--dsw-alias-border-l2); padding-block: 12px; min-width: 0; }
 .finance-p2 summary { cursor: pointer; overflow-wrap: anywhere; font-weight: 600; }
 .finance-p2__list { display: grid; gap: 12px; }
@@ -183,6 +197,125 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     return h('p', { role: 'alert', id, className: 'finance-p2__error' },
       error.code ? `${error.code}: ` : '', error.message || t('unknownError'))
   }
+
+  function RowConfiguration({ t, view, kind, getRowConfig, saveRowConfig }) {
+    const rowId = kind === 'data' ? 'finance-data' : 'finance-review'
+    const [readState, setReadState] = React.useState({ status: 'loading' })
+    const [config, setConfig] = React.useState(null)
+    const [draft, setDraft] = React.useState(null)
+    const [saveState, setSaveState] = React.useState('idle')
+    const [saveError, setSaveError] = React.useState('')
+    React.useEffect(() => {
+      let active = true
+      setReadState({ status: 'loading' })
+      Promise.resolve().then(() => getRowConfig?.()).then(remote => {
+        if (!active) return
+        if (!remote?.ok) {
+          setReadState({ status: 'unavailable', message: remote?.error?.message ?? t('configUnavailable') })
+          return
+        }
+        const result = remote.value
+        if (result?.status !== 'READY') {
+          setReadState({ status: 'unavailable', message: result?.error?.message ?? t('configUnavailable') })
+          return
+        }
+        const value = JSON.parse(result.configJson)
+        if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('invalid configuration shape')
+        setConfig(value)
+        setDraft(value)
+        setReadState({ status: 'ready' })
+      }).catch(() => {
+        if (active) setReadState({ status: 'unavailable', message: t('configUnavailable') })
+      })
+      setSaveState('idle')
+      setSaveError('')
+      return () => { active = false }
+    }, [rowId, view])
+
+    const summary = readState.status === 'ready'
+      ? kind === 'data'
+        ? `${t('configTimeout')}: ${config.requestTimeoutMs} · ${t('configConcurrency')}: ${config.maxConcurrentQueries}`
+        : `${t('configPolicy')}: ${config.policyId}`
+      : readState.status === 'loading' ? t('configLoading') : readState.message
+    if (view === 'summary') return h('span', null, summary)
+
+    if (readState.status !== 'ready' || !config || !draft) {
+      return h('section', { className: 'finance-p2 finance-p2__card', role: readState.status === 'unavailable' ? 'alert' : 'status' },
+        h('h2', null, t(kind === 'data' ? 'configDataTitle' : 'configReviewTitle')),
+        h('p', { className: 'finance-p2__hint' }, summary))
+    }
+
+    const saving = saveState === 'saving'
+    const valueOf = key => draft[key] ?? config[key]
+    const input = (key, label, min, max) => {
+      const id = `finance-config-${kind}-${key}`
+      return h('label', { htmlFor: id, className: 'finance-p2__field' },
+        h('span', null, label),
+        h('input', { id, type: 'number', min, max, step: 1, value: String(valueOf(key)), disabled: saving,
+          onChange: event => setDraft({ ...draft, [key]: event.target.value === '' ? '' : Number(event.target.value) }) }))
+    }
+    const submit = async event => {
+      event?.preventDefault?.()
+      if (saving) return
+      const next = kind === 'data'
+        ? { requestTimeoutMs: valueOf('requestTimeoutMs'), maxConcurrentQueries: valueOf('maxConcurrentQueries') }
+        : { policyId: valueOf('policyId'), customJson: valueOf('customJson') }
+      if (kind === 'data' && (!Number.isInteger(next.requestTimeoutMs) || next.requestTimeoutMs < 1 || next.requestTimeoutMs > 300000
+        || !Number.isInteger(next.maxConcurrentQueries) || next.maxConcurrentQueries < 1 || next.maxConcurrentQueries > 128)) {
+        setSaveState('invalid'); return
+      }
+      if (kind === 'review' && (!['original', 'fast', 'strict', 'custom'].includes(next.policyId)
+        || next.policyId === 'custom' && !next.customJson.trim()
+        || next.policyId !== 'custom' && next.customJson.trim())) { setSaveState('invalid'); return }
+      if (kind === 'review' && next.customJson.trim()) {
+        try { JSON.parse(next.customJson) } catch { setSaveState('invalid'); return }
+      }
+      setSaveState('saving')
+      setSaveError('')
+      try {
+        const remote = await saveRowConfig?.({ expectedJson: JSON.stringify(config), configJson: JSON.stringify(next) })
+        if (!remote?.ok) {
+          setSaveError(remote?.error?.message ?? t('configSaveFailed'))
+          setSaveState('failed')
+          return
+        }
+        const result = remote.value
+        if (result?.status === 'APPLIED') {
+          setConfig(next); setDraft(next); setSaveState('saved')
+        } else if (result?.status === 'CONFLICT') setSaveState('conflict')
+        else {
+          setSaveError(result?.error?.message ?? t('configSaveFailed'))
+          setSaveState('failed')
+        }
+      } catch { setSaveError(t('configSaveFailed')); setSaveState('failed') }
+    }
+
+    return h('section', { className: 'finance-p2 finance-p2__card', 'aria-live': 'polite' },
+      h('h2', null, t(kind === 'data' ? 'configDataTitle' : 'configReviewTitle')),
+      kind === 'data'
+        ? h('div', { className: 'finance-p2__form' },
+          input('requestTimeoutMs', t('configTimeout'), 1, 300000),
+          input('maxConcurrentQueries', t('configConcurrency'), 1, 128))
+        : h('div', { className: 'finance-p2__form' },
+          h('label', { htmlFor: 'finance-config-review-policy', className: 'finance-p2__field' },
+            h('span', null, t('configPolicy')),
+            h('select', { id: 'finance-config-review-policy', value: String(valueOf('policyId')), disabled: saving,
+              onChange: event => setDraft({ ...draft, policyId: event.target.value, ...(event.target.value === 'custom' ? {} : { customJson: '' }) }) },
+              ...['original', 'fast', 'strict', 'custom'].map(policyId => h('option', { key: policyId, value: policyId }, policyId)))),
+          h('label', { htmlFor: 'finance-config-review-json', className: 'finance-p2__field' },
+            h('span', null, t('configCustomJson')),
+            h('textarea', { id: 'finance-config-review-json', value: String(valueOf('customJson') ?? ''), disabled: saving,
+              onChange: event => setDraft({ ...draft, customJson: event.target.value }) }))),
+      h('div', { className: 'finance-p2__actions' },
+        h('button', { type: 'button', disabled: saving, onClick: submit }, saving ? t('configSaving') : t('configSave'))),
+      saveState === 'saved' ? h('p', { className: 'finance-p2__hint', role: 'status' }, t('configSaved')) : null,
+      saveState === 'conflict' ? h('p', { className: 'finance-p2__error', role: 'alert' }, t('configConflict')) : null,
+      saveState === 'failed' ? h('p', { className: 'finance-p2__error', role: 'alert' }, saveError || t('configSaveFailed')) : null,
+      saveState === 'invalid' ? h('p', { className: 'finance-p2__error', role: 'alert' }, t('configInvalid')) : null)
+  }
+
+  const FinanceDataRowConfig = props => h(RowConfiguration, { ...props, kind: 'data' })
+  const FinanceReviewRowConfig = props => h(RowConfiguration, { ...props, kind: 'review' })
 
   function FinanceIcon({ size }) {
     return h('svg', { width: size, height: size, viewBox: '0 0 32 32', fill: 'none', 'aria-hidden': true, focusable: false },
@@ -525,6 +658,10 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
         },
       }), 'financial-services: catalogue resource')
       const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps, ...reviewProps, ...workbenchProps })
+      const rowConfigInject = rowId => () => ({
+        getRowConfig: () => ctx.remote.financeOperations.rowConfig({ rowId }),
+        saveRowConfig: request => ctx.remote.financeOperations.saveRowConfig({ rowId, ...request }),
+      })
       ctx.slots.inject('main', () => ctx.slots.register({ name: 'main', key: PANEL, locale: NS, inject }, WorkspacePage))
       ctx.slots.inject('sidebar.panellist', () => ctx.slots.register({
         name: 'sidebar.panellist', id: PANEL, order: 30, label: () => t('title'), locale: NS,
@@ -532,9 +669,14 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
       ctx.slots.inject('plugins.bundle.activation', () => ctx.slots.register({
         name: 'plugins.bundle.activation', key: PACKAGE, locale: NS, inject,
       }, ActivationGuide))
-      ctx.slots.inject('plugins.bundle.config', () => ctx.slots.register({
-        name: 'plugins.bundle.config', key: PACKAGE, locale: NS, inject,
-      }, WorkspacePage))
+      // Plugin Manager row configuration is keyed by `<bundle package>#<row id>`.
+      // Do not put the Financial Services workbench in the bundle-config slot: that slot is a settings page.
+      ctx.slots.inject('plugins.row.config', () => ctx.slots.register({
+        name: 'plugins.row.config', key: `${PACKAGE}#finance-data`, locale: NS, inject: rowConfigInject('finance-data'),
+      }, FinanceDataRowConfig))
+      ctx.slots.inject('plugins.row.config', () => ctx.slots.register({
+        name: 'plugins.row.config', key: `${PACKAGE}#finance-review`, locale: NS, inject: rowConfigInject('finance-review'),
+      }, FinanceReviewRowConfig))
       })
     },
   }

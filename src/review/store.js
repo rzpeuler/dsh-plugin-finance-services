@@ -14,8 +14,9 @@ const digestOf = value => createHash('sha256').update(JSON.stringify(value)).dig
  * Durable review state over a caller-supplied document seam.
  *
  * `load()` returns the persisted document or undefined; `save(next)` persists it. The store
- * rebuilds its gate from the persisted decisions on every load, so there is exactly one fact
- * source and a restart cannot invent approvals. Stage records exist to classify interrupted
+ * rebuilds its gate from decisions matching the active policy snapshot; older decisions remain
+ * immutable history and cannot authorize a new snapshot. There is one fact source and a restart
+ * cannot invent approvals. Stage records exist to classify interrupted
  * work; a process that restarted cannot resume a RUNNING stage in place.
  */
 export class ReviewStore {
@@ -43,6 +44,10 @@ export class ReviewStore {
     const document = persisted ? this.#normalize(persisted) : emptyDocument()
     this.#gate = new ReviewGate({ snapshot: this.#snapshot, now: this.#now })
     for (const review of document.reviews) {
+      // Keep decisions from older policy snapshots as immutable audit history, but never replay
+      // them into the active gate: a matching policy version alone does not authorize a decision
+      // under a different requirements digest.
+      if (review.snapshotDigest !== this.#snapshot.digest) continue
       const outcome = this.#gate.settle(review)
       if (outcome.status !== 'SETTLED' && outcome.status !== 'IDEMPOTENT_NOOP') {
         fail('STORE_CORRUPT', `persisted review ${review.reviewId} could not be replayed: ${outcome.status}`)
@@ -154,8 +159,10 @@ export class ReviewStore {
         if (!stages.length) continue
         for (const stage of stages) {
           const review = reviewsByKey.get(stageKey(stage))
-          const decision = this.#gate.evaluate({ sessionId: review?.sessionId ?? stage.sessionId ?? '', runId: stage.runId,
-            agentId, checkpointId, artifact: stage.artifact ?? { version: 'unrecorded' } })
+          const decision = review && review.snapshotDigest !== this.#snapshot.digest
+            ? Object.freeze({ decision: 'HOLD', reason: 'SNAPSHOT_MISMATCH', agentId, checkpointId, reviewId: review.reviewId })
+            : this.#gate.evaluate({ sessionId: review?.sessionId ?? stage.sessionId ?? '', runId: stage.runId,
+              agentId, checkpointId, artifact: stage.artifact ?? { version: 'unrecorded' } })
           rows.push(Object.freeze({
             sessionId: review?.sessionId ?? stage.sessionId ?? null, runId: stage.runId, agentId, checkpointId, requirement,
             reviewId: review?.reviewId ?? null, decision: decision.decision, reason: decision.reason,
@@ -201,7 +208,7 @@ export class ReviewStore {
         const stage = stages.find(record => record.agentId === agentId && record.checkpointId === checkpointId)
         if (!stage) { missingStage.push({ agentId, checkpointId }); continue }
         const review = reviews.get(stageKey(stage))
-        if (!review || review.status !== 'APPROVED') awaitingReview.push({ agentId, checkpointId })
+        if (!review || review.snapshotDigest !== this.#snapshot.digest || review.status !== 'APPROVED') awaitingReview.push({ agentId, checkpointId })
       }
     }
     if (missingStage.length) {

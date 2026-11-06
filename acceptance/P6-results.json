@@ -1,8 +1,8 @@
 {
   "stage": "P6",
-  "status": "CRITERIA_ESTABLISHED_IMPLEMENTATION_STARTED",
+  "status": "PARTIAL_REMAINING_LIFECYCLE_ACCESSIBILITY_OFFLINE",
   "stageAccepted": false,
-  "observedDate": "2026-11-05",
+  "observedDate": "2026-11-06",
   "previousStages": [
     {
       "stage": "P3",
@@ -36,14 +36,14 @@
     "P6-DELIVERABLES": "PASS_USER_OBSERVED",
     "P6-REVIEWQUEUE": "PASS_USER_OBSERVED",
     "P6-DATASOURCES": "PASS_USER_OBSERVED",
-    "P6-SETTINGS": "PARTIAL_NATIVE_CONFIG_SURFACE_AND_LIVE_VIEW_NOT_RENDERED",
+    "P6-SETTINGS": "PASS_USER_CONFIRMED_FIELDS_SAVE_POLICY_SNAPSHOT_HISTORY",
     "P6-NAV": "PASS_USER_OBSERVED",
     "P6-I18N": "PARTIAL_STATIC_COVERAGE",
     "P6-RESPONSIVE": "PASS_USER_OBSERVED",
     "P6-PERMISSION": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-LIFECYCLE": "PARTIAL_RESTART_CONFIRMED",
+    "P6-LIFECYCLE": "PARTIAL_DISABLE_REENABLE_UNINSTALL_REINSTALL_CONFIRMED_LOCAL_UPGRADE_UNAVAILABLE_GENERIC_UNTESTED",
     "P6-OFFLINE": "PARTIAL_SCENARIO_COVERAGE",
-    "P6-A11Y": "PARTIAL_USER_OBSERVED_NARROW_DARK_FOCUS",
+    "P6-A11Y": "PARTIAL_STATIC_CONTRAST_AND_POSTFIX_VISUAL_PASS_SCREENREADER_PENDING",
     "P6-NO-FAKE": "PARTIAL_SCENARIO_COVERAGE",
     "P6-BROWSER-RENDERING": "PASS_USER_OBSERVED",
     "P6-DELIVERABLE-OPEN": "PASS_USER_OBSERVED"
@@ -52,11 +52,12 @@
   "notClaimed": [
     "P6 complete",
     "P3/P4/P5 complete",
-    "Visual acceptance",
+    "Upgrade UI and offline acceptance",
+    "Screen-reader/formal contrast acceptance",
     "Commercial financial E2E"
   ],
   "workbench": {
-    "status": "BUILT_INSTALLED_NOT_RENDERED",
+    "status": "PASS_USER_OBSERVED_SEVEN_SECTIONS",
     "source": "../src/workbench/client-panel.js",
     "cards": [
       "workspace binding and status",
@@ -79,14 +80,17 @@
       "failed": 0,
       "evidence": "P6-workbench-tests-002.tap"
     },
-    "rendered": false,
+    "rendered": true,
+    "humanEvidence": "P6-manual-2026-11-06-001.md",
+    "renderedScope": "All seven sections had data and no error codes; exact contents were not transcribed by the observer.",
     "renders": [
-      "runs list (top 10)",
-      "deliverable list (top 10) with bytes, classification and hash prefix"
-    ]
+      "all seven workbench sections (human confirmation)",
+      "runs list and deliverable card as built/tested projections"
+    ],
+    "detailInteractionsNotSeparatelyConfirmed": ["per-agent detail expansion", "task-template detail"]
   },
   "runsAndDeliverablesIndex": {
-    "status": "PASS_NATIVE_INDEX_NOT_RENDERED",
+    "status": "PASS_NATIVE_INDEX_AND_WORKBENCH_RENDERED",
     "evidence": "P6-index-native-pass-001.json",
     "domain": "financial_artifacts",
     "checksPassed": 7,
@@ -100,7 +104,8 @@
     ],
     "decisionEndpoints": "UNAVAILABLE",
     "readOnly": true,
-    "clientSections": "NOT_BUILT"
+    "clientSections": "Rendered in the seven-section workbench summary; dedicated independent index pages are not built",
+    "humanEvidence": "P6-manual-2026-11-06-001.md"
   },
   "remainingKeyAcceptance": [
     "Manual browser acceptance per MANUAL_CHECKLIST.md",
@@ -110,8 +115,23 @@
     "Native Office delivery and safe MCP delegation (host interface blocked)"
   ],
   "settingsSurface": {
-    "status": "PASS_NATIVE_CONFIG_SURFACE_NOT_RENDERED",
-    "evidence": "P6-settings-config-surface-001.json",
+    "status": "PASS_USER_CONFIRMED_FIELDS_SAVE_POLICY_SNAPSHOT_HISTORY",
+    "evidence": [
+      "P6-settings-config-surface-001.json",
+      "P6-settings-ui-failure-001.md",
+      "P6-settings-row-config-002.json",
+      "P6-settings-ui-failure-002.md",
+      "P6-settings-row-config-003.json",
+      "P6-settings-ui-failure-003.md",
+      "P6-settings-row-config-004.json",
+      "P6-settings-row-config-005.json",
+      "P6-settings-ui-failure-004.md",
+      "P6-settings-row-config-006.json",
+      "P6-settings-row-config-007.json",
+      "P6-settings-a11y-001.json",
+      "P6-theme-contrast-static-001.json",
+      "P6-settings-contrast-ui-001.json"
+    ],
     "rows": {
       "review": [
         "policyId",
@@ -124,8 +144,21 @@
       "main": "no configuration"
     },
     "separateSettingsStore": false,
-    "profileWrites": 0,
-    "rendered": false
+    "directProfileFileWritesByBundle": 0,
+    "nativeConfigEditorBridge": true,
+    "rowSlotsLive": true,
+    "fieldsRenderedConfirmed": true,
+    "ordinarySavePersistenceVerified": true,
+    "originalValueRestored": true,
+    "policySaveAttemptRejectedBeforeRestart": true,
+    "policySaveAfterRestartVerified": true,
+    "policySnapshotHistoryFixBuilt": true,
+    "policySnapshotHistoryFixLive": true,
+    "runtimeRestartRequired": false,
+    "reviewPolicyNewLifecycleVerified": true,
+    "oldDecisionHistoryPreserved": true,
+    "oldApprovalsReusedForNewSnapshot": false,
+    "exactValuesTranscribed": false
   },
   "navigation": {
     "slot": "main",
@@ -151,7 +184,7 @@
   },
   "documentation": {
     "status": "PASS_STRUCTURE_AND_LINKS",
-    "evidence": "P6-docs-completeness.tap",
+    "evidence": "P6-theme-contrast-static-001.tap",
     "checksPassed": 5,
     "checksFailed": 0,
     "requiredDocuments": [
@@ -196,16 +229,16 @@
   },
   "gapLedger": {
     "status": "PASS_CONSISTENCY",
-    "evidence": "P6-gap-ledger.tap",
+    "evidence": "P6-theme-contrast-static-001.tap",
     "ledger": "gap-ledger.json",
     "manualChecklist": "MANUAL_CHECKLIST.md",
-    "openGaps": 9,
+    "openGaps": 8,
     "checksPassed": 4,
     "checksFailed": 0,
     "rule": "A gap closes only with a new native or browser observation saved under acceptance/."
   },
   "rolesAndSkills": {
-    "status": "BUILT_INSTALLED_NOT_RENDERED",
+    "status": "PASS_USER_OBSERVED_OVERVIEW_DETAILS_UNVERIFIED",
     "evidence": "P6-agents-catalogue-tests.tap",
     "checksPassed": 15,
     "checksFailed": 0,
@@ -220,12 +253,14 @@
       "total skills and flagged skills"
     ],
     "bounds": "20 mains, 8 tools, 8 sources per row",
-    "rendered": false
+    "rendered": true,
+    "humanEvidence": "P6-manual-2026-11-06-001.md",
+    "detailExpandedByHuman": false
   },
   "handover": {
     "status": "PASS_CONSISTENCY",
     "document": "HANDOVER.md",
-    "evidence": "P6-handover-consistency.tap",
+    "evidence": "P6-theme-contrast-static-001.tap",
     "checksPassed": 4,
     "checksFailed": 0,
     "verified": [
@@ -257,28 +292,42 @@
     ]
   },
   "accessibility": {
-    "status": "PASS_STRUCTURE_ONLY",
-    "evidence": "P6-a11y-tree.tap",
+    "status": "PARTIAL_STATIC_AND_POSTFIX_USER_VISUAL_PASS_SCREENREADER_PENDING",
+    "evidence": ["P6-a11y-tree.tap", "P6-settings-a11y-001.json", "P6-theme-contrast-static-001.json", "P6-theme-contrast-static-001.tap", "P6-settings-contrast-ui-001.json"],
     "checksPassed": 5,
     "checksFailed": 0,
+    "contrastAssertionsPassed": 10,
+    "contrastAssertionsFailed": 0,
+    "humanChecksPassed": 3,
+    "humanChecksRecordedBeforeLatestContrastFix": true,
+    "postFixHumanChecksPassed": 5,
+    "liveVisualRecheckAfterContrastFix": "PASS_USER_OBSERVED_AFTER_RESTART",
     "checked": [
       "no page-level heading inside a panel",
       "buttons are explicitly typed and text-labelled",
       "status region is aria-live",
       "every input has a matching label (review panel has none)",
       "no tabIndex -1",
-      "degraded render keeps the same structure"
+      "degraded render keeps the same structure",
+      "Prior user observation confirmed Settings pages at approximately 520px without horizontal overflow and keyboard traversal to Save",
+      "After restart, user confirmed both Settings pages remain readable in light/dark themes with adjusted placeholder, control boundaries and error messages",
+      "Current source tokens give placeholder/error text at 4.5:1+ and interactive boundaries/focus at 3:1+ in both resolved theme palettes"
     ],
     "notChecked": [
-      "colour contrast",
-      "screen-reader announcement",
-      "focus order in a browser",
-      "zoom and reflow"
-    ]
+      "browser-measured contrast ratios",
+      "screen-reader announcements",
+      "zoom/reflow beyond the observed narrow width",
+      "focus order on other client surfaces"
+    ],
+    "humanObservationEvidence": "P6-settings-contrast-ui-001.json",
+    "staticContrastEvidence": "P6-theme-contrast-static-001.json"
   },
   "workbookDownload": {
-    "status": "BUILT_NOT_CLICKED",
+    "status": "PASS_USER_CLICKED_AND_OPENED",
     "nativeEvidence": "P4-workbook-over-remote-001.json",
+    "humanEvidence": "P6-manual-2026-11-06-001.md",
+    "bytesObserved": 5747,
+    "sheetNamesObserved": ["Review state", "Notes"],
     "clientTests": "tests/workbench-client-panel.test.js (decodeWorkbook, saveWorkbook, one download control)",
     "guards": {
       "filename": "^[A-Za-z0-9._-]+\\.xlsx$",
@@ -287,33 +336,51 @@
       "payloadLength": "must equal declared bytes",
       "dom": "exactly one document.body.appendChild and one .click() in the whole client artifact"
     },
-    "clicked": false
+    "clicked": true
   },
   "clientArtifactVm": {
-    "status": "PASS_ARTIFACT_EXECUTES",
-    "evidence": "P6-client-artifact-vm.tap",
-    "checksPassed": 4,
+    "status": "PASS_ARTIFACT_ROW_CONFIG_REGISTRATIONS",
+    "evidence": "P6-theme-contrast-static-001.tap",
+    "checksPassed": 6,
     "checksFailed": 0,
-    "what": "The built lib/client.js is executed in a browser-like realm with React/Zod stubs; the serialized factories run without ReferenceError and register the expected namespaces, panel and dictionaries.",
-    "catches": "A factory that closes over a module-level helper would break only after serialization; src-level tests cannot see it.",
-    "notRendered": true
+    "what": "The built lib/client.js registers the two keyed row-config pages; VM tests verify each page injects read/save calls for its exact finance-data or finance-review row id. Human rendering/save evidence is recorded separately.",
+    "catches": "Wrong Slot keys, an accidental bundle-config occupant, or a read/save injection targeting the wrong row.",
+    "automatedBrowser": false,
+    "humanRendered": true
   },
   "tasksCard": {
-    "status": "BUILT_NOT_RENDERED",
+    "status": "PASS_USER_OBSERVED_DECLARATIONS_ONLY",
     "reads": "financeOperations.taskTemplates",
     "shows": [
       "preset id",
       "title",
       "declared checkpoint count"
     ],
-    "states": "declarations only, no run is started"
+    "states": "declarations only, no run is started",
+    "rendered": true,
+    "humanEvidence": "P6-manual-2026-11-06-001.md",
+    "detailsTranscribed": false
   },
   "lifecycle": {
-    "status": "RESTART_REQUIRED_AFTER_ARTIFACT_REFRESH",
-    "evidence": "P6-install-restart-required-001.json",
-    "restartReason": "unmanaged-plugin",
-    "applied": false,
-    "note": "The package directory is current; the running instance is not. Native claims made after this point need a restart."
+    "status": "PASS_AFTER_USER_RESTART_AND_FUNCTIONAL_TEST",
+    "evidence": "P6-settings-row-config-007.json",
+    "restartReason": "financial_review domain was already open; user restarted the current Harness",
+    "applied": true,
+    "note": "After restart the user reports the functional policy test passed; live Client Slots, finance-data/finance-review Config schemas, and Host Config Editor contract are present. The user confirms disable/re-enable and uninstall/reinstall UI flows. Live Plugin Manager inventory shows this local bundle has no installTarget; the UI update handler returns without opening an update flow. No profile state was changed while checking eligibility.",
+    "managerUI": {
+      "status": "PARTIAL_DISABLE_REENABLE_UNINSTALL_REINSTALL_CONFIRMED_LOCAL_UPGRADE_NOT_OFFERED",
+      "evidence": ["P6-lifecycle-ui-001.json", "P6-lifecycle-ui-002.json", "P6-lifecycle-upgrade-eligibility-001.json"],
+      "disableReenablePassed": true,
+      "uninstallReinstallPassed": true,
+      "addFromLocalDirectoryPassed": true,
+      "expectedPostInstallBehaviourConfirmedByUser": true,
+      "specificPersistedValueCompared": false,
+      "upgradeUITested": false,
+      "upgradeAvailableForCurrentLocalBundle": false,
+      "upgradeTargetUnavailableReason": "The local package is not in the Official catalog; Host provides no installTarget and the UI updater returns without opening an update flow.",
+      "eligibleOfficialTargetsInstalled": 0,
+      "genericOfficialUpgradeTested": false
+    }
   },
   "artifactLoad": {
     "status": "PASS_SHAPES_AND_ALIASES",
@@ -321,8 +388,8 @@
     "checksPassed": 6,
     "checksFailed": 0,
     "what": "Every rebuilt entry imports; service classes expose their methods; function plugins declare inject/apply/Config; role aliases equal the canonical generation; no side-effecting method exists on the review service; the client artifact still registers its factory.",
-    "why": "The install is pending a restart, so this proves the bytes that will be loaded next, not the running instance.",
-    "notBooted": "Cordis loader lifecycle is still not exercised here."
+    "why": "Artifact checks are static; the user separately confirmed the policy workflow after restarting the current Harness.",
+    "notBooted": "No automated Loader lifecycle test; post-restart live behavior is human-confirmed in P6-settings-row-config-007.json."
   },
   "runtimeState": {
     "status": "LOADED_AFTER_RESTART",
@@ -330,7 +397,9 @@
     "serviceInstances": 3,
     "runs": 14,
     "restartedAt": "2026-11-05T16:08:49.195Z",
-    "catalogueCaveat": "The Inspect Service catalogue omits this bundle; use a probe or the client, not the catalogue."
+    "catalogueCaveat": "The Inspect Service catalogue omits this bundle; use a probe or the client, not the catalogue.",
+    "currentPostFailureState": "User confirmed policy save, new snapshot, old decision retention, and restoration after restart",
+    "restartRequiredToReleaseDomain": false
   },
   "liveRegistration": {
     "main": {
@@ -351,11 +420,18 @@
       "ourKeyActive": true
     },
     "plugins.bundle.config": {
-      "occupant": "@local/dsh-financial-services",
-      "active": true
+      "occupants": [],
+      "active": false
     },
     "plugins.bundle.activation": {
       "occupant": "@local/dsh-financial-services",
+      "active": true
+    },
+    "plugins.row.config": {
+      "activeKeys": [
+        "@local/dsh-financial-services#finance-data",
+        "@local/dsh-financial-services#finance-review"
+      ],
       "active": true
     }
   },

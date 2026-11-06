@@ -2,7 +2,7 @@
 
 - 日期：2026-11-06
 - 版本：`@local/dsh-financial-services@0.4.0-alpha.1`
-- 安装形态：原生 Plugin Manager 链接安装，`application: applied`；三行（`financial-services` / `finance-data` / `finance-review`）
+- 安装形态：原生 Plugin Manager 链接安装；首次策略切换修复因旧 storage domain 已打开未能热应用，用户重启后完成功能验收；三行（`financial-services` / `finance-data` / `finance-review`）。重启后的 Plugin Manager 操作结果未单独记录
 - 结论：**P0–P2 已按任务书验收完成；P3、P5、P6 部分完成；P4 被宿主接口阻断。整体尚未达到"全部阶段完成"。**
 
 本报告只陈述有证据支撑的内容。逐条追溯见 [TRACEABILITY.md](TRACEABILITY.md)，未闭合项见 [gap-ledger.json](gap-ledger.json)。
@@ -30,7 +30,7 @@
 | P3 数据可扩展基础 | 部分（`PARTIAL`） | 契约/策略/热插拔/原生 MCP 已验证；**Manager 与安全委派接口不存在** |
 | P4 业务执行与交付 | **阻断**（`BLOCKED`） | 模板与数值内核已验证；**Office 写入工作区与商业数据不可用** |
 | P5 审核与恢复 | 部分（`PARTIAL`） | 四策略/门禁/持久化/重启恢复/错误码已验证；**跨重启逐字节一致未测** |
-| P6 前端整合 | 部分（`PARTIAL`） | 七段工作台、审核面板、下载、跳转、窄屏均由人确认；**配置页/生命周期/离线/读屏未验** |
+| P6 前端整合 | 部分（`PARTIAL`） | 七段工作台、审核面板、下载、跳转；Settings 字段/保存/策略快照、最新CSS重启后浅深主题可读性及禁用/启用/卸载/本地重装由人确认；源Token对比度静态测量并修正低值；**本地 Bundle 无升级 target，通用升级 UI 未测；离线、读屏与浏览器实测对比度仍未验** |
 
 强制验收 11 条：5 条 `PASS_NATIVE`、2 条 `PASS_STATIC`、1 条 `PASS_USER_OBSERVED`、3 条 `PARTIAL`。
 
@@ -72,15 +72,16 @@
 
 ### P6 前端整合（PARTIAL）
 
-人工确认（[第 1 次](P6-manual-2026-11-06-001.md)、[第 2 次](P6-manual-2026-11-06-002.md)）：
+人工确认（[第 1 次](P6-manual-2026-11-06-001.md)、[第 2 次](P6-manual-2026-11-06-002.md)、[设置字段](P6-settings-row-config-007.json)、[最新CSS复验](P6-settings-contrast-ui-001.json)）：
 
 1. 工作台七段均有数据、无错误码
 2. 审核面板只读，策略 `original`，待审 3 条，**无批准按钮**
 3. 下载工作簿成功：5747 字节，可打开，表名正确
 4. 最小宽度无横向滚动、深色可读、焦点可见
 5. 成果"打开会话"跳转到真实会话，返回后工作台正常
+6. `finance-data`/`finance-review` 配置页字段、保存/恢复原值均正常；重启后 policyId 在新服务生命周期生效，旧决定保留为历史但不授权新快照
 
-未完成：插件配置/激活页、禁用与重装界面流程、读屏与对比度测量、离线受限案例。
+未完成：Plugin Manager upgrade UI、读屏、浏览器实测对比度/最终计算样式、缩放回流及离线受限案例；源Token对比度已静态测量并修正，最新CSS已由用户重启后复验。
 
 **一次真实缺陷**：首版"打开会话"点击无响应（错误被静默吞掉 + 数据指向已消失的会话）。修复后陈旧会话显示"该会话已不存在"，存活会话可跳转，并由用户复验通过。
 
@@ -99,13 +100,13 @@
 
 | 机制 | 作用 |
 |---|---|
-| `acceptance/` 243 份文件（100 TAP / 123 JSON / 15 MD） | 每阶段的真实运行记录，失败也保留 |
+| `acceptance/` | P0–P6 的运行证据、用户观察与真实失败/修复记录均保留 |
 | [TRACEABILITY.md](TRACEABILITY.md) | 任务书 §11 七门 + §12 十一条逐条映射到证据与缺口 |
-| [gap-ledger.json](gap-ledger.json) | 9 个未闭合缺口 + 2 个已关闭缺口，含关闭依据 |
+| [gap-ledger.json](gap-ledger.json) | 8 个未闭合缺口 + 3 个已关闭缺口，含关闭依据 |
 | [audit-claims.mjs](../scripts/audit-claims.mjs) | 通过项必须引用机器证据；人工观察项必须引用人工记录 |
-| 回归 498 项 | 任何改动都会重跑；含文档一致性、映射防漂移、可访问性结构、声明审计 |
+| 回归 512 项 | 本轮全量回归 512/512；含文档一致性、映射防漂移、可访问性结构/源Token对比度、声明审计 |
 
-## 7. 未闭合缺口（9）
+## 7. 未闭合缺口（8）
 
 | ID | 阶段 | 状态 | 需要什么 |
 |---|---|---|---|
@@ -114,19 +115,18 @@
 | P4-BUSINESS-RUNS | P4 | NOT_RUN | 商业数据授权 + Office 通道 |
 | P5-OS-RESTART | P5 | PARTIAL | 重启前取快照，重启后逐字节比较 |
 | P5-ERROR-LINEAGE | P5 | PARTIAL | 逐业务/逐来源谱系（需真实业务运行） |
-| P6-SETTINGS-UI | P6 | NOT_RUN | 打开插件配置页与激活页 |
-| P6-LIFECYCLE-UI | P6 | NOT_RUN | 界面内禁用/重装流程 |
-| P6-ACCESSIBILITY | P6 | PARTIAL | 读屏播报与对比度测量 |
+| P6-LIFECYCLE-UI | P6 | PARTIAL | 禁用/重新启用和卸载/本地重装已确认；本地 Bundle 无 Plugin Manager upgrade target；通用 Official 包升级 UI 未测（[资格审计](P6-lifecycle-upgrade-eligibility-001.json)） |
+| P6-ACCESSIBILITY | P6 | PARTIAL | 读屏、浏览器最终计算样式与缩放/回流；源Token对比度已静态测量 |
 | P6-OFFLINE-CASE | P6 | NOT_RUN | 断开连接后观察降级 |
 
-已关闭：`P6-BROWSER-RENDERING`、`P6-DELIVERABLE-OPEN`（均由人工观察关闭）。
+已关闭：`P6-BROWSER-RENDERING`、`P6-DELIVERABLE-OPEN`、`P6-SETTINGS-UI`（均由人工观察关闭；Settings 字段/持久化/策略快照历史见 [证据 007](P6-settings-row-config-007.json)）。
 
 ## 8. 复验方式
 
 ```text
 pnpm run build            # 重建产物
 pnpm run check:package    # 导出/产物集合/哈希一致性
-pnpm test                 # 498 项回归
+pnpm test                 # 512 项回归
 node scripts/check-traceability.mjs   # 重新生成并校验追溯矩阵
 node scripts/audit-claims.mjs         # 声明证据审计
 node scripts/check-clean-rebuild.mjs  # 干净归档重建一致性

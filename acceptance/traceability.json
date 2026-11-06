@@ -86,15 +86,22 @@
         "acceptance/P6-manual-2026-11-06-001.md",
         "acceptance/P6-post-restart-verified-001.json",
         "acceptance/P6-live-client-registration-001.json",
-        "acceptance/P6-client-scenarios.tap"
+        "acceptance/P6-client-scenarios.tap",
+        "acceptance/P6-settings-row-config-007.json",
+        "acceptance/P6-settings-a11y-001.json",
+        "acceptance/P6-settings-contrast-ui-001.json",
+        "acceptance/P6-theme-contrast-static-001.json",
+        "acceptance/P6-theme-contrast-static-001.tap",
+        "acceptance/P6-lifecycle-ui-001.json",
+        "acceptance/P6-lifecycle-ui-002.json",
+        "acceptance/P6-lifecycle-upgrade-eligibility-001.json"
       ],
       "gaps": [
-        "P6-SETTINGS-UI",
         "P6-LIFECYCLE-UI",
         "P6-ACCESSIBILITY",
         "P6-OFFLINE-CASE"
       ],
-      "note": "四项界面判据由人工确认；配置页、生命周期、可访问性、成果打开与离线案例仍打开。"
+      "note": "工作台、设置字段/保存/策略快照、禁用/启用/卸载/本地重装已由人工确认；用户已在重启后确认最新CSS可读；源Token比值已静态测量。当前本地Bundle无Plugin Manager upgrade target，通用升级UI仍未测试；读屏/浏览器实测比值与离线案例仍打开。"
     }
   ],
   "mandatoryAcceptance": [
@@ -177,12 +184,15 @@
       "evidence": [
         "acceptance/P6-manual-2026-11-06-001.md",
         "acceptance/P6-manual-2026-11-06-002.md",
-        "acceptance/P6-live-client-registration-001.json"
+        "acceptance/P6-live-client-registration-001.json",
+        "acceptance/P6-settings-row-config-007.json",
+        "acceptance/P6-lifecycle-ui-001.json",
+        "acceptance/P6-lifecycle-ui-002.json"
       ],
       "gaps": [
-        "P6-SETTINGS-UI"
+        "P6-LIFECYCLE-UI"
       ],
-      "note": "原生侧栏、面板与会话跳转均被复用，界面无假状态；插件配置页与激活页仍未打开。"
+      "note": "原生侧栏、面板、会话跳转、插件配置页及禁用/重新启用和卸载/重装界面已由用户验证；upgrade UI 流程仍未完成。"
     },
     {
       "id": "A8",

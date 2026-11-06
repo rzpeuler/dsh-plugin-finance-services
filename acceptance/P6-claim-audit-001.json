@@ -1,7 +1,7 @@
 {
   "stage": "P6",
   "id": "P6_CLAIM_AUDIT",
-  "observedDate": "2026-11-05",
+  "observedDate": "2026-11-06",
   "status": "PASS_CLAIMS_BACKED",
   "rule": "Every PASS entry must cite at least one machine-checked result; documents alone cannot carry a native claim.",
   "audited": 11,
@@ -165,6 +165,24 @@
           "verdict": "STATUS_ONLY",
           "checks": 0,
           "status": "PASS_LIVE_REGISTRATION_NOT_RENDERED"
+        },
+        {
+          "path": "acceptance/P6-settings-row-config-007.json",
+          "verdict": "NO_VERDICT",
+          "checks": 0,
+          "status": "USER_CONFIRMED_POLICY_SAVE_HISTORY_AND_RESTORE_AFTER_RESTART"
+        },
+        {
+          "path": "acceptance/P6-lifecycle-ui-001.json",
+          "verdict": "NO_VERDICT",
+          "checks": 0,
+          "status": "USER_CONFIRMED_DISABLE_REENABLE_PASS"
+        },
+        {
+          "path": "acceptance/P6-lifecycle-ui-002.json",
+          "verdict": "NO_VERDICT",
+          "checks": 0,
+          "status": "USER_CONFIRMED_UNINSTALL_REINSTALL_PASS"
         }
       ]
     },

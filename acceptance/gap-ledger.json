@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "observedDate": "2026-11-05",
+  "observedDate": "2026-11-06",
   "rule": "A gap closes only with a new native or browser observation saved under acceptance/. Static code and installed state never close a gap.",
   "stages": {
     "P0": {
@@ -112,28 +112,35 @@
     {
       "id": "P6-LIFECYCLE-UI",
       "stage": "P6",
-      "title": "UI behaviour across install, upgrade, disable, reinstall is unverified",
-      "status": "NOT_RUN",
-      "blockedBy": "Requires driving the Plugin Manager and the browser together.",
+      "title": "Disable/re-enable and uninstall/reinstall UI passed; local Bundle has no Plugin Manager upgrade target",
+      "status": "PARTIAL",
+      "blockedBy": "Live inventory has no installTarget for this linked local package; the UI update handler no-ops without a target. A generic Official-package upgrade flow remains untested.",
       "evidence": [
         "acceptance/P5-persist-phase-b.json",
-        "acceptance/P5-boundary-phase-b-003.json"
+        "acceptance/P5-boundary-phase-b-003.json",
+        "acceptance/P6-lifecycle-ui-001.json",
+        "acceptance/P6-lifecycle-ui-002.json",
+        "acceptance/P6-lifecycle-upgrade-eligibility-001.json"
       ],
-      "notClaimed": "UI lifecycle acceptance",
-      "nextStep": "Record each lifecycle step in the manual checklist."
+      "notClaimed": "Generic Plugin Manager upgrade UI behavior; local Financial Services bundle has no update target",
+      "nextStep": "If generic upgrade acceptance is required, first identify or install an older Official package version with a current installTarget; no eligible Official package is installed now."
     },
     {
       "id": "P6-ACCESSIBILITY",
       "stage": "P6",
-      "title": "Narrow layout, dark theme readability and focus visibility were observed; screen-reader output and formal contrast were not",
+      "title": "Settings narrow/theme/keyboard and post-fix contrast appearance confirmed; screen-reader and browser-measured contrast remain open",
       "status": "PARTIAL",
-      "blockedBy": "Screen-reader announcement and measured contrast still need a dedicated review.",
+      "blockedBy": "Screen-reader announcements, browser-measured contrast ratios, and zoom/reflow beyond the observed width remain uncovered.",
       "evidence": [
         "acceptance/P6-manual-2026-11-06-001.md",
+        "acceptance/P6-settings-a11y-001.json",
+        "acceptance/P6-settings-contrast-ui-001.json",
+        "acceptance/P6-theme-contrast-static-001.json",
+        "acceptance/P6-theme-contrast-static-001.tap",
         "acceptance/P6-a11y-tree.tap"
       ],
-      "notClaimed": "WCAG conformance or screen-reader behaviour",
-      "nextStep": "Run a screen reader and measure contrast tokens."
+      "notClaimed": "Full WCAG conformance, screen-reader behaviour, or browser-computed color values after the complete cascade",
+      "nextStep": "Test a screen reader and, if required, browser-computed contrast/zoom; latest Settings colors were visually rechecked after restart."
     },
     {
       "id": "P5-ERROR-LINEAGE",
@@ -151,15 +158,26 @@
     {
       "id": "P6-SETTINGS-UI",
       "stage": "P6",
-      "title": "The bundle configuration and activation views were never opened",
-      "status": "NOT_RUN",
-      "blockedBy": "The slots are registered but no one has opened the plugin detail page.",
+      "title": "Row fields, save, policy lifecycle and old-decision snapshot handling confirmed by the user",
+      "status": "CLOSED_BY_HUMAN_OBSERVATION",
+      "blockedBy": "Functional Settings, the prior narrow/theme/keyboard checks, and the latest CSS contrast appearance after restart are user-confirmed. Screen-reader and browser-measured contrast checks remain in P6-ACCESSIBILITY.",
       "evidence": [
-        "acceptance/P6-live-client-registration-001.json",
-        "acceptance/P6-settings-config-surface-001.json"
+        "acceptance/P6-settings-ui-failure-001.md",
+        "acceptance/P6-settings-row-config-002.json",
+        "acceptance/P6-settings-ui-failure-002.md",
+        "acceptance/P6-settings-row-config-003.json",
+        "acceptance/P6-settings-ui-failure-003.md",
+        "acceptance/P6-settings-row-config-004.json",
+        "acceptance/P6-settings-row-config-005.json",
+        "acceptance/P6-settings-ui-failure-004.md",
+        "acceptance/P6-settings-row-config-006.json",
+        "acceptance/P6-settings-row-config-007.json",
+        "acceptance/P6-settings-config-surface-001.json",
+        "acceptance/P6-settings-a11y-001.json",
+        "acceptance/P6-settings-contrast-ui-001.json"
       ],
-      "notClaimed": "Settings page rendering, edit and save behaviour",
-      "nextStep": "Open the bundle page and record what the configuration view shows."
+      "notClaimed": "Screen-reader behaviour, browser-measured contrast ratios, and full WCAG conformance remain open",
+      "nextStep": "Functional, narrow-width, theme-readability, keyboard and static token contrast checks are complete; continue P6-ACCESSIBILITY screen-reader/live-render review."
     },
     {
       "id": "P6-OFFLINE-CASE",

@@ -7,7 +7,7 @@
 ## 当前范围
 
 - 原生 Plugin Manager 单一安装单元，无 DSH Core 修改。
-- 一个 Financial Services 导航入口，以及原生插件配置/启用引导位置。
+- 一个 Financial Services 导航入口；`finance-data` 与 `finance-review` 的配置在 Plugin Manager 对应行的 Configure 页面。页面由 Host Config Editor 读取/保存 Loader Config（不直接写 Profile 文件、不另建设置存储）；Bundle 本身无独立 Config，启用引导位于原生激活槽。
 - Host 负责真实 Workspace 目录验证、规范路径/ID绑定、版本化持久状态；Client 只显示真实 Host 状态。
 - 默认仅绑定真实已存在的本地目录。使用原生目录选择器，或输入绝对目录；不会调用全局 initializeDefault，也不会自动执行金融任务。
 - 禁用/卸载不删除用户目录、原始附件或 DSH Session 历史。重新安装从Host持久域读取既有绑定；目录已移动则需重新绑定。
@@ -34,7 +34,7 @@ pnpm pack
 
 ## 升级与回滚
 
-升级 = 用同一路径重新 `install_bundle`（或先在 Manager 中卸载再安装）。审核策略在服务启动时固定，因此升级或重启后用**新**服务生命周期生效；已记录的审核决定按各自快照保留，不会因为升级自动失效或自动批准。旧的角色/数据模块（`role-numeric-1`、`data`）仍随包保留，引用它们的既有 Preset 继续可用；回滚到旧版本仍是同样的链接安装流程。升级不会删除用户文件、DSH 历史或审核记录。
+升级 = 用同一路径重新 `install_bundle`（或先在 Manager 中卸载再安装）。审核策略在服务启动时固定，因此变更后需新的 review-service 生命周期生效。已记录的决定按原 snapshotDigest 保留为审计历史，但**不会**自动授权新策略快照；新策略仍要求的检查点必须按新快照重新审核，策略不再要求的旧检查点不进入当前队列。旧的角色/数据模块（`role-numeric-1`、`data`）仍随包保留，引用它们的既有 Preset 继续可用；回滚到旧版本仍是同样的链接安装流程。升级不会删除用户文件、DSH 历史或审核记录。
 
 ## 卸载
 

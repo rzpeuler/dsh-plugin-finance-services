@@ -152,6 +152,28 @@ test('a required stage that never started keeps the run in progress rather than 
   assert.equal(outcome.outstanding, 1)
 })
 
+test('a policy switch preserves historical decisions but never reauthorizes them under the new snapshot', async () => {
+  const seam = memorySeam()
+  const original = new ReviewStore({ snapshot, load: seam.load, save: seam.save, now: () => NOW })
+  await original.open()
+  await original.settle(review({ reviewId: 'review-valuation', checkpointId: 'valuation_complete' }))
+  await original.settle(review({ reviewId: 'review-deck', checkpointId: 'deck_complete' }))
+  await original.recordStage({ sessionId: 'session-1', runId: 'run-1', agentId: PITCH,
+    checkpointId: 'valuation_complete', status: 'COMPLETED', artifact: { hash: HASH } })
+  const before = JSON.parse(JSON.stringify(seam.box.document.reviews))
+
+  const fastSnapshot = resolvePolicy({ bundle: { policyId: 'fast' } })
+  const fast = new ReviewStore({ snapshot: fastSnapshot, load: seam.load, save: seam.save, now: () => NOW })
+  await fast.open()
+  assert.equal(fast.inspect().reviews, 2)
+  assert.deepEqual(seam.box.document.reviews, before, 'policy changes must preserve persisted decision records byte-for-byte')
+  const rows = await fast.queue()
+  assert.deepEqual(rows.map(row => row.checkpointId), ['valuation_complete'], 'fast no longer queues the optional deck checkpoint')
+  assert.equal(rows[0].decision, 'HOLD')
+  assert.equal(rows[0].reason, 'SNAPSHOT_MISMATCH', 'an old approval must not be reauthorized under a new policy digest')
+  assert.equal(fast.classify('run-1').status, 'PENDING_REVIEW')
+})
+
 test('the persisted document is versioned, monotonic and rejects corruption', async () => {
   const seam = memorySeam()
   const instance = await store(seam)

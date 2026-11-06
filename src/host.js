@@ -11,12 +11,56 @@ import { createBusinessTaskTemplates } from './business/task-templates.js'
 import { WorkspaceBindingOperations } from './workspace-binding.js'
 import { financeReflection } from './host/reflection.js'
 import { createWorkspaceTool } from './host/tool.js'
+import { POLICY_IDS, resolvePolicy } from './review/policy.js'
 
 /** Native event-only directory watch. No polling, source writes or directory creation. */
 function watchDirectory(directory, changed, failed) {
   const watcher = watch(directory, { persistent: false }, changed)
   watcher.on('error', failed)
   return () => watcher.close()
+}
+
+const DATA_ROW_NAME = '@local/dsh-financial-services/data-runtime-2'
+const REVIEW_ROW_NAME = '@local/dsh-financial-services/review'
+const DataPageConfig = z.strictObject({
+  requestTimeoutMs: z.number().int().min(1).max(300000).default(10000),
+  maxConcurrentQueries: z.number().int().min(1).max(128).default(32),
+})
+const ReviewPageConfig = z.object({
+  policyId: z.enum(POLICY_IDS).default('original'),
+  customJson: z.string().max(20000).default(''),
+})
+
+function rowConfigEntry(editor, rowId) {
+  const name = rowId === 'finance-data' ? DATA_ROW_NAME : REVIEW_ROW_NAME
+  return editor.configuration().find(({ entry }) => entry?.options?.id === rowId && entry?.options?.name === name)?.entry
+}
+
+function rowConfigValues(rowId, config) {
+  if (rowId === 'finance-data') return DataPageConfig.parse(config ?? {})
+  return ReviewPageConfig.parse(config ?? {})
+}
+
+function validateReviewPageConfig(config) {
+  const custom = config.customJson.trim() ? JSON.parse(config.customJson) : undefined
+  resolvePolicy({ bundle: { policyId: config.policyId, ...(custom === undefined ? {} : { custom }) } })
+}
+
+function safeConfigEditError(error) {
+  const chain = []
+  for (let item = error; item && chain.length < 5; item = item.cause) chain.push(item)
+  const message = chain.map(item => String(item?.message ?? '')).join(' ')
+  const code = chain.find(item => typeof item?.code === 'string')?.code
+  if (code === 'STORE_CORRUPT' || message.includes('STORE_CORRUPT:')) {
+    return { code: 'POLICY_HISTORY_STALE', message: 'The prior review decisions were preserved; this policy could not be applied and the prior configuration was restored.' }
+  }
+  if (/overridden by a home patch or command-line overlay/i.test(message)) {
+    return { code: 'CONFIG_OVERLAY', message: 'A higher-priority configuration controls this row; edit that layer instead.' }
+  }
+  if (code?.startsWith('POLICY_')) {
+    return { code: 'CONFIG_INVALID', message: 'The review policy or custom JSON is invalid; the prior configuration remains active.' }
+  }
+  return { code: 'CONFIG_REJECTED', message: 'The Host rejected the configuration update; the prior value remains active.' }
 }
 
 /** Financial Services Host service. Default export is the Loader's sole plugin form. */
@@ -152,6 +196,50 @@ export default class FinanceOperations extends TypertRemoteService {
     this.requireOperations()
     const input = this.schemas.PrepareDraftRequest.parse(request)
     return this.schemas.PreparedDraft.parse(await this.catalogData.prepareDraft(input))
+  }
+
+  /** Read the active Loader config for one whitelisted Plugin Manager row. */
+  rowConfig(request) {
+    const { rowId } = this.schemas.RowConfigRequest.parse(request)
+    const editor = this.ctx.get('configEditor')
+    if (!editor) return this.schemas.RowConfigSnapshot.parse({ status: 'UNAVAILABLE', rowId, configJson: '',
+      error: { code: 'CONFIG_EDITOR_UNAVAILABLE', message: 'The native configuration editor is unavailable.' } })
+    try {
+      const entry = rowConfigEntry(editor, rowId)
+      if (!entry) return this.schemas.RowConfigSnapshot.parse({ status: 'UNAVAILABLE', rowId, configJson: '',
+        error: { code: 'CONFIG_ROW_UNAVAILABLE', message: 'The configured Loader row is not available.' } })
+      const config = rowConfigValues(rowId, entry.options.config)
+      return this.schemas.RowConfigSnapshot.parse({ status: 'READY', rowId, configJson: JSON.stringify(config), error: null })
+    } catch {
+      return this.schemas.RowConfigSnapshot.parse({ status: 'UNAVAILABLE', rowId, configJson: '',
+        error: { code: 'CONFIG_VALUE_UNAVAILABLE', message: 'The current row configuration cannot be represented by this form.' } })
+    }
+  }
+
+  /** Persist only the exposed fields through ConfigEditor; reject stale or invalid drafts. */
+  async saveRowConfig(request) {
+    const input = this.schemas.SaveRowConfigRequest.parse(request)
+    const editor = this.ctx.get('configEditor')
+    const result = (status, error = null) => this.schemas.SaveRowConfigResult.parse({ status, rowId: input.rowId, error })
+    if (!editor) return result('UNAVAILABLE', { code: 'CONFIG_EDITOR_UNAVAILABLE', message: 'The native configuration editor is unavailable.' })
+    try {
+      const expected = rowConfigValues(input.rowId, JSON.parse(input.expectedJson))
+      const next = rowConfigValues(input.rowId, JSON.parse(input.configJson))
+      if (input.rowId === 'finance-review') validateReviewPageConfig(next)
+      const entry = rowConfigEntry(editor, input.rowId)
+      if (!entry) return result('UNAVAILABLE', { code: 'CONFIG_ROW_UNAVAILABLE', message: 'The configured Loader row is not available.' })
+      await editor.edit(entry, current => {
+        const actual = rowConfigValues(input.rowId, current)
+        if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+          throw Object.assign(new Error('Configuration changed since this page was loaded.'), { code: 'CONFIG_CONFLICT' })
+        }
+        return { ...current, ...next }
+      })
+      return result('APPLIED')
+    } catch (error) {
+      if (error?.code === 'CONFIG_CONFLICT') return result('CONFLICT', { code: 'CONFIG_CONFLICT', message: 'Configuration changed since this page was loaded. Reload it before saving.' })
+      return result('REJECTED', safeConfigEditError(error))
+    }
   }
 
   requireOperations() {

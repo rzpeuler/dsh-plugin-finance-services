@@ -1,0 +1,112 @@
+﻿TAP version 13
+# Subtest: the built artifact loads and returns a Cordis client plugin
+ok 1 - the built artifact loads and returns a Cordis client plugin
+  ---
+  duration_ms: 1.0023
+  type: 'test'
+  ...
+# Subtest: apply mounts every remote namespace this bundle owns
+ok 2 - apply mounts every remote namespace this bundle owns
+  ---
+  duration_ms: 4.4557
+  type: 'test'
+  ...
+# Subtest: apply registers one main panel, one sidebar entry and the two plugin pages
+ok 3 - apply registers one main panel, one sidebar entry and the two plugin pages
+  ---
+  duration_ms: 2.6866
+  type: 'test'
+  ...
+# Subtest: the serialized client still registers its dictionary namespaces
+ok 4 - the serialized client still registers its dictionary namespaces
+  ---
+  duration_ms: 2.3084
+  type: 'test'
+  ...
+# Subtest: finance-data row form receives the correct native read and save actions
+ok 5 - finance-data row form receives the correct native read and save actions
+  ---
+  duration_ms: 2.2078
+  type: 'test'
+  ...
+# Subtest: finance-review row form receives only its own native config actions
+ok 6 - finance-review row form receives only its own native config actions
+  ---
+  duration_ms: 3.4051
+  type: 'test'
+  ...
+# Subtest: Client-embedded factory has no module closure dependencies
+ok 7 - Client-embedded factory has no module closure dependencies
+  ---
+  duration_ms: 6.2996
+  type: 'test'
+  ...
+# Subtest: all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+ok 8 - all public descriptors are direct, strict and uniquely identified; follow has native cancellation
+  ---
+  duration_ms: 3.4469
+  type: 'test'
+  ...
+# Subtest: request codecs reject missing, wrongly typed, fractional, negative and extra fields
+ok 9 - request codecs reject missing, wrongly typed, fractional, negative and extra fields
+  ---
+  duration_ms: 1.0769
+  type: 'test'
+  ...
+# Subtest: Snapshot, nested binding/error, state root and BindResult remain strict
+ok 10 - Snapshot, nested binding/error, state root and BindResult remain strict
+  ---
+  duration_ms: 1.3468
+  type: 'test'
+  ...
+# Subtest: workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+ok 11 - workspace tool validates at execution, uses shared methods, and offers no approval/shell action
+  ---
+  duration_ms: 3.0754
+  type: 'test'
+  ...
+# Subtest: Tool output uses only the native JSON Schema subset while executor retains refinements
+ok 12 - Tool output uses only the native JSON Schema subset while executor retains refinements
+  ---
+  duration_ms: 0.7029
+  type: 'test'
+  ...
+# Subtest: reflection describes the actual public signatures and stream, without business readings
+ok 13 - reflection describes the actual public signatures and stream, without business readings
+  ---
+  duration_ms: 0.3191
+  type: 'test'
+  ...
+# Subtest: rowConfig reads live ConfigEditor values for the exact finance-data row
+ok 14 - rowConfig reads live ConfigEditor values for the exact finance-data row
+  ---
+  duration_ms: 3.0592
+  type: 'test'
+  ...
+# Subtest: saveRowConfig updates only whitelisted fields and preserves hidden review instance settings
+ok 15 - saveRowConfig updates only whitelisted fields and preserves hidden review instance settings
+  ---
+  duration_ms: 1.4077
+  type: 'test'
+  ...
+# Subtest: stale edits conflict, invalid custom policy is rejected, and absent rows are unavailable
+ok 16 - stale edits conflict, invalid custom policy is rejected, and absent rows are unavailable
+  ---
+  duration_ms: 0.5933
+  type: 'test'
+  ...
+# Subtest: row config cannot target another Loader entry or write when ConfigEditor is absent
+ok 17 - row config cannot target another Loader entry or write when ConfigEditor is absent
+  ---
+  duration_ms: 0.6191
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 153.9622

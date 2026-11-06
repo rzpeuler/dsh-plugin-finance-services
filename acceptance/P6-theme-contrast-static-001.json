@@ -1,0 +1,36 @@
+{
+  "id": "P6-theme-contrast-static-001",
+  "status": "PASS_TOKEN_SOURCE_MEASUREMENTS",
+  "method": "WCAG relative-luminance contrast calculation over resolved sRGB CSS theme tokens; regression-checked in both schemes",
+  "themeSource": "audit/dsh-reference/packages/client/ui-theme/src/styles/design-platform.css",
+  "themePackage": "@deepseek-ai/dsh-client-ui-theme@0.2.1-rc.5",
+  "runtimeMatch": "Host Config inspection resolved include:ui-theme; its installed package.json reports the same 0.2.1-rc.5 version.",
+  "thresholds": {
+    "normalText": "4.5:1",
+    "nonTextControlBoundaryAndFocus": "3:1"
+  },
+  "errorColorAdjustment": "95% state-error-primary mixed with 5% label-primary in sRGB",
+  "measurements": {
+    "light": {
+      "placeholderAgainstBase": 5.7993,
+      "errorTextAgainstBase": 4.8791,
+      "fieldBoundaryAgainstBase": 3.7056,
+      "buttonBoundaryAgainstElevatedFill": 3.7056,
+      "focusIndicatorAgainstBase": 4.2349
+    },
+    "dark": {
+      "placeholderAgainstBase": 12.1072,
+      "errorTextAgainstBase": 5.8174,
+      "fieldBoundaryAgainstBase": 8.5427,
+      "buttonBoundaryAgainstElevatedFill": 4.4943,
+      "focusIndicatorAgainstBase": 7.8343
+    }
+  },
+  "testEvidence": "P6-theme-contrast-static-001.tap",
+  "notClaimed": [
+    "Browser-computed styles after unrelated cascade overrides",
+    "Screen-reader announcements",
+    "Zoom and reflow beyond the previously observed narrow viewport",
+    "Full WCAG conformance"
+  ]
+}

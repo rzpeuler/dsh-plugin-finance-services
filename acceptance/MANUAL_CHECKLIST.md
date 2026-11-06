@@ -58,9 +58,11 @@
 
 | # | 操作 | 预期 |
 |---|---|---|
-| E1 | 打开插件详情页 | 看到 `finance-data`（超时/并发）与 `finance-review`（策略 id/customJson）两个可配置行 |
-| E2 | 修改 `finance-review.policyId` 后保存 | 仅对新服务生命周期生效：重启该行/重装后审核面板的策略 id 改变；已记录决定不变 |
+| E1 | 打开 Plugins → Financial Services 插件详情页，分别点击 `finance-data` 与 `finance-review` 行的 Configure | `finance-data` 页显示 `requestTimeoutMs`（1–300000，默认 10000）与 `maxConcurrentQueries`（1–128，默认 32）；`finance-review` 页显示 `policyId` 与 `customJson`。确认没有凭据/API Key 字段 |
+| E2 | 修改 `finance-review.policyId` 后保存 | Host 保存成功；新 review-service 生命周期显示新 policy id。旧决定按原 snapshotDigest 保留作历史，不自动授权新快照；新策略仍要求的检查点需重新审核 |
 | E3 | 检查是否有任何凭据/API Key 输入框 | **不应存在** |
+
+**2026-11-06 人工结果**：E1 两页字段/控件显示符合预期。首次 `policyId` 保存因活动 review domain 冲突被拒；用户重启 Harness 后重测完成，确认新 `policyId` 在新服务生命周期生效、旧决定作为历史保留且不自动授权新快照，并恢复 `original`。E1/E2 的字段、保存、策略快照与恢复结果记为 PASS（[用户证据](P6-settings-row-config-007.json)；失败历史见 [failure-004](P6-settings-ui-failure-004.md)）。E3 凭据字段显示不在用户本次明确回报范围内，保持代码/视觉核查未完成。
 
 ## F. 窄屏、主题、键盘
 
@@ -70,6 +72,8 @@
 | F2 | 切换深色/浅色主题 | 文字与错误提示保持可读，不出现白底白字 |
 | F3 | 仅用 Tab 键 | 刷新按钮与策略表单可依次聚焦，焦点可见 |
 
+**2026-11-06 Settings 页人工结果**：用户先确认 `finance-data` 与 `finance-review` 两页在约 520px 窄视口无横向溢出、深浅主题均可读，Tab 可依次经过字段与 Save（[证据](P6-settings-a11y-001.json)）；后在重启后确认最新CSS的浅深主题可读、占位符/输入框/按钮边界及错误提示可读（[复验](P6-settings-contrast-ui-001.json)）。用户未提供实测宽度/对比度数值；另见基于匹配 DSH theme CSS 的静态 token 对比记录（[测量](P6-theme-contrast-static-001.json)）；读屏未测。
+
 ## G. 生命周期
 
 | # | 操作 | 预期 |
@@ -78,6 +82,9 @@
 | G2 | 重新**启用** | 面板恢复；此前记录的审核仍在队列中 |
 | G3 | **卸载**后检查工作目录 | 用户文件与 DSH 历史仍在 |
 | G4 | 重装并刷新 | 绑定与审核索引恢复；若目录已移动则提示重新绑定 |
+| G5 | 检查本 Bundle 是否有 Plugin Manager Update target；若有则执行升级并验收，若没有则记录不可用，不模拟点击 | 有目标才验证更新流；本地未发布 Bundle 不应伪装成 Official 更新 |
+
+**2026-11-06 人工结果**：用户确认 G1/G2 禁用→重新启用通过（[证据 001](P6-lifecycle-ui-001.json)）；随后确认 G3/G4 的 Plugin Manager UI 卸载→从本地 Bundle 重装通过，符合预期（[证据 002](P6-lifecycle-ui-002.json)）。G5 eligibility 检查发现本地 Bundle 是 profile link 且无 `installTarget`，其 UI update handler 不开启更新流；通用 Official 包升级仍未测试（[资格审计](P6-lifecycle-upgrade-eligibility-001.json)）。具体中间画面/逐项持久化值未抄录。
 
 ## 结论如何进入验收
 

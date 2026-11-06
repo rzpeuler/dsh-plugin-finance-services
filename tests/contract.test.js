@@ -11,7 +11,7 @@ const snapshot = () => ({ version: '1', stage: 'P1', revision: 0, onboardingVers
 test('Client-embedded factory has no module closure dependencies', () => {
   const embedded = Function(`return (${createFinanceContract.toString()})`)()(z)
   assert.equal(embedded.remote.package, '@local/dsh-financial-services')
-  assert.deepEqual(embedded.remote.descriptors.map(item => item.method), ['snapshot', 'bindWorkspace', 'unbindWorkspace', 'catalog', 'taskTemplates', 'prepareDraft', 'follow'])
+  assert.deepEqual(embedded.remote.descriptors.map(item => item.method), ['snapshot', 'bindWorkspace', 'unbindWorkspace', 'catalog', 'taskTemplates', 'prepareDraft', 'rowConfig', 'saveRowConfig', 'follow'])
   assert.deepEqual(embedded.schemas.Snapshot.parse(snapshot()), snapshot())
 })
 
@@ -28,11 +28,12 @@ test('all public descriptors are direct, strict and uniquely identified; follow 
     assert.equal(descriptor.parameters[0].codec.mode, 'strict')
     assert.equal(descriptor.result.mode, 'strict')
     const resultNames = { snapshot: 'Snapshot', bindWorkspace: 'BindResult', unbindWorkspace: 'BindResult', catalog: 'Catalog',
-      taskTemplates: 'TaskTemplates', prepareDraft: 'PreparedDraft', follow: 'Snapshot' }
+      taskTemplates: 'TaskTemplates', prepareDraft: 'PreparedDraft', rowConfig: 'RowConfigSnapshot',
+      saveRowConfig: 'SaveRowConfigResult', follow: 'Snapshot' }
     assert.equal(descriptor.result.create(), schemas[resultNames[descriptor.method]])
     assert.equal(descriptor.result.create().safeParse({ fake: true }).success, false)
   }
-  assert.equal(ids.size, 7)
+  assert.equal(ids.size, 9)
   const stream = remote.descriptors.find(item => item.method === 'follow')
   assert.equal(stream.mode, 'stream')
   assert.deepEqual(stream.cancellation, { parameter: 'signal' })
@@ -100,7 +101,7 @@ test('reflection describes the actual public signatures and stream, without busi
   const model = financeReflection()
   assert.equal(model.services.length, 1)
   assert.equal(model.services[0].key, 'financeOperations')
-  assert.deepEqual(model.services[0].members.map(item => item.name), remote.descriptors.map(item => item.method))
+  assert.deepEqual(model.services[0].members.map(item => item.name), remote.descriptors.map(item => item.method).filter(method => !['rowConfig', 'saveRowConfig'].includes(method)))
   assert.match(model.services[0].members.at(-1).signature, /AbortSignal.*AsyncIterable<Snapshot>/)
   assert.deepEqual(model.events, [])
 })

@@ -45,7 +45,7 @@
   },
   "notClaimed": ["Rendered settings page", "Editable configuration through the UI", "Profile file edits"],
   "notes": [
-    "Configuration lives on the native rows; the product must not write profile files or keep a second settings store.",
+    "Configuration lives on the native rows; the bundle must not hand-write profile files or keep a second settings store. A user save uses the Host Config Editor through the normal Loader path.",
     "Changing policy affects only a new service lifetime, as established in P5."
   ]
 }

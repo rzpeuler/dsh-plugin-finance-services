@@ -179,7 +179,7 @@ test('factory materializes through the parent ModuleLoader wrapper with only Rea
   assert.deepEqual([...plugin.inject], ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'])
   const f = fixture()
   await plugin.apply(f.ctx)
-  assert.equal(f.entries.size, 4)
+  assert.equal(f.entries.size, 5)
   await f.dispose()
 })
 
@@ -205,22 +205,26 @@ test('failed mount does not leave partial registrations', async () => {
   assert.equal(f.dictionaries.size, 0)
 })
 
-test('one global sidebar id matches a new main key; config and activation belong only to this package', async () => {
+test('one global sidebar id matches a new main key; row config and activation belong only to this package', async () => {
   const f = await started()
   assert.deepEqual([...f.entries.keys()], [
     'main:financial-services', 'sidebar.panellist:financial-services',
-    `plugins.bundle.activation:${PACKAGE}`, `plugins.bundle.config:${PACKAGE}`,
+    `plugins.bundle.activation:${PACKAGE}`,
+    `plugins.row.config:${PACKAGE}#finance-data`, `plugins.row.config:${PACKAGE}#finance-review`,
   ])
-  const main = f.entries.get('main:financial-services')
-  const config = f.entries.get(`plugins.bundle.config:${PACKAGE}`)
-  assert.equal(main.Component, config.Component, 'shared component identity is stable at registration')
+  assert.equal(f.entries.has(`plugins.bundle.config:${PACKAGE}`), false)
   for (const { registration, Component } of f.entries.values()) {
     assert.equal(typeof Component, 'function')
     assert.equal(registration.locale, 'financial-services')
     if (!registration.inject) continue
     const face = registration.inject()
-    assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory', 'startDraft'])
-    assert.ok(Object.values(face).every(value => typeof value === 'function'))
+    if (registration.name === 'plugins.row.config') {
+      assert.deepEqual(Object.keys(face).sort(), ['getRowConfig', 'saveRowConfig'])
+      assert.ok(Object.values(face).every(value => typeof value === 'function'))
+    } else {
+      assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory', 'startDraft'])
+      assert.ok(Object.values(face).every(value => typeof value === 'function'))
+    }
   }
   assert.equal(f.entries.get('sidebar.panellist:financial-services').registration.label(), 'Financial Services')
   await f.dispose()
@@ -363,7 +367,7 @@ test('disposal removes all owned registrations and old callbacks fail closed; re
   assert.equal(f.calls.pick, 0)
   assert.equal(f.calls.panel.length, 0)
   await f.plugin.apply(f.ctx)
-  assert.equal(f.entries.size, 4)
+  assert.equal(f.entries.size, 5)
   assert.equal(f.providers.size, 2)
   assert.deepEqual([...f.providers.keys()], ['finance-workspace', 'finance-catalog'])
   await f.dispose()

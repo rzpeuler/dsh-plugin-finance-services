@@ -1,0 +1,118 @@
+﻿TAP version 13
+# Subtest: the report states the version, the installation shape and no false completion
+ok 1 - the report states the version, the installation shape and no false completion
+  ---
+  duration_ms: 0.7144
+  type: 'test'
+  ...
+# Subtest: the reported gap counts match the ledger
+ok 2 - the reported gap counts match the ledger
+  ---
+  duration_ms: 0.1718
+  type: 'test'
+  ...
+# Subtest: the report does not accept a stage the records leave open
+ok 3 - the report does not accept a stage the records leave open
+  ---
+  duration_ms: 0.1564
+  type: 'test'
+  ...
+# Subtest: the report names what is explicitly not claimed
+ok 4 - the report names what is explicitly not claimed
+  ---
+  duration_ms: 0.1042
+  type: 'test'
+  ...
+# Subtest: every evidence link in the report resolves
+ok 5 - every evidence link in the report resolves
+  ---
+  duration_ms: 0.7912
+  type: 'test'
+  ...
+# Subtest: every delivery-list document exists and is non-trivial
+ok 6 - every delivery-list document exists and is non-trivial
+  ---
+  duration_ms: 4.4359
+  type: 'test'
+  ...
+# Subtest: the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+ok 7 - the README covers installation, upgrade, uninstall, first use, dependencies and troubleshooting
+  ---
+  duration_ms: 0.7042
+  type: 'test'
+  ...
+# Subtest: the matrices and reports name the known gaps instead of a blanket success
+ok 8 - the matrices and reports name the known gaps instead of a blanket success
+  ---
+  duration_ms: 0.8423
+  type: 'test'
+  ...
+# Subtest: every evidence link in the stage documents resolves to a file that exists
+ok 9 - every evidence link in the stage documents resolves to a file that exists
+  ---
+  duration_ms: 17.1692
+  type: 'test'
+  ...
+# Subtest: the acceptance directory keeps failures and passing evidence for every stage
+ok 10 - the acceptance directory keeps failures and passing evidence for every stage
+  ---
+  duration_ms: 0.5303
+  type: 'test'
+  ...
+# Subtest: the ledger is unique, well-formed and every gap names an existing evidence file
+ok 11 - the ledger is unique, well-formed and every gap names an existing evidence file
+  ---
+  duration_ms: 2.0294
+  type: 'test'
+  ...
+# Subtest: every stage that is not accepted has at least one open gap
+ok 12 - every stage that is not accepted has at least one open gap
+  ---
+  duration_ms: 0.2864
+  type: 'test'
+  ...
+# Subtest: the manual checklist covers rendering, lifecycle and accessibility gaps
+ok 13 - the manual checklist covers rendering, lifecycle and accessibility gaps
+  ---
+  duration_ms: 0.3255
+  type: 'test'
+  ...
+# Subtest: the ledger never contradicts the stage records
+ok 14 - the ledger never contradicts the stage records
+  ---
+  duration_ms: 0.7378
+  type: 'test'
+  ...
+# Subtest: the package, the build artifact and the documentation agree on one version
+ok 15 - the package, the build artifact and the documentation agree on one version
+  ---
+  duration_ms: 2.0209
+  type: 'test'
+  ...
+# Subtest: every declared bundle row resolves to an exported entry
+ok 16 - every declared bundle row resolves to an exported entry
+  ---
+  duration_ms: 1.383
+  type: 'test'
+  ...
+# Subtest: no stage is claimed accepted while the ledger still lists a gap for it
+ok 17 - no stage is claimed accepted while the ledger still lists a gap for it
+  ---
+  duration_ms: 1.0548
+  type: 'test'
+  ...
+# Subtest: the handover names every unaccepted stage and the blocked items
+ok 18 - the handover names every unaccepted stage and the blocked items
+  ---
+  duration_ms: 0.2921
+  type: 'test'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 91.2932

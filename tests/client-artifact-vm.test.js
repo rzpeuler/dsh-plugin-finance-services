@@ -35,7 +35,7 @@ function loadArtifact() {
 const plugin = loadArtifact()
 
 function fakeContext() {
-  const record = { mounted: [], namespaces: [], locales: [], effects: [], slots: [], resources: [], panels: [], sidebars: [] }
+  const record = { mounted: [], namespaces: [], locales: [], effects: [], slots: [], resources: [], panels: [], sidebars: [], rowConfigs: [], bundleConfigs: [], configCalls: [] }
   const remote = {
     async $mount(contract) { record.mounted.push(contract.package) },
     financeOperations: {
@@ -43,6 +43,8 @@ function fakeContext() {
       async catalog() { return { ok: true, value: { agents: [], workers: [], skills: [], commands: [] } } },
       async bindWorkspace() { return { ok: true, value: {} } },
       async prepareDraft() { return { ok: true, value: {} } },
+      async rowConfig(request) { record.configCalls.push(['read', request]); return { ok: true, value: { status: 'READY', rowId: request.rowId, configJson: '{}', error: null } } },
+      async saveRowConfig(request) { record.configCalls.push(['save', request]); return { ok: true, value: { status: 'APPLIED', rowId: request.rowId, error: null } } },
       async *follow() {},
     },
     financeData: { async catalog() { return { ok: true, value: { catalogJson: JSON.stringify({ revision: 0, adapters: [], bindings: [] }) } } } },
@@ -70,7 +72,9 @@ function fakeContext() {
       register(options, component) {
         if (options.name === 'main') { record.panels.push(options.key); return { options, component } }
         if (options.name === 'sidebar.panellist') { record.sidebars.push(options); return { options } }
-        return { options }
+        if (options.name === 'plugins.row.config') { record.rowConfigs.push({ options, component }); return { options, component } }
+        if (options.name === 'plugins.bundle.config') { record.bundleConfigs.push({ options, component }); return { options, component } }
+        return { options, component }
       },
     },
     layout: { panelInfo: { getSnapshot: () => ({ activePanelId: null }) }, selectPanel() {} },
@@ -110,7 +114,11 @@ test('apply registers one main panel, one sidebar entry and the two plugin pages
   await plugin.apply(root)
   assert.deepEqual(record.panels, ['financial-services'])
   assert.equal(record.sidebars.length, 1)
-  assert.ok(record.slots.includes('plugins.bundle.config'))
+  assert.equal(record.rowConfigs.length, 2)
+  assert.deepEqual([...record.rowConfigs.map(item => item.options.key)].sort(), [
+    '@local/dsh-financial-services#finance-data', '@local/dsh-financial-services#finance-review',
+  ])
+  assert.equal(record.bundleConfigs.length, 0, 'the workbench must not occupy the bundle configuration page')
   assert.ok(record.slots.includes('plugins.bundle.activation'))
 })
 
@@ -120,4 +128,37 @@ test('the serialized client still registers its dictionary namespaces', async ()
   for (const namespace of ['financial-services', 'financial-data-ui', 'financial-review-ui', 'financial-workbench-ui']) {
     assert.ok(record.locales.includes(namespace), `missing dictionary ${namespace}`)
   }
+})
+
+test('finance-data row form receives the correct native read and save actions', async () => {
+  const { ctx, record } = fakeContext()
+  await plugin.apply({ remote: ctx.remote, inject: (deps, callback) => callback(ctx) })
+  const entry = record.rowConfigs.find(item => item.options.key.endsWith('#finance-data'))
+  assert.ok(entry)
+  const injected = entry.options.inject()
+  assert.equal(typeof injected.getRowConfig, 'function')
+  assert.equal(typeof injected.saveRowConfig, 'function')
+  const wrapper = entry.component({ ...injected, t: key => key, view: 'page' })
+  assert.equal(wrapper.props.kind, 'data')
+  assert.equal(wrapper.props.getRowConfig, injected.getRowConfig)
+  await injected.getRowConfig()
+  await injected.saveRowConfig({ expectedJson: '{"requestTimeoutMs":10000,"maxConcurrentQueries":32}', configJson: '{"requestTimeoutMs":20000,"maxConcurrentQueries":16}' })
+  assert.deepEqual(record.configCalls.map(([kind, request]) => [kind, request.rowId]), [
+    ['read', 'finance-data'], ['save', 'finance-data'],
+  ])
+})
+
+test('finance-review row form receives only its own native config actions', async () => {
+  const { ctx, record } = fakeContext()
+  await plugin.apply({ remote: ctx.remote, inject: (deps, callback) => callback(ctx) })
+  const entry = record.rowConfigs.find(item => item.options.key.endsWith('#finance-review'))
+  assert.ok(entry)
+  const injected = entry.options.inject()
+  const wrapper = entry.component({ ...injected, t: key => key, view: 'page' })
+  assert.equal(wrapper.props.kind, 'review')
+  await injected.getRowConfig()
+  await injected.saveRowConfig({ expectedJson: '{"policyId":"original","customJson":""}', configJson: '{"policyId":"fast","customJson":""}' })
+  assert.deepEqual(record.configCalls.map(([kind, request]) => [kind, request.rowId]), [
+    ['read', 'finance-review'], ['save', 'finance-review'],
+  ])
 })

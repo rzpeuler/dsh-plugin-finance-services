@@ -67,6 +67,19 @@
       "revisionMonotonic": true,
       "saveFailureLeavesNoMemoryApproval": true,
       "restartConvertsRunningToUnknownTerminated": true
+    },
+    "policySnapshotTransition": {
+      "status": "PASS_POLICY_SWITCH_PRESERVES_HISTORY_AND_FAILS_CLOSED",
+      "evidence": "P6-policy-switch-targeted.tap",
+      "switch": "original -> fast",
+      "oldDecisionRecordsPreservedUnchanged": true,
+      "oldApprovalsReauthorizedUnderNewSnapshot": false,
+      "newlyRequiredCheckpointNeedsNewReview": true,
+      "humanLifecycleTest": "PASS_AFTER_RESTART",
+      "humanEvidence": "P6-settings-row-config-007.json",
+      "priorDecisionHistoryPreserved": true,
+      "priorApprovalsAuthorizeNewSnapshot": false,
+      "originalPolicyRestored": true
     }
   },
   "criteriaResults": {
