@@ -5,7 +5,7 @@
  * @param {Function} createFinanceContract Bundle-owned, self-contained contract factory.
  * @returns {object} Cordis function-plugin exports for the Client module loader.
  */
-export function createFinanceClient(React, z, createFinanceContract, dataClient, reviewClient, workbenchClient) {
+export function createFinanceClient(React, z, createFinanceContract, dataClient, reviewClient, workbenchClient, runClient = null) {
   const h = React.createElement
   const PACKAGE = '@local/dsh-financial-services'
   const PANEL = 'financial-services'
@@ -15,8 +15,8 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
   const ONBOARDING_VERSION = 1
   const en = {
     title: 'Financial Services',
-    stage: 'P2 · Roles, Skills and unsent drafts',
-    introduction: 'Browse installed financial roles and their native preset diagnostics. Bind a real directory, then open an unsent task draft in a native Session.',
+    stage: 'FUX-01 / FRUN-01 · Agents, Sessions and real Run facts',
+    introduction: 'Start with the ten financial Agents, choose a standard task or free chat, and inspect Runs derived from native Session events.',
     catalog: 'Installed catalogue', catalogLoading: 'Reading the installed catalogue…', catalogUnavailable: 'The catalogue resource is unavailable.',
     catalogStale: 'Catalogue connection failed. Any displayed entries are the last received state, not current verification.',
     agents: 'Main roles', workers: 'Owned Workers', skills: 'Skills', commands: 'Command templates', steering: 'Steering examples',
@@ -60,7 +60,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     'status.PERMISSION_DENIED': 'Access to the directory was denied',
     'status.PATH_DRIFT': 'Workspace path differs from the saved binding',
     limits: 'P2 scope and limitations',
-    scope: 'P2 exposes installed roles, scoped Skills, source diagnostics and unsent native drafts. Data adapters, Office business execution, Runs, deliverable indexes and deterministic Review Gates are not yet available here; this is not financial business E2E verification.',
+    scope: 'FUX-01 and FRUN-01 provide Agents, Skills, Runs, Deliverables, Review Queue, Data Sources, Settings and native unsent drafts. Runs begin only after durable user-authored Session messages and record real Session events. Artifact production, Office business execution and an end-to-end financial workflow remain out of scope.',
     boundaries: 'No reports are published, client messages sent, ledger entries posted, trades or fund operations executed, or final compliance decisions signed.',
     switching: 'A new binding affects future tasks only. Existing Sessions, files and history are not moved or deleted.',
     hostLimits: 'Host-reported limitations',
@@ -81,11 +81,22 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     configLoading: 'Loading current Host configuration…', configUnavailable: 'Current configuration values are not available from the Host.',
     configConflict: 'Configuration changed elsewhere. Reload this page before saving.',
     configSaveFailed: 'The Host refused this configuration update.', configInvalid: 'Enter values within the documented range and policy rules.',
+    navAgents: 'Agents', navSkills: 'Skills', navRuns: 'Runs', navDeliverables: 'Deliverables', navReviews: 'Review Queue', navData: 'Data Sources', navSettings: 'Settings',
+    domainBankingResearch: 'Banking & Research', domainAdvisoryModeling: 'Advisory & Modeling', domainRiskControl: 'Risk & Control', domainFundOperations: 'Fund Operations', domainOther: 'Other',
+    agentHomeTitle: 'Choose a financial Agent', agentHomeHint: 'Availability reflects the installed native preset and declared skill assets, not a successful query or business execution.',
+    agentNoResults: 'No Agents match this search.', viewAgent: 'View Agent details',
+    searchAgents: 'Search Agents by name, description, domain, or dependency', statusCanDraft: 'Can prepare a native draft', statusPartial: 'Declared dependency gaps', statusUnavailable: 'Native preset unavailable',
+    detailOverview: 'Overview', detailCapabilities: 'Capabilities', detailDependencies: 'Dependencies', detailHistory: 'History', backAgents: 'Back to Agents', agentDetails: 'Agent details',
+    availabilityHint: 'Draft creation also requires a ready Workspace. Model, data-source and commercial-service access are not inferred from this status.',
+    standardTask: 'Standard task', chooseTask: 'Choose a native command or steering template', freeChat: 'Free conversation', taskNone: 'No standard template is declared for this Agent.',
+    freeChatHint: 'Opens the native DSH chat draft with this Agent preset; no prompt is submitted.', dependencyNote: 'Allowlisted services are not evidence of connection, credentials, authorization, or a successful query.',
+    noWorkerDetails: 'No owned Worker details are declared.', noSkillDetails: 'No scoped Skills are declared.', advancedInfo: 'Advanced implementation facts',
+    settingsIntro: 'Workspace binding, configuration and implementation diagnostics. Workspace changes apply to future native drafts only.', pageRunsIntro: 'Runs are derived from durable user-authored messages and native Session events.',
   }
   const zh = {
     title: 'Financial Services',
-    stage: 'P2 · 角色、Skill 与未提交草稿',
-    introduction: '浏览已安装金融角色及其原生 Preset 诊断。绑定真实目录后，在原生会话打开未提交任务草稿。',
+    stage: 'FUX-01 / FRUN-01 · Agents、Session 与真实 Run 事实',
+    introduction: '从十个金融 Agent 开始，选择标准任务或自由对话，并查看由原生 Session 事件派生的 Runs。',
     catalog: '已安装目录', catalogLoading: '正在读取已安装目录…', catalogUnavailable: '目录资源当前不可用。',
     catalogStale: '目录连接失败。下方如有条目，仅为最后收到的状态，并非当前核验结果。',
     agents: '主角色', workers: '所属 Worker', skills: 'Skills', commands: '命令模板', steering: 'Steering 样例',
@@ -129,7 +140,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     'status.PERMISSION_DENIED': '没有目录访问权限',
     'status.PATH_DRIFT': '工作区路径与已保存的绑定不一致',
     limits: 'P2 范围与限制',
-    scope: 'P2 提供已安装角色、作用域 Skills、来源诊断和未提交原生草稿。数据适配、Office 业务执行、Runs、成果索引和确定性 Review Gate 在此尚未开放；不代表金融业务端到端验证。',
+    scope: 'FUX-01 与 FRUN-01 提供 Agents、Skills、Runs、成果、审核、数据源、设置和原生未提交草稿。Run 仅在用户消息持久化后建立，并记录真实 Session 事件。成果生成、Office 业务执行和金融业务端到端闭环仍不在范围内。',
     boundaries: '不会发布报告、发送客户资料、正式记账、执行交易或资金操作，也不会代替人工完成最终合规签字。',
     switching: '更换绑定仅影响未来的新任务；不会移动或删除已有会话、文件和历史。',
     hostLimits: 'Host 返回的限制',
@@ -150,6 +161,17 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     configLoading: '正在读取 Host 当前配置…', configUnavailable: 'Host 当前配置值不可用。',
     configConflict: '配置已被其他操作修改，请重新载入此页后再保存。',
     configSaveFailed: 'Host 拒绝了此配置更新。', configInvalid: '请输入符合范围与策略规则的值。',
+    navAgents: 'Agents', navSkills: 'Skills', navRuns: 'Runs', navDeliverables: '成果', navReviews: '审核', navData: '数据源', navSettings: '设置',
+    domainBankingResearch: '银行与研究', domainAdvisoryModeling: '顾问与建模', domainRiskControl: '风险与控制', domainFundOperations: '基金运营', domainOther: '其他',
+    agentHomeTitle: '选择金融 Agent', agentHomeHint: '可用状态反映已安装的原生 Preset 与已声明的 Skill 资产，不代表查询成功或业务已执行。',
+    agentNoResults: '没有匹配的 Agent。', viewAgent: '查看 Agent 详情',
+    searchAgents: '按名称、说明、业务领域或依赖搜索 Agent', statusCanDraft: '可准备原生草稿', statusPartial: '存在依赖缺口', statusUnavailable: '原生 Preset 不可用',
+    detailOverview: '概览', detailCapabilities: '能力', detailDependencies: '依赖', detailHistory: '历史', backAgents: '返回 Agents', agentDetails: 'Agent 详情',
+    availabilityHint: '创建草稿还要求 Workspace 就绪。此状态不推断模型、数据源或商业服务访问权限。',
+    standardTask: '标准任务', chooseTask: '选择原生命令或 Steering 模板', freeChat: '自由对话', taskNone: '此 Agent 未声明标准模板。',
+    freeChatHint: '使用此 Agent Preset 打开原生 DSH 聊天草稿；不会提交提示词。', dependencyNote: '服务允许列表不代表已连接、已配置凭据、已获授权或查询成功。',
+    noWorkerDetails: '未声明所属 Worker 详情。', noSkillDetails: '未声明作用域 Skill。', advancedInfo: '高级实现信息',
+    settingsIntro: '工作区绑定、配置和实现诊断。工作区更改仅影响未来的原生草稿。', pageRunsIntro: 'Runs 来源于持久化的用户消息和原生 Session 事件。'
   }
   const CSS = `
 .finance-p2 { box-sizing: border-box; color: var(--dsw-alias-label-primary); font: inherit; line-height: 1.55; min-width: 0; }
@@ -181,7 +203,13 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
 .finance-p2 details { border-top: 1px solid var(--dsw-alias-border-l2); padding-block: 12px; min-width: 0; }
 .finance-p2 summary { cursor: pointer; overflow-wrap: anywhere; font-weight: 600; }
 .finance-p2__list { display: grid; gap: 12px; }
-@media (max-width: 520px) { .finance-p2__facts { grid-template-columns: minmax(0, 1fr); gap: 3px; } .finance-p2 dd { margin-bottom: 9px; } .finance-p2__actions button { flex: 1 1 180px; } }
+.finance-p2__nav { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 10px; margin: 8px 0 16px; }
+.finance-p2__nav button[aria-current="page"] { border-color: var(--dsw-alias-state-business-primary); background: var(--dsw-alias-interactive-bg-hover); }
+.finance-p2__agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; }
+.finance-p2__agent-card { min-width: 0; border: 1px solid var(--dsw-alias-border-l2); border-radius: 12px; background: var(--dsw-alias-bg-layer-1); padding: 16px; }
+.finance-p2__tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.finance-p2__tabs [aria-selected="true"] { border-color: var(--dsw-alias-state-business-primary); background: var(--dsw-alias-interactive-bg-hover); }
+@media (max-width: 520px) { .finance-p2__facts { grid-template-columns: minmax(0, 1fr); gap: 3px; } .finance-p2 dd { margin-bottom: 9px; } .finance-p2__actions button { flex: 1 1 180px; } .finance-p2__tabs button { flex: 1 1 120px; } }
 `
 
   function failureOf(error) {
@@ -420,6 +448,141 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
           h('ul', null, catalog.limitations.map((limit, index) => h('li', { key: index }, limit)))) : null) : null)
   }
 
+  const DOMAIN_BY_SLUG = {
+    'pitch-agent': 'domainBankingResearch', 'market-researcher': 'domainBankingResearch', 'earnings-reviewer': 'domainBankingResearch',
+    'meeting-prep-agent': 'domainAdvisoryModeling', 'model-builder': 'domainAdvisoryModeling',
+    'gl-reconciler': 'domainRiskControl', 'kyc-screener': 'domainRiskControl',
+    'valuation-reviewer': 'domainFundOperations', 'month-end-closer': 'domainFundOperations', 'statement-auditor': 'domainFundOperations',
+  }
+
+  function hasAgentGaps(agent, catalog) {
+    const skillNames = agent.skillNames ?? []
+    const skills = skillNames.map(name => catalog.skills.find(skill => skill.name === name)).filter(Boolean)
+    const workerIds = agent.workerPresetIds ?? []
+    const workers = workerIds.map(id => catalog.workers.find(worker => worker.id === id)).filter(Boolean)
+    return skills.length !== skillNames.length || skills.some(skill => skill.assetStatus !== 'AVAILABLE' || skill.issues.length > 0)
+      || workers.length !== workerIds.length || workers.some(worker => worker.parentId !== agent.id || worker.mountStatus !== 'AVAILABLE')
+  }
+
+  function AgentHome({ t, useResource, startDraft, ready, runClient, runProps }) {
+    const resource = useResource(CATALOG_ADDRESS)
+    const catalog = resource.value
+    const [search, setSearch] = React.useState('')
+    const [selectedId, setSelectedId] = React.useState(null)
+    const [detailTab, setDetailTab] = React.useState('overview')
+    const searchId = React.useId()
+    const query = search.trim().toLocaleLowerCase()
+    if (resource.status === 'loading' && !catalog) return h('p', { role: 'status' }, t('catalogLoading'))
+    if (!catalog) return h('p', { role: resource.status === 'failed' ? 'alert' : 'status' }, t(resource.status === 'failed' ? 'catalogStale' : 'catalogUnavailable'))
+    const agents = catalog.agents.filter(agent => [agent.name, agent.description, agent.slug, t(DOMAIN_BY_SLUG[agent.slug] ?? 'domainOther')]
+      .join(' ').toLocaleLowerCase().includes(query))
+    const selected = selectedId ? catalog.agents.find(agent => agent.id === selectedId) : null
+    if (selected) return h(AgentDetails, { key: selected.id, t, catalog, agent: selected, ready, startDraft, useResource, runClient, runProps,
+      activeTab: detailTab, setActiveTab: setDetailTab, back: () => { setSelectedId(null); setDetailTab('overview') } })
+    const groups = new Map()
+    for (const agent of agents) {
+      const domain = t(DOMAIN_BY_SLUG[agent.slug] ?? 'domainOther')
+      groups.set(domain, [...(groups.get(domain) ?? []), agent])
+    }
+    return h('section', { className: 'finance-p2__list', 'aria-busy': resource.status === 'loading' },
+      h('h2', null, t('agentHomeTitle')), h('p', { className: 'finance-p2__hint' }, t('agentHomeHint')),
+      h('label', { htmlFor: searchId }, t('searchAgents')),
+      h('input', { id: searchId, type: 'search', value: search, onChange: event => setSearch(event.target.value) }),
+      agents.length === 0 ? h('p', { role: 'status' }, t('agentNoResults')) : null,
+      [...groups.entries()].map(([domain, items]) => h('section', { key: domain }, h('h3', null, domain),
+        h('div', { className: 'finance-p2__agent-grid' }, items.map(agent => {
+          const gaps = hasAgentGaps(agent, catalog)
+          const state = agent.mountStatus !== 'AVAILABLE' ? 'statusUnavailable' : gaps ? 'statusPartial' : 'statusCanDraft'
+          return h('article', { key: agent.id, className: 'finance-p2__agent-card' },
+            h('h4', null, agent.name), h('p', { className: 'finance-p2__hint' }, domain),
+            h('p', null, agent.description), h('p', { className: 'finance-p2__badge' }, t(state)),
+            h('button', { type: 'button', onClick: () => { setSelectedId(agent.id); setDetailTab('overview') } }, t('viewAgent')))
+        })))))
+  }
+
+  function AgentDetails({ t, catalog, agent, ready, startDraft, useResource, runClient, runProps, activeTab, setActiveTab, back }) {
+    const tabs = [['overview', 'detailOverview'], ['capabilities', 'detailCapabilities'], ['dependencies', 'detailDependencies'], ['history', 'detailHistory']]
+    const commands = catalog.commands.filter(item => item.targetPresetIds.includes(agent.id))
+    const steering = catalog.steering.filter(item => item.targetPresetId === agent.id)
+    const options = [...commands.map(item => ({ id: item.id, label: item.name, kind: 'command' })),
+      ...steering.map(item => ({ id: item.id, label: item.title, kind: 'steering' }))]
+    const [selectedTask, setSelectedTask] = React.useState('')
+    const task = options.find(item => `${item.kind}:${item.id}` === selectedTask)
+    const workers = catalog.workers.filter(worker => worker.parentId === agent.id && agent.workerPresetIds.includes(worker.id))
+    const skills = (agent.skillNames ?? []).map(name => catalog.skills.find(skill => skill.name === name)).filter(Boolean)
+    const availability = agent.mountStatus !== 'AVAILABLE' ? 'statusUnavailable' : hasAgentGaps(agent, catalog) ? 'statusPartial' : 'statusCanDraft'
+    const content = activeTab === 'overview' ? h(React.Fragment, null,
+      h('p', null, agent.description), h('p', { className: 'finance-p2__badge' }, t(availability)),
+      h('p', { className: 'finance-p2__hint' }, t('availabilityHint')),
+      h('h3', null, t('standardTask')),
+      options.length ? h(React.Fragment, null,
+        h('label', { htmlFor: 'finance-standard-task' }, t('chooseTask')),
+        h('select', { id: 'finance-standard-task', value: selectedTask, onChange: event => setSelectedTask(event.target.value) },
+          h('option', { value: '' }, t('chooseTask')),
+          options.map(item => h('option', { key: `${item.kind}:${item.id}`, value: `${item.kind}:${item.id}` }, item.label))),
+        task ? h(DraftAction, { t, startDraft, agent, ready, allowPrompt: false,
+          ...(task.kind === 'command' ? { commandId: task.id } : { steeringId: task.id }) }) : null)
+        : h('p', { className: 'finance-p2__hint' }, t('taskNone')),
+      h('h3', null, t('freeChat')),
+      h('p', { className: 'finance-p2__hint' }, t('freeChatHint')),
+      h(DraftAction, { t, startDraft, agent, ready, allowPrompt: false }))
+      : activeTab === 'capabilities' ? h(React.Fragment, null,
+        h('h3', null, t('workers')),
+        workers.length ? h('ul', null, workers.map(worker => h('li', { key: worker.id }, `${worker.name}: ${worker.description}`))) : h('p', null, t('noWorkerDetails')),
+        h('h3', null, t('skills')),
+        skills.length ? h('ul', null, skills.map(skill => h('li', { key: skill.name }, `${skill.name} · ${skill.assetStatus}`))) : h('p', null, t('noSkillDetails')),
+        h('p', { className: 'finance-p2__hint' }, t('workerVisibility')))
+      : activeTab === 'dependencies' ? h(React.Fragment, null,
+        h('h3', null, t('mcp')), h('ul', null, (agent.allowedMcpServers ?? []).map(id => h('li', { key: id }, id))),
+        h('p', { className: 'finance-p2__hint' }, t('dependencyNote')),
+        h('h3', null, t('issues')),
+        skills.map(skill => h('article', { key: skill.name }, h('strong', null, `${skill.name} · ${skill.assetStatus}`),
+          skill.issues.length ? h('ul', null, skill.issues.map((issue, index) => h('li', { key: index }, issue))) : h('p', null, t('empty')))))
+      : runClient?.RecentPanel ? h(runClient.RecentPanel, { ...runProps, useResource, agentFilter: agent.id }) : h('p', null, t('pageRunsIntro'))
+    return h('section', { className: 'finance-p2__card' },
+      h('button', { type: 'button', onClick: back }, t('backAgents')),
+      h('h2', null, agent.name), h('div', { className: 'finance-p2__tabs', role: 'tablist', 'aria-label': t('agentDetails') },
+        tabs.map(([id, label]) => h('button', { key: id, type: 'button', role: 'tab', 'aria-selected': activeTab === id,
+          onClick: () => setActiveTab(id) }, t(label)))),
+      h('div', { role: 'tabpanel' }, content))
+  }
+
+  function SkillsPage({ t, useResource }) {
+    const resource = useResource(CATALOG_ADDRESS)
+    const catalog = resource.value
+    const [search, setSearch] = React.useState('')
+    const searchId = React.useId()
+    const query = search.trim().toLocaleLowerCase()
+    const skills = catalog?.skills.filter(skill => [skill.name, skill.description, skill.assetStatus, ...skill.issues].join(' ').toLocaleLowerCase().includes(query)) ?? []
+    return h('section', { className: 'finance-p2__card', 'aria-busy': resource.status === 'loading' },
+      h('h2', null, t('skills')), resource.status === 'loading' ? h('p', { role: 'status' }, t('catalogLoading')) : null,
+      resource.status === 'failed' ? h('p', { role: 'alert' }, t('catalogStale')) : null,
+      h('label', { htmlFor: searchId }, t('skillSearch')),
+      h('input', { id: searchId, type: 'search', value: search, onChange: event => setSearch(event.target.value) }),
+      skills.length === 0 ? h('p', { role: 'status' }, t('noSkills')) : null,
+      skills.map(skill => h('article', { key: skill.name }, h('h3', null, `${skill.name} · ${skill.assetStatus}`),
+        h('p', null, skill.description), skill.issues.length ? h('ul', null, skill.issues.map((issue, index) => h('li', { key: index }, issue))) : h('p', null, t('empty')))))
+  }
+
+  function WorkspaceForm({ t, resource, snapshot, facts, draft, setDraft, activity, busy, canBind, choose, submit, actionError, hintId, fieldId, errorId }) {
+    return h('section', { className: 'finance-p2__card' }, h('h2', null, t('workspace')),
+      resource.status === 'loading' ? h('p', { role: 'status' }, t('loading')) : null,
+      resource.status === 'none' ? h('p', { role: 'status' }, t('unavailable')) : null,
+      resource.status === 'failed' ? h('p', { role: 'alert', className: 'finance-p2__error' }, t('stale')) : null,
+      h(ErrorNotice, { error: resource.failure, t }),
+      snapshot ? h(React.Fragment, null, h('span', { className: 'finance-p2__badge' }, t(snapshot.binding ? 'saved' : 'unbound')),
+        h('dl', { className: 'finance-p2__facts' }, facts.map(([key, value]) => h(React.Fragment, { key }, h('dt', null, t(key)), h('dd', null, value)))),
+        h(ErrorNotice, { error: snapshot.error, t })) : null,
+      h('form', { className: 'finance-p2__form', onSubmit: submit, 'aria-busy': busy },
+        h('label', { htmlFor: fieldId }, t('path')),
+        h('input', { id: fieldId, type: 'text', value: draft, placeholder: t('pathPlaceholder'), disabled: busy, autoComplete: 'off', spellCheck: false,
+          'aria-describedby': `${hintId}${actionError ? ` ${errorId}` : ''}`, 'aria-invalid': Boolean(actionError), onChange: event => setDraft(event.target.value) }),
+        h('p', { id: hintId, className: 'finance-p2__hint' }, t('pathHint')),
+        h('div', { className: 'finance-p2__actions' }, h('button', { type: 'button', onClick: choose, disabled: busy }, t(activity === 'pick' ? 'picking' : 'pick')),
+          h('button', { type: 'submit', disabled: !canBind || draft.trim() === '', className: 'finance-p2__primary' }, t(activity === 'bind' ? 'saving' : 'save'))),
+        h(ErrorNotice, { error: actionError, t, id: errorId })), h('p', { className: 'finance-p2__hint' }, t('switching')))
+  }
+
   function WorkspacePage(props) {
     const { t, useResource, bindWorkspace, pickDirectory } = props
     const resource = useResource(ADDRESS)
@@ -467,6 +630,8 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
       }
     }
 
+    const catalogResource = useResource(CATALOG_ADDRESS)
+    const [page, setPage] = React.useState('agents')
     const facts = snapshot ? [
       ['statusLabel', t(`status.${snapshot.workspaceStatus}`)],
       ['revision', String(snapshot.revision)],
@@ -478,47 +643,39 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     ] : []
 
     if (props.view === 'summary') return h('span', null, t('stage'))
-    return h('section', { className: props.view === 'page' ? 'finance-p2' : 'finance-p2 finance-p2--page', 'aria-busy': busy || resource.status === 'loading' },
+    const runProps = props.runProps ?? {}
+    const ready = resource.status === 'live' && snapshot?.workspaceStatus === 'READY'
+    const pages = [['agents', 'navAgents'], ['skills', 'navSkills'], ['runs', 'navRuns'], ['deliverables', 'navDeliverables'],
+      ['reviews', 'navReviews'], ['data', 'navData'], ['settings', 'navSettings']]
+    let content
+    if (page === 'agents') content = h(AgentHome, { t, useResource, startDraft: props.startDraft, ready, runClient, runProps })
+    else if (page === 'skills') content = h(SkillsPage, { t, useResource })
+    else if (page === 'runs') content = runClient?.RecentPanel ? h(runClient.RecentPanel, { ...runProps, useResource }) : h('p', { role: 'status' }, t('unavailable'))
+    else if (page === 'deliverables') content = workbenchClient ? h(workbenchClient.Panel, { ...props, section: 'deliverables' }) : h('p', { role: 'status' }, t('unavailable'))
+    else if (page === 'reviews') content = reviewClient ? h(reviewClient.Panel, props) : h('p', { role: 'status' }, t('unavailable'))
+    else if (page === 'data') content = dataClient ? h(dataClient.Panel, props) : h('p', { role: 'status' }, t('unavailable'))
+    else content = h(React.Fragment, null,
+      h('p', { className: 'finance-p2__hint' }, t('settingsIntro')),
+      h(WorkspaceForm, { t, resource, snapshot, facts, draft, setDraft, activity, busy, canBind, choose, submit, actionError, hintId, fieldId, errorId }),
+      h('section', { className: 'finance-p2__card' }, h('h2', null, t('limits')), h('p', null, t('scope')),
+        h('p', { className: 'finance-p2__hint' }, t('boundaries')),
+        snapshot?.limitations?.length ? h(React.Fragment, null, h('h3', null, t('hostLimits')),
+          h('ul', null, snapshot.limitations.map(limit => h('li', { key: limit }, limit)))) : null),
+      h('details', { className: 'finance-p2__card' }, h('summary', null, t('advancedInfo')),
+        catalogResource.value ? h(React.Fragment, null,
+          catalogResource.status === 'failed' ? h('p', { role: 'alert' }, t('catalogStale')) : null,
+          h('p', { className: 'finance-p2__hint' }, `${t('sourceTreeSha')}: ${catalogResource.value.sourceTreeSha256}`),
+          catalogResource.value.agents.map(agent => h('details', { key: agent.id }, h('summary', null, agent.name), h(RoleFacts, { role: agent, t })))
+        ) : h('p', { role: catalogResource.status === 'failed' ? 'alert' : 'status' }, t(catalogResource.status === 'failed' ? 'catalogStale' : 'catalogUnavailable'))))
+    return h('section', { className: 'finance-p2 finance-p2--page', 'aria-busy': busy || resource.status === 'loading' },
       h('style', null, CSS),
       h('div', { className: 'finance-p2__body' },
-        h('header', null,
-          h('p', { className: 'finance-p2__eyebrow' }, t('stage')),
-          h('h1', null, t('title')),
+        h('header', null, h('p', { className: 'finance-p2__eyebrow' }, t('stage')), h('h1', null, t('title')),
           h('p', { className: 'finance-p2__hint' }, t('introduction'))),
-        h('section', { className: 'finance-p2__card' },
-          h('h2', null, t('workspace')),
-          resource.status === 'loading' ? h('p', { role: 'status' }, t('loading')) : null,
-          resource.status === 'none' ? h('p', { role: 'status' }, t('unavailable')) : null,
-          resource.status === 'failed' ? h('p', { role: 'alert', className: 'finance-p2__error' }, t('stale')) : null,
-          h(ErrorNotice, { error: resource.failure, t }),
-          snapshot ? h(React.Fragment, null,
-            h('span', { className: 'finance-p2__badge' }, t(snapshot.binding ? 'saved' : 'unbound')),
-            h('dl', { className: 'finance-p2__facts' }, facts.map(([key, value]) =>
-              h(React.Fragment, { key }, h('dt', null, t(key)), h('dd', null, value)))),
-            h(ErrorNotice, { error: snapshot.error, t })) : null,
-          h('form', { className: 'finance-p2__form', onSubmit: submit, 'aria-busy': busy },
-            h('label', { htmlFor: fieldId }, t('path')),
-            h('input', { id: fieldId, type: 'text', value: draft, placeholder: t('pathPlaceholder'),
-              disabled: busy, autoComplete: 'off', spellCheck: false,
-              'aria-describedby': `${hintId}${actionError ? ` ${errorId}` : ''}`,
-              'aria-invalid': Boolean(actionError), onChange: event => setDraft(event.target.value) }),
-            h('p', { id: hintId, className: 'finance-p2__hint' }, t('pathHint')),
-            h('div', { className: 'finance-p2__actions' },
-              h('button', { type: 'button', onClick: choose, disabled: busy }, t(activity === 'pick' ? 'picking' : 'pick')),
-              h('button', { type: 'submit', disabled: !canBind || draft.trim() === '', className: 'finance-p2__primary' }, t(activity === 'bind' ? 'saving' : 'save'))),
-            h(ErrorNotice, { error: actionError, t, id: errorId })),
-          h('p', { className: 'finance-p2__hint' }, t('switching'))),
-        workbenchClient ? h(workbenchClient.Panel, props) : null,
-        dataClient ? h(dataClient.Panel, props) : null,
-        reviewClient ? h(reviewClient.Panel, props) : null,
-        h(Catalogue, { t, useResource, startDraft: props.startDraft, ready: resource.status === 'live' && snapshot?.workspaceStatus === 'READY' }),
-        h('section', { className: 'finance-p2__card' },
-          h('h2', null, t('limits')),
-          h('p', null, t('scope')),
-          h('p', { className: 'finance-p2__hint' }, t('boundaries')),
-          snapshot && snapshot.limitations.length > 0 ? h(React.Fragment, null,
-            h('p', { className: 'finance-p2__hint' }, t('hostLimits')),
-            h('ul', null, snapshot.limitations.map(limit => h('li', { key: limit }, limit)))) : null)))
+        h('nav', { className: 'finance-p2__nav', 'aria-label': t('title') }, pages.map(([id, label]) =>
+          h('button', { key: id, type: 'button', 'aria-current': page === id ? 'page' : undefined, onClick: () => setPage(id) }, t(label)))),
+        page === 'runs' ? h('p', { className: 'finance-p2__hint' }, t('pageRunsIntro')) : null,
+        content))
   }
 
   function ActivationGuide(props) {
@@ -541,13 +698,14 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
   }
 
   return {
-    inject: ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'],
+    inject: ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale', 'sidebarRightTabs'],
     async apply(rootCtx) {
       await rootCtx.remote.$mount(createFinanceContract(z).remote)
       if (dataClient) await rootCtx.remote.$mount(dataClient.remote)
       if (reviewClient) await rootCtx.remote.$mount(reviewClient.remote)
+      if (runClient) await rootCtx.remote.$mount(runClient.remote)
       // Every mounted namespace is explicitly injected before any callback captures it.
-      rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : []), ...(reviewClient ? ['remote.financeReview'] : [])], ctx => {
+      rootCtx.inject(['remote.financeOperations', ...(dataClient ? ['remote.financeData'] : []), ...(reviewClient ? ['remote.financeReview'] : []), ...(runClient ? ['remote.financeRuns'] : [])], ctx => {
       const dataProps = dataClient ? dataClient.install(ctx) : {}
       const reviewProps = reviewClient ? reviewClient.install(ctx) : {}
       const workbenchProps = workbenchClient ? workbenchClient.install(ctx) : {}
@@ -657,7 +815,9 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
           }
         },
       }), 'financial-services: catalogue resource')
-      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, ...dataProps, ...reviewProps, ...workbenchProps })
+      const runProps = runClient ? runClient.install(ctx) : {}
+      if (runClient) runClient.registerTabs(ctx)
+      const inject = () => ({ bindWorkspace, pickDirectory, openWorkbench, startDraft, runProps, ...dataProps, ...reviewProps, ...workbenchProps })
       const rowConfigInject = rowId => () => ({
         getRowConfig: () => ctx.remote.financeOperations.rowConfig({ rowId }),
         saveRowConfig: request => ctx.remote.financeOperations.saveRowConfig({ rowId, ...request }),

@@ -11,6 +11,8 @@
       name: '@local/dsh-financial-services/review'
       config:
         policyId: original
+    - id: finance-runs
+      name: '@local/dsh-financial-services/run'
     - id: preset-finance-pitch-agent
       name: '@deepseek-ai/dsh-agent-preset'
       config:

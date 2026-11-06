@@ -208,7 +208,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
       h('p', { className: 'finance-p2__meta' }, `${t('source')}: ${state.source}`))
   }
 
-  function Panel({ workbenchT: t, loadOverview, loadWorkbook, openSession, sessionGone }) {
+  function Panel({ workbenchT: t, loadOverview, loadWorkbook, openSession, sessionGone, section = 'all' }) {
     const [state, setState] = React.useState({ status: 'loading', cards: null, error: null })
     const [navigation, setNavigation] = React.useState({ sessionId: null, status: 'idle', error: null })
     const [download, setDownload] = React.useState({ status: 'idle', error: null })
@@ -232,8 +232,8 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     React.useEffect(refresh, [])
     const cards = state.cards
     const loading = state.status === 'loading' && !cards ? h('p', null, t('loading')) : null
-    const degraded = cards && [cards.workspace, cards.roles, cards.dataSources, cards.tasks, cards.reviews, cards.runs, cards.deliverables].some(value => !isOk(value))
-      ? h('p', { className: 'finance-p2__error' }, t('degraded')) : null
+    const relevant = section === 'deliverables' ? [cards?.deliverables] : [cards?.workspace, cards?.roles, cards?.dataSources, cards?.tasks, cards?.reviews, cards?.runs, cards?.deliverables]
+    const degraded = cards && relevant.some(value => !isOk(value)) ? h('p', { className: 'finance-p2__error' }, t('degraded')) : null
     const workspace = cardValue(cards?.workspace)
     const roles = cardValue(cards?.roles)
     const data = cardValue(cards?.dataSources)
@@ -242,22 +242,22 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
     const runs = cardValue(cards?.runs)
     const deliverables = cardValue(cards?.deliverables)
     const list = cards ? h('ul', { className: 'finance-p2__list' }, [
-      card(t, t('workspace'), workspace ? h('p', null,
+      section !== 'deliverables' && card(t, t('workspace'), workspace ? h('p', null,
         `${t('binding')}: ${workspace.binding ? t('bound') : t('unbound')} · ${workspace.workspaceStatus} · ${t('revision')}: ${workspace.revision}`)
         : null, cards.workspace),
-      card(t, t('roles'), roles ? h('div', null,
+      section !== 'deliverables' && card(t, t('roles'), roles ? h('div', null,
         h('p', null, `${t('agents')}: ${roles.agents} · ${t('workers')}: ${roles.workers} · ${t('skills')}: ${roles.skills.total} · ${t('flagged')}: ${roles.skills.flagged}`),
         h('ul', { className: 'finance-p2__list' }, roles.mains.map(main => h('li', { key: main.id },
           `${main.id} · ${t('mains')}: ${main.workers} · ${t('writer')}: ${main.writer ? 'yes' : 'no'} · ${t('sources')}: ${main.sources.join(', ') || '—'} · ${t('skills')}: ${main.skills} · ${t('mounts')}: ${main.mount}`)))
       ) : null, cards.roles),
-      card(t, t('dataSources'), data ? h('p', null,
+      section !== 'deliverables' && card(t, t('dataSources'), data ? h('p', null,
         `${t('adapters')}: ${data.adapters} · ${t('policy')}: ${data.bindings} · ${t('revision')}: ${data.revision}`)
         : null, cards.dataSources),
-      card(t, t('tasksTitle'), tasks ? h('div', null,
+      section !== 'deliverables' && card(t, t('tasksTitle'), tasks ? h('div', null,
         h('p', null, `${tasks.templates.length} ${t('templates')} · ${t('startsNothing')}`),
         h('ul', { className: 'finance-p2__list' }, tasks.templates.slice(0, 10).map(template => h('li', { key: template.presetId },
           `${template.presetId} · ${template.title} · ${t('checkpoints')}: ${template.checkpoints}`)))) : null, cards.tasks),
-      card(t, t('runsTitle'), runs ? (runs.runs.length === 0 ? h('p', null, t('noRuns'))
+      section !== 'deliverables' && card(t, t('runsTitle'), runs ? (runs.runs.length === 0 ? h('p', null, t('noRuns'))
         : h('ul', { className: 'finance-p2__list' }, runs.runs.slice(0, 10).map(run => h('li', { key: run.runId },
           `${shortId(run.runId)} · ${run.classification} · ${t('checkpoints')}: ${Object.entries(run.checkpoints).map(([id, state]) => `${id}=${state}`).join(', ')} · ${t('deliverablesTitle')}: ${run.deliverableCount}`)))) : null, cards.runs),
       card(t, t('deliverablesTitle'), deliverables ? (deliverables.items.length === 0 ? h('p', null, t('noDeliverables'))
@@ -276,7 +276,7 @@ export function createWorkbenchClient(React, z, createFinanceContract) {
                 }
               } }, t('backToSession'))
               : h('span', { className: 'finance-p2__meta' }, item.sessionId ? ` ${t('noSessionLinked')}` : ''))))) : null, cards.deliverables),
-      card(t, t('reviews'), reviews ? h('p', null,
+      section !== 'deliverables' && card(t, t('reviews'), reviews ? h('p', null,
         `${t('sessions')}: ${reviews.sessions} · ${t('items')}: ${reviews.items} · ${t('pending')}: ${reviews.pending} · ${t('decided')}: ${reviews.decided}`)
         : null, cards.reviews),
     ]) : null

@@ -2,7 +2,7 @@
 
 独立、仓库外 Financial Services Bundle。当前版本 **0.4.0-alpha.1 / P3与P4均为PARTIAL的候选版**，不是完整金融移植产品。P0–P2关键验收通过；P3有217本地、33原生工具/生命周期、15真实Client、7原生MCP transport及独立模板检查，但Manager与安全MCP金融委派/凭据接口仍缺失。P4已建立逐业务标准并在[TASK_TEMPLATES](docs/P4_TASK_TEMPLATES.md#L1-L6)提供10种输入模板SDK、在[GL](docs/P4_GL_CHECKS.md)与[LP](docs/P4_LP_CHECKS.md)提供两个本地数值检查库，338项本地回归通过；尚无业务Worker运行或Office交付，原生Windows沙箱下固定`--version`即无法启动子进程，故Office链明确未通过。TEST_ONLY不是商业金融E2E。
 
-> 阶段完成情况与证据索引见 [阶段完成报告](acceptance/COMPLETION_REPORT.md)；逐条追溯见 [TRACEABILITY.md](acceptance/TRACEABILITY.md)。
+> 阶段完成情况与证据索引见 [阶段完成报告](acceptance/COMPLETION_REPORT.md)；逐条追溯见 [TRACEABILITY.md](acceptance/TRACEABILITY.md)。FUX-01 + FRUN-01 的本地候选实现与未验收边界见 [本地验收记录](acceptance/FUX01-FRUN01.md)。
 
 ## 当前范围
 
@@ -13,6 +13,8 @@
 - 禁用/卸载不删除用户目录、原始附件或 DSH Session 历史。重新安装从Host持久域读取既有绑定；目录已移动则需重新绑定。
 - Workspace切换仅改变未来任务默认目录，不移动历史 Session 或成果。
 - 10主角色、30独立Worker persona、63完整金融技能及41命令/29样例的只读目录；入口只创建未提交草稿。
+- FUX-01/FRUN-01候选实现提供 Agents、Skills、Runs、Deliverables、Review Queue、Data Sources、Settings 七页与四个 Agent 详情标签；标准任务和自由对话只准备原生未提交草稿。
+- FinanceRun 仅在用户消息接受并成功持久化后建立，与 Session ID/事件引用关联；不保存提示词或工具内容，按真实 Session/Worker 事件显示进度和诊断。右栏可由会话内 Guide 手动打开；当前公开接口不能证明提交动作已完成以自动打开。
 - 每角色独立的原生Preset与Skill registry/provider/loader作用域；Writer无MCP，主/Reader无写入。恰两源Bash角色有固定数值剖面，无通用Shell，不冒称Office工作簿。
 - 新增Host `financeData`服务：14稳定能力接口、显式Session/来源策略、时点与单位规范化。两个独立TEST_ONLY Adapter已原生安装/查询/卸载验证，用户可据[数据契约](docs/DATA_CONTRACT.md)扩展；商业Provider默认不授权，模型与真实Client链已验证，Manager/安全MCP桥接仍待。
 - 文件操作通过宿主FS/provider与沙箱策略；写入只限该Session分配的成果目录，创建不覆盖、编辑需SHA与原生版本CAS。已有链接/junction拒绝；不宣称提供超越宿主的恶意本地OS进程TOCTOU隔离。

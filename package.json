@@ -18,6 +18,7 @@
     "./data-runtime-2/icon": "./icon.svg",
     "./data-contracts/v1": "./src/data/contracts.js",
     "./review": "./lib/review.js",
+    "./run": "./lib/run.js",
     "./business-task-templates/v1": "./src/business/task-templates.js",
     "./business-checks/gl-v1": "./src/business/gl-reconciliation.js",
     "./business-checks/lp-v1": "./src/business/lp-tieout.js",
@@ -45,6 +46,7 @@
     "lib/data.js",
     "lib/data-runtime-2.js",
     "lib/review.js",
+    "lib/run.js",
     "lib/role-data-1.js",
     "lib/role.js",
     "lib/role-numeric-1.js",
@@ -97,6 +99,7 @@
       "platform": "web",
       "inject": [
         "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-sidebar-right",
         "@deepseek-ai/dsh-client-ui-layout",
         "@deepseek-ai/dsh-client-ui-plugin-manager",
         "@deepseek-ai/dsh-client-resources",

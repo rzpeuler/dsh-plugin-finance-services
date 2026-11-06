@@ -15,7 +15,8 @@ const lines = ['# Generated from audited financial assets. Do not edit the decla
   '    - id: financial-services', "      name: '@local/dsh-financial-services'",
   '    - id: finance-data', `      name: '${dataModule}'`,
   '      config:', '        requestTimeoutMs: 10000', '        maxConcurrentQueries: 32',
-  '    - id: finance-review', "      name: '@local/dsh-financial-services/review'", '      config:', '        policyId: original']
+  '    - id: finance-review', "      name: '@local/dsh-financial-services/review'", '      config:', '        policyId: original',
+  '    - id: finance-runs', "      name: '@local/dsh-financial-services/run'"]
 const quoted = value => JSON.stringify(value)
 let order = 1000
 for (const role of manifest.roles) {
