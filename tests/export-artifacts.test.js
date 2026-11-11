@@ -31,7 +31,6 @@ test('the compatibility aliases are byte-identical to their canonical entry', ()
   const read = name => readFileSync(join('lib', name), 'utf8')
   assert.equal(read('role.js'), read('role-data-1.js'), 'lib/role.js must carry the canonical role generation')
   assert.equal(read('role-numeric-1.js'), read('role-data-1.js'), 'lib/role-numeric-1.js must carry the canonical role generation')
-  assert.equal(read('data.js'), read('data-runtime-2.js'), 'lib/data.js must carry the canonical data runtime')
 })
 
 test('the manifest names exactly the artifacts that exist', () => {

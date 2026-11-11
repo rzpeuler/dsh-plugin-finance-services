@@ -1,0 +1,4 @@
+- insert:
+    - id: ashare-source-adapters
+      name: '@local/dsh-ashare-source-adapters'
+      config: {}

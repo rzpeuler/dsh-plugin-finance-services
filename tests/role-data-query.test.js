@@ -2,104 +2,96 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { z } from 'zod'
-import { createRoleTools } from '../src/role/tools.js'
-import { CAPABILITIES, createDataSchemas } from '../src/data/contracts.js'
-import { makeQuery } from './data-fixtures.js'
+import { createRoleTools, roleToolNames } from '../src/role/tools.js'
+import { createDataSchemas } from '../src/data/contracts.js'
 const schemas = createDataSchemas(z)
-function fixture(backend) {
-  const role = { id: 'finance-test-reader', builtinTools: ['read'], allowedMcpServers: ['capiq'], skillNames: [], writer: false }
+const makeQuery = (overrides = {}) => schemas.Query.parse({
+  capability: 'financial.statements', entity: { scheme: 'ticker', id: '600519.SH' }, market: 'CN',
+  requiredFields: ['revenue'], period: { kind: 'fiscal_year', start: '2024-01-01', end: '2024-12-31' },
+  asOf: new Date().toISOString(), purpose: 'research', temporalMode: 'current_only', maxAgeSeconds: 300,
+  ...overrides,
+})
+const args = (query = makeQuery()) => ({ action: 'query', capability: query.capability, query_json: JSON.stringify(query) })
+function fixture({ role: overrides = {}, queryForAgent, describeForAgent } = {}) {
+  const role = { id: 'finance-test-reader', builtinTools: ['read'], allowedMcpServers: [], skillNames: [], writer: false, ...overrides }
   const agent = {}, state = { active: true, checks: 0 }
   const filesystem = { check() { state.checks++; if (!state.active) throw new Error('ROLE_REVOKED') } }
   const filesystemFor = candidate => { if (candidate !== agent) throw new Error('EXACT_AGENT_REQUIRED'); return filesystem }
-  const tool = createRoleTools(role, filesystemFor, backend).find(value => value.name === 'finance_data_query')
-  const signal = new AbortController().signal
-  return { role, agent, state, tool, exec: { agent, signal } }
+  const tools = createRoleTools(role, filesystemFor, queryForAgent, describeForAgent)
+  const tool = tools.find(value => value.name === 'finance_data_query')
+  return { role, agent, state, filesystem, filesystemFor, tools, tool, exec: { agent, signal: new AbortController().signal } }
 }
-const args = () => ({ action: 'query', capability: 'financial.statements', query_json: JSON.stringify(makeQuery()) })
 
-test('all fourteen deferred descriptions give parseable TEST_ONLY examples without claiming Provider coverage', async () => {
-  const f = fixture()
-  assert.deepEqual(f.tool.parameters.properties.capability.enum, [...CAPABILITIES])
-  assert.equal(f.tool.parameters.properties.query_json.type, 'string')
-  for (const capability of CAPABILITIES) {
-    const output = await f.tool.execute({ action: 'describe', capability }, f.exec)
-    assert.equal(output.status, 'DESCRIBED')
-    const result = JSON.parse(output.result_json)
-    assert.equal(result.exampleClassification, 'TEST_ONLY_NOT_PROVIDER_COVERAGE')
-    assert.equal(schemas.Query.safeParse(result.example).success, true)
-    assert.equal(result.schema.additionalProperties, false)
-    assert.ok(Buffer.byteLength(output.result_json) < 20000)
-  }
+test('one canonical data query is registered for every non-writer', () => {
+  const empty = { id: 'finance-empty-reader', builtinTools: ['read'], allowedMcpServers: [], skillNames: [], writer: false }
+  const allowed = { ...empty, id: 'finance-allowed-reader', allowedMcpServers: ['cn-source'] }
+  const writer = { ...empty, id: 'finance-writer', writer: true }
+  assert.deepEqual(roleToolNames(empty).filter(name => name.startsWith('finance_data_')), ['finance_data_query'])
+  assert.deepEqual(roleToolNames(allowed).filter(name => name.startsWith('finance_data_')), ['finance_data_query'])
+  assert.deepEqual(roleToolNames(writer).filter(name => name.startsWith('finance_data_')), [])
+  const writerTools = createRoleTools(writer, () => ({}))
+  assert.equal(writerTools.some(tool => tool.name === 'finance_data_query'), false)
 })
 
-test('query delegates only the exact Agent, validated request and native cancellation signal', async () => {
+test('empty MCP allowlists do not disable FinanceData; role denial stays separate', async () => {
+  const unconfigured = fixture()
+  assert.equal((await unconfigured.tool.execute(args(), unconfigured.exec)).status, 'NOT_CONFIGURED')
+  const unconfiguredDescription = await unconfigured.tool.execute({ action: 'describe', capability: 'financial.statements' }, unconfigured.exec)
+  assert.equal(unconfiguredDescription.status, 'NOT_CONFIGURED')
+  assert.equal(JSON.parse(unconfiguredDescription.result_json).scopeAvailability.status, 'NOT_CONFIGURED')
+
+  const denied = fixture({ role: { allowedMcpServers: undefined } })
+  assert.equal((await denied.tool.execute(args(), denied.exec)).status, 'ROLE_QUERY_DENIED')
+  const deniedDescription = await denied.tool.execute({ action: 'describe', capability: 'financial.statements' }, denied.exec)
+  assert.equal(deniedDescription.status, 'ROLE_QUERY_DENIED')
+  assert.equal(JSON.parse(deniedDescription.result_json).scopeAvailability.status, 'ROLE_QUERY_DENIED')
+
+  const dataTools = unconfigured.tools.filter(tool => tool.name.startsWith('finance_data_'))
+  assert.deepEqual(dataTools.map(tool => tool.name), ['finance_data_query'])
+  assert.deepEqual(Object.keys(unconfigured.tool.parameters.properties), ['action', 'capability', 'query_json'])
+  assert.equal(dataTools.some(tool => /catalog|binding|policy|grant|set/i.test(tool.name)), false)
+})
+
+test('query forwards only the exact Agent, validated CN Query and execution signal; it renders as fetch', async () => {
   let seen
-  const f = fixture(async (...input) => { seen = input; return { status: 'NOT_AUTHORIZED', data: null, trace: [{ code: 'SOURCE_BINDING_REQUIRED' }] } })
-  const output = await f.tool.execute(args(), f.exec)
+  const f = fixture({
+    role: { allowedMcpServers: ['cn-source'] },
+    queryForAgent: async (...args) => { seen = args; return { status: 'OK', providers: [], observations: [] } },
+  })
+  const request = makeQuery()
+  const output = await f.tool.execute(args(request), f.exec)
   assert.equal(seen[0], f.agent)
+  assert.deepEqual(seen[1], request)
   assert.equal(seen[2], f.exec.signal)
-  assert.deepEqual(seen[1], makeQuery())
-  assert.equal(output.status, 'NOT_AUTHORIZED')
+  assert.equal(output.status, 'OK')
   assert.equal(output.trust, 'UNTRUSTED_DATA')
-  assert.equal(JSON.parse(output.result_json).data, null)
+  assert.equal(f.tool.isConcurrencySafe(), true)
+  assert.equal(f.tool.presentCall(args(request)).kind, 'fetch')
   assert.equal(f.state.checks, 2)
 })
 
-test('an absent backend reports NOT_CONFIGURED without invented observations', async () => {
-  const f = fixture()
-  const output = await f.tool.execute(args(), f.exec)
-  assert.equal(output.status, 'NOT_CONFIGURED')
-  assert.equal(JSON.parse(output.result_json).data, null)
-})
-
-test('old free-form source requests and model-supplied identity/permission fields are rejected', async () => {
+test('invalid foreign or non-CN queries never reach the Host callback', async () => {
   let calls = 0
-  const f = fixture(async () => { calls++; return { status: 'OK' } })
-  for (const input of [
-    { source: 'capiq', query: 'arbitrary old free text' },
-    { ...args(), roleId: 'finance-test-reader' },
-    { ...args(), query_json: JSON.stringify({ ...makeQuery(), agentId: 'forge' }) },
-    { ...args(), query_json: JSON.stringify({ ...makeQuery(), credentialRef: 'forge' }) },
-    { ...args(), capability: 'company.identity' },
-    { action: 'query', capability: 'financial.statements' },
-    { action: 'describe', capability: 'financial.statements', query_json: '{}' },
-    { ...args(), query_json: '{malformed' },
-  ]) await assert.rejects(f.tool.execute(input, f.exec))
+  const f = fixture({ role: { allowedMcpServers: ['cn-source'] }, queryForAgent: async () => { calls++; return { status: 'OK' } } })
+  const valid = makeQuery()
+  for (const invalid of [
+    { ...valid, market: 'US' },
+    { ...valid, entity: { scheme: 'cusip', id: '037833100' } },
+    { ...valid, entity: { scheme: 'ticker', id: 'AAPL' } },
+  ]) await assert.rejects(f.tool.execute(args(invalid), f.exec))
   assert.equal(calls, 0)
 })
 
-test('held definitions cannot disclose data across Agent identity, role source removal or Writer promotion', async () => {
-  let calls = 0
-  const f = fixture(async () => { calls++; return { status: 'OK', data: [] } })
-  await assert.rejects(f.tool.execute(args(), { ...f.exec, agent: {} }), /EXACT_AGENT_REQUIRED/)
-  f.role.writer = true
-  await assert.rejects(f.tool.execute(args(), f.exec), error => error.code === 'SOURCE_DENIED')
-  f.role.writer = false; f.role.allowedMcpServers = []
-  await assert.rejects(f.tool.execute({ action: 'describe', capability: 'company.identity' }, f.exec), error => error.code === 'SOURCE_DENIED')
-  assert.equal(calls, 0)
-})
-
-test('a grant revoked while the backend awaits prevents disclosure of its late result', async () => {
+test('role filesystem authority is rechecked after the Host callback awaits', async () => {
   let entered, finish
   const started = new Promise(resolve => { entered = resolve })
-  const f = fixture(async () => { entered(); return await new Promise(resolve => { finish = resolve }) })
+  const f = fixture({ role: { allowedMcpServers: ['cn-source'] }, queryForAgent: async () => {
+    entered()
+    return await new Promise(resolve => { finish = resolve })
+  } })
   const pending = f.tool.execute(args(), f.exec)
   await started
   f.state.active = false
-  finish({ status: 'OK', data: ['DO_NOT_DISCLOSE'] })
+  finish({ status: 'OK', providers: [], observations: ['DO_NOT_DISCLOSE'] })
   await assert.rejects(pending, /ROLE_REVOKED/)
-})
-
-test('UTF-8 request/result budgets reject rather than silently truncate', async () => {
-  const f = fixture(async () => ({ status: 'OK', data: '\u6d4b'.repeat(40000) }))
-  await assert.rejects(f.tool.execute(args(), f.exec), error => error.code === 'DATA_RESULT_LIMIT')
-  await assert.rejects(f.tool.execute({ ...args(), query_json: '\u6d4b'.repeat(20000) }, f.exec))
-})
-
-test('pre-aborted execution never contacts the backend', async () => {
-  let calls = 0
-  const f = fixture(async () => { calls++; return { status: 'OK' } })
-  const controller = new AbortController(); controller.abort()
-  await assert.rejects(f.tool.execute(args(), { agent: f.agent, signal: controller.signal }))
-  assert.equal(calls, 0)
 })

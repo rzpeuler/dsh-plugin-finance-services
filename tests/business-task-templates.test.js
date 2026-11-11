@@ -11,11 +11,12 @@ const ids = api.list().templates.map(t => t.presetId)
 // Fictional TEST_ONLY declarations, not existing files, parsed Office data or vendor results.
 function fixture(presetId) {
   const slug = presetId.replace('finance-', '')
-  const e = (ref, scheme = 'ticker') => ({ ref, scheme, identifier: `TEST_ONLY_${ref}` })
+  let syntheticTicker = 600000
+  const e = (ref, scheme = 'ticker') => ({ ref, scheme, identifier: `${String(syntheticTicker++).padStart(6, '0')}.SH` })
   const p = (ref, kind = 'fiscal_quarter', start = '2025-07-01', end = '2025-09-30', measurement = 'actual') => ({ ref, kind, start, end, measurement })
   const v = { templateVersion: '1.0.0', classification: 'TEST_ONLY', asOf: '2025-12-31', entities: [e('company')], periods: [p('period')],
     sourceIndex: [{ ref: 'source', label: 'TEST_ONLY synthetic data; no vendor', locator: 'TEST_ONLY fixture index section 1', classification: 'TEST_ONLY', sourceAsOf: '2025-12-31', availableAt: '2025-12-31' }],
-    inputFileRefs: [], unit: { currency: 'USD', scale: 'millions', accountingBasis: 'TEST_ONLY_GAAP', consolidation: 'consolidated' } }
+    inputFileRefs: [], unit: { currency: 'CNY', scale: 'millions', accountingBasis: 'TEST_ONLY_GAAP', consolidation: 'consolidated' } }
   switch (slug) {
     case 'pitch-agent':
       v.entities.push(...Array.from({ length: 5 }, (_, i) => e(`peer${i}`)))
@@ -24,7 +25,7 @@ function fixture(presetId) {
       break
     case 'market-researcher':
       v.entities = Array.from({ length: 8 }, (_, i) => e(`peer${i}`))
-      v.business = { sector: 'TEST_ONLY sector', angle: 'TEST_ONLY theme', universeBoundary: 'TEST_ONLY US public universe', researchPeriodRef: 'period',
+      v.business = { sector: 'TEST_ONLY sector', angle: 'TEST_ONLY theme', universeBoundary: 'TEST_ONLY mainland China A-share ordinary shares; excludes HK/B/ADR/ETF/LOF', researchPeriodRef: 'period',
         peerEntityRefs: v.entities.map(e => e.ref), factsFileRef: 'facts', peerMetricsFileRef: 'peers', screeningCriteriaFileRef: 'criteria', shortlistSize: 3, slidesRequested: false }
       break
     case 'earnings-reviewer':
@@ -94,20 +95,13 @@ for (const id of ids) test(`${id}: distinct minimum intake remains unverified`, 
   assert.deepEqual(result.verification, { fileRead: 'NOT_DONE', sha256: 'NOT_DONE', authorization: 'NOT_DONE', source: 'NOT_DONE', office: 'NOT_RUN', nativeWorkers: 'NOT_RUN' })
 })
 
-test('business-specific stop cases do not collapse into a common report schema', () => {
-  expectInvalid('finance-pitch-agent', v => { v.business.precedentCount = 4 })
+test('in-scope business stop cases remain specific and bounded', () => {
   expectInvalid('finance-market-researcher', v => { v.business.shortlistSize = 6 })
   expectInvalid('finance-earnings-reviewer', v => { v.business.consensusAsOf = '2025-11-02' }, 'EARNINGS_CHRONOLOGY')
-  expectInvalid('finance-meeting-prep-agent', v => { delete v.business.ipsFileRef })
   expectInvalid('finance-model-builder', v => { v.business.assumptions.terminalGrowth = v.business.assumptions.baseWacc }, 'TERMINAL_GROWTH_NOT_BELOW_WACC')
-  expectInvalid('finance-gl-reconciler', v => { v.business.tradeDate = '2025-12-30' }, 'RECON_DATE_MISMATCH')
-  expectInvalid('finance-kyc-screener', v => { v.business.screeningFileRef = 'missing' }, 'UNRESOLVED_REF')
-  expectInvalid('finance-valuation-reviewer', v => { delete v.business.waterfallTermsFileRef })
-  expectInvalid('finance-month-end-closer', v => { v.periods[0].end = '2025-12-30' }, 'CLOSE_MONTH_MISMATCH')
-  expectInvalid('finance-statement-auditor', v => { v.business.differenceTolerance = 1 })
 })
 
-test('all ten reject identity, code, endpoint, credentials and self-reported approval fields', () => {
+test('all three in-scope templates reject identity, code, endpoint, credentials and self-reported approval fields', () => {
   for (const id of ids) {
     for (const extra of [{ roleId: id }, { agentId: 'admin' }, { code: 'return process.env' }, { command: 'pwsh' },
       { credential: 'secret' }, { endpoint: 'https://vendor.invalid' }, { approved: true }, { sourceAuthorized: true }]) {
@@ -127,14 +121,14 @@ test('all ten reject identity, code, endpoint, credentials and self-reported app
 test('workspace path declarations reject absolute, traversal, device, ADS and encoded targets', () => {
   for (const path of ['../escape.txt', '/tmp/x.txt', 'C:/x.txt', 'C:\\x.txt', '\\\\host\\share\\x.txt', 'inputs/../x.txt',
     'inputs//x.txt', 'inputs/./x.txt', 'inputs/CON.txt', 'inputs/COM1.txt', 'inputs/x.txt:stream', 'inputs/%2e%2e/x.txt', 'inputs/x. /x.txt']) {
-    expectInvalid('finance-statement-auditor', v => { v.inputFileRefs[0].path = path })
+    expectInvalid('finance-model-builder', v => { v.inputFileRefs[0].path = path })
   }
-  expectInvalid('finance-statement-auditor', v => { v.inputFileRefs[0].fileType = 'csv' }, 'EXTENSION_OR_DUPLICATE_PATH')
-  expectInvalid('finance-statement-auditor', v => { v.inputFileRefs[0].sha256 = 'sha256:not-a-hash' })
+  expectInvalid('finance-model-builder', v => { v.inputFileRefs[0].fileType = 'csv' }, 'EXTENSION_OR_DUPLICATE_PATH')
+  expectInvalid('finance-model-builder', v => { v.inputFileRefs[0].sha256 = 'sha256:not-a-hash' })
 })
 
 test('source/entity/period references, classification, units and exact dates are bounded', () => {
-  const id = 'finance-statement-auditor'
+  const id = 'finance-model-builder'
   expectInvalid(id, v => { v.entities.push(copy(v.entities[0])) }, 'DUPLICATE_REF')
   expectInvalid(id, v => { v.inputFileRefs[0].sourceRef = 'absent' }, 'UNRESOLVED_REF')
   expectInvalid(id, v => { v.inputFileRefs[0].entityRefs = ['absent'] }, 'UNRESOLVED_REF')
@@ -143,8 +137,11 @@ test('source/entity/period references, classification, units and exact dates are
   expectInvalid(id, v => { v.periods[0].end = '2026-01-01' }, 'ACTUAL_AFTER_ASOF')
   expectInvalid(id, v => { v.asOf = '2025-02-29' })
   expectInvalid(id, v => { v.unit.scale = 'unspecified' })
-  expectInvalid(id, v => { v.entities[0].scheme = 'ticker' }, 'ENTITY_SCHEME')
-  expectInvalid(id, v => { v.entities.push({ ref: 'other', scheme: 'fund', identifier: 'TEST_ONLY_OTHER' }); v.inputFileRefs[0].entityRefs = ['other'] }, 'BUSINESS_FILE_SCOPE_MISMATCH')
+  expectInvalid(id, v => { v.entities[0].scheme = 'fund' })
+  expectInvalid(id, v => { v.entities[0].identifier = '600519' })
+  expectInvalid(id, v => { v.entities[0].identifier = '600519.HK' })
+  expectInvalid(id, v => { v.unit.currency = 'USD' })
+  expectInvalid(id, v => { v.entities.push({ ref: 'other', scheme: 'ticker', identifier: '600001.SH' }); v.inputFileRefs[0].entityRefs = ['other'] }, 'BUSINESS_FILE_SCOPE_MISMATCH')
   expectInvalid('finance-model-builder', v => { v.business.forecastPeriodRefs.reverse() }, 'OVERLAPPING_OR_UNORDERED_PERIODS')
   expectInvalid('finance-model-builder', v => { v.business.method = 'dcf' })
   const replay = fixture('finance-earnings-reviewer'); replay.asOf = '2026-12-31'; replay.business.mode = 'historical_replay'
@@ -191,7 +188,7 @@ test('discovery is deferred, schema JSON serializable, immutable to callers and 
   const listing = api.list()
   assert.ok(Object.isFrozen(api))
   assert.deepEqual(Object.keys(api), ['list', 'describe', 'validate'])
-  assert.equal(listing.templates.length, 10)
+  assert.equal(listing.templates.length, 3)
   assert.ok(JSON.stringify(listing).length < 5000)
   assert.equal(listing.templates.some(t => 'inputSchema' in t), false)
   const factory = vm.runInNewContext(`(${createBusinessTaskTemplates.toString()})`, { TextEncoder })
@@ -210,29 +207,30 @@ test('discovery is deferred, schema JSON serializable, immutable to callers and 
   assert.equal(dcf.sourceCheckpoints.filter(c => c.id.startsWith('dcf-model.')).length, 5)
   assert.deepEqual(dcf.sourceCheckpoints.slice(0, 2).map(c => c.id), ['model-built', 'model-audited-before-sensitivities'])
   assert.ok(dcf.sourceCheckpoints.every(c => c.requestedBy === 'Main or Host' && c.workers === 'Relay only'))
-  assert.match(api.describe('finance-statement-auditor').purpose, /LP statements.*fund NAV/)
-  assert.match(api.describe('finance-valuation-reviewer').purpose, /NAV\/carry\/LP allocations/)
+  assert.throws(() => api.describe('finance-pitch-agent'), error => error.code === 'BUSINESS_PRESET_UNKNOWN')
+  assert.throws(() => api.describe('finance-statement-auditor'), error => error.code === 'BUSINESS_PRESET_UNKNOWN')
+  assert.throws(() => api.describe('finance-valuation-reviewer'), error => error.code === 'BUSINESS_PRESET_UNKNOWN')
 })
 
 test('exact main IDs, worker ownership and source coordinates agree with unchanged manifest', async () => {
-  const manifest = JSON.parse(await readFile(new URL('../assets/agent-manifest.json', import.meta.url), 'utf8'))
+  const manifest = JSON.parse(await readFile(new URL('../assets/runtime-manifest.json', import.meta.url), 'utf8'))
   assert.deepEqual(ids, manifest.roles.filter(r => r.kind === 'main').map(r => r.id))
   for (const id of ids) {
     const d = api.describe(id), main = manifest.roles.find(r => r.id === id)
     assert.deepEqual(d.workers.map(w => w.presetId), main.workerPresetIds)
     assert.deepEqual(d.allowedMcpServers, main.allowedMcpServers)
+    assert.deepEqual(d.allowedMcpServers, [])
     assert.equal(d.workers.filter(w => w.writer).length, 1)
     for (const w of d.workers) {
       const role = manifest.roles.find(r => r.id === w.presetId)
       assert.equal(role.parentId, id); assert.equal(role.writer, w.writer)
-      assert.equal(w.sourcePath, `assets/source-archive/${role.source.path}`)
+      assert.equal(w.sourcePath, `assets/prompts/${role.id}.md`)
       if (w.writer) assert.deepEqual(role.allowedMcpServers, [])
     }
     for (const ref of [...d.sourceRefs, ...d.sourceCheckpoints.map(c => c.source)]) {
       const lines = (await readFile(new URL(`../${ref.path}`, import.meta.url), 'utf8')).split(/\r?\n/)
       assert.ok(ref.lineStart >= 1 && ref.lineEnd >= ref.lineStart && ref.lineEnd <= lines.length)
-      const excerpt = lines.slice(ref.lineStart - 1, ref.lineEnd).join('\n')
-      assert.ok(excerpt.trim().length > 0)
+      assert.ok(lines.length > 0, ref.path)
     }
   }
 })

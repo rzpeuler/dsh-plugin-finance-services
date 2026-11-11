@@ -1,6 +1,0 @@
-# TEST_ONLY disposable fixture; no product navigation or preset changes.
-- insert:
-    - id: finance-p2-client-retry-3
-      name: '@local/dsh-financial-services-p2-client-retry-3'
-      config:
-        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-earnings-reviewer",
+  "skillNames": [
+    "3-statement-model",
+    "audit-xls",
+    "catalyst-calendar",
+    "clean-data-xls",
+    "competitive-analysis",
+    "comps-analysis",
+    "dcf-model",
+    "deck-refresh",
+    "earnings-analysis",
+    "earnings-preview",
+    "ib-check-deck",
+    "idea-generation",
+    "initiating-coverage",
+    "lbo-model",
+    "model-update",
+    "morning-note",
+    "ppt-template-creator",
+    "pptx-author",
+    "sector-overview",
+    "skill-creator",
+    "thesis-tracker",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

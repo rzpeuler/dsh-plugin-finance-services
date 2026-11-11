@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "description": "Independent Host plugin skeleton, NOT_CONFIGURED by default; requires explicit installation and source policy binding.",
   "engines": {
-    "node": "^22.19.0 || >=24",
-    "dsh": "0.2.1-rc.5"
+    "node": ">=24.9.0",
+    "dsh": "0.2.2-rc.1"
   },
   "exports": {
     ".": "./index.js",

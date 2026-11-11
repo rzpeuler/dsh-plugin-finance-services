@@ -27,10 +27,10 @@ const role = (index, worker = false) => ({
 })
 const CATALOG = Object.freeze({
   stage: 'P2', sourceTreeSha256: 'TEST_ONLY-tree-sha',
-  agents: Array.from({ length: 10 }, (_, index) => role(index)), workers: Array.from({ length: 30 }, (_, index) => role(index, true)),
-  skills: Array.from({ length: 63 }, (_, index) => ({ name: `TEST_ONLY-skill-${index}`, description: 'TEST_ONLY skill description', assetStatus: index ? 'AVAILABLE' : 'BLOCKED', issues: index ? [] : ['TEST_ONLY missing template'] })),
-  commands: Array.from({ length: 41 }, (_, index) => ({ id: `TEST_ONLY-command-${index}`, name: `TEST_ONLY Command ${index}`, sourcePath: `TEST_ONLY/${index}.md`, targetPresetIds: ['finance-test-main-1', 'finance-test-main-2'], selectionRequired: true })),
-  steering: Array.from({ length: 29 }, (_, index) => ({ id: `TEST_ONLY-steering-${index}`, targetPresetId: `finance-test-main-${index % 10}`, title: 'TEST_ONLY steering title' })),
+  agents: Array.from({ length: 3 }, (_, index) => role(index)), workers: Array.from({ length: 9 }, (_, index) => role(index, true)),
+  skills: Array.from({ length: 22 }, (_, index) => ({ name: `TEST_ONLY-skill-${index}`, description: 'TEST_ONLY skill description', assetStatus: index ? 'AVAILABLE' : 'BLOCKED', issues: index ? [] : ['TEST_ONLY missing template'] })),
+  commands: Array.from({ length: 16 }, (_, index) => ({ id: `TEST_ONLY-command-${index}`, name: `TEST_ONLY Command ${index}`, sourcePath: `TEST_ONLY/${index}.md`, targetPresetIds: ['finance-test-main-1', 'finance-test-main-2'], selectionRequired: true })),
+  steering: Array.from({ length: 9 }, (_, index) => ({ id: `TEST_ONLY-steering-${index}`, targetPresetId: `finance-test-main-${index % 3}`, title: 'TEST_ONLY steering title' })),
   limitations: ['TEST_ONLY catalogue limitation'],
 })
 const DRAFT = Object.freeze({ status: 'DRAFT_READY', workspaceId: 'TEST_ONLY-workspace', agentPreset: 'finance-test-main', prompt: 'TEST_ONLY unsent prompt', whenDraftExists: 'keep', autoSubmit: false, error: null })
@@ -104,6 +104,7 @@ function fixture(options = {}) {
       submit() { throw new Error('Draft callbacks must never prompt or submit') },
     },
     layout: { selectPanel(panel) { calls.panel.push(panel) } },
+    sidebarRightTabs: { register(definition) { return () => {} } },
     remote: {
       async $mount(remote) {
         calls.mount.push(remote)
@@ -176,7 +177,7 @@ test('factory materializes through the parent ModuleLoader wrapper with only Rea
   }
   vm.runInNewContext(`const createFinanceContract = ${contractFactory.toString()}; const createFinanceClient = ${createFinanceClient.toString()}; window.__ModuleLoader__.load({id:'${PACKAGE}',factory(require){return createFinanceClient(require('react'),require('zod').z,createFinanceContract)}})`, sandbox)
   assert.deepEqual(names, ['react', 'zod'])
-  assert.deepEqual([...plugin.inject], ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'])
+  assert.deepEqual([...plugin.inject], ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale', 'sidebarRightTabs'])
   const f = fixture()
   await plugin.apply(f.ctx)
   assert.equal(f.entries.size, 5)
@@ -222,8 +223,9 @@ test('one global sidebar id matches a new main key; row config and activation be
       assert.deepEqual(Object.keys(face).sort(), ['getRowConfig', 'saveRowConfig'])
       assert.ok(Object.values(face).every(value => typeof value === 'function'))
     } else {
-      assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory', 'startDraft'])
-      assert.ok(Object.values(face).every(value => typeof value === 'function'))
+      assert.deepEqual(Object.keys(face).sort(), ['bindWorkspace', 'openWorkbench', 'pickDirectory', 'runProps', 'startDraft'])
+      assert.ok(['bindWorkspace', 'openWorkbench', 'pickDirectory', 'startDraft'].every(key => typeof face[key] === 'function'))
+      assert.equal(typeof face.runProps, 'object')
     }
   }
   assert.equal(f.entries.get('sidebar.panellist:financial-services').registration.label(), 'Financial Services')
@@ -235,8 +237,8 @@ test('factory dictionaries have matching bilingual keys and package locale files
   const { en, zh } = f.dictionaries.get('financial-services')
   assert.deepEqual(Object.keys(en).sort(), Object.keys(zh).sort())
   for (const value of [...Object.values(en), ...Object.values(zh)]) assert.equal(typeof value, 'string')
-  assert.match(zh.scope, /尚未开放/)
-  assert.match(en.scope, /not yet available/)
+  assert.match(zh.scope, /仍不在范围内/)
+  assert.match(en.scope, /remain out of scope/)
   for (const language of ['en', 'zh']) {
     const metadata = JSON.parse(await readFile(new URL(`../locale/${language}.json`, import.meta.url), 'utf8'))
     assert.deepEqual(Object.keys(metadata), ['meta'])

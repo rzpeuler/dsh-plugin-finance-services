@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Financial Services 金融服务",
-    "description": "P2 金融工作台：持久工作区绑定、已安装主角色、内部 Worker、作用域 Skills 与来源诊断。打开原生任务草稿但不提交；数据、Office 业务执行及确定性 Review Gate 仍待后续阶段。"
+    "description": "聚焦财务分析与股票研究：3 个主 Agent、9 个内部 Worker、22 项范围内 Skill。仅生成草稿，不自动提交。"
   }
 }

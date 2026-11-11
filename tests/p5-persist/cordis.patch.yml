@@ -1,7 +1,0 @@
-- insert:
-    - id: finance-p5-persist-test-only
-      name: '@local/dsh-finance-p5-persist-test-only'
-      config:
-        bundleRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle'
-        workspace: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-persist'
-        reportPath: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle\tests\p5-persist\latest.json'

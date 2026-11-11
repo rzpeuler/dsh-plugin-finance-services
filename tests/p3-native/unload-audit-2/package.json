@@ -1,6 +1,0 @@
-{
-  "name": "@local/finance-p3-unload-audit-2-test-only", "version": "0.0.1", "private": true, "type": "module",
-  "description": "TEST_ONLY read-only post-uninstall catalogue, source-policy and exact-Agent audit; no UI or model.",
-  "engines": {"dsh": "0.2.1-rc.5"}, "exports": {".": "./probe.js"},
-  "dsh": {"bundle": {"patch": "./cordis.patch.yml"}}
-}

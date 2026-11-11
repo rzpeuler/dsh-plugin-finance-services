@@ -1,15 +1,24 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { z } from 'zod'
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { Context, Service } from '@deepseek-ai/cordis'
 import { createScope, scopeOf, scopeChainOf, scopeTarget, ScopedLayers, NamedEntries, AnonymousEntries } from '@deepseek-ai/dsh-scope'
 import * as rolePlugin from '../src/role.js'
 import * as floorPlugin from '../src/floor.js'
-import { makeQuery } from './data-fixtures.js'
-const queryArgs = () => ({ action: 'query', capability: 'financial.statements', query_json: JSON.stringify(makeQuery()) })
+import { createDataSchemas } from '../src/data/contracts.js'
+const schemas = createDataSchemas(z)
+const queryArgs = () => ({
+  action: 'query', capability: 'financial.statements',
+  query_json: JSON.stringify(schemas.Query.parse({
+    capability: 'financial.statements', entity: { scheme: 'ticker', id: '600519.SH' }, market: 'CN',
+    requiredFields: ['revenue'], period: { kind: 'fiscal_year', start: '2024-01-01', end: '2024-12-31' },
+    asOf: new Date().toISOString(), purpose: 'research', temporalMode: 'current_only', maxAgeSeconds: 300,
+  })),
+})
 
-const manifest = JSON.parse(await readFile(new URL('../assets/agent-manifest.json', import.meta.url), 'utf8'))
+const manifest = JSON.parse(await readFile(new URL('../assets/runtime-manifest.json', import.meta.url), 'utf8'))
 const roles = manifest.roles.map(role => ({ ...role, skillRoots: [resolve('assets', role.skillRoot)] }))
 const services = ['financeOperations', 'tools', 'agentPresets', 'agents', 'fs', 'workingDirectory', 'sandboxPolicy', 'systemPrompt']
 const modules = {
@@ -100,6 +109,7 @@ async function fixture(t, options = {}) {
     },
   })
   ctx.provide('workingDirectory', { get: session => session.header.cwd })
+  if (options.financeData) ctx.provide('financeData', options.financeData)
   ctx.provide('sandboxPolicy', { resolve: () => ({ mode: 'workspace-write', workspaceRoot: resolve('.') }) })
   // No file reads happen in these lifecycle tests; attempting one is explicitly unavailable, not simulated data.
   ctx.provide('fs', { async lstat() { throw new Error('TEST_ONLY no FS installed in lifecycle fixture') } })
@@ -139,7 +149,7 @@ async function fixture(t, options = {}) {
       throw error
     }
   }
-  const dispatch = (agent, name, args = {}) => ctx.tools.execute({ agent, name, arguments: args, callId: 'TEST_ONLY-call', signal: new AbortController().signal })
+  const dispatch = (agent, name, args = {}, signal = new AbortController().signal) => ctx.tools.execute({ agent, name, arguments: args, callId: 'TEST_ONLY-call', signal })
   const names = agent => ctx.tools.schemas(agent).map(tool => tool.name).sort()
   return { ctx, compose, create, dispatch, names, agents, revoke, compositions, grants, byId, authority }
 }
@@ -156,11 +166,12 @@ test('actual Cordis plus scope stubs isolate main/Worker schemas and actual disp
   const reader = await f.create(readerComposition)
   const writer = await f.create(writerComposition)
   assert.deepEqual(f.names(main), ['ask_user_question', 'finance_data_query', 'glob', 'grep', 'interrupt_agent', 'list_agents', 'read', 'send_message', 'skill', 'subagent'])
-  assert.deepEqual(f.names(reader), ['grep', 'read', 'skill'])
+  assert.deepEqual(f.names(reader), ['finance_data_query', 'grep', 'read', 'skill'])
   assert.deepEqual(f.names(writer), ['edit', 'read', 'skill', 'write'])
   assert.equal(f.ctx.tools.get('skill', main), mainComposition.native.get('skill'), 'native catalog identity must survive own-layer rehang')
   for (const agent of [main, reader, writer]) for (const name of ['pwsh', 'subagent_fork', 'workflow', 'web_fetch']) assert.equal((await f.dispatch(agent, name)).isError, true)
   for (const name of ['write', 'edit']) assert.equal((await f.dispatch(main, name)).isError, true)
+  assert.equal((await f.dispatch(writer, 'finance_data_query', queryArgs())).isError, true)
   assert.equal((await f.dispatch(writer, 'finance_data_query', queryArgs())).isError, true)
   assert.equal((await f.dispatch(reader, 'ask_user_question')).isError, true)
   assert.equal((await f.dispatch(reader, 'subagent')).isError, true)
@@ -184,6 +195,60 @@ test('real Cordis Service facades with one backing grant admit query and native 
   assert.equal(result.isError, false)
   assert.equal(result.value.status, 'NOT_CONFIGURED')
   assert.equal((await f.dispatch(agent, 'subagent', { agent_preset: role.workerPresetIds[0] })).isError, false)
+})
+
+test('role tool uses Host-only FinanceData callbacks and exposes no control-plane methods', async t => {
+  const seen = []
+  const hostResult = { status: 'OK', providers: [], observations: [] }
+  const financeData = {
+    async queryForAgent(...args) { seen.push(['query', ...args]); return hostResult },
+    async describeForAgent(...args) {
+      seen.push(['describe', ...args])
+      return { status: 'EXPLICIT_SCOPE_GRANTS_FOUND', providers: [] }
+    },
+    setBindings() { assert.fail('control mutation must not be exposed') },
+    catalog() { assert.fail('catalog control must not be exposed') },
+  }
+  const f = await fixture(t, { financeData })
+  const base = roles.find(role => role.kind === 'worker' && !role.writer)
+  const role = { ...base, allowedMcpServers: ['cn-source'] }
+  f.byId.set(role.id, role)
+  const composition = await f.compose(role)
+  const agent = await f.create(composition)
+  assert.equal(rolePlugin.inject.includes('financeData'), false, 'FinanceData remains Host-only')
+  const signal = new AbortController().signal
+  const queryInput = queryArgs()
+  const result = await f.dispatch(agent, 'finance_data_query', queryInput, signal)
+  assert.equal(result.isError, false)
+  assert.equal(result.value.status, 'OK')
+  assert.equal(seen[0][0], 'query')
+  assert.equal(seen[0][1], agent)
+  assert.deepEqual(seen[0][2], schemas.Query.parse(JSON.parse(queryInput.query_json)))
+  assert.equal(seen[0][3], signal)
+
+  const described = await f.dispatch(agent, 'finance_data_query', { action: 'describe', capability: 'financial.statements' }, signal)
+  assert.equal(described.isError, false)
+  assert.equal(described.value.status, 'DESCRIBED')
+  assert.deepEqual(seen[1], ['describe', agent, 'financial.statements'])
+  const financialTools = f.names(agent).filter(name => name.startsWith('finance_data_'))
+  assert.deepEqual(financialTools, ['finance_data_query'])
+  assert.equal(financialTools.some(name => /catalog|binding|policy|grant|set/i.test(name)), false)
+})
+
+test('missing Host FinanceData backend reports NOT_CONFIGURED to an otherwise non-writer role', async t => {
+  const f = await fixture(t)
+  const base = roles.find(role => role.kind === 'worker' && !role.writer)
+  const role = { ...base, allowedMcpServers: ['cn-source'] }
+  f.byId.set(role.id, role)
+  const composition = await f.compose(role)
+  const agent = await f.create(composition)
+  const result = await f.dispatch(agent, 'finance_data_query', queryArgs())
+  assert.equal(result.isError, false)
+  assert.equal(result.value.status, 'NOT_CONFIGURED')
+  const description = await f.dispatch(agent, 'finance_data_query', { action: 'describe', capability: 'financial.statements' })
+  assert.equal(description.isError, false)
+  assert.equal(description.value.status, 'NOT_CONFIGURED')
+  assert.equal(JSON.parse(description.value.result_json).scopeAvailability.status, 'NOT_CONFIGURED')
 })
 
 test('captured executors recheck current Agent grant/source and closed root even when the floor is not dispatched', async t => {

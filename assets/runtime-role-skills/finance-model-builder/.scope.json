@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "roleId": "finance-model-builder",
+  "skillNames": [
+    "3-statement-model",
+    "audit-xls",
+    "clean-data-xls",
+    "competitive-analysis",
+    "comps-analysis",
+    "dcf-model",
+    "deck-refresh",
+    "ib-check-deck",
+    "lbo-model",
+    "ppt-template-creator",
+    "pptx-author",
+    "skill-creator",
+    "xlsx-author"
+  ],
+  "grantsTools": false
+}

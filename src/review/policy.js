@@ -21,7 +21,7 @@ export const LOCKED_BOUNDARIES = Object.freeze([
 /** External side effects stay disabled for every policy. Enabling them needs a separate authorized action surface. */
 export const EXTERNAL_SIDE_EFFECTS = 'DISABLED'
 
-const SOURCE = 'original persona / skills; see docs/P4_BUSINESS_MAP.md'
+const SOURCE = 'selected Agent and Skill scope; see docs/RUNTIME_SCOPE.md'
 const checkpoint = (id, label, kind, options) => Object.freeze({
   id, label, kind,
   mandatory: options.mandatory ?? false,
@@ -36,13 +36,6 @@ const checkpoint = (id, label, kind, options) => Object.freeze({
  * authority gate. `strictOnly` entries exist only in the `strict` policy.
  */
 export const CHECKPOINTS = Object.freeze({
-  'finance-pitch-agent': Object.freeze([
-    checkpoint('valuation_complete', 'Valuation model complete', 'INTERMEDIATE', { mandatory: true,
-      provenance: 'pitch-agent persona: banker approves the model before deck work' }),
-    checkpoint('deck_complete', 'Pitch deck complete', 'FINAL', { fastSkippable: true }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
   'finance-market-researcher': Object.freeze([
     checkpoint('comps_spread_complete', 'Comps spread complete', 'INTERMEDIATE', { mandatory: true,
       provenance: 'market-researcher persona: analyst confirms comps before the note' }),
@@ -60,41 +53,6 @@ export const CHECKPOINTS = Object.freeze({
   ]),
   'finance-earnings-reviewer': Object.freeze([
     checkpoint('note_complete', 'Earnings note complete', 'FINAL', { fastSkippable: true }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-meeting-prep-agent': Object.freeze([
-    checkpoint('pack_complete', 'Meeting pack complete', 'FINAL', { fastSkippable: true }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-gl-reconciler': Object.freeze([
-    checkpoint('break_resolution_complete', 'Break resolution ready', 'FINAL', { mandatory: true,
-      provenance: 'gl-reconciler: controller decides on breaks; no posting' }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-kyc-screener': Object.freeze([
-    checkpoint('screening_review_complete', 'Screening review ready', 'FINAL', { mandatory: true,
-      provenance: 'kyc-screener: escalation is reviewed; final clearance stays with compliance' }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-valuation-reviewer': Object.freeze([
-    checkpoint('lp_pack_complete', 'LP pack complete', 'FINAL', { mandatory: true,
-      provenance: 'valuation-reviewer: LP reporting is released by a human, never automatically' }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-month-end-closer': Object.freeze([
-    checkpoint('close_package_complete', 'Close package complete', 'FINAL', { mandatory: true,
-      provenance: 'month-end-closer: drafts only; formal close stays with the controller' }),
-    checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
-    checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
-  ]),
-  'finance-statement-auditor': Object.freeze([
-    checkpoint('pass_hold_sheet_complete', 'Pass/hold sheet complete', 'FINAL', { mandatory: true,
-      provenance: 'statement-auditor: pass/hold recommendations require IR/controller review' }),
     checkpoint('assumptions_review', 'Key assumptions review', 'ASSUMPTION', { strictOnly: true }),
     checkpoint('result_review', 'Deliverable result review', 'RESULT', { strictOnly: true }),
   ]),
@@ -163,7 +121,9 @@ function validateCustom(custom, agentIds) {
  * Later levels win; every level is validated on its own so an invalid override fails loudly
  * instead of silently falling back.
  */
-export function resolvePolicy({ bundle, agent, run } = {}) {
+export function resolvePolicy({ bundle, agent, run, agentIds } = {}) {
+  const activeAgentIds = agentIds === undefined ? Object.keys(CHECKPOINTS) : [...new Set(agentIds)]
+  if (activeAgentIds.some(agentId => !known.has(agentId))) fail('POLICY_UNKNOWN_AGENT', 'active agent scope contains an unknown Agent')
   const levels = [['bundle', bundle ?? { policyId: 'original' }], ['agent', agent ?? null], ['run', run ?? null]]
   let policyId = 'original'
   let custom = null
@@ -185,7 +145,7 @@ export function resolvePolicy({ bundle, agent, run } = {}) {
   }
 
   const requirements = {}
-  for (const agentId of Object.keys(CHECKPOINTS)) {
+  for (const agentId of activeAgentIds) {
     requirements[agentId] = requirementsFor(agentId, policyId, custom?.[agentId])
   }
   const snapshot = {

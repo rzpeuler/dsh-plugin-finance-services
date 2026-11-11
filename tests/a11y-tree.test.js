@@ -66,8 +66,8 @@ const review = createReviewClient(host.React, z, createReviewRemoteContract)
 
 const role = index => ({ id: `finance-role-${index}`, builtinTools: ['read'], allowedMcpServers: ['capiq'],
   workerPresetIds: ['a', 'b', 'c'], skillNames: ['s'], writer: false, mountStatus: 'AVAILABLE' })
-const catalogue = { ok: true, value: { agents: new Array(10).fill({}).map((_, index) => role(index)),
-  workers: new Array(30).fill({}), skills: [{ name: 'x', issues: [] }] } }
+const catalogue = { ok: true, value: { agents: new Array(3).fill({}).map((_, index) => role(index)),
+  workers: new Array(9).fill({}), skills: [{ name: 'x', issues: [] }] } }
 
 async function renderedWorkbench(ok = true) {
   const load = async () => ({
@@ -76,7 +76,7 @@ async function renderedWorkbench(ok = true) {
     dataSources: ok ? workbench.decodeDataSources({ ok: true, value: { catalogJson: JSON.stringify({ revision: 1, adapters: [], bindings: [] }) } })
       : { ok: false, code: 'NOT_CONFIGURED', source: 'financeData.catalog' },
     tasks: workbench.decodeTemplates({ ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [
-      { presetId: 'finance-pitch-agent', title: 'Pitch', templateVersion: '1.0.0', checkpoints: ['a'] }] }) } }),
+      { presetId: 'finance-earnings-reviewer', title: 'Pitch', templateVersion: '1.0.0', checkpoints: ['a'] }] }) } }),
     reviews: workbench.decodeReviews({ ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state',
       revision: 1, groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }),
     runs: workbench.decodeRuns({ ok: true, value: { runsJson: JSON.stringify({ deliverableRevision: 0, runs: [] }) } }),
@@ -88,8 +88,8 @@ async function renderedWorkbench(ok = true) {
 async function renderedReview() {
   const load = async () => ({
     summary: review.decodeSummary({ ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state',
-      revision: 3, groups: [{ sessionId: 's-1', live: true, status: 'LIVE_SESSION', preset: 'finance-pitch-agent',
-        pending: 1, decided: 0, items: [{ agentId: 'finance-pitch-agent', checkpointId: 'valuation_complete',
+      revision: 3, groups: [{ sessionId: 's-1', live: true, status: 'LIVE_SESSION', preset: 'finance-earnings-reviewer',
+        pending: 1, decided: 0, items: [{ agentId: 'finance-earnings-reviewer', checkpointId: 'note_complete',
           runId: 'r-1', decision: 'HOLD', reason: 'REVIEW_REQUIRED', stageStatus: 'COMPLETED' }] }],
       totals: { sessions: 1, items: 1, pending: 1, decided: 0 } }) } }),
     policy: review.decodePolicy({ ok: true, value: { policyJson: JSON.stringify({ policyId: 'original', version: 'p5-policy-v1',

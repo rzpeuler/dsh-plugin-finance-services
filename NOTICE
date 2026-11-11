@@ -1,27 +1,19 @@
 Financial Services for DeepSeek Harness
 
 This is an independent, out-of-tree adaptation project. It is not an official
-Anthropic, LSEG, S&P Global, Kensho, or DeepSeek financial product.
+Anthropic or DeepSeek financial product.
 
-Upstream financial methods, agent prompts, skills, commands and resource assets:
-https://github.com/anthropics/financial-services
-Local source snapshot: SHA256
-1345d96cb71838806b855380bc55666c8ab642430260e8a5e9511c32cd11e18b
-The supplied local source has no Git metadata; its commit is unknown.
+The bundled Agent prompts and Skills are limited to three selected Financial
+Analysis / Equity Research Agents, their nine owned Workers, and 22 Skills from
+the corresponding upstream vertical-plugin directories. Their selected source
+origins are recorded in assets/runtime-manifest.json. The full historical
+catalogue and source archive are intentionally not included.
 
 The original financial-services source is licensed under Apache License 2.0.
-LSEG partner authorship and Kensho Technologies, LLC copyright notices must
-remain with the corresponding migrated assets. No commercial market data,
-credentials or Microsoft tenant grants are included or implied.
-
-DSH integration code and the original icon are independently authored.
-Migrated source files are retained byte-for-byte in assets/source-snapshot.zip
-and under assets/source-archive. npm omits .gitignore from the ordinary tree;
-the complete ZIP preserves both such metadata files and all 363 source files;
-adapted prompts and Skills carry modification and provenance notices. All six
-upstream license files, including Kensho attribution, remain with those assets.
-Business execution is not represented as verified by asset inclusion. Missing
-upstream binary templates are not invented or claimed to be included.
+No commercial market data, credentials, or Microsoft tenant grants are included
+or implied. Business execution is not represented as verified by asset
+inclusion. Missing upstream binary templates are not invented or claimed to be
+included.
 
 DSH runtime packages and Zod retain their respective MIT licenses. They are
 installation dependencies, not code copied into this project's Client artifact.

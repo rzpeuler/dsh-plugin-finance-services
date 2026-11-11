@@ -40,10 +40,10 @@ export function createFinanceContract(z) {
   })
   const TaskTemplates = z.strictObject({ templatesJson: z.string().max(200000) })
   const Catalog = z.strictObject({
-    stage: z.literal('P2'), sourceTreeSha256: z.string(), agents: z.array(PublicRole).length(10), workers: z.array(PublicRole).length(30),
-    skills: z.array(z.strictObject({ name: z.string(), description: z.string(), assetStatus: z.string(), issues: z.array(z.string()) })).length(63),
-    commands: z.array(z.strictObject({ id: z.string(), name: z.string(), sourcePath: z.string(), targetPresetIds: z.array(z.string()), selectionRequired: z.boolean() })).length(41),
-    steering: z.array(z.strictObject({ id: z.string(), targetPresetId: z.string(), title: z.string() })).length(29),
+    stage: z.literal('P2'), sourceTreeSha256: z.string(), agents: z.array(PublicRole).length(3), workers: z.array(PublicRole).length(9),
+    skills: z.array(z.strictObject({ name: z.string(), description: z.string(), assetStatus: z.string(), issues: z.array(z.string()) })).length(22),
+    commands: z.array(z.strictObject({ id: z.string(), name: z.string(), sourcePath: z.string(), targetPresetIds: z.array(z.string()), selectionRequired: z.boolean() })).length(16),
+    steering: z.array(z.strictObject({ id: z.string(), targetPresetId: z.string(), title: z.string() })).length(9),
     limitations: z.array(z.string()),
   })
   const PrepareDraftRequest = z.strictObject({ agentId: z.string().regex(/^finance-[a-z0-9-]+$/), prompt: z.string().max(64000).optional(),
@@ -74,7 +74,7 @@ export function createFinanceContract(z) {
     descriptor('bindWorkspace', 'BindRequest', 'BindResult', 'Bind an existing absolute directory for new financial tasks only; reject stale revisions without replacing the previous binding.'),
     descriptor('unbindWorkspace', 'UnbindRequest', 'BindResult', 'Clear only the default binding for new tasks; retain Workspace registrations, directories and Session history.'),
     descriptor('catalog', 'EmptyRequest', 'Catalog', 'Read the installed main roles, internal Workers, scoped Skills and draft templates with native preset diagnostics.'),
-    descriptor('taskTemplates', 'EmptyRequest', 'TaskTemplates', 'Read the ten declared task-intake templates with their version and required checkpoints. It reports declarations, not authorization, files or a started run.'),
+    descriptor('taskTemplates', 'EmptyRequest', 'TaskTemplates', 'Read the three in-scope task-intake templates with their version and required checkpoints. It reports declarations, not authorization, files or a started run.'),
     descriptor('prepareDraft', 'PrepareDraftRequest', 'PreparedDraft', 'Validate a main role, template and bound Workspace; return an unsent draft intent without creating a Session or executing it.'),
     descriptor('rowConfig', 'RowConfigRequest', 'RowConfigSnapshot', 'Read the active native finance-data or finance-review Loader configuration for the Plugin Manager row form.'),
     descriptor('saveRowConfig', 'SaveRowConfigRequest', 'SaveRowConfigResult', 'Validate and persist whitelisted finance-data or finance-review fields through the native Config Editor; reject stale values.'),

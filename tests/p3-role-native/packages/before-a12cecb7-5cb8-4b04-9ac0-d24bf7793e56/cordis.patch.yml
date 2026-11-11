@@ -1,7 +1,0 @@
-# TEST_ONLY metadata-free fixture; parent installs manually.
-- insert:
-    - id: finance-p3-role-native-before-a12cecb7-5cb8-4b04-9ac0-d24bf7793e56-test-only
-      name: '@local/dsh-finance-p3-role-native-before-a12cecb7-5cb8-4b04-9ac0-d24bf7793e56-test-only'
-      config:
-        bundleRoot: "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle"
-        mode: before

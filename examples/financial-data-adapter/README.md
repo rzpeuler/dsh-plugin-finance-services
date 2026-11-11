@@ -1,48 +1,45 @@
-# 财务数据适配器：独立 Host 插件最小模板
+# FinanceData：A 股适配器独立 Host 插件模板
 
-这是私有、不可发布（private:true）的独立示例包 `@local/finance-data-adapter-example`，需要用户**显式安装本目录**，不会随主包或测试包自动启用。默认状态 **NOT_CONFIGURED**。仅有 TEST_ONLY 虚构夹具，不提供商业数据、供应商等价性或 OAuth 假实现。图标为本模板原创几何图形。
+这是私有、不可发布（`private:true`）的独立示例包 `@local/finance-data-adapter-example`，只实现当前唯一活动的 unversioned FinanceData 契约。主 Bundle 唯一 package/runtime entry 为 `@local/dsh-financial-services/data`；Schema contract 子路径为 `@local/dsh-financial-services/data-contracts`。需要用户显式安装本目录；不会随主包或测试包自动启用。默认状态为 `NOT_CONFIGURED`，且默认普通股 ticker allowlist 为空。内置数据是 `TEST_ONLY` 合成夹具，不代表任何真实证券、Provider、商业数据或 OAuth。
 
-## 使用步骤
+## 使用与授权边界
 
-1. 复制整个目录到自己的插件目录，修改 package name、patch row ID、metadata.id、metadata.sourceId、Host 控制服务名、语言资源与图标，避免与其他示例冲突。
-2. 在提供 `financeData` 的 DSH Host 中，通过原生插件管理器显式安装该独立目录。包无安装脚本、无外部 npm 依赖、不导入主功能包运行时值。
-3. 默认保持 NOT_CONFIGURED。只有可信 Host 插件显式注入 `financeExampleDataAdapter` 后，可为本地测试调用 `setState('READY')`。该服务没有 Remote、模型工具或 HTTP 暴露，模型无法将自己声明为已配置。
-4. 可信 Host 另建 SourcePolicy binding。示例 adapterId `example-financial-statements`，sourceId `test-only-template`；sourceAllowlistKey 必须选原生角色原始允许的 capiq / daloopa 等键，不能用本 sourceId 代替，也不能扩展原 allowlist。scopeIds 必须用实际原生 Agent ID，并明确 roleIds / capabilities / markets / purposes / priority / minQuality / enabled / allowTestOnly:true。注册本身不授予角色来源权限。
-5. 实际生产接入须替换 fake client、元数据、验证与映射，并以真实授权状态替代测试控制。未完成之前绝不能改为 COMMERCIAL 或将 sourceId 冒充供应商。
+1. 复制整个目录后修改包名、patch row ID、metadata ID/source ID、Host 控制服务名、语言资源与图标，避免冲突。
+2. 在提供 FinanceData Host 的 DSH 环境中，由用户通过原生插件管理器显式安装。无安装脚本、无外部 npm 依赖，不导入主功能包运行时值。
+3. Adapter 默认 `NOT_CONFIGURED`；可信 Host 可在同进程测试控制中设置状态，但 READY 只表示合成夹具可读，不能证明来源或许可。
+4. `createAdapter({ ordinaryEquitySymbols })` 的符号 allowlist 是可信 Host 输入，默认 `[]`。活动查询要求 `market: "CN"` 和六位 `.SH`、`.SZ`、`.BJ` ticker；代码形状不是普通股资格证明。必须在发出请求前由来源 Adapter 校验显式普通股名单；不能枚举全市场，也不能推断 ETF/LOF/基金为普通股。内置假数据仅绑定虚构的格式样例 `999999.SH`，不声称它是上市证券或普通股；生产 Adapter 必须换成经用户确认的真实普通股配置及真实数据源。
+5. Adapter 注册不授予任何角色或 Session 查询权限。当前 source policy 存在独立的 `financial_data_current` 域，初始为空且默认 fail-closed；只有可信用户通过 Data Sources 显式建立精确 binding，且不超出角色原始来源 allowlist，才能查询。旧 `financial_data` grants 不迁移、不读取，保持惰性。
+6. 非 `TEST_ONLY` 来源还须对每次查询逐项证明 `licensePermitted`、`modelProcessingPermitted`、`sessionLoggingPermitted` 均为 true；缺失、false 或未知均拒绝。商业许可与来源条件未核实之前不能将夹具改标为商业或声称授权。
 
-## 服务契约
+## Adapter 契约
 
-Host 提供 `financeData.registerAdapter(definition) -> disposer`，插件仅 `inject = ['financeData']`，在 `ctx.effect` 内注册并返回清理。definition 是：
+Host 暴露 `financeData.registerAdapter(definition) -> disposer`。插件通过 `inject = ['financeData']` 注入，并在 `ctx.effect` 中注册、返回清理函数。Metadata 与数据结构按 `@local/dsh-financial-services/data-contracts` 的 strict schema：
 
 ```js
 {
-  metadata: { id, version, sourceId, label, testOnly, licenseClass,
-    capabilities: [{ id, markets, fields, priority, quality, pointInTime }],
-    /* credentialRef? 仅引用，不是凭证值 */ },
-  state: { getSnapshot, subscribe /* listener -> disposer */ },
+  metadata: {
+    id, version, sourceId, label, testOnly, licenseClass,
+    capabilities: [{ id, markets, fields, temporalModes, priority, quality }],
+    // credentialRef? 仅为可信 Host 引用，不是凭证值
+  },
+  state: { getSnapshot, subscribe },
   validate(query, { signal, requestId }) { return { compatible, code } },
-  async query(query, { signal, requestId }) { return { observations, warnings } }
+  async query(query, { signal, requestId }) {
+    return { observations, corporateActions: [], filings: [], warnings }
+  }
 }
 ```
 
-state 返回 `{state, verifiedAt, code?}`；READY / NOT_CONFIGURED / NOT_AUTHORIZED / UNAVAILABLE / ERROR，verifiedAt 为精确 RFC3339 当前状态验证时间。生产 query 必须传播 AbortSignal，不得将未知异常文本、令牌、密钥写入 warning / code / reference。
+此模板只声明 `financial.statements` / `CN` / `current_only`，只接受 `revenue`、`ebitda`，限定 FY2024、`PRC_GAAP`、合并口径及 CNY。它拒绝非 `current_only` 查询，并输出 `availabilityEvidence`、`revisionEvidence`、`reference` 与 `licenseClass`；current snapshot 不声称历史可得性，不可用于历史 as-of、回测或 source revision chain。所有 Query 字段必须由 Host strict schema 验证；未覆盖字段、时期、能力或时间模式应明确拒绝。
 
-Query 由父 Host 严格解析，适配器仍需明确验证覆盖范围。当前模板只支持 `financial.statements`、US、ticker:TOY、FY2024（2024-01-01 至 2024-12-31）、revenue / ebitda、US_GAAP / consolidated。14 个合法 capability ID：company.identity、financial.statements、filings、earnings.transcript、earnings.consensus、prices.history、comps、transactions、macro.rates、portfolio.nav、accounting.gl、accounting.subledger、crm.relationship、compliance.screening。声明自己实际实现的子集，不能仅为通过选择而虚报覆盖。
+当前模型查询只提供 A 股股票边界：`market=CN`，`entity.scheme=ticker`，六位 `.SH/.SZ/.BJ` 代码；支持能力及其余 Query 结构由 Host 的当前 schema 决定。Ticker 语法不等同于证券类别授权。来源偏好只选择来源，不授予权限。Adapter 不能接收/生成 Agent、Session、role ID、策略 binding 或秘密凭证。
 
-每项 Observation 必须且只可包含 field、entity、value、unit、period、accountingBasis、consolidation、measurementType、sourceAsOf、availableAt、retrievedAt、revision、reference、licenseClass。measurementType 为必填枚举 actual / estimate / forecast / indicative / identity / record / screening_result；本模板固定 actual。Query.measurementType 可选，指定时只匹配实际覆盖类型；本模板明确拒绝其他类型。financial.statements 的 actual 期间末日不能晚于 sourceAsOf；earnings.consensus 只能是 estimate，不能把预测混入财报实际数据。entity 为 scheme/id，unit 为 dimension/currency/scale，period 为 kind/start/end/可选 label，reference 为无凭证 URI/label。不要提前自行生成 provenance 或 observationId，由 Host 规范化保留原始来源。不同供应商/修订/时期不合并、不平均。
+## 状态、凭证与清理
 
-本夹具通过小型进程内 `tools.call` 返回 structuredContent，收入 USD millions 2，EBITDA 0.4。它只是独立的虚构记录，不声称和 REST 夹具或任何商业数据等价。sourceAsOf 2025-02-01T00:00:00Z，availableAt 2025-02-02T00:00:00Z，retrievedAt 当前；asOf 2025-03-01T00:00:00Z 且 maxAgeSeconds >=2419200 可查询历史已公开数据。不能将 availableAt 猜成当前时间或伪造历史可用时间。
+状态为 `READY` / `NOT_CONFIGURED` / `NOT_AUTHORIZED` / `UNAVAILABLE` / `ERROR`，`verifiedAt` 必须是实际状态检查时刻。生产 query 必须传播 AbortSignal，不得将 Provider 异常正文、令牌、密钥写入 warning / code / reference。模板不配置 endpoint、apiKey、password、token 或任意用户文件路径，不接触凭证服务。真实凭证只能按当前 DSH 公开 Host 凭证接口在可信边界内使用，不能发送到模型、catalog、reference 或前端。
 
-## 凭证与配置安全
-
-模板没有任意 endpoint、apiKey、password、token 或用户文件路径配置，不接触凭证服务。可选 credentialRef 只应是可信 Host 预先配置的凭证引用 ID。真实适配器要按 DSH 当前公开 credentials / authorization API 在 Host 内解析、验证和使用凭证，另做服务 API inspect；决不能向模型、catalog、reference 或前端发送密钥。不要用“设置字符串即 OAuth 成功”替代真实授权流程。本地 TEST_ONLY READY 绝不意味着商业认证。
-
-真实非 TEST_ONLY 来源采用许可默认拒绝：生产 validate 可返回 licensePermitted / modelProcessingPermitted / sessionLoggingPermitted 三个可选 boolean，但商业来源查询必须三者经真实授权核验均为 true，分别证明来源使用、模型处理和会话日志许可。不返回、false 或无法验证均不能授权。注册、READY、credentialRef 存在或原角色 allowlist 都不代表获得这些许可。模板维持 NOT_CONFIGURED / TEST_ONLY，不伪造任何许可 true；上线前必须核对供应商合同、数据用途、处理和留存范围。
-
-## 测试控制与卸载
-
-financeExampleDataAdapter 的 `setState(state, code?)`、`failNextQuery(code?)`、`changed()`、`getSnapshot()`、`diagnostics()` 仅供可信 Host 测试。状态 code 白名单 FIXTURE_NOT_CONFIGURED / FIXTURE_NOT_AUTHORIZED / FIXTURE_UNAVAILABLE / FIXTURE_ERROR；故障 code 仅 FIXTURE_QUERY_FAILED / FIXTURE_UNAVAILABLE。changed 返回通知数量与累计 observerFailures；单个订阅者抛错不会阻断其他订阅者，诊断计数不会掩盖失败。卸载会注销 adapter、Host 服务并清空订阅，旧控制引用不能再修改实例。
+`financeExampleDataAdapter` 的 `setState`、`failNextQuery`、`changed`、`getSnapshot`、`diagnostics` 仅供可信 Host 测试；错误码是固定白名单。卸载会精确注销 Adapter、Host 服务并清空订阅，旧控制引用不能修改已卸载实例。
 
 ## 检查与分发
 
-在主仓库根目录运行 `node --test tests/p3-adapters/adapter.test.mjs`（纯 Node/fakeCtx 测试，不等于原生验收）和 `node tests/p3-adapters/check-packages.mjs`（资源/语法/临时独立复制导入检查，无安装或联网）。示例包含完整 runtime、patch、locale/en.json、locale/zh.json、原创 SVG 与 manifest files/exports；没有对测试目录或主包的生产导入。
+在 Bundle 根目录可运行 `node --check examples/financial-data-adapter/index.js` 与 `node --check examples/financial-data-adapter/client.js` 做语法检查；通用契约、Policy/Registry 与 Host 行为由 `pnpm test` 覆盖。本示例只展示 `registerAdapter` 接口与 TEST_ONLY 合成快照，不连接真实数据源。历史资料中使用过 `registerAdapterV2`、版本化契约路径及带版本后缀的工具名；这些均不是当前接口。示例包包含完整 runtime、patch、locale、原创 SVG 与 manifest exports/files；没有主包的生产导入。

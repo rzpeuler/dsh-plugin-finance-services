@@ -41,7 +41,7 @@ export async function apply(ctx, config) {
       const policy = JSON.parse(payload.policyJson)
       assert.equal(policy.externalSideEffects, 'DISABLED')
       assert.equal(policy.lockedBoundaries.length, 8)
-      assert.equal(Object.keys(policy.requirements).length, 10)
+      assert.deepEqual(Object.keys(policy.requirements).sort(), ['finance-earnings-reviewer', 'finance-market-researcher', 'finance-model-builder'])
       return { policyId: policy.policyId, version: policy.version }
     })
 

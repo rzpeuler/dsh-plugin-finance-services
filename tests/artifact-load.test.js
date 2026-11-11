@@ -7,7 +7,7 @@ import { z } from 'zod'
 // Smoke test for the artifacts that will actually be loaded after a restart.
 // It does not boot Cordis: it proves each entry imports and exposes the shape the loader expects,
 // which is exactly what a stale or half-written build would break.
-const CLASS_ENTRIES = ['host', 'review', 'data-runtime-2', 'data']
+const CLASS_ENTRIES = ['host', 'review', 'data']
 const FUNCTION_ENTRIES = ['floor', 'role', 'role-numeric-1', 'role-data-1']
 
 test('every compiled entry imports without touching a service runtime', async () => {
@@ -20,7 +20,7 @@ test('every compiled entry imports without touching a service runtime', async ()
 test('service entries default to their declared class and declare config where they accept it', async () => {
   // financeOperations takes no configuration, so it has no static Config. The review and data
   // services are configured from their native rows and must keep their schema.
-  const configured = new Set(['review', 'data-runtime-2', 'data'])
+  const configured = new Set(['review', 'data'])
   for (const name of CLASS_ENTRIES) {
     const module = await import(`../lib/${name}.js`)
     assert.equal(typeof module.default, 'function', `${name} must default to a Service class`)
@@ -45,8 +45,6 @@ test('the role aliases carry exactly the canonical generation', () => {
   for (const alias of ['lib/role.js', 'lib/role-numeric-1.js']) {
     assert.equal(readFileSync(alias, 'utf8'), canonical, `${alias} must equal the canonical role entry`)
   }
-  assert.equal(readFileSync('lib/data.js', 'utf8'), readFileSync('lib/data-runtime-2.js', 'utf8'),
-    'lib/data.js must equal lib/data-runtime-2.js')
 })
 
 test('the artifacts carry their reviewed behaviour, not a placeholder', async () => {

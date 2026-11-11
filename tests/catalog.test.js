@@ -14,14 +14,15 @@ async function fixture({ ready = true, broken = false } = {}) {
   await catalog.initialize()
   return catalog
 }
-test('packaged authority-bearing manifest validates 40 roles and exact source ownership', async () => {
+test('runtime manifest validates only the selected main Agents and their owned Workers', async () => {
   const c = await fixture()
-  assert.equal(c.roles.size, 40)
-  const main = c.role('finance-pitch-agent')
-  assert.deepEqual(main.workerPresetIds, ['finance-pitch-agent-researcher', 'finance-pitch-agent-modeler', 'finance-pitch-agent-deck-writer'])
+  assert.equal(c.roles.size, 12)
+  const main = c.role('finance-model-builder')
+  assert.deepEqual(main.workerPresetIds, ['finance-model-builder-data-puller', 'finance-model-builder-builder', 'finance-model-builder-auditor'])
   assert.equal(main.writer, false)
   assert.equal(main.skillRoots.length, 1)
-  assert.match(main.skillRoots[0], /role-skills[\\/]finance-pitch-agent$/)
+  assert.match(main.skillRoots[0], /runtime-role-skills[\\/]finance-model-builder$/)
+  assert.throws(() => c.role('finance-unknown'), /Unknown financial role/)
   assert.throws(() => c.role('standard'), /Unknown financial role/)
   for (const role of c.roles.values()) if (role.writer) assert.deepEqual(role.allowedMcpServers, [])
 })
@@ -29,14 +30,15 @@ test('asset resolver rejects path traversal and foreign absolute or alternate-da
   const c = await fixture()
   for (const path of ['../package.json', '/tmp/a', 'C:\\data', 'file:secret', 'skills\\a', 'skills/../a', 'skills//a']) assert.throws(() => c.resolveAsset(path))
 })
-test('catalogue exposes ten main roles, thirty internal workers and true source limitations', async () => {
+test('catalogue exposes the three selected main roles, owned Workers and vertical-directory assets', async () => {
   const c = await fixture()
   const view = schemas.Catalog.parse(await c.catalog())
-  assert.equal(view.agents.length, 10)
-  assert.equal(view.workers.length, 30)
-  assert.equal(view.skills.length, 63)
-  assert.equal(view.commands.length, 41)
-  assert.equal(view.steering.length, 29)
+  assert.deepEqual(view.agents.map(role => role.id).sort(), ['finance-earnings-reviewer', 'finance-market-researcher', 'finance-model-builder'])
+  assert.equal(view.agents.length, 3)
+  assert.equal(view.workers.length, 9)
+  assert.equal(view.skills.length, 22)
+  assert.equal(view.commands.length, 16)
+  assert.equal(view.steering.length, 9)
   assert.ok(view.agents.every(role => role.kind === 'main'))
   assert.ok(view.skills.some(skill => skill.assetStatus.includes('BLOCKED')))
   assert.ok(view.limitations.some(line => line.includes('not yet implemented')))
@@ -67,7 +69,7 @@ test('all command targets require explicit allowed main identity and ambiguous t
     assert.equal(result.status, 'DRAFT_READY', command.id)
     assert.ok(result.prompt.length > 300)
   }
-  assert.equal((await c.prepareDraft({ agentId: 'finance-pitch-agent', commandId: 'missing' })).error.code, 'COMMAND_ROLE_MISMATCH')
+  assert.equal((await c.prepareDraft({ agentId: 'finance-unknown', commandId: 'missing' })).error.code, 'MAIN_AGENT_REQUIRED')
 })
 test('steering drafts preserve role ownership and template selection is strict at the entry', async () => {
   const c = await fixture()
@@ -76,6 +78,6 @@ test('steering drafts preserve role ownership and template selection is strict a
     assert.equal(result.status, 'DRAFT_READY')
     assert.ok(result.prompt.includes(entry.prompt))
   }
-  assert.throws(() => schemas.PrepareDraftRequest.parse({ agentId: 'finance-pitch-agent', commandId: 'x', prompt: 'y' }))
-  assert.throws(() => schemas.PrepareDraftRequest.parse({ agentId: 'finance-pitch-agent', autoSubmit: true }))
+  assert.throws(() => schemas.PrepareDraftRequest.parse({ agentId: 'finance-unknown', commandId: 'x', prompt: 'y' }))
+  assert.throws(() => schemas.PrepareDraftRequest.parse({ agentId: 'finance-unknown', autoSubmit: true }))
 })

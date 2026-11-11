@@ -1,0 +1,9 @@
+SHA256 (uppercase, hex) for task-owned Adapter and fixture artifacts.
+
+E7025074FA17ECE2633580DF8E5B39BD550E2E9887C83465F29E1BA27BB780EC  examples/ashare-adapters/sources.js
+B38A567EDEC0081905D0DE24828DAFD023045B3F324E4962235D0F2D50B36B0C  examples/ashare-adapters/index.js
+4F1B71F477951984C43A37D2C215C31A03C21BCDE3413AA9D6B708629847CD15  tests/ashare-adapters.test.js
+2DB9F9735E8ED3A610F9913C48FDDC7852DA3B720E4CC28176CE615EECCB950E  tests/data-fprov01.test.js
+E6523DF85A5721FCD856A91865D5355DE2D4AAC57589F426DDB4BB86E0AFCED4  acceptance/FPROV01-ACCEPTANCE-REPORT.md
+
+These hashes identify the local worktree files at capture time; they do not authenticate third-party data or legal evidence.

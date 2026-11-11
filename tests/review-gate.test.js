@@ -3,12 +3,12 @@ import assert from 'node:assert/strict'
 import { ReviewGate } from '../src/review/gate.js'
 import { resolvePolicy } from '../src/review/policy.js'
 
-const PITCH = 'finance-pitch-agent'
+const MARKET = 'finance-market-researcher'
 const HASH = 'a'.repeat(64)
 const HASH_B = 'b'.repeat(64)
 const NOW = '2026-01-15T09:00:00.000Z'
 
-const ids = { sessionId: 'session-1', runId: 'run-1', agentId: PITCH, checkpointId: 'valuation_complete' }
+const ids = { sessionId: 'session-1', runId: 'run-1', agentId: MARKET, checkpointId: 'comps_spread_complete' }
 
 function gate(policyId = 'original', now = () => NOW) {
   return new ReviewGate({ snapshot: resolvePolicy({ bundle: { policyId } }), now })
@@ -24,12 +24,12 @@ function decision(overrides = {}) {
 test('a required checkpoint holds until a decision exists', () => {
   const g = gate()
   assert.deepEqual(g.evaluate({ ...ids, artifact: { hash: HASH } }),
-    { decision: 'HOLD', reason: 'REVIEW_REQUIRED', agentId: PITCH, checkpointId: 'valuation_complete' })
+    { decision: 'HOLD', reason: 'REVIEW_REQUIRED', agentId: MARKET, checkpointId: 'comps_spread_complete' })
 })
 
 test('a checkpoint the policy does not require allows the stage without any record', () => {
   const g = gate('fast')
-  assert.equal(g.evaluate({ ...ids, checkpointId: 'deck_complete', artifact: { hash: HASH } }).reason,
+  assert.equal(g.evaluate({ ...ids, checkpointId: 'note_complete', artifact: { hash: HASH } }).reason,
     'NOT_REQUIRED_BY_POLICY')
 })
 
@@ -88,14 +88,14 @@ test('a decision from another policy version is rejected and not stored', () => 
 })
 
 test('an approval taken under one snapshot cannot unlock another snapshot of the same version', () => {
-  const fast = gate('fast')
-  fast.settle(decision({ checkpointId: 'deck_complete' }))
+  const original = gate('original')
+  original.settle(decision({ checkpointId: 'note_complete' }))
   const strict = gate('strict')
-  assert.equal(strict.evaluate({ ...ids, checkpointId: 'deck_complete', artifact: { hash: HASH } }).reason,
+  assert.equal(strict.evaluate({ ...ids, checkpointId: 'note_complete', artifact: { hash: HASH } }).reason,
     'REVIEW_REQUIRED')
-  const carried = fast.evaluate({ ...ids, checkpointId: 'deck_complete', artifact: { hash: HASH } })
+  const carried = original.evaluate({ ...ids, checkpointId: 'note_complete', artifact: { hash: HASH } })
   assert.equal(carried.decision, 'ALLOW')
-  assert.equal(strict.identity().digest === fast.identity().digest, false)
+  assert.equal(strict.identity().digest === original.identity().digest, false)
 })
 
 test('an expired approval no longer opens the gate', () => {
@@ -129,7 +129,7 @@ test('records missing mandatory fields are refused', () => {
 
 test('settling a checkpoint the policy does not require records nothing', () => {
   const g = gate('fast')
-  const result = g.settle(decision({ checkpointId: 'deck_complete' }))
+  const result = g.settle(decision({ checkpointId: 'note_complete' }))
   assert.equal(result.status, 'NOT_REQUIRED_BY_POLICY')
   assert.equal(g.history().length, 0)
 })
@@ -138,10 +138,10 @@ test('the pending projection lists required checkpoints and reflects decisions',
   const g = gate()
   const before = g.pending()
   assert.ok(before.every(row => row.status === 'AWAITING_REVIEW'))
-  assert.ok(before.some(row => row.agentId === PITCH && row.checkpointId === 'valuation_complete'))
+  assert.ok(before.some(row => row.agentId === MARKET && row.checkpointId === 'comps_spread_complete'))
   assert.ok(!before.some(row => row.checkpointId === 'result_review'), 'strict-only nodes are not pending under original')
   g.settle(decision())
-  const after = g.pending().find(row => row.agentId === PITCH && row.checkpointId === 'valuation_complete')
+  const after = g.pending().find(row => row.agentId === MARKET && row.checkpointId === 'comps_spread_complete')
   assert.equal(after.status, 'APPROVED')
   assert.equal(after.runId, 'run-1')
   assert.ok(Object.isFrozen(after))
@@ -150,7 +150,7 @@ test('the pending projection lists required checkpoints and reflects decisions',
 test('history is ordered, immutable and carries the record fields the task requires', () => {
   const g = gate()
   g.settle(decision({ reviewId: 'review-a', decidedAt: '2026-01-15T08:00:00.000Z' }))
-  g.settle(decision({ reviewId: 'review-b', checkpointId: 'deck_complete', decidedAt: '2026-01-15T09:30:00.000Z' }))
+  g.settle(decision({ reviewId: 'review-b', checkpointId: 'note_complete', decidedAt: '2026-01-15T09:30:00.000Z' }))
   const history = g.history()
   assert.deepEqual(history.map(row => row.reviewId), ['review-a', 'review-b'])
   for (const row of history) {

@@ -5,12 +5,13 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
-const manifest = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'), 'utf8'))
+const manifest = JSON.parse(await readFile(join(root, 'assets/runtime-manifest.json'), 'utf8'))
 const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
-const dataModule = pkg.exports['./data-runtime-2'] ? '@local/dsh-financial-services/data-runtime-2' : '@local/dsh-financial-services/data'
+const dataModule = '@local/dsh-financial-services/data'
 const roleModule = pkg.exports['./role-data-1'] ? '@local/dsh-financial-services/role-data-1' : '@local/dsh-financial-services/role-numeric-1'
-assert.equal(manifest.roles.length, 40)
-assert.equal(new Set(manifest.roles.map(role => role.id)).size, 40)
+assert.equal(manifest.roles.length, 12)
+assert.equal(new Set(manifest.roles.map(role => role.id)).size, 12)
+assert.deepEqual(manifest.roles.filter(role => role.kind === 'main').map(role => role.slug).sort(), ['earnings-reviewer', 'market-researcher', 'model-builder'])
 const lines = ['# Generated from audited financial assets. Do not edit the declarations by hand.', '- insert:',
   '    - id: financial-services', "      name: '@local/dsh-financial-services'",
   '    - id: finance-data', `      name: '${dataModule}'`,
@@ -64,8 +65,8 @@ await writeFile(reportPath, JSON.stringify({
   patchSha256: createHash('sha256').update(patch).digest('hex'),
   mainIds: manifest.roles.filter(role => role.kind === 'main').map(role => role.id),
   workerIds: manifest.roles.filter(role => role.kind === 'worker').map(role => role.id),
-  nativeDelegation: 'spawn with three owned presets and maxDepth=1',
+  nativeDelegation: 'spawn only the selected main Agent’s owned presets and maxDepth=1',
   skillIsolation: 'registry + filesystem provider + native skill tool share one isolated skills realm per preset',
   retainedPermissionFloor: 'A separate tools-only plugin keeps ambient capabilities masked until the native revision releases',
 }, null, 2) + '\n', 'utf8')
-console.log('Generated one Bundle patch: 10 main + 30 Worker native Presets, no global/default preset overrides.')
+console.log('Generated one Bundle patch: 3 main + 9 owned Worker native Presets, no global/default preset overrides.')

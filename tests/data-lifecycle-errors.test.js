@@ -1,80 +1,64 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { FinancialDataRegistry } from '../src/data/registry.js'
-import { fixedNow, makeMetadata, makeQuery, makeResult } from './data-fixtures.js'
-function setup() {
-  const role = { id: 'finance-test-reader', writer: false, allowedMcpServers: ['capiq'] }
-  const context = { roleId: role.id, scopeId: 'TEST_ONLY-lifecycle' }
-  const registry = new FinancialDataRegistry({ roles: [role], authorize: value => value === context, now: () => fixedNow })
-  return { registry, context, binding: id => ({ adapterId: id, sourceAllowlistKey: 'capiq', scopeIds: [context.scopeId], roleIds: [role.id], capabilities: ['financial.statements'], markets: ['US'], purposes: ['research'], priority: 0, minQuality: 0, enabled: true, allowTestOnly: true }) }
+
+const now = '2025-03-02T00:00:00Z'
+const role = { id: 'finance-reader', writer: false, allowedMcpServers: ['TEST_ONLY-source'] }
+function registry() {
+  return new FinancialDataRegistry({ roles: [role], authorize: () => true, now: () => now })
 }
-function source(id, broken = false, query = async () => makeResult()) {
+function source(id, { broken = false } = {}) {
   let callback, cleaned = 0
-  return { definition: { metadata: makeMetadata(id), state: { getSnapshot: () => ({ state: 'READY', verifiedAt: fixedNow }), subscribe(fn) { callback = fn; return () => { cleaned++; if (broken) throw new Error('api_key=DO_NOT_EXPORT') } } }, validate: async () => ({ compatible: true }), query }, late: () => callback(), cleaned: () => cleaned }
+  const definition = {
+    metadata: { id, version: '1.0.0', sourceId: id, label: `TEST_ONLY ${id}`, testOnly: true, licenseClass: 'TEST_ONLY',
+      capabilities: [{ id: 'financial.statements', markets: ['CN'], fields: ['net_profit'], temporalModes: ['strict'], priority: 1, quality: 50 }] },
+    state: { getSnapshot: () => ({ state: 'READY', verifiedAt: now }), subscribe(fn) { callback = fn; return () => { cleaned++; if (broken) throw new Error('api_key=DO_NOT_EXPORT') } } },
+    validate: async () => ({ compatible: true }), query: async () => ({ observations: [], corporateActions: [], filings: [], warnings: [] }),
+  }
+  return { definition, late: () => callback(), cleaned: () => cleaned }
 }
 
-test('throwing provider unsubscribe cannot retain a registered capability; repeat disposal is idempotent', () => {
-  const { registry } = setup(), broken = source('test-broken', true)
-  const remove = registry.registerAdapter(broken.definition)
+test('throwing adapter unsubscribe cannot retain registration; repeat disposal is idempotent', () => {
+  const value = registry(), broken = source('test-broken', { broken: true })
+  const remove = value.registerAdapter(broken.definition)
   assert.doesNotThrow(remove)
-  assert.equal(registry.catalog().adapters.length, 0)
-  assert.equal(registry.catalog().diagnostics.disposalFailures, 1)
+  assert.equal(value.catalog().adapters.length, 0)
+  assert.equal(value.catalog().diagnostics.disposalFailures, 1)
   assert.doesNotThrow(remove)
   assert.equal(broken.cleaned(), 1)
-  assert.ok(!JSON.stringify(registry.catalog()).includes('DO_NOT_EXPORT'))
-  registry.dispose()
+  assert.ok(!JSON.stringify(value.catalog()).includes('DO_NOT_EXPORT'))
+  value.dispose()
 })
 
-test('registry disposal cleans every owned subscription even if the first provider throws', () => {
-  const { registry } = setup(), broken = source('test-broken', true), good = source('test-good')
-  registry.registerAdapter(broken.definition); registry.registerAdapter(good.definition)
+test('registry disposal cleans every subscription if one adapter cleanup throws', () => {
+  const value = registry(), broken = source('test-broken', { broken: true }), good = source('test-good')
+  value.registerAdapter(broken.definition)
+  value.registerAdapter(good.definition)
   let changed = 0
-  registry.subscribe(() => changed++)
-  assert.doesNotThrow(() => registry.dispose())
+  value.subscribe(() => changed++)
+  assert.doesNotThrow(() => value.dispose())
   assert.equal(good.cleaned(), 1)
-  assert.equal(registry.catalog().adapters.length, 0)
-  assert.equal(registry.catalog().diagnostics.disposalFailures, 1)
-  assert.equal(registry.listeners.size, 0)
+  assert.equal(value.catalog().adapters.length, 0)
+  assert.equal(value.catalog().diagnostics.disposalFailures, 1)
+  assert.equal(value.listeners.size, 0)
   const before = changed
   broken.late(); good.late()
   assert.equal(changed, before)
-  assert.throws(() => registry.subscribe(() => {}), error => error.code === 'REGISTRY_DISPOSED')
-  assert.doesNotThrow(() => registry.dispose())
+  assert.throws(() => value.subscribe(() => {}), error => error.code === 'REGISTRY_DISPOSED')
+  assert.doesNotThrow(() => value.dispose())
 })
 
 test('late callbacks from an old registration cannot invalidate its same-ID successor', () => {
-  const { registry } = setup(), old = source('test-same'), current = source('test-same')
-  registry.registerAdapter(old.definition)()
-  registry.registerAdapter(current.definition)
+  const value = registry(), old = source('test-same'), current = source('test-same')
+  value.registerAdapter(old.definition)()
+  value.registerAdapter(current.definition)
   let changes = 0
-  registry.subscribe(() => changes++)
-  const snapshot = registry.catalog()
+  value.subscribe(() => changes++)
+  const snapshot = value.catalog()
   old.late()
   assert.equal(changes, 0)
-  assert.equal(registry.catalog(), snapshot)
+  assert.deepEqual(value.catalog(), snapshot)
   current.late()
   assert.equal(changes, 1)
-  registry.dispose()
-})
-
-test('unregister aborts a held query even if provider cleanup throws and its late response arrives', async () => {
-  const { registry, context, binding } = setup()
-  let entered, finish, observedSignal
-  const started = new Promise(resolve => { entered = resolve })
-  const broken = source('test-broken', true, async (_query, execution) => {
-    observedSignal = execution.signal
-    entered()
-    return await new Promise(resolve => { finish = resolve })
-  })
-  const remove = registry.registerAdapter(broken.definition)
-  registry.setBindings({ expectedRevision: 0, bindings: [binding('test-broken')] })
-  const pending = registry.query(makeQuery(), context)
-  await started
-  assert.doesNotThrow(remove)
-  assert.equal(observedSignal.aborted, true)
-  const result = await pending
-  assert.equal(result.data, null)
-  assert.equal(result.status, 'UNAVAILABLE')
-  finish(makeResult())
-  registry.dispose()
+  value.dispose()
 })

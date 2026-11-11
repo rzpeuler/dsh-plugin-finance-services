@@ -5,7 +5,6 @@ import { dataQueryInput, dataQueryParameters, dataQueryOutput, dataQueryDescript
 /** Source Bash exceptions receive fixed arithmetic only, never an execution language. */
 export function calculationModels(role) {
   if (!role.builtinTools.includes('bash')) return []
-  if (role.id === 'finance-pitch-agent-modeler' && !role.writer && ['dcf-model', 'lbo-model'].every(name => role.skillNames.includes(name))) return ['dcf', 'lbo']
   if (role.id === 'finance-model-builder-builder' && role.writer && ['dcf-model', 'lbo-model', '3-statement-model', 'comps-analysis'].every(name => role.skillNames.includes(name))) return ['dcf', 'lbo', 'three_statement', 'comps']
   return []
 }
@@ -59,7 +58,11 @@ const descriptions = {
 
 /** Exact source-authorized capabilities. Bash is deliberately not migrated into a generic shell. */
 export function roleToolNames(role) {
-  return [...['read', 'grep', 'glob', 'write', 'edit'].filter(name => role.builtinTools.includes(name)), ...role.allowedMcpServers.length && !role.writer ? ['finance_data_query'] : [], ...calculationModels(role).length ? ['finance_model_calculate'] : []]
+  return [
+    ...['read', 'grep', 'glob', 'write', 'edit'].filter(name => role.builtinTools.includes(name)),
+    ...(!role.writer ? ['finance_data_query'] : []),
+    ...(calculationModels(role).length ? ['finance_model_calculate'] : []),
+  ]
 }
 
 /** Registry definitions use only the DSH JSON subset; Zod enforces tighter execution limits. */
@@ -92,7 +95,7 @@ export function createRoleTools(role, filesystemFor, queryForAgent, describeForA
       }
       if (name === 'finance_data_query') {
         const result = await executeDataQuery(role, input, exec.agent, exec.signal, queryForAgent, describeForAgent)
-        filesystem.check() // A grant revoked during an await cannot disclose a late result.
+        filesystem.check() // A role/source grant revoked during an await cannot disclose a late result.
         return result
       }
       return filesystem[name](input, exec.signal)

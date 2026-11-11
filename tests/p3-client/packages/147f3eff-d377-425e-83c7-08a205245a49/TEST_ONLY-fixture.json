@@ -1,7 +1,0 @@
-{
-  "kind": "TEST_ONLY_P3_CLIENT_PACKAGE",
-  "identity": "147f3eff-d377-425e-83c7-08a205245a49",
-  "packageName": "@local/dsh-finance-p3-client-147f3eff-d377-425e-83c7-08a205245a49-test-only",
-  "target": "C:\\Users\\Administrator\\Documents\\deepseek-harness\\default-workspace\\financial-services-bundle\\tests\\p3-client\\packages\\147f3eff-d377-425e-83c7-08a205245a49",
-  "installed": false
-}

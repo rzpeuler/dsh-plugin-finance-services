@@ -1,4 +1,0 @@
-- insert:
-    - id: finance-p3-native-mcp-audit-a5873758-9329-4773-91a8-54a08b697f71-test-only
-      name: '@local/dsh-finance-p3-native-mcp-audit-a5873758-9329-4773-91a8-54a08b697f71-test-only'
-      config: {}

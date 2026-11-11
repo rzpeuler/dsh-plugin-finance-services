@@ -1,1 +1,0 @@
-{"name":"@local/dsh-finance-p6-seed-deliverable-test-only","version":"0.0.1","private":true,"type":"module","description":"Disposable probe that seeds one TEST_ONLY deliverable linked to a live session.","engines":{"dsh":"0.2.1-rc.5"},"exports":{".":"./probe.js"},"dsh":{"bundle":{"patch":"./cordis.patch.yml"}}}

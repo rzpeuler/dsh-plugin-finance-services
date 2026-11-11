@@ -50,9 +50,9 @@ export default class FinanceRuns extends TypertRemoteService {
   }
 
   async* [Service.init]() {
-    const manifest = JSON.parse(await readFile(assetUrl('agent-manifest.json'), 'utf8'))
+    const manifest = JSON.parse(await readFile(assetUrl('runtime-manifest.json'), 'utf8'))
     this.mainIds = new Set(manifest.roles.filter(role => role.kind === 'main').map(role => role.id))
-    if (this.mainIds.size !== 10) throw new Error('FinanceRun requires the verified ten-role main-agent manifest')
+    if (this.mainIds.size !== 3) throw new Error('FinanceRun requires the scoped three-Agent runtime manifest')
     this.domain = await this.ctx.storageDomain.open(defineDomain({ name: `financial_runs${this.config.domainSuffix}`, version: 1,
       tables: { state: domainTable(Document) } }))
     try {

@@ -24,11 +24,23 @@ for (const target of [...targets, './cordis.patch.yml', './README.md', './NOTICE
   assert.ok(resolved.startsWith(root + '\\') || resolved.startsWith(root + '/'), `Export escapes package: ${target}`);
   assert.ok((await stat(resolved)).isFile(), `Missing payload: ${target}`);
 }
-assert.ok(pkg.files.every(path => !path.includes('audit/') && !path.includes('.env') && !path.includes('node_modules')));
+assert.ok(pkg.files.every(path => !path.includes('audit/') && !path.includes('.env') && !path.includes('node_modules')))
+for (const obsolete of ['assets/source-archive/**', 'assets/source-snapshot.zip', 'assets/agent-manifest.json', 'assets/skills/**', 'assets/role-skills/**', 'assets/commands/**']) {
+  assert.ok(!pkg.files.includes(obsolete), `Historical or out-of-scope assets must not ship: ${obsolete}`)
+}
+for (const selected of ['assets/runtime-manifest.json', 'assets/runtime-scope.json', 'assets/runtime-skills/**/*', 'assets/runtime-role-skills/**/*', 'assets/runtime-commands/**/*', 'assets/prompts/**/*.md']) {
+  assert.ok(pkg.files.includes(selected), `Required selected asset is missing from package.files: ${selected}`)
+}
 assert.ok(pkg.files.includes('lib/host.js') && pkg.files.includes('lib/client.js'));
 assert.equal(pkg.exports['.'], './lib/host.js');
+assert.equal(pkg.exports['./data'], './lib/data.js');
+assert.equal(pkg.exports['./data-runtime'], undefined);
+assert.equal(pkg.exports['./data-contracts'], './src/data/contracts.js');
+assert.equal(pkg.exports['./data-runtime-2'], undefined);
+assert.equal(pkg.exports['./data-contracts/v2'], undefined);
 const host = await readFile(join(root, 'lib/host.js'), 'utf8');
 assert.ok(!/from\s+['"]\.\.?\//.test(host), 'Host implementation must be bundled into its actual exported entry');
+assert.doesNotMatch(host, /financial_data_v2|data-api-v2|contractVersion|queryForAgentV2|registerAdapterV2/, 'Host artifact must expose only canonical data APIs');
 assert.ok(pkg.files.includes('lib/build-manifest.json'));
 
 for (const locale of ['en', 'zh']) {
@@ -42,12 +54,18 @@ assert.ok(Buffer.byteLength(svg) <= 256 * 1024);
 assert.ok(!/<script|<foreignObject|\bon\w+\s*=|https?:\/\/(?!www\.w3\.org\/2000\/svg)/i.test(svg), 'Icon must be self-contained SVG');
 const patch = await readFile(join(root, 'cordis.patch.yml'), 'utf8');
 assert.match(patch, /id: financial-services/);
+assert.doesNotMatch(patch, /finance_data_query_v2|data-runtime-2|data-api-v2/, 'Preset patch must use only canonical data names');
 assert.equal((patch.match(/name: '@local\/dsh-financial-services'/g) ?? []).length, 1);
 assert.deepEqual(patch.split('\n').filter(line => line.startsWith('- ')), ['- insert:'], 'Bundle may only append its own declarations');
-const assets = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'), 'utf8'));
-assert.equal(assets.roles.length, 40);
-assert.equal((patch.match(/^    - id: preset-finance-/gm) ?? []).length, 40);
+const assets = JSON.parse(await readFile(join(root, 'assets/runtime-manifest.json'), 'utf8'));
+assert.deepEqual(assets.scope.mainAgentIds.slice().sort(), ['finance-earnings-reviewer', 'finance-market-researcher', 'finance-model-builder']);
+assert.equal(assets.roles.length, 12);
+assert.deepEqual([assets.counts.mainAgents, assets.counts.workers, assets.counts.skills], [3, 9, 22]);
+assert.equal((patch.match(/^    - id: preset-finance-/gm) ?? []).length, 12);
 for (const role of assets.roles) assert.ok(patch.includes(`    - id: preset-${role.id}\n`));
+for (const forbidden of ['finance-pitch-agent', 'finance-meeting-prep-agent', 'finance-gl-reconciler', 'finance-kyc-screener', 'finance-valuation-reviewer', 'finance-month-end-closer', 'finance-statement-auditor']) {
+  assert.ok(!patch.includes(`    - id: preset-${forbidden}\n`), `Out-of-scope Preset leaked into patch: ${forbidden}`);
+}
 for (const entry of ['role', 'floor', ...(pkg.exports['./data'] ? ['data'] : [])]) {
   assert.equal(pkg.exports[`./${entry}`], `./lib/${entry}.js`);
   const code = await readFile(join(root, `lib/${entry}.js`), 'utf8');
@@ -58,7 +76,7 @@ for (const entry of ['role', 'floor', ...(pkg.exports['./data'] ? ['data'] : [])
   }
 }
 
-for (const [entry, localeEntry] of [['role-numeric-1', 'role'], ['role-data-1', 'role'], ['data-runtime-2', 'data']]) {
+for (const [entry, localeEntry] of [['role-numeric-1', 'role'], ['role-data-1', 'role']]) {
   if (!pkg.exports[`./${entry}`]) continue;
   assert.equal(pkg.exports[`./${entry}`], `./lib/${entry}.js`);
   assert.ok(pkg.files.includes(`lib/${entry}.js`));
@@ -78,6 +96,7 @@ const client = await readFile(join(root, 'lib/client.js'), 'utf8');
 new Script(client, { filename: 'lib/client.js' });
 assert.match(client, /window\.__ModuleLoader__\.load/);
 assert.match(client, /@local\/dsh-financial-services/);
+assert.doesNotMatch(client, /data-api-v2|finance_data_query_v2|dataV2Address|remoteV2|contractVersion/, 'Client artifact must use the sole canonical data API');
 assert.ok(!/require\(['"]@deepseek-ai\/dsh-client-/.test(client));
 // Layout must render through React; the single allowed exception is the workbook download anchor.
 assert.ok(!/localStorage|iframe|useSyncExternalStore|document\.body\.innerHTML|document\.querySelector/.test(client));
@@ -99,8 +118,16 @@ const build = JSON.parse(await readFile(join(root, 'lib/build-manifest.json'), '
 assert.equal(build.version, pkg.version);
 assert.equal(build.hostSha256, createHash('sha256').update(host).digest('hex'));
 assert.equal(build.clientSha256, createHash('sha256').update(client).digest('hex'));
-assert.equal(build.assetsManifestSha256, createHash('sha256').update(await readFile(join(root, 'assets/agent-manifest.json'))).digest('hex'));
-assert.equal(build.sourceSnapshotSha256, createHash('sha256').update(await readFile(join(root, 'assets/source-snapshot.zip'))).digest('hex'));
+assert.equal(build.runtimeManifestSha256, createHash('sha256').update(await readFile(join(root, 'assets/runtime-manifest.json'))).digest('hex'));
+assert.equal(build.runtimeScopeSha256, createHash('sha256').update(await readFile(join(root, 'assets/runtime-scope.json'))).digest('hex'));
+assert.ok(!('sourceSnapshotSha256' in build), 'The removed full-source snapshot must not remain in build metadata')
+const selectedSkillNames = new Set(Object.values(assets.scope.skillsByDomain).flat())
+assert.deepEqual(new Set(assets.skills.map(skill => skill.name)), selectedSkillNames)
+for (const skill of assets.skills) {
+  assert.ok(skill.origins.length > 0)
+  assert.ok(skill.origins.every(origin => assets.scope.skillSourceRoots.some(root => origin.path.startsWith(`${root}/${skill.name}/`))), `Out-of-scope origin leaked for ${skill.name}`)
+}
+assert.ok(assets.commands.every(command => assets.scope.commandSourceRoots.some(root => command.source.path.startsWith(`${root}/`))))
 assert.equal(build.patchSha256, createHash('sha256').update(patch).digest('hex'));
 for (const [file, expected] of Object.entries(build.entrySha256)) assert.equal(createHash('sha256').update(await readFile(join(root, 'lib', file))).digest('hex'), expected);
 for (const [path, expected] of Object.entries(build.sourceSha256)) {

@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "roleId": "finance-kyc-screener-escalator",
-  "skillNames": [
-    "xlsx-author"
-  ],
-  "grantsTools": false
-}

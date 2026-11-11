@@ -25,4 +25,4 @@ P3-MCP-NATIVE现为`SUPPORTED_NATIVE_TRANSPORT_VERIFIED / MANAGER_AND_SAFE_BRIDG
 
 **尚不能完成金融Adapter的原生MCP桥接。** 真实金融角色的单调权限层会拒绝raw MCP；当前未取得能保留原Agent工具审批/沙箱边界的公开MCP Manager连接调用或委派契约。不能在Adapter中通过删去Agent、替换身份、直接调用definition.execute或私有连接来绕过。独立Host授权的连接测试不等于金融角色数据访问，更不是商业许可或OAuth。
 
-其余契约、Adapter扩展、模型工具和真实Client链已独立验证；此宿主接口缺口仍保留，不能据此宣称P3已完成。
+此前记录中的 V1/V2 契约、带版本后缀的 Adapter/模型工具标识及 Client 检查均为历史验证证据；这些标识已不用于当前 FinanceData API。它们不证明当前 A 股 Provider 已接入或授权；宿主接口缺口仍保留，不能据此宣称 P3 已完成。

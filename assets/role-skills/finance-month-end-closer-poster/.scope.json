@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "roleId": "finance-month-end-closer-poster",
-  "skillNames": [
-    "xlsx-author"
-  ],
-  "grantsTools": false
-}

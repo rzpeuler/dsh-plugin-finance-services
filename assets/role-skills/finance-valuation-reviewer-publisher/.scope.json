@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "roleId": "finance-valuation-reviewer-publisher",
-  "skillNames": [
-    "xlsx-author"
-  ],
-  "grantsTools": false
-}

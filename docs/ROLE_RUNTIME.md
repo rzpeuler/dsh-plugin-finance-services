@@ -60,11 +60,11 @@ mutation 先调用 `sandboxPolicy.resolve({ session })`，原生 read-only 一�
 
 DCF遵循源net-debt权重与midyear约定；LBO限定无PIK/分红/复杂再融资的债务水瀑；三表限定无SBC/NOL/递延税的明确年度剖面；Comps仅同币种/单位/期间/asOf观察，NM返回null且不计入分位。支持范围在describe中明示，超范围不静默简化。所有结果标记TEST_ONLY或UNSOURCED、commercialReady=false、reviewRequired=true、NUMERIC_RESULT_NOT_OFFICE；这不是P5强制Gate。
 
-P2的0.2.2正常角色导出为`role-numeric-1`。当前0.3.0-alpha.2的Preset引用`@local/dsh-financial-services/role-data-1`，数据服务引用`data-runtime-2`；旧artifact逐字保留给既有引用，正常新模块版本已原生applied，不改宿主缓存或私有符号。数字结果无需缺失Office模板，builder仍只能用原write工具新建自己JSON；缺模板和真实工作簿交付按P4单独验收。
+P2的0.2.2正常角色导出为`role-numeric-1`。早期0.3.0-alpha.2 Preset 曾引用`@local/dsh-financial-services/role-data-1` 和 `data-runtime-2`；这些带代际后缀的包标识是历史升级记录。当前活动 FinanceData package/runtime 唯一入口为 `@local/dsh-financial-services/data`。数字结果无需缺失Office模板，builder仍只能用原write工具新建自己JSON；缺模板和真实工作簿交付按P4单独验收。
 
 ## 查询与不可信内容
 
-仅 allowedMcpServers 非空且非writer才注册`finance_data_query`。P3使用`describe/query + capability + query_json`：先发现严格请求结构、TEST_ONLY例子、运行时限制及仅本Session明确授权的Provider字段/市场/用途，再提交有界查询。不再接收旧自由文本source/query；sourceIds仅选择、不赋权。执行前及await后均重验exact-Agent文件/权限grant；数据服务再按原始source key、角色、Session、capability与实际许可逐请求交集检查。源enabled或配置存在不证明授权。writer仍无查询工具；无Backend/Provider或授权不全时明确NOT_CONFIGURED/NOT_AUTHORIZED，不猜数字或联网替代。真实原生dispatcher、fallback、撤销/清理见[33项检查](../acceptance/P3-role-native-pass-002.json)，均为TEST_ONLY，不是商业MCP或金融E2E。
+仅在非writer且角色结构有效时注册活动工具 `finance_data_query`；FinanceData 直接来源 grants 与 `allowedMcpServers` 独立，旧 MCP allowlist 仅约束 legacy MCP bindings。当前只允许 A 股股票边界：`market=CN`、六位 `.SH/.SZ/.BJ` ticker；ticker 形状不证明普通股资格，Adapter 还须匹配显式普通股 allowlist。工具用 `describe/query + capability + query_json` 发现严格请求结构、TEST_ONLY例子、运行时限制及仅本Session明确授权的Provider字段/市场/用途，再提交有界查询。sourceIds仅选择、不赋权。执行前及await后均重验exact-Agent文件/权限grant；FinanceData服务逐请求检查角色、Session、能力、源许可和显式 binding。Remote 的 `catalog`、`setBindings`、`follow` 只服务于 UI；当前策略保存在隔离的 `financial_data_current` 域，来源 allowlists 和 policy 初始为空，未绑定即拒绝。旧 `financial_data` grants 保持惰性，不迁移、不读取、不用于授权。writer仍无查询工具；无Backend/Provider或授权不全时明确NOT_CONFIGURED/NOT_AUTHORIZED，不猜数字或联网替代。历史版本化工具与 dispatcher/fallback 检查见[33项检查](../acceptance/P3-role-native-pass-002.json)，仅为审计证据，不表示当前有 Provider 授权或商业MCP/金融E2E。
 
 文件文本、搜索命中和查询结果带 `UNTRUSTED_DATA`；角色 required runtime context 明确其不是工具权限或执行指令。工具参数没有动态 instruction/tool-definition 字段，文本“忽略规则”“调用写 API”等只能作为数据返回，不能修改工具集合、角色或允许源。原生 Skill 方法也不授予额外权限。
 

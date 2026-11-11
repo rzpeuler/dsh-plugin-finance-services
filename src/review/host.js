@@ -85,10 +85,11 @@ export default class FinanceReview extends TypertRemoteService {
   }
 
   async* [Service.init]() {
-    const manifest = JSON.parse(await readFile(assetUrl('agent-manifest.json'), 'utf8'))
+    const manifest = JSON.parse(await readFile(assetUrl('runtime-manifest.json'), 'utf8'))
     this.roleKinds = new Map(manifest.roles.map(role => [role.id, role.kind]))
+    this.mainAgentIds = manifest.roles.filter(role => role.kind === 'main').map(role => role.id)
     const custom = this.config.customJson ? Custom.parse(JSON.parse(this.config.customJson)) : undefined
-    this.snapshot = resolvePolicy({ bundle: { policyId: this.config.policyId, ...(custom ? { custom } : {}) } })
+    this.snapshot = resolvePolicy({ bundle: { policyId: this.config.policyId, ...(custom ? { custom } : {}) }, agentIds: this.mainAgentIds })
     this.domain = await this.ctx.storageDomain.open(defineDomain({
       name: `financial_review${this.config.domainSuffix}`, version: 1, tables: { state: domainTable(Document) },
     }))

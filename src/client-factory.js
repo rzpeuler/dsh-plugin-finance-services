@@ -16,7 +16,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
   const en = {
     title: 'Financial Services',
     stage: 'FUX-01 / FRUN-01 · Agents, Sessions and real Run facts',
-    introduction: 'Start with the ten financial Agents, choose a standard task or free chat, and inspect Runs derived from native Session events.',
+    introduction: 'Start with the three selected financial Agents, choose a standard task or free chat, and inspect Runs derived from native Session events.',
     catalog: 'Installed catalogue', catalogLoading: 'Reading the installed catalogue…', catalogUnavailable: 'The catalogue resource is unavailable.',
     catalogStale: 'Catalogue connection failed. Any displayed entries are the last received state, not current verification.',
     agents: 'Main roles', workers: 'Owned Workers', skills: 'Skills', commands: 'Command templates', steering: 'Steering examples',
@@ -82,7 +82,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     configConflict: 'Configuration changed elsewhere. Reload this page before saving.',
     configSaveFailed: 'The Host refused this configuration update.', configInvalid: 'Enter values within the documented range and policy rules.',
     navAgents: 'Agents', navSkills: 'Skills', navRuns: 'Runs', navDeliverables: 'Deliverables', navReviews: 'Review Queue', navData: 'Data Sources', navSettings: 'Settings',
-    domainBankingResearch: 'Banking & Research', domainAdvisoryModeling: 'Advisory & Modeling', domainRiskControl: 'Risk & Control', domainFundOperations: 'Fund Operations', domainOther: 'Other',
+    domainEquityResearch: 'Equity Research', domainFinancialAnalysis: 'Financial Analysis', domainOther: 'Other',
     agentHomeTitle: 'Choose a financial Agent', agentHomeHint: 'Availability reflects the installed native preset and declared skill assets, not a successful query or business execution.',
     agentNoResults: 'No Agents match this search.', viewAgent: 'View Agent details',
     searchAgents: 'Search Agents by name, description, domain, or dependency', statusCanDraft: 'Can prepare a native draft', statusPartial: 'Declared dependency gaps', statusUnavailable: 'Native preset unavailable',
@@ -96,7 +96,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
   const zh = {
     title: 'Financial Services',
     stage: 'FUX-01 / FRUN-01 · Agents、Session 与真实 Run 事实',
-    introduction: '从十个金融 Agent 开始，选择标准任务或自由对话，并查看由原生 Session 事件派生的 Runs。',
+    introduction: '从保留的三个金融 Agent 开始，选择标准任务或自由对话，并查看由原生 Session 事件派生的 Runs。',
     catalog: '已安装目录', catalogLoading: '正在读取已安装目录…', catalogUnavailable: '目录资源当前不可用。',
     catalogStale: '目录连接失败。下方如有条目，仅为最后收到的状态，并非当前核验结果。',
     agents: '主角色', workers: '所属 Worker', skills: 'Skills', commands: '命令模板', steering: 'Steering 样例',
@@ -162,7 +162,7 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     configConflict: '配置已被其他操作修改，请重新载入此页后再保存。',
     configSaveFailed: 'Host 拒绝了此配置更新。', configInvalid: '请输入符合范围与策略规则的值。',
     navAgents: 'Agents', navSkills: 'Skills', navRuns: 'Runs', navDeliverables: '成果', navReviews: '审核', navData: '数据源', navSettings: '设置',
-    domainBankingResearch: '银行与研究', domainAdvisoryModeling: '顾问与建模', domainRiskControl: '风险与控制', domainFundOperations: '基金运营', domainOther: '其他',
+    domainEquityResearch: '股票研究', domainFinancialAnalysis: '财务分析', domainOther: '其他',
     agentHomeTitle: '选择金融 Agent', agentHomeHint: '可用状态反映已安装的原生 Preset 与已声明的 Skill 资产，不代表查询成功或业务已执行。',
     agentNoResults: '没有匹配的 Agent。', viewAgent: '查看 Agent 详情',
     searchAgents: '按名称、说明、业务领域或依赖搜索 Agent', statusCanDraft: '可准备原生草稿', statusPartial: '存在依赖缺口', statusUnavailable: '原生 Preset 不可用',
@@ -449,10 +449,8 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
   }
 
   const DOMAIN_BY_SLUG = {
-    'pitch-agent': 'domainBankingResearch', 'market-researcher': 'domainBankingResearch', 'earnings-reviewer': 'domainBankingResearch',
-    'meeting-prep-agent': 'domainAdvisoryModeling', 'model-builder': 'domainAdvisoryModeling',
-    'gl-reconciler': 'domainRiskControl', 'kyc-screener': 'domainRiskControl',
-    'valuation-reviewer': 'domainFundOperations', 'month-end-closer': 'domainFundOperations', 'statement-auditor': 'domainFundOperations',
+    'market-researcher': 'domainEquityResearch', 'earnings-reviewer': 'domainEquityResearch',
+    'model-builder': 'domainFinancialAnalysis',
   }
 
   function hasAgentGaps(agent, catalog) {
@@ -701,7 +699,9 @@ export function createFinanceClient(React, z, createFinanceContract, dataClient,
     inject: ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale', 'sidebarRightTabs'],
     async apply(rootCtx) {
       await rootCtx.remote.$mount(createFinanceContract(z).remote)
-      if (dataClient) await rootCtx.remote.$mount(dataClient.remote)
+      if (dataClient) {
+        await rootCtx.remote.$mount(dataClient.remote)
+      }
       if (reviewClient) await rootCtx.remote.$mount(reviewClient.remote)
       if (runClient) await rootCtx.remote.$mount(runClient.remote)
       // Every mounted namespace is explicitly injected before any callback captures it.

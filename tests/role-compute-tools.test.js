@@ -3,18 +3,18 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createRoleTools, roleToolNames, calculationModels } from '../src/role/tools.js'
 import { describeCalculation } from '../src/role/calculation.js'
-const roles = JSON.parse(await readFile(new URL('../assets/agent-manifest.json', import.meta.url), 'utf8')).roles
-const modeler = roles.find(role => role.id === 'finance-pitch-agent-modeler')
+const roles = JSON.parse(await readFile(new URL('../assets/runtime-manifest.json', import.meta.url), 'utf8')).roles
+const modeler = roles.find(role => role.id === 'finance-earnings-reviewer-transcript-reader')
 const builder = roles.find(role => role.id === 'finance-model-builder-builder')
 const toolFor = (role, filesystemFor) => createRoleTools(role, filesystemFor).find(tool => tool.name === 'finance_model_calculate')
 
-test('only exact source Bash exception roles with assigned financial skills acquire bounded computation', () => {
-  assert.deepEqual(roles.filter(role => roleToolNames(role).includes('finance_model_calculate')).map(role => role.id), [modeler.id, builder.id])
+test('only the retained Model Builder Worker receives bounded computation', () => {
+  assert.deepEqual(roles.filter(role => roleToolNames(role).includes('finance_model_calculate')).map(role => role.id), [builder.id])
   assert.deepEqual(calculationModels({ ...modeler, builtinTools: ['read'] }), [])
   assert.deepEqual(calculationModels({ ...builder, skillNames: ['dcf-model'] }), [])
   assert.deepEqual(calculationModels({ ...modeler, id: 'finance-other' }), [])
   assert.ok(!roles.some(role => roleToolNames(role).includes('bash')))
-  assert.deepEqual(toolFor(modeler).parameters.properties.model.enum, ['dcf', 'lbo'])
+  assert.equal(toolFor(modeler), undefined)
   assert.deepEqual(toolFor(builder).parameters.properties.model.enum, ['dcf', 'lbo', 'three_statement', 'comps'])
 })
 
@@ -36,10 +36,8 @@ test('progressive contracts and fixed numeric results remain bounded and role-at
   assert.equal(checks, 8)
 })
 
-test('modeler cannot calculate unassigned models or inject code/path fields', async () => {
-  const tool = toolFor(modeler, () => ({ check() {} }))
-  await assert.rejects(tool.execute({ action: 'describe', model: 'three_statement' }, {}), /MODEL_DENIED/)
-  await assert.rejects(tool.execute({ action: 'describe', model: 'comps' }, {}), /MODEL_DENIED/)
+test('calculation rejects caller-supplied model changes and code/path fields', async () => {
+  const tool = toolFor(builder, () => ({ check() {} }))
   await assert.rejects(tool.execute({ action: 'describe', model: 'dcf', input_json: '{}' }, {}), /omit/)
   await assert.rejects(tool.execute({ action: 'calculate', model: 'dcf' }, {}), /CALC_INPUT_REQUIRED/)
   await assert.rejects(tool.execute({ action: 'calculate', model: 'dcf', input_json: '{"model":"lbo"}' }, {}), /MODEL_MISMATCH/)
@@ -51,7 +49,7 @@ test('modeler cannot calculate unassigned models or inject code/path fields', as
 test('both describe and calculate require the existing exact Agent admission even through a held definition', async () => {
   const owner = {}
   let active = true
-  const tool = toolFor(modeler, agent => {
+  const tool = toolFor(builder, agent => {
     assert.equal(agent, owner, 'Wrong Agent')
     return { check() { if (!active) throw new Error('ROLE_AUTHORITY_UNAVAILABLE') } }
   })

@@ -17,14 +17,14 @@ const roleSchema = z.object({
   skillRoot: assetPath,
 }).passthrough()
 const manifestSchema = z.object({
-  schemaVersion: z.literal(1), sourceTreeSha256: sha256, roles: z.array(roleSchema).length(40),
+  schemaVersion: z.literal(1), sourceTreeSha256: sha256, roles: z.array(roleSchema),
   skills: z.array(z.object({ name: z.string().min(1), description: z.string(), directory: assetPath,
-    origins: z.array(z.unknown()), assetStatus: z.string(), issues: z.array(z.unknown()).default([]) }).passthrough()).length(63),
+    origins: z.array(z.unknown()), assetStatus: z.string(), issues: z.array(z.unknown()).default([]) }).passthrough()),
   commands: z.array(z.object({ id: z.string().min(1), name: z.string(), source: z.object({ path: z.string(), sha256 }).passthrough(),
     targetPresetId: presetId.nullable(), targetPresetIds: z.array(presetId).optional(), targetPresetChoices: z.array(presetId).optional(),
-    selectionRequired: z.boolean(), promptPath: assetPath }).passthrough()).length(41),
+    selectionRequired: z.boolean(), promptPath: assetPath }).passthrough()),
   steering: z.array(z.object({ id: z.string().min(1), targetPresetId: presetId, title: z.string(), prompt: z.string(),
-    source: z.object({ path: z.string(), sha256 }).passthrough() }).passthrough()).length(29),
+    source: z.object({ path: z.string(), sha256 }).passthrough() }).passthrough()),
 }).passthrough()
 
 /** Owns one immutable package manifest and verifies all authority-bearing references at startup. */
@@ -36,13 +36,23 @@ export class FinanceCatalog {
   }
 
   async initialize() {
-    const manifest = manifestSchema.parse(JSON.parse(await readFile(resolve(this.assetsRoot, 'agent-manifest.json'), 'utf8')))
+    const manifest = manifestSchema.parse(JSON.parse(await readFile(resolve(this.assetsRoot, 'runtime-manifest.json'), 'utf8')))
     const roles = new Map(manifest.roles.map(role => [role.id, role]))
     const skillNames = new Set(manifest.skills.map(skill => skill.name))
-    if (roles.size !== 40 || skillNames.size !== 63) throw new Error('Financial manifest contains duplicate identities')
+    if (roles.size !== 12 || skillNames.size !== 22) throw new Error('Runtime scope contains duplicate or out-of-scope identities')
     const mains = manifest.roles.filter(role => role.kind === 'main')
     const workers = manifest.roles.filter(role => role.kind === 'worker')
-    if (mains.length !== 10 || workers.length !== 30 || workers.filter(role => role.writer).length !== 10) throw new Error('Financial role counts differ from the audited source')
+    const expectedMainIds = ['finance-earnings-reviewer', 'finance-market-researcher', 'finance-model-builder']
+    if (JSON.stringify(mains.map(role => role.id).sort()) !== JSON.stringify(expectedMainIds)) throw new Error('Runtime scope exposes an unexpected main Agent')
+    const scopedSkills = new Set(Object.values(manifest.scope?.skillsByDomain ?? {}).flat())
+    if (scopedSkills.size !== 22 || [...scopedSkills].some(name => !skillNames.has(name))) throw new Error('Runtime Skill catalogue differs from the explicit vertical-directory scope')
+    for (const skill of manifest.skills) {
+      if (!skill.origins.some(origin => manifest.scope.skillSourceRoots.some(directory => origin.path.startsWith(`${directory}/${skill.name}/`)))) {
+        throw new Error(`Runtime Skill is outside the selected vertical directories: ${skill.name}`)
+      }
+    }
+    if (mains.length !== 3 || workers.length !== 9 || new Set(mains.map(role => role.id)).size !== 3) throw new Error('Runtime scope must contain exactly the selected three main Agents and their Workers')
+    if (mains.some(role => !manifest.scope?.mainAgentIds.includes(role.id))) throw new Error('Runtime Agent differs from the explicit scope')
     for (const role of roles.values()) {
       if (role.skillNames.some(name => !skillNames.has(name))) throw new Error(`Unknown skill in ${role.id}`)
       if (role.writer !== role.builtinTools.includes('write')) throw new Error(`Writer flag disagrees with source permissions: ${role.id}`)
@@ -58,9 +68,10 @@ export class FinanceCatalog {
       if (createHash('sha256').update(prompt).digest('hex') !== role.prompt.adaptedSha256) throw new Error(`Adapted prompt hash mismatch: ${role.id}`)
       if (!(await stat(this.resolveAsset(role.skillRoot))).isDirectory()) throw new Error(`Missing role skill root: ${role.id}`)
     }
-    if (new Set(mains.flatMap(role => role.skillNames)).size !== 63) throw new Error('Main role discovery does not cover all financial skills')
+    if (new Set(mains.flatMap(role => role.skillNames)).size !== 22 || new Set(mains.flatMap(role => role.skillNames)).size !== skillNames.size) throw new Error('Selected main Agents do not cover the complete runtime Skill scope')
     for (const command of manifest.commands) {
       const targets = command.targetPresetIds ?? command.targetPresetChoices ?? (command.targetPresetId === null ? [] : [command.targetPresetId])
+      if (!manifest.scope.commandSourceRoots.some(directory => command.source.path.startsWith(`${directory}/`))) throw new Error(`Out-of-scope command source: ${command.id}`)
       if (targets.length === 0 || targets.some(id => roles.get(id)?.kind !== 'main')) throw new Error(`Invalid command role choices: ${command.id}`)
       if (command.selectionRequired !== (targets.length > 1)) throw new Error(`Ambiguous command was implicitly assigned: ${command.id}`)
       await stat(this.resolveAsset(command.promptPath))
@@ -120,14 +131,14 @@ export class FinanceCatalog {
       limitations: ['Preset registration and skill discovery do not establish financial business execution.',
         'Commercial sources remain unconfigured; Office execution and deterministic Review Gate are not yet implemented.',
         'Missing upstream templates remain explicitly unavailable; do not invent or substitute them.',
-        'Internal Worker presets may appear in the native preset roster; this directory lists only ten main roles.'] }
+        'Only the selected three main roles are listed here; their nine owned Workers remain internal support presets.'] }
   }
 
   async prepareDraft(request) {
     const reject = (code, message) => ({ status: 'REJECTED', workspaceId: null, agentPreset: null, prompt: '',
       whenDraftExists: 'keep', autoSubmit: false, error: { code, message } })
     const role = this.roles?.get(request.agentId)
-    if (!role || role.kind !== 'main') return reject('MAIN_AGENT_REQUIRED', 'Choose one of the ten main financial Agents, not an internal Worker.')
+    if (!role || role.kind !== 'main') return reject('MAIN_AGENT_REQUIRED', 'Choose one of the three active main financial Agents, not an internal Worker.')
     const active = await this.viewRole(role)
     if (active.mountStatus !== 'AVAILABLE') return reject('PRESET_UNAVAILABLE', active.diagnostic ?? 'The native preset is unavailable.')
     const state = await this.binding.snapshot({})

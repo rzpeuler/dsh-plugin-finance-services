@@ -35,7 +35,7 @@ function loadArtifact() {
 const plugin = loadArtifact()
 
 function fakeContext() {
-  const record = { mounted: [], namespaces: [], locales: [], effects: [], slots: [], resources: [], panels: [], sidebars: [], rowConfigs: [], bundleConfigs: [], configCalls: [] }
+  const record = { mounted: [], namespaces: [], locales: [], effects: [], slots: [], resources: [], panels: [], sidebars: [], runTabs: [], rowConfigs: [], bundleConfigs: [], configCalls: [] }
   const remote = {
     async $mount(contract) { record.mounted.push(contract.package) },
     financeOperations: {
@@ -61,6 +61,7 @@ function fakeContext() {
   }
   const ctx = {
     remote,
+    sidebarRightTabs: { register(definition) { record.runTabs.push(definition); return () => {} } },
     locale: {
       register(namespace) { record.locales.push(namespace); return () => {} },
       bind(namespace) { return key => `${namespace}.${key}` },
@@ -86,7 +87,7 @@ function fakeContext() {
 
 test('the built artifact loads and returns a Cordis client plugin', () => {
   // The plugin is a cross-realm value; compare copies rather than the foreign prototypes.
-  assert.deepEqual([...plugin.inject], ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale'])
+  assert.deepEqual([...plugin.inject], ['slots', 'remote', 'resources', 'uiWorkspace', 'layout', 'locale', 'sidebarRightTabs'])
   assert.equal(typeof plugin.apply, 'function')
 })
 
@@ -99,10 +100,12 @@ test('apply mounts every remote namespace this bundle owns', async () => {
   await plugin.apply(root)
   assert.deepEqual([...record.mounted], [
     '@local/dsh-financial-services',
-    '@local/dsh-financial-services/data-api-v1',
+    '@local/dsh-financial-services/data-api',
     '@local/dsh-financial-services/review-api-v1',
+    '@local/dsh-financial-services/run-api-v1',
   ])
   assert.ok(record.namespaces.includes('remote.financeReview'), 'the review namespace must be injected')
+  assert.ok(record.namespaces.includes('remote.financeRuns'), 'the run namespace must be injected')
 })
 
 test('apply registers one main panel, one sidebar entry and the two plugin pages', async () => {

@@ -60,10 +60,10 @@ const roleStub = index => ({ id: `finance-role-${index}`, builtinTools: ['read']
   skillNames: [], writer: false, mountStatus: 'AVAILABLE' })
 const catalogue = (agents, workers) => ({ ok: true, value: {
   agents: new Array(agents).fill({}).map((_, index) => roleStub(index)),
-  workers: new Array(workers).fill({}), skills: new Array(63).fill({ name: 'x', issues: [] }) } })
+  workers: new Array(workers).fill({}), skills: new Array(22).fill({ name: 'x', issues: [] }) } })
 const cataloguePayload = (agents, workers) => ({
   agents: new Array(agents).fill({}).map((_, index) => roleStub(index)),
-  workers: new Array(workers).fill({}), skills: new Array(63).fill({ name: 'x', issues: [] }) })
+  workers: new Array(workers).fill({}), skills: new Array(22).fill({ name: 'x', issues: [] }) })
 const dataPayload = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviewsPayload = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }
@@ -74,7 +74,7 @@ async function workbenchTree(overrides = {}) {
   const { host, workbench } = makeWorkbench()
   const load = async () => ({
     workspace: workbench.decodeWorkspace(overrides.workspace ?? snapshot(null)),
-    roles: workbench.decodeCatalogue(overrides.roles ?? catalogue(10, 30)),
+    roles: workbench.decodeCatalogue(overrides.roles ?? catalogue(3, 9)),
     dataSources: overrides.dataSources ?? workbench.decodeDataSources(dataPayload),
     tasks: overrides.tasks ?? workbench.decodeTemplates({ ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [] }) } }),
     reviews: overrides.reviews ?? workbench.decodeReviews({ ...reviewsPayload }),
@@ -175,13 +175,13 @@ test('a review permission denial replaces rows with the refusal and its code', a
 test('the review panel refuses to show rows whose policy could not be read', async () => {
   const summaryOk = { ok: true, value: { summaryJson: JSON.stringify({
     source: 'financial_review.domain/state', revision: 2,
-    groups: [{ sessionId: 's', live: true, status: 'LIVE_SESSION', preset: 'finance-pitch-agent', pending: 1, decided: 0,
-      items: [{ agentId: 'finance-pitch-agent', checkpointId: 'valuation_complete', runId: 'r', decision: 'HOLD',
+    groups: [{ sessionId: 's', live: true, status: 'LIVE_SESSION', preset: 'finance-market-researcher', pending: 1, decided: 0,
+      items: [{ agentId: 'finance-market-researcher', checkpointId: 'comps_spread_complete', runId: 'r', decision: 'HOLD',
         reason: 'REVIEW_REQUIRED', stageStatus: 'COMPLETED' }] }],
     totals: { sessions: 1, items: 1, pending: 1, decided: 0 } }) } }
   const { review } = makeReview()
   const tree = await reviewTree(async () => ({ summary: review.decodeSummary(summaryOk), policy: review.decodePolicy(denied()) }))
   const lines = texts(tree)
   assert.match(lines, /not-authorized/)
-  assert.doesNotMatch(lines, /valuation_complete/, 'rows must not render when the policy read failed')
+  assert.doesNotMatch(lines, /comps_spread_complete/, 'rows must not render when the policy read failed')
 })

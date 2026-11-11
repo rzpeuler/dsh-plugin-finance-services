@@ -33,16 +33,17 @@ const snapshot = { ok: true, value: { binding: null, workspaceStatus: 'UNBOUND',
 const role = (id, extra = {}) => ({ id, kind: 'main', writer: false, builtinTools: ['read', 'finance_data_query'],
   allowedMcpServers: ['capiq'], workerPresetIds: ['w1', 'w2', 'w3'], skillNames: ['a', 'b'], mountStatus: 'AVAILABLE', ...extra })
 const catalogue = { ok: true, value: {
-  agents: [role('finance-pitch-agent'), ...new Array(9).fill({}).map((_, index) => role(`finance-other-${index}`))],
-  workers: new Array(30).fill({}),
-  skills: [{ name: 'dcf-model', issues: [] }, { name: 'comps', issues: ['missing asset'] }, ...new Array(61).fill({ name: 'x', issues: [] })],
+  agents: [role('finance-earnings-reviewer'), role('finance-market-researcher'), role('finance-model-builder')],
+  workers: new Array(9).fill({}),
+  skills: [{ name: 'dcf-model', issues: [] }, { name: 'comps-analysis', issues: ['missing asset'] }, ...new Array(20).fill({ name: 'x', issues: [] })],
 } }
 const data = { ok: true, value: { catalogJson: JSON.stringify({ revision: 8, adapters: [], bindings: [] }) } }
 const reviews = { ok: true, value: { summaryJson: JSON.stringify({ source: 'financial_review.domain/state', revision: 35,
   groups: [], totals: { sessions: 0, items: 0, pending: 0, decided: 0 } }) } }
 const templates = { ok: true, value: { templatesJson: JSON.stringify({ templateVersion: '1.0.0', templates: [
-  { presetId: 'finance-pitch-agent', title: 'Bank pitch first draft', templateVersion: '1.0.0', checkpoints: ['a', 'b'], sourceRefs: [] },
-  { presetId: 'finance-gl-reconciler', title: 'GL reconciliation', templateVersion: '1.0.0', checkpoints: ['c'], sourceRefs: [] },
+  { presetId: 'finance-earnings-reviewer', title: 'Earnings update', templateVersion: '1.0.0', checkpoints: ['a', 'b'], sourceRefs: [] },
+  { presetId: 'finance-market-researcher', title: 'Equity research', templateVersion: '1.0.0', checkpoints: ['c'], sourceRefs: [] },
+  { presetId: 'finance-model-builder', title: 'Financial model', templateVersion: '1.0.0', checkpoints: ['d'], sourceRefs: [] },
 ] }) } }
 const runs = { ok: true, value: { runsJson: JSON.stringify({ deliverableRevision: 2, runs: [
   { runId: 'run-a', agents: ['finance-model-builder'], sessions: ['session-a'],
@@ -57,15 +58,15 @@ test('every card decodes from its own source and reports that source', () => {
   assert.equal(workspace.source, 'financeOperations.snapshot')
   assert.equal(workspace.value.binding, null)
   const taskView = client.decodeTemplates(templates)
-  assert.equal(taskView.value.templates.length, 2)
+  assert.equal(taskView.value.templates.length, 3)
   assert.equal(taskView.value.templates[0].checkpoints, 2)
   const roles = client.decodeCatalogue(catalogue)
-  assert.equal(roles.value.agents, 10)
-  assert.equal(roles.value.workers, 30)
-  assert.equal(roles.value.mains[0].id, 'finance-pitch-agent')
+  assert.equal(roles.value.agents, 3)
+  assert.equal(roles.value.workers, 9)
+  assert.equal(roles.value.mains[0].id, 'finance-earnings-reviewer')
   assert.equal(roles.value.mains[0].workers, 3)
   assert.deepEqual(roles.value.mains[0].sources, ['capiq'])
-  assert.equal(roles.value.skills.total, 63)
+  assert.equal(roles.value.skills.total, 22)
   assert.equal(roles.value.skills.flagged, 1)
   const sources = client.decodeDataSources(data)
   assert.equal(sources.value.revision, 8)
@@ -174,9 +175,9 @@ test('the panel renders four cards, the degraded warning and the read-only note'
   stub.flush(); stub.rewind()
   const tree = client.Panel({ workbenchT: key => key, loadOverview: load })
   const lines = texts(tree).join('\n')
-  for (const expected of ['agents: 10', 'workers: 30', 'skills: 63', 'flagged: 1', 'adapters: 0', 'policy: 0', 'pending: 0',
-    'finance-pitch-agent', 'Bank pitch first draft',
-    'finance-pitch-agent', 'sources: capiq', 'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
+  for (const expected of ['agents: 3', 'workers: 9', 'skills: 22', 'flagged: 1', 'adapters: 0', 'policy: 0', 'pending: 0',
+    'finance-earnings-reviewer', 'Earnings update',
+    'finance-model-builder', 'sources: capiq', 'IN_PROGRESS', 'artifacts/model.xlsx', 'TEST_ONLY']) {
     assert.ok(lines.includes(expected), `${expected} missing from ${lines}`)
   }
   assert.ok(lines.includes('readOnly'))

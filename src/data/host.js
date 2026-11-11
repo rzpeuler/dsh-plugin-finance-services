@@ -10,6 +10,20 @@ import { SourceBindings } from './policy.js'
 import { createDataRemoteContract } from './remote.js'
 
 const Policy = z.strictObject({ revision: z.number().int().min(0), bindings: SourceBindings })
+const registryKey = Symbol('financeDataRegistry')
+const authorityContextsKey = Symbol('financeDataAuthorityContexts')
+
+function requireRegistry(service) {
+  if (!service.active || !service[registryKey]) throw Object.assign(new Error('Financial data service is not active'), { code: 'DATA_SERVICE_UNAVAILABLE' })
+  return service[registryKey]
+}
+
+async function contextForAgent(service, agent) {
+  const exact = await service.contextForAgent(agent)
+  const context = { scopeId: exact.scopeId, roleId: exact.roleId, agentId: agent.id }
+  service[authorityContextsKey].set(context, exact)
+  return context
+}
 const ConfigInput = z.strictObject({ requestTimeoutMs: z.number().int().min(1).max(300000).default(10000), maxConcurrentQueries: z.number().int().min(1).max(128).default(32) })
 
 /** Public injected financeData service; only control-plane methods have Remote descriptors. */
@@ -23,105 +37,144 @@ export default class FinanceData extends TypertRemoteService {
     this.active = false
     this.policyTail = Promise.resolve()
     this.queries = new Map()
+    this[registryKey] = undefined
+    this[authorityContextsKey] = new WeakMap()
   }
 
   async* [Service.init]() {
-    const manifest = JSON.parse(await readFile(assetUrl('agent-manifest.json'), 'utf8'))
-    const domain = await this.ctx.storageDomain.open(defineDomain({ name: 'financial_data', version: 1, tables: { policy: domainTable(Policy) } }))
+    const manifest = JSON.parse(await readFile(assetUrl('runtime-manifest.json'), 'utf8'))
+    const roles = this.rolesFromManifest(manifest)
+    const domain = await this.ctx.storageDomain.open(defineDomain({
+      name: 'financial_data_current', version: 1, tables: { policy: domainTable(Policy) },
+    }))
     this.domain = domain
     yield async () => {
       this.active = false
       for (const controllers of this.queries.values()) for (const controller of controllers) controller.abort(new Error('DATA_SERVICE_DISPOSED'))
       this.queries.clear()
-      this.registry?.dispose()
+      this[registryKey]?.dispose()
       await this.policyTail
       await domain.close()
     }
     const table = domain.table('policy')
-    const initialPolicy = table.get('root') ?? { revision: 0, bindings: [] }
-    this.registry = new FinancialDataRegistry({ roles: manifest.roles, ...this.config, initialPolicy,
-      authorize: context => this.active && this.ctx.get('financeOperations')?.isRoleRuntimeActive(context.agent, context.roleId, context.expectedRevision) === true })
+    const initialPolicy = Policy.parse(table.get('root') ?? { revision: 0, bindings: [] })
     this.table = table
+    this[registryKey] = new FinancialDataRegistry({
+      roles, ...this.config, initialPolicy: initialPolicy,
+      authorize: context => {
+        const exact = context && this[authorityContextsKey].get(context)
+        return this.active && Boolean(exact) &&
+          this.ctx.get('financeOperations')?.isRoleRuntimeActive(exact.agent, exact.roleId, exact.expectedRevision) === true
+      },
+    })
+
     this.active = true
     this.ctx.on('agent/disposed', ({ agent }) => {
       const controllers = this.queries.get(agent)
       if (controllers) for (const controller of controllers) controller.abort(new Error('DATA_SCOPE_DISPOSED'))
     })
-    const { remote, schemas } = createDataRemoteContract(z)
-    this.schemas = schemas
-    yield this.ctx.typert.register({ package: remote.package, face: 'host',
-      schemas: Object.entries(schemas).map(([name, value]) => ({ name, create: () => value })),
-      model: { services: [], events: [], objects: [] }, invocations: remote.descriptors })
+    const remoteContract = createDataRemoteContract(z)
+    this.schemas = remoteContract.schemas
+    yield this.ctx.typert.register({ package: remoteContract.remote.package, face: 'host',
+      schemas: Object.entries(remoteContract.schemas).map(([name, value]) => ({ name, create: () => value })),
+      model: { services: [], events: [], objects: [] }, invocations: remoteContract.remote.descriptors })
   }
 
-  requireRegistry() {
-    if (!this.active || !this.registry) throw Object.assign(new Error('Financial data service is not active'), { code: 'DATA_SERVICE_UNAVAILABLE' })
-    return this.registry
-  }
+  /** Registry role source; subclasses may supply isolated TEST_ONLY roles in tests. */
+  rolesFromManifest(manifest) { return manifest.roles }
 
   /** Same-process Adapter seam; callers own its exact disposer with ctx.effect. */
-  registerAdapter(definition) { return this.requireRegistry().registerAdapter(definition) }
+  registerAdapter(definition) { return requireRegistry(this).registerAdapter(definition) }
 
-  /** Read actual state without credentials or financial payloads. */
+  /** Read current state without credentials or financial payloads. */
   catalog(request) {
     this.schemas.Empty.parse(request)
-    return this.schemas.Catalog.parse({ catalogJson: JSON.stringify(this.requireRegistry().catalog()) })
+    return this.schemas.Catalog.parse({ catalogJson: JSON.stringify(requireRegistry(this).catalog()) })
   }
 
-  /** Persist first, then publish; stale expected revisions cannot mutate current policy. */
+  /** Policy writes use a serialized CAS queue and independent durable domain. */
   setBindings(request) {
     const input = this.schemas.PolicyRequest.parse(request)
     const operation = this.policyTail.then(async () => {
-      const registry = this.requireRegistry()
-      let candidate
-      try { candidate = registry.prepareBindings({ expectedRevision: input.expectedRevision, bindings: JSON.parse(input.bindingsJson) }) }
-      catch (error) {
-        const conflict = error.code === 'POLICY_CONFLICT'
-        return { status: conflict ? 'CONFLICT' : 'REJECTED', revision: registry.policyRevision,
-          error: { code: conflict ? 'POLICY_CONFLICT' : 'POLICY_INVALID', message: conflict ? 'Source policy changed; read a fresh catalogue.' : 'Policy exceeds the source role, Session or capability constraints.' } }
-      }
-      try { await this.table.put('root', candidate) }
+      let registry
+      try { registry = requireRegistry(this) }
       catch {
-        return { status: 'REJECTED', revision: registry.policyRevision, error: { code: 'POLICY_SAVE_FAILED', message: 'Source policy was not durably saved; current grants are unchanged.' } }
+        return this.schemas.PolicyResult.parse({ status: 'DISPOSED', revision: 0,
+          error: { code: 'DATA_SERVICE_UNAVAILABLE', message: 'Financial data service is not active.' } })
       }
-      if (!this.active) return { status: 'DISPOSED', revision: candidate.revision, error: { code: 'POLICY_SAVED_NOT_PUBLISHED', message: 'Policy saved during disposal; reconnect and read authoritative state.' } }
-      registry.commitBindings(candidate)
-      return { status: 'APPLIED', revision: candidate.revision, error: null }
+      let candidate
+      try {
+        const bindings = JSON.parse(input.bindingsJson)
+        const reviewedAt = registry.clockNow()
+        for (const binding of bindings) {
+          if (binding?.sourceId && binding.licenseAssessment?.assessmentStatus === 'VERIFIED') {
+            // Ignore a Client-supplied review clock; the Host stamps this trusted update.
+            binding.licenseAssessment.reviewedAt = reviewedAt
+          }
+        }
+        candidate = registry.prepareBindings({ expectedRevision: input.expectedRevision, bindings })
+      } catch (error) {
+        const conflict = error.code === 'POLICY_CONFLICT'
+        const disposed = error.code === 'REGISTRY_DISPOSED'
+        return this.schemas.PolicyResult.parse({
+          status: conflict ? 'CONFLICT' : disposed ? 'DISPOSED' : 'REJECTED',
+          revision: registry.policyRevision,
+          error: { code: conflict ? 'POLICY_CONFLICT' : disposed ? 'REGISTRY_DISPOSED' : 'POLICY_INVALID',
+            message: conflict ? 'Source policy changed; read a fresh catalogue.' :
+              disposed ? 'Financial data service is not active.' :
+                'Policy exceeds the source role, Session or capability constraints.' },
+        })
+      }
+      const stored = Policy.parse({ revision: candidate.revision, bindings: candidate.bindings })
+      try { await this.table.put('root', stored) }
+      catch {
+        return this.schemas.PolicyResult.parse({ status: 'REJECTED', revision: registry.policyRevision,
+          error: { code: 'POLICY_SAVE_FAILED', message: 'Policy was not durably saved; current grants are unchanged.' } })
+      }
+      if (!this.active) return this.schemas.PolicyResult.parse({ status: 'DISPOSED', revision: candidate.revision,
+        error: { code: 'POLICY_SAVED_NOT_PUBLISHED', message: 'Policy was saved during disposal; reconnect and read authoritative state.' } })
+      try { registry.commitBindings(candidate) }
+      catch {
+        return this.schemas.PolicyResult.parse({ status: 'DISPOSED', revision: registry.policyRevision,
+          error: { code: 'POLICY_NOT_PUBLISHED', message: 'Policy was saved but not published; reconnect and read authoritative state.' } })
+      }
+      return this.schemas.PolicyResult.parse({ status: 'APPLIED', revision: candidate.revision, error: null })
     })
     this.policyTail = operation.then(() => undefined, () => undefined)
     return operation
   }
 
-  async contextForAgent(agent) {
-    const roleId = this.ctx.agentPresets.composedPreset(agent.ctx)
-    const role = await this.ctx.financeOperations.roleDefinition(roleId)
-    return { agent, roleId, scopeId: agent.id,
-      expectedRevision: { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 } }
-  }
-
   async describeForAgent(agent, capability) {
-    return this.requireRegistry().describeCapability(capability, await this.contextForAgent(agent))
+    return requireRegistry(this).describeCapability(capability, await contextForAgent(this, agent))
   }
 
-  /** Only an existing exact-role Agent creates this query context; it is never a Remote/model parameter. */
-  async queryForAgent(agent, request, signal) {
-    const registry = this.requireRegistry()
-    const context = await this.contextForAgent(agent)
+  /** Track and abort queries owned by this exact Agent. */
+  async trackAgentQuery(agent, signal, operation) {
     const controller = new AbortController()
     const controllers = this.queries.get(agent) ?? new Set()
     this.queries.set(agent, controllers)
     controllers.add(controller)
-    try { return await registry.query(request, context, signal ? AbortSignal.any([signal, controller.signal]) : controller.signal) }
+    const combined = signal ? AbortSignal.any([signal, controller.signal]) : controller.signal
+    try { return await operation(combined) }
     finally {
       controllers.delete(controller)
       if (!controllers.size) this.queries.delete(agent)
     }
   }
 
-  /** Coalescing stream of real registration/auth/policy state, not a poll or a second manager. */
+  /** Model queries stay Host/plugin-only and use a Host-created exact role context. */
+  async queryForAgent(agent, request, signal) {
+    const registry = requireRegistry(this)
+    return this.trackAgentQuery(agent, signal, async querySignal => {
+      const context = await contextForAgent(this, agent)
+      return registry.query(request, context, querySignal)
+    })
+  }
+
+  /** Coalescing stream of the sole FinanceData catalog, policy and registry state. */
   async* follow(request, signal) {
     this.schemas.Empty.parse(request)
-    const registry = this.requireRegistry()
+    const registry = requireRegistry(this)
     let dirty = true
     let wake
     const changed = () => { dirty = true; wake?.(); wake = undefined }

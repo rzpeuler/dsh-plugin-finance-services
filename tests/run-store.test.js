@@ -57,7 +57,7 @@ test('closes pending phases and leaves missing tool results explicitly unknown',
 
 test('does not cross-associate Sessions that reuse event sequence numbers', () => {
   let doc = submitted('session-a', 1)
-  doc = createRun(doc, { sessionId: 'session-b', agentId: 'finance-pitch-agent', runId: 'session-b:1', message: userMessage(1) })
+  doc = createRun(doc, { sessionId: 'session-b', agentId: 'finance-market-researcher', runId: 'session-b:1', message: userMessage(1) })
   doc = applySessionEvent(doc, 'session-b', event('turn/start', 2, { turn: 1 }))
   assert.equal(doc.runs.find(run => run.sessionId === 'session-a').status, 'SUBMITTED')
   assert.equal(doc.runs.find(run => run.sessionId === 'session-b').status, 'RUNNING')

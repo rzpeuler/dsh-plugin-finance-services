@@ -1,6 +1,0 @@
-{
-  "meta": {
-    "title": "TEST_ONLY Native MCP Host Probe",
-    "description": "Verifies actual native MCP calls and FinanceRole denial through public dispatch, without model turns or policy changes."
-  }
-}

@@ -1,6 +1,0 @@
-{
-  "meta": {
-    "title": "TEST_ONLY Native MCP Toy Connection",
-    "description": "Connects a package-owned synthetic TOY stdio MCP server using the shipped native client; not commercial financial data."
-  }
-}

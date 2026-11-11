@@ -20,7 +20,7 @@ function watchDirectory(directory, changed, failed) {
   return () => watcher.close()
 }
 
-const DATA_ROW_NAME = '@local/dsh-financial-services/data-runtime-2'
+const DATA_ROW_NAME = '@local/dsh-financial-services/data'
 const REVIEW_ROW_NAME = '@local/dsh-financial-services/review'
 const DataPageConfig = z.strictObject({
   requestTimeoutMs: z.number().int().min(1).max(300000).default(10000),

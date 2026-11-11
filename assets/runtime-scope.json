@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "sourceBasis": "plugins/vertical-plugins; source directories supplied by the user",
+  "mainAgentIds": [
+    "finance-earnings-reviewer",
+    "finance-market-researcher",
+    "finance-model-builder"
+  ],
+  "workerPolicy": "retain only Workers owned by the three selected main Agents; do not list Workers as main Agents",
+  "skillSourceRoots": [
+    "plugins/vertical-plugins/financial-analysis/skills",
+    "plugins/vertical-plugins/equity-research/skills"
+  ],
+  "commandSourceRoots": [
+    "plugins/vertical-plugins/financial-analysis/commands",
+    "plugins/vertical-plugins/equity-research/commands"
+  ],
+  "skillsByDomain": {
+    "Financial Analysis": [
+      "3-statement-model",
+      "audit-xls",
+      "clean-data-xls",
+      "competitive-analysis",
+      "comps-analysis",
+      "dcf-model",
+      "deck-refresh",
+      "ib-check-deck",
+      "lbo-model",
+      "ppt-template-creator",
+      "pptx-author",
+      "skill-creator",
+      "xlsx-author"
+    ],
+    "Equity Research": [
+      "catalyst-calendar",
+      "earnings-analysis",
+      "earnings-preview",
+      "idea-generation",
+      "initiating-coverage",
+      "model-update",
+      "morning-note",
+      "sector-overview",
+      "thesis-tracker"
+    ]
+  }
+}

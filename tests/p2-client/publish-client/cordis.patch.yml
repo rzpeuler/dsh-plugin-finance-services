@@ -1,6 +1,0 @@
-# Disposable TEST_ONLY native publication; no display resources or navigation.
-- insert:
-    - id: finance-p2-publish-client-test-only
-      name: '@local/dsh-financial-services-p2-publish-client-test-only'
-      config:
-        bundleRoot: 'C:\Users\Administrator\Documents\deepseek-harness\default-workspace\financial-services-bundle'

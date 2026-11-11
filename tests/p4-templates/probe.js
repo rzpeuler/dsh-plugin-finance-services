@@ -1,4 +1,4 @@
-// Native probe: the ten task templates are readable through the operations Remote.
+// Native probe: the three in-scope task templates are readable through the operations Remote.
 import { writeFile } from 'node:fs/promises'
 import assert from 'node:assert/strict'
 
@@ -15,13 +15,13 @@ export async function apply(ctx, config) {
   const call = (method, request = {}) => ctx.typertGateway.invoke({ namespace: 'financeOperations', method, args: { request }, peer, signal: peer.signal })
 
   try {
-    await check('ten-templates-are-dispatchable', async () => {
+    await check('three-scoped-templates-are-dispatchable', async () => {
       const payload = await call('taskTemplates')
       const parsed = JSON.parse(payload.templatesJson)
-      assert.equal(parsed.templates.length, 10)
+      assert.equal(parsed.templates.length, 3)
       assert.equal(parsed.templateVersion, '1.0.0')
       const ids = parsed.templates.map(item => item.presetId)
-      assert.equal(new Set(ids).size, 10)
+      assert.equal(new Set(ids).size, 3)
       return { templates: parsed.templates.length, version: parsed.templateVersion }
     })
 

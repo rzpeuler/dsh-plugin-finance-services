@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "roleId": "finance-meeting-prep-agent-pack-writer",
-  "skillNames": [
-    "client-review",
-    "pptx-author"
-  ],
-  "grantsTools": false
-}

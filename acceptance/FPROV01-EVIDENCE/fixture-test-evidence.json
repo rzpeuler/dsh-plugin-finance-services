@@ -1,0 +1,48 @@
+{
+  "evidenceVersion": 1,
+  "capturedDate": "2026-11-12",
+  "repositoryHead": "b9eeb079f9d5d4d51bc11a9299403bd7cf36e2b5",
+  "branch": "codex/fprov-01-ashare-adapters",
+  "suite": {
+    "command": "pnpm test",
+    "node": "v24.16.0",
+    "tests": 367,
+    "passed": 367,
+    "failed": 0
+  },
+  "focusedFinalRun": {
+    "command": "node --test tests/ashare-adapters.test.js tests/data-fprov01.test.js",
+    "tests": 11,
+    "passed": 11,
+    "failed": 0
+  },
+  "build": {
+    "command": "pnpm build",
+    "status": "PASS",
+    "summary": "Generated self-contained Host/role/floor/data exports and one native Client factory from 39 sources."
+  },
+  "packageCheck": {
+    "command": "pnpm check:package",
+    "status": "PASS",
+    "summary": "Manifest, exports, localized metadata, patch, Client syntax and source/build hashes."
+  },
+  "fixtures": [
+    "Synthetic Eastmoney JSON/JSONP row: daily unadjusted OHLC field mapping and mismatch refusal.",
+    "Synthetic THS HTML: explicit aggregate consensus EPS per-share header, unknown broker-row refusal and missing-value refusal.",
+    "Synthetic TDX ZIP: bounded .cod/.md1 parsing and OHLC extraction; no volume or amount output.",
+    "Mocked Fetch in Host Registry integration: no request before direct verified assessment; one synthetic current observation after exact grant."
+  ],
+  "externalClaims": {
+    "realUpstreamRequests": 0,
+    "realDataE2E": false,
+    "licensedSourceAuthorizationVerified": false,
+    "profileInstallOrEnable": false,
+    "guiClickThrough": false,
+    "strictHistoricalPITVerified": false
+  },
+  "limitations": [
+    "Fixture values are synthetic and are not retained audit data.",
+    "Reviewed audit observations do not prove access, model-processing, session-logging, retention or redistribution rights.",
+    "All three candidate adapters remain UNASSESSED and exact source grants must fail closed without trusted evidence."
+  ]
+}

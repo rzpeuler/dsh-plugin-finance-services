@@ -6,7 +6,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { CAPABILITIES, DATA_CONTRACT_VERSION } from '../src/data/contracts.js'
+import { CAPABILITIES } from '../src/data/contracts.js'
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 
@@ -18,10 +18,10 @@ export function buildMatrix(manifest, capabilities = CAPABILITIES) {
   for (const role of manifest.roles) {
     for (const name of role.skillNames) skillsUsing.set(name, (skillsUsing.get(name) ?? 0) + 1)
   }
+  const contractOnly = ids => ids.map(id => ({ id, contract: true, registeredProviders: 0, status: 'CONTRACT_ONLY' }))
   const matrix = {
-    schemaVersion: 1,
+    schemaVersion: 3,
     sourceTreeSha256: manifest.sourceTreeSha256,
-    contractVersion: DATA_CONTRACT_VERSION,
     counts: {
       mains: mains.length, workers: workers.length, skills: manifest.skills.length,
       commands: manifest.commands.length, capabilities: capabilities.length,
@@ -46,13 +46,14 @@ export function buildMatrix(manifest, capabilities = CAPABILITIES) {
       issues: skill.issues?.length ?? 0,
       boundRoles: skillsUsing.get(skill.name) ?? 0,
     })),
-    capabilities: capabilities.map(id => ({
-      id,
-      contract: true,
-      // Production registers no provider; the two TEST_ONLY adapters were removed after their checks.
-      registeredProviders: 0,
-      status: 'CONTRACT_ONLY',
-    })),
+    capabilities: contractOnly(capabilities),
+    candidateAdapters: {
+      cnequityReaderDefinitions: 3,
+      registered: 0,
+      authorized: 0,
+      defaultSymbolAllowlistSize: 0,
+      defaultPermissionFlagsEnabled: 0,
+    },
   }
   // Referential integrity is part of the matrix, not only of the test.
   for (const main of matrix.mains) {
@@ -69,8 +70,8 @@ export function renderDocument(matrix) {
   const lines = [
     '# 能力与角色映射（生成文件，请勿手改）',
     '',
-    `- 契约版本：\`${matrix.contractVersion}\`；源树 \`${matrix.sourceTreeSha256}\``,
-    `- 主 Agent ${matrix.counts.mains}、Worker ${matrix.counts.workers}、Skill ${matrix.counts.skills}、命令 ${matrix.counts.commands}、能力 ${matrix.counts.capabilities}`,
+    `- 唯一 FinanceData 契约；源树 \`${matrix.sourceTreeSha256}\``,
+    `- 主 Agent ${matrix.counts.mains}、Worker ${matrix.counts.workers}、Skill ${matrix.counts.skills}、命令 ${matrix.counts.commands}、数据能力 ${matrix.counts.capabilities}`,
     '',
     '## 主 Agent 与 Worker 归属',
     '',
@@ -78,13 +79,19 @@ export function renderDocument(matrix) {
     '|---|---|---|---|---:|',
     ...matrix.mains.map(main => `| \`${main.id}\` | ${main.workers.map(id => `\`${id}\``).join('<br>')} | ${main.writer ? 'yes' : 'no'} | ${main.allowedMcpServers.join(', ') || '—'} | ${main.skills} |`),
     '',
-    '## 14 个能力现状',
+    '## 唯一 FinanceData 能力现状',
     '',
-    '生成时不注册任何 Provider：两个 TEST_ONLY Adapter 在验收后已移除，因此全部为契约层。',
+    '当前只有一套 FinanceData 能力契约。CNEquity Reader 有 3 个本地 TEST_ONLY 候选 Adapter factory；当前没有注册或授权，默认 A 股代码 allowlist 为空且三项权限均关闭。',
     '',
-    '| 能力 | 契约 | 生产 Provider | 状态 |',
-    '|---|---|---:|---|',
+    '| FinanceData 能力 | 已有契约 | 已注册 Provider | 状态 |',
+    '|---|---:|---:|---|',
     ...matrix.capabilities.map(item => `| \`${item.id}\` | yes | ${item.registeredProviders} | ${item.status} |`),
+    '',
+    '## CNEquity Reader 候选状态',
+    '',
+    '| 候选定义 | 已注册 | 已授权 | 默认符号 allowlist | 默认开启权限标志 |',
+    '|---:|---:|---:|---:|---:|',
+    `| ${matrix.candidateAdapters.cnequityReaderDefinitions} | ${matrix.candidateAdapters.registered} | ${matrix.candidateAdapters.authorized} | ${matrix.candidateAdapters.defaultSymbolAllowlistSize} | ${matrix.candidateAdapters.defaultPermissionFlagsEnabled} |`,
     '',
     '## Skill 资产状态',
     '',
@@ -97,7 +104,7 @@ export function renderDocument(matrix) {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('generate-capability-matrix.mjs')) {
-  const manifest = JSON.parse(await readFile(join(root, 'assets/agent-manifest.json'), 'utf8'))
+  const manifest = JSON.parse(await readFile(join(root, 'assets/runtime-manifest.json'), 'utf8'))
   const matrix = buildMatrix(manifest)
   await mkdir(join(root, 'acceptance'), { recursive: true })
   await writeFile(join(root, 'acceptance/CAPABILITY_MATRIX.json'), JSON.stringify(matrix, null, 2) + '\n', 'utf8')

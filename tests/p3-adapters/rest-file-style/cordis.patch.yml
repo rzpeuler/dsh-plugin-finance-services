@@ -1,4 +1,0 @@
-- insert:
-    - id: finance-test-rest-adapter
-      name: '@local/finance-test-rest-adapter'
-      config: {}

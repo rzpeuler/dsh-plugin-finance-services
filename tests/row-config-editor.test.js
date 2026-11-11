@@ -4,7 +4,7 @@ import { z } from 'zod'
 import FinanceOperations from '../src/host.js'
 import { createFinanceContract } from '../src/contract.js'
 
-const DATA_NAME = '@local/dsh-financial-services/data-runtime-2'
+const DATA_NAME = '@local/dsh-financial-services/data'
 const REVIEW_NAME = '@local/dsh-financial-services/review'
 const schemas = createFinanceContract(z).schemas
 

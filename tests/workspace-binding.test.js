@@ -361,7 +361,7 @@ test('actual Cordis Service initialization owns strict/tool effects and closes t
   assert.equal(contributed.invocations.length, 9)
   assert.equal(registrations.get('tool').name, 'finance_workspace')
   const actor = { id: 'TEST_ONLY_actor_identity' }
-  const role = await service.roleDefinition('finance-pitch-agent')
+  const role = await service.roleDefinition('finance-model-builder')
   const expected = { sourceSha256: role.source.sha256, adaptedPromptSha256: role.prompt.adaptedSha256 }
   assert.equal(service.isRoleRuntimeActive(actor, role.id, expected), false)
   const oldGrant = service.registerRoleRuntime(actor, role.id)

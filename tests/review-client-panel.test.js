@@ -39,9 +39,9 @@ const summaryPayload = (overrides = {}) => ({
   ok: true,
   value: { summaryJson: JSON.stringify({
     source: 'financial_review.domain/state', revision: 12,
-    groups: [{ sessionId: 'session-a', live: true, status: 'LIVE_SESSION', preset: 'finance-pitch-agent',
+    groups: [{ sessionId: 'session-a', live: true, status: 'LIVE_SESSION', preset: 'finance-market-researcher',
       pending: 1, decided: 0,
-      items: [{ agentId: 'finance-pitch-agent', checkpointId: 'valuation_complete', runId: 'run-a',
+      items: [{ agentId: 'finance-market-researcher', checkpointId: 'comps_spread_complete', runId: 'run-a',
         decision: 'HOLD', reason: 'REVIEW_REQUIRED', stageStatus: 'COMPLETED' }] }],
     totals: { sessions: 1, items: 1, pending: 1, decided: 0 },
     ...overrides,
@@ -53,7 +53,7 @@ const policyPayload = overrides => ({
   value: { policyJson: JSON.stringify({
     policyId: 'original', version: 'p5-policy-v1', digest: 'a'.repeat(64),
     lockedBoundaries: new Array(8).fill('x'), externalSideEffects: 'DISABLED',
-    requirements: { 'finance-pitch-agent': { valuation_complete: 'MANDATORY' } },
+    requirements: { 'finance-market-researcher': { comps_spread_complete: 'MANDATORY' } },
     ...overrides,
   }) },
 })
@@ -152,7 +152,7 @@ test('the panel renders policy, totals and per-session rows from a ready state',
   const lines = texts(rerendered).join('\n')
   assert.match(lines, /POLICY|policy/)
   assert.match(lines, /session-a|—/)
-  assert.match(lines, /checkpoint: valuation_complete|valuation_complete/)
+  assert.match(lines, /checkpoint: comps_spread_complete|comps_spread_complete/)
   assert.match(lines, /readOnly/)
   assert.equal(buttons(rerendered).length, 1)
 })

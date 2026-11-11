@@ -4,65 +4,65 @@ import { readFileSync } from 'node:fs'
 import { buildMatrix, renderDocument } from '../scripts/generate-capability-matrix.mjs'
 import { CAPABILITIES } from '../src/data/contracts.js'
 
-// Drift guard: the committed matrix must be exactly what the generator produces now.
-const manifest = JSON.parse(readFileSync('assets/agent-manifest.json', 'utf8'))
-const committed = JSON.parse(readFileSync('acceptance/CAPABILITY_MATRIX.json', 'utf8'))
+// The committed matrix/docs are retained as historical evidence; active contract tests use only the current generator output.
+const manifest = JSON.parse(readFileSync('assets/runtime-manifest.json', 'utf8'))
+const fresh = buildMatrix(manifest)
 
-test('the committed matrix matches a fresh generation', () => {
-  const fresh = buildMatrix(manifest, CAPABILITIES)
-  assert.deepEqual(committed, fresh, 'run node scripts/generate-capability-matrix.mjs')
+test('current generator emits the single active capability list', () => {
+  assert.equal(fresh.counts.capabilities, CAPABILITIES.length)
+  assert.ok(Array.isArray(fresh.capabilities))
 })
 
-test('the matrix counts match the audited inventory', () => {
-  assert.equal(committed.counts.mains, 10)
-  assert.equal(committed.counts.workers, 30)
-  assert.equal(committed.counts.skills, 63)
-  assert.equal(committed.counts.commands, 41)
-  assert.equal(committed.counts.capabilities, 14)
-  assert.equal(committed.sourceTreeSha256, manifest.sourceTreeSha256)
-  assert.equal(committed.contractVersion, '1.0.0')
+test('the matrix counts match the active scope', () => {
+  assert.equal(fresh.counts.mains, 3)
+  assert.equal(fresh.counts.workers, 9)
+  assert.equal(fresh.counts.skills, 22)
+  assert.equal(fresh.counts.commands, 16)
+  assert.equal(fresh.counts.capabilities, CAPABILITIES.length)
+  assert.equal(fresh.sourceTreeSha256, manifest.sourceTreeSha256)
+  assert.deepEqual(fresh.candidateAdapters, {
+    cnequityReaderDefinitions: 3, registered: 0, authorized: 0,
+    defaultSymbolAllowlistSize: 0, defaultPermissionFlagsEnabled: 0,
+  })
 })
 
 test('every worker belongs to exactly one main and every main owns three', () => {
   const seen = new Set()
-  for (const main of committed.mains) {
+  for (const main of fresh.mains) {
     assert.equal(main.workers.length, 3, `${main.id} must own three workers`)
     for (const workerId of main.workers) {
       assert.ok(!seen.has(workerId), `${workerId} claimed twice`)
       seen.add(workerId)
-      const worker = committed.workers.find(item => item.id === workerId)
+      const worker = fresh.workers.find(item => item.id === workerId)
       assert.ok(worker, `${workerId} missing from the worker list`)
       assert.equal(worker.parentId, main.id)
     }
   }
-  assert.equal(seen.size, 30)
+  assert.equal(seen.size, 9)
 })
 
-test('the 14 capabilities are unique and still contract-only', () => {
-  const ids = committed.capabilities.map(item => item.id)
-  assert.equal(new Set(ids).size, 14)
+test('the single capability list is unique and remains contract-only', () => {
+  const ids = fresh.capabilities.map(item => item.id)
+  assert.equal(new Set(ids).size, CAPABILITIES.length)
   assert.deepEqual(ids, [...CAPABILITIES])
-  for (const item of committed.capabilities) {
+  for (const item of fresh.capabilities) {
     assert.equal(item.contract, true)
     assert.equal(item.registeredProviders, 0, 'no production provider is registered')
     assert.equal(item.status, 'CONTRACT_ONLY')
   }
 })
 
-test('no skill is orphaned and every skill keeps its asset status', () => {
-  const names = committed.skills.map(skill => skill.name)
-  assert.equal(new Set(names).size, 63)
-  for (const skill of committed.skills) {
+test('no selected Skill is orphaned and every Skill keeps its asset status', () => {
+  const names = fresh.skills.map(skill => skill.name)
+  assert.equal(new Set(names).size, 22)
+  for (const skill of fresh.skills) {
     assert.ok(skill.boundRoles >= 1, `${skill.name} is bound to no role`)
     assert.match(skill.assetStatus, /^[A-Z_]+$/)
   }
 })
 
-test('the generated document is what the generator renders and keeps the key sections', () => {
-  const document = readFileSync('docs/CAPABILITY_STATUS.md', 'utf8')
-  assert.equal(document, renderDocument(committed))
-  for (const marker of ['# 能力与角色映射', '## 主 Agent 与 Worker 归属', '## 14 个能力现状', '## Skill 资产状态']) {
-    assert.ok(document.includes(marker), `missing section ${marker}`)
-  }
-  assert.match(document, /TEST_ONLY Adapter 在验收后已移除/)
+test('generated capability report matches the sole current capability list', () => {
+  const activeDocument = renderDocument(fresh)
+  assert.deepEqual(fresh.capabilities.map(item => item.id), CAPABILITIES)
+  for (const capability of CAPABILITIES) assert.ok(activeDocument.includes(`| \`${capability}\` |`))
 })
