@@ -1,0 +1,45 @@
+{
+  "evidenceVersion": 1,
+  "capturedDate": "2026-11-12",
+  "scope": {
+    "mainAgents": [
+      "finance-earnings-reviewer",
+      "finance-market-researcher",
+      "finance-model-builder"
+    ],
+    "workerCount": 9,
+    "skills": {
+      "total": 22,
+      "Financial Analysis": 13,
+      "Equity Research": 9
+    },
+    "commands": 16,
+    "steeringExamples": 9
+  },
+  "excludedHistoricalScope": {
+    "fullCatalogAtCommit": "1089564f9345070b44fc9c36772d2ef80a7aca15",
+    "mainAgents": 10,
+    "workers": 30,
+    "restored": false,
+    "acceptancePathsRemovedFromCurrentTree": 271,
+    "directGL_LPCoreTestSamplePathsRemoved": 27,
+    "staleUnreachableGLFixtureRemoved": true,
+    "selectedModelBuilderNumericCoreRetained": [
+      "DCF",
+      "LBO",
+      "three-statement",
+      "comps"
+    ]
+  },
+  "historicalAncestry": {
+    "main": "1089564f9345070b44fc9c36772d2ef80a7aca15",
+    "featFinancialServices": "b9eeb079f9d5d4d51bc11a9299403bd7cf36e2b5",
+    "fprov01": "bf7e1011eeb20068f6a011bb9a416078fea0ddc9",
+    "priorNativeMcpEvidence": "388e310bd1c919ad3841e11de5f0418aa79a0483"
+  },
+  "sourcePermissions": "UNASSESSED",
+  "realSourceRequests": 0,
+  "rawAuditPayloadCopied": false,
+  "profileInstallation": false,
+  "guiVisualValidation": false
+}

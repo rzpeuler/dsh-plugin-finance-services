@@ -14,7 +14,10 @@ test('package, build artifact, and active-scope documentation agree on one versi
   assert.equal(build.version, pkg.version)
   assert.equal(build.package, pkg.name)
   assert.ok(read('README.md').includes(pkg.version))
-  assert.ok(read('docs/RUNTIME_SCOPE.md').includes('not installed or pushed'))
+  const scopeDoc = read('docs/RUNTIME_SCOPE.md')
+  assert.ok(scopeDoc.includes('not installed in the current Profile'))
+  assert.ok(scopeDoc.includes('not visually validated in the live GUI'))
+  assert.ok(existsSync('acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md'))
 })
 
 test('bundle rows contain only four local services and the three Agent/Worker families', () => {

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { buildMatrix, renderDocument } from '../scripts/generate-capability-matrix.mjs'
 import { CAPABILITIES } from '../src/data/contracts.js'
 
-// The committed matrix/docs are retained as historical evidence; active contract tests use only the current generator output.
+// The committed matrix/docs are generated evidence and must match the active manifest and contracts.
 const manifest = JSON.parse(readFileSync('assets/runtime-manifest.json', 'utf8'))
 const fresh = buildMatrix(manifest)
 
@@ -13,15 +13,22 @@ test('current generator emits the single active capability list', () => {
   assert.ok(Array.isArray(fresh.capabilities))
 })
 
+test('committed matrix and status document match the current generator', () => {
+  assert.deepEqual(JSON.parse(readFileSync('acceptance/CAPABILITY_MATRIX.json', 'utf8')), fresh)
+  assert.equal(readFileSync('docs/CAPABILITY_STATUS.md', 'utf8'), renderDocument(fresh))
+})
+
 test('the matrix counts match the active scope', () => {
   assert.equal(fresh.counts.mains, 3)
   assert.equal(fresh.counts.workers, 9)
   assert.equal(fresh.counts.skills, 22)
   assert.equal(fresh.counts.commands, 16)
+  assert.equal(fresh.counts.steering, 9)
   assert.equal(fresh.counts.capabilities, CAPABILITIES.length)
   assert.equal(fresh.sourceTreeSha256, manifest.sourceTreeSha256)
   assert.deepEqual(fresh.candidateAdapters, {
-    cnequityReaderDefinitions: 3, registered: 0, authorized: 0,
+    cnequityReaderDefinitions: 3, cnequityReaderRegistered: 0,
+    fprovAshareDefinitions: 3, fprovAshareRegistered: 0, fprovAshareAuthorized: 0,
     defaultSymbolAllowlistSize: 0, defaultPermissionFlagsEnabled: 0,
   })
 })

@@ -1,5 +1,7 @@
 {
   "evidenceVersion": 1,
+  "recordStatus": "HISTORICAL_LOCAL_CAPTURE",
+  "historicalNote": "repositoryHead is a historical local checkpoint, not the current integration head; see acceptance/FINANCE-3A-FPROV-EVIDENCE/.",
   "capturedDate": "2026-11-12",
   "repositoryHead": "b9eeb079f9d5d4d51bc11a9299403bd7cf36e2b5",
   "branch": "codex/fprov-01-ashare-adapters",

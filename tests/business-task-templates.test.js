@@ -43,11 +43,6 @@ function fixture(presetId) {
       v.business = { companyEntityRef: 'company', method: 'dcf-model', historicalPeriodRefs: v.periods.slice(0, 3).map(p => p.ref), forecastPeriodRefs: v.periods.slice(3).map(p => p.ref),
         financialsFileRef: 'financials', assumptionsFileRef: 'assumptions', assumptions: { terminalGrowth: 0.025, baseWacc: 0.09, dilutedShares: 10 } }
       break
-    case 'gl-reconciler':
-      v.entities = [e('entity', 'internal')]; v.periods = [p('period', 'instant', '2025-12-31', '2025-12-31')]
-      v.business = { accountingEntityRef: 'entity', tradeDate: '2025-12-31', reconciliationPeriodRef: 'period', assetClasses: ['equity'], glFileRef: 'gl', subledgerFileRef: 'subledger',
-        transactionFileRefs: ['transactions'], custodianFileRefs: [], amountTolerance: 0.01, quantityTolerance: 0 }
-      break
     case 'kyc-screener':
       v.entities = [e('applicant', 'local')]; v.periods = [p('period', 'instant', '2025-12-31', '2025-12-31')]
       v.business = { applicantEntityRef: 'applicant', packetId: 'TEST_ONLY_packet', reviewDate: '2025-12-31', reviewPeriodRef: 'period', refreshKind: 'onboarding',

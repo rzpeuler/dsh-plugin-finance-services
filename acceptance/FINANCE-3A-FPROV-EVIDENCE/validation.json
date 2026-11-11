@@ -1,0 +1,60 @@
+{
+  "evidenceVersion": 1,
+  "capturedDate": "2026-11-12",
+  "toolchain": {
+    "node": "v24.21.0",
+    "pnpm": "v11.28.5",
+    "dshRuntime": "0.2.2-rc.1"
+  },
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --ignore-scripts",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "Already up to date; no install scripts executed."
+    },
+    {
+      "command": "pnpm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "Validated 3 main Agents, 9 Workers, 22 Skills, 16 commands, 9 steering examples; built self-contained artifacts from 39 sources."
+    },
+    {
+      "command": "pnpm test",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": 378,
+      "passed": 378,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "command": "pnpm run check:package",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "Manifest, exports, localized metadata, SVG safety, patch, native Client syntax, and source/build hashes passed."
+    },
+    {
+      "command": "pnpm pack --pack-destination <isolated temp directory>",
+      "status": "PASS",
+      "exitCode": 0,
+      "result": "Tarball created outside the repository; archive entry scan found no excluded source archive, audit, tests, node_modules, private local data, or removed-domain payload paths; current integration deliverables were present."
+    }
+  ],
+  "packContentScan": {
+    "status": "PASS",
+    "archiveEntryCount": 329,
+    "excludedPathMatches": 0,
+    "currentIntegrationDeliverablesPresent": true,
+    "rawExternalAuditPayloadCopied": false
+  },
+  "sourceAndProfileBoundaries": {
+    "realUpstreamRequests": 0,
+    "userLocalDataOpened": false,
+    "sourceRights": "UNASSESSED",
+    "profileInstallOrEnable": false,
+    "guiVisualValidation": false,
+    "dshCoreModified": false
+  }
+}

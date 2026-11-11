@@ -16,15 +16,17 @@ test('the README and runtime-scope documentation describe the selected scope', (
     assert.ok(scopeDoc.includes(agent), `scope documentation must name ${agent}`)
   }
   assert.ok(scopeDoc.includes('22-Skill'))
-  assert.ok(scopeDoc.includes('not installed or pushed'))
+  assert.ok(scopeDoc.includes('not installed in the current Profile'))
+  assert.ok(scopeDoc.includes('not visually validated in the live GUI'))
+  assert.ok(readme.includes('acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md'))
 })
 
 test('scope, manifest and generated capability report agree on active counts', () => {
   const matrix = json('acceptance/CAPABILITY_MATRIX.json')
   assert.deepEqual(scope.mainAgentIds.slice().sort(), ['finance-earnings-reviewer', 'finance-market-researcher', 'finance-model-builder'])
-  assert.deepEqual([manifest.counts.mainAgents, manifest.counts.workers, manifest.counts.skills, manifest.counts.commands], [3, 9, 22, 16])
-  assert.deepEqual([matrix.counts.mains, matrix.counts.workers, matrix.counts.skills, matrix.counts.commands], [3, 9, 22, 16])
-  assert.ok(read('docs/CAPABILITY_STATUS.md').includes('主 Agent 3、Worker 9、Skill 22、命令 16'))
+  assert.deepEqual([manifest.counts.mainAgents, manifest.counts.workers, manifest.counts.skills, manifest.counts.commands, manifest.counts.steering], [3, 9, 22, 16, 9])
+  assert.deepEqual([matrix.counts.mains, matrix.counts.workers, matrix.counts.skills, matrix.counts.commands, matrix.counts.steering], [3, 9, 22, 16, 9])
+  assert.ok(read('docs/CAPABILITY_STATUS.md').includes('主 Agent 3、Worker 9、Skill 22、命令 16、steering样例 9'))
 })
 
 test('removed source catalogues and audit copies stay absent', () => {

@@ -148,6 +148,13 @@ export class FinancialDataRegistry {
       })
       if (typeof disposeState !== 'function') throw fault('ADAPTER_INVALID', 'Status subscription did not return its disposer')
       record.disposeState = disposeState
+      // subscribe() may synchronously notify; a registry observer can then retire
+      // this record before subscribe() returns its disposer. Detach that late handle.
+      if (record.disposed || this.closed || this.adapters.get(metadata.id) !== record) {
+        record.disposeState = undefined
+        try { disposeState() } catch { this.disposalFailures++ }
+        throw fault('ADAPTER_INVALID', 'Adapter was retired while its status subscription was being attached')
+      }
     } catch (error) {
       this.retireRecord(record, 'ADAPTER_REMOVED')
       this.changed()

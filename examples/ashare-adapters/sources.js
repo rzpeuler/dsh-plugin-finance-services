@@ -1,5 +1,5 @@
 import { inflateRawSync } from 'node:zlib'
-import { readFile, realpath, stat } from 'node:fs/promises'
+import { open, realpath } from 'node:fs/promises'
 import { isAbsolute, join, relative, resolve, sep } from 'node:path'
 
 const SOURCE_REF = {
@@ -48,6 +48,12 @@ function observableState(initial = 'READY') {
     subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener) },
     set(state, nextCode, connectionStatus = 'UNKNOWN') {
       snapshot = { state, verifiedAt: nowISO(), connectionStatus, authenticationStatus: 'NOT_REQUIRED', ...(nextCode ? { code: nextCode } : {}) }
+      for (const listener of listeners) { try { listener() } catch { /* observer is isolated */ } }
+    },
+    setQueryFailure(nextCode, connectionStatus = 'UNKNOWN') {
+      // A failed request is not a failed registration. Keep the Adapter queryable so
+      // a later request can recover; preserve verifiedAt as the last successful check.
+      snapshot = { ...snapshot, state: 'READY', connectionStatus, code: nextCode }
       for (const listener of listeners) { try { listener() } catch { /* observer is isolated */ } }
     },
   }
@@ -131,7 +137,9 @@ function makeAdapter(metadata, sourceId, validate, query) {
           ['CURRENT_OBSERVED only; source revision history and strict point-in-time availability are not established.'])
       } catch (error) {
         const safeCode = typeof error?.code === 'string' && /^[A-Z][A-Z0-9_]{0,63}$/.test(error.code) ? error.code : 'ADAPTER_ERROR'
-        state.set('UNAVAILABLE', safeCode, 'UNAVAILABLE')
+        const connectionStatus = ['NETWORK_UNAVAILABLE', 'TIMEOUT', 'HTTP_UNAVAILABLE'].includes(safeCode)
+          ? 'DISCONNECTED' : 'UNKNOWN'
+        state.setQueryFailure(safeCode, connectionStatus)
         throw error?.code ? error : fault('ADAPTER_ERROR')
       } finally { busy = false }
     },
@@ -151,7 +159,10 @@ export function parseEastmoneyDaily(text, symbol, date) {
   try { payload = JSON.parse(jsonText) } catch { throw fault('INVALID_RESULT') }
   const code = payload?.data?.code
   const expected = symbol.slice(0, 6)
-  if (typeof code !== 'string' || !code.endsWith(expected)) throw fault('ENTITY_MISMATCH')
+  const market = symbol.slice(-2)
+  if (!['SH', 'SZ'].includes(market)) throw fault('ENTITY_UNSUPPORTED')
+  const normalizedCode = typeof code === 'string' ? code.toUpperCase() : ''
+  if (normalizedCode !== expected && normalizedCode !== `${market}${expected}`) throw fault('ENTITY_MISMATCH')
   const lines = payload?.data?.klines
   if (!Array.isArray(lines) || lines.length > 1000) throw fault('INVALID_RESULT')
   const line = lines.find(item => typeof item === 'string' && item.slice(0, 10) === date)
@@ -160,13 +171,19 @@ export function parseEastmoneyDaily(text, symbol, date) {
   if (values.length < 7 || values[0] !== date) throw fault('INVALID_RESULT')
   // Eastmoney fields2 order: date, open, close, high, low, volume, amount, ...
   const mapped = { open: Number(values[1]), close: Number(values[2]), high: Number(values[3]), low: Number(values[4]) }
-  if (Object.values(mapped).some(value => !Number.isFinite(value) || value <= 0)) throw fault('INVALID_RESULT')
+  if (Object.values(mapped).some(value => !Number.isFinite(value) || value <= 0) ||
+    mapped.high < mapped.low || mapped.high < Math.max(mapped.open, mapped.close) ||
+    mapped.low > Math.min(mapped.open, mapped.close)) throw fault('INVALID_RESULT')
   return mapped
 }
 
 export function createEastmoneyPriceAdapter({ ordinaryEquitySymbols = [], fetchImpl = globalThis.fetch } = {}) {
   const symbols = ordinarySymbols(ordinaryEquitySymbols)
-  const validate = query => checkCommon(query, symbols, FIELDS, 'prices.history', 'eastmoney')
+  const validate = query => {
+    const common = checkCommon(query, symbols, FIELDS, 'prices.history', 'eastmoney')
+    if (common) return common
+    return query.entity.id.endsWith('.SH') || query.entity.id.endsWith('.SZ') ? null : 'ENTITY_UNSUPPORTED'
+  }
   const definition = makeAdapter({
     id: 'ashare-eastmoney-price', version: '1.0.0', sourceId: 'eastmoney',
     label: 'Eastmoney daily A-share price (current-source observation)', testOnly: false, licenseClass: 'UNASSESSED',
@@ -227,7 +244,7 @@ export function createThsConsensusAdapter({ ordinaryEquitySymbols = [], fetchImp
   const validate = query => {
     const common = checkCommon(query, symbols, ['eps'], 'earnings.consensus', 'ths')
     if (common) return common
-    if (!query.entity.id.startsWith('600519.')) return 'CAPABILITY_UNSUPPORTED'
+    if (query.entity.id !== '600519.SH') return 'CAPABILITY_UNSUPPORTED'
     if (query.period.kind !== 'fiscal_year' || query.period.start !== `${query.period.end.slice(0, 4)}-01-01` ||
       query.period.end !== `${query.period.end.slice(0, 4)}-12-31`) return 'PERIOD_UNSUPPORTED'
     return null
@@ -250,43 +267,91 @@ export function createThsConsensusAdapter({ ordinaryEquitySymbols = [], fetchImp
 function findEocd(bytes) {
   const minimum = Math.max(0, bytes.length - 65_557)
   for (let offset = bytes.length - 22; offset >= minimum; offset--) {
-    if (bytes.readUInt32LE(offset) === 0x06054b50) return offset
+    if (offset + 22 > bytes.length || bytes.readUInt32LE(offset) !== 0x06054b50) continue
+    if (offset + 22 + bytes.readUInt16LE(offset + 20) === bytes.length) return offset
   }
   throw fault('INVALID_RESULT')
 }
+const CRC32_TABLE = Array.from({ length: 256 }, (_unused, index) => {
+  let value = index
+  for (let bit = 0; bit < 8; bit++) value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1
+  return value >>> 0
+})
+function crc32(bytes) {
+  let value = 0xffffffff
+  for (const byte of bytes) value = CRC32_TABLE[(value ^ byte) & 0xff] ^ (value >>> 8)
+  return (value ^ 0xffffffff) >>> 0
+}
 function zipEntries(bytes) {
   if (!Buffer.isBuffer(bytes) || bytes.length > MAX_BODY) throw fault('RESPONSE_TOO_LARGE')
+  if (bytes.length < 22) throw fault('INVALID_RESULT')
   const eocd = findEocd(bytes)
-  const count = bytes.readUInt16LE(eocd + 10)
-  const centralOffset = bytes.readUInt32LE(eocd + 16)
-  if (count > 100 || centralOffset >= bytes.length) throw fault('INVALID_RESULT')
-  const entries = new Map()
+  const disk = bytes.readUInt16LE(eocd + 4), centralDisk = bytes.readUInt16LE(eocd + 6)
+  const diskCount = bytes.readUInt16LE(eocd + 8), count = bytes.readUInt16LE(eocd + 10)
+  const centralSize = bytes.readUInt32LE(eocd + 12), centralOffset = bytes.readUInt32LE(eocd + 16)
+  const centralEnd = centralOffset + centralSize
+  if (disk !== 0 || centralDisk !== 0 || diskCount !== count || count > 100 ||
+      centralOffset > eocd || centralEnd !== eocd) throw fault('INVALID_RESULT')
+  const entries = new Map(), ranges = []
   let cursor = centralOffset, totalUncompressed = 0
   for (let index = 0; index < count; index++) {
-    if (bytes.readUInt32LE(cursor) !== 0x02014b50) throw fault('INVALID_RESULT')
-    const method = bytes.readUInt16LE(cursor + 10), compressed = bytes.readUInt32LE(cursor + 20)
+    if (cursor + 46 > centralEnd || bytes.readUInt32LE(cursor) !== 0x02014b50) throw fault('INVALID_RESULT')
+    const flags = bytes.readUInt16LE(cursor + 8), method = bytes.readUInt16LE(cursor + 10)
+    const checksum = bytes.readUInt32LE(cursor + 16), compressed = bytes.readUInt32LE(cursor + 20)
     const uncompressed = bytes.readUInt32LE(cursor + 24), nameLength = bytes.readUInt16LE(cursor + 28)
     const extraLength = bytes.readUInt16LE(cursor + 30), commentLength = bytes.readUInt16LE(cursor + 32)
-    const localOffset = bytes.readUInt32LE(cursor + 42)
-    const name = bytes.toString('utf8', cursor + 46, cursor + 46 + nameLength)
+    const diskStart = bytes.readUInt16LE(cursor + 34), localOffset = bytes.readUInt32LE(cursor + 42)
+    const centralRecordEnd = cursor + 46 + nameLength + extraLength + commentLength
+    if (centralRecordEnd > centralEnd || diskStart !== 0 || (flags & 1) !== 0 || ![0, 8].includes(method)) {
+      throw fault('INVALID_RESULT')
+    }
+    const nameBytes = bytes.subarray(cursor + 46, cursor + 46 + nameLength)
+    const name = nameBytes.toString('utf8')
+    if (!/^(?:sh|sz|bj)\d{6}\.(?:cod|md1)$/.test(name) || entries.has(name) || localOffset + 30 > centralOffset) {
+      throw fault('INVALID_RESULT')
+    }
     totalUncompressed += uncompressed
     if (totalUncompressed > MAX_ZIP_TOTAL) throw fault('RESPONSE_TOO_LARGE')
-    if (name.includes('..') || name.includes('\\') || localOffset >= bytes.length || entries.has(name)) throw fault('INVALID_RESULT')
     if (bytes.readUInt32LE(localOffset) !== 0x04034b50) throw fault('INVALID_RESULT')
-    const localName = bytes.readUInt16LE(localOffset + 26), localExtra = bytes.readUInt16LE(localOffset + 28)
-    const dataOffset = localOffset + 30 + localName + localExtra
+    const localFlags = bytes.readUInt16LE(localOffset + 6), localMethod = bytes.readUInt16LE(localOffset + 8)
+    const localChecksum = bytes.readUInt32LE(localOffset + 14), localCompressed = bytes.readUInt32LE(localOffset + 18)
+    const localUncompressed = bytes.readUInt32LE(localOffset + 22), localNameLength = bytes.readUInt16LE(localOffset + 26)
+    const localExtraLength = bytes.readUInt16LE(localOffset + 28)
+    const dataOffset = localOffset + 30 + localNameLength + localExtraLength
     const dataEnd = dataOffset + compressed
-    if (dataEnd > bytes.length) throw fault('INVALID_RESULT')
+    if (localFlags !== flags || localMethod !== method || localNameLength !== nameLength ||
+        !bytes.subarray(localOffset + 30, localOffset + 30 + localNameLength).equals(nameBytes) ||
+        dataOffset > centralOffset || dataEnd > centralOffset) throw fault('INVALID_RESULT')
+    const hasDescriptor = (flags & 8) !== 0
+    if (!hasDescriptor && (localChecksum !== checksum || localCompressed !== compressed || localUncompressed !== uncompressed)) {
+      throw fault('INVALID_RESULT')
+    }
+    if (hasDescriptor && ((localChecksum !== 0 && localChecksum !== checksum) ||
+        (localCompressed !== 0 && localCompressed !== compressed) ||
+        (localUncompressed !== 0 && localUncompressed !== uncompressed))) throw fault('INVALID_RESULT')
     const compressedData = bytes.subarray(dataOffset, dataEnd)
     let data
     try {
-      data = method === 0 ? Buffer.from(compressedData) : method === 8
-        ? inflateRawSync(compressedData, { maxOutputLength: MAX_ZIP_TOTAL }) : null
+      data = method === 0 ? Buffer.from(compressedData) : inflateRawSync(compressedData, { maxOutputLength: MAX_ZIP_TOTAL })
     } catch { throw fault('INVALID_RESULT') }
-    if (!data || data.length !== uncompressed) throw fault('INVALID_RESULT')
+    if (data.length !== uncompressed || crc32(data) !== checksum) throw fault('INVALID_RESULT')
+    let rangeEnd = dataEnd
+    if (hasDescriptor) {
+      let descriptor = dataEnd
+      if (descriptor + 4 <= centralOffset && bytes.readUInt32LE(descriptor) === 0x08074b50) descriptor += 4
+      if (descriptor + 12 > centralOffset || bytes.readUInt32LE(descriptor) !== checksum ||
+          bytes.readUInt32LE(descriptor + 4) !== compressed || bytes.readUInt32LE(descriptor + 8) !== uncompressed) {
+        throw fault('INVALID_RESULT')
+      }
+      rangeEnd = descriptor + 12
+    }
+    ranges.push([localOffset, rangeEnd])
     entries.set(name, data)
-    cursor += 46 + nameLength + extraLength + commentLength
+    cursor = centralRecordEnd
   }
+  if (cursor !== centralEnd) throw fault('INVALID_RESULT')
+  ranges.sort((left, right) => left[0] - right[0])
+  for (let index = 1; index < ranges.length; index++) if (ranges[index - 1][1] > ranges[index][0]) throw fault('INVALID_RESULT')
   return entries
 }
 /** Decode only configured symbols from a dated TDX official daily package. */
@@ -339,11 +404,24 @@ function localPackageReader(directory) {
     const configuredFile = await realpath(join(configuredRoot, `${date.replaceAll('-', '')}.zip`))
     const rel = relative(configuredRoot, configuredFile)
     if (!rel || rel.startsWith(`..${sep}`) || rel === '..' || isAbsolute(rel)) throw fault('INVALID_RESULT')
-    const info = await stat(configuredFile)
-    if (!info.isFile() || info.size > MAX_BODY) throw fault('RESPONSE_TOO_LARGE')
-    const bytes = await readFile(configuredFile)
-    signal?.throwIfAborted()
-    return bytes
+    const file = await open(configuredFile, 'r')
+    try {
+      const info = await file.stat()
+      if (!info.isFile()) throw fault('INVALID_RESULT')
+      if (info.size > MAX_BODY) throw fault('RESPONSE_TOO_LARGE')
+      const bytes = Buffer.alloc(info.size)
+      let offset = 0
+      while (offset < bytes.length) {
+        signal?.throwIfAborted()
+        const { bytesRead } = await file.read(bytes, offset, bytes.length - offset, offset)
+        if (bytesRead === 0) throw fault('INVALID_RESULT')
+        offset += bytesRead
+      }
+      const after = await file.stat()
+      if (after.size !== info.size || after.mtimeMs !== info.mtimeMs) throw fault('INVALID_RESULT')
+      signal?.throwIfAborted()
+      return bytes
+    } finally { await file.close() }
   }
 }
 

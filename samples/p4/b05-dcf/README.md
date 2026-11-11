@@ -8,10 +8,11 @@ scenario selector, a working-capital-aware free-cash-flow build, a Gordon termin
 5×5 sensitivity grids that must tie back to the explicit model.
 
 It is produced by the **creator's** Office toolchain (Python `openpyxl` + LibreOffice Kit), not by a
-Finance Agent or a Bundle Tool. The plugin-side producer is currently blocked: see
-[P4 acceptance §0.4.0-alpha.1](../..//acceptance/P4.md) — six fixed calls under the native Windows
-confinement runner exit `0xC0000142`, and the public Host filesystem exposes no binary workspace
-write.
+Finance Agent or a Bundle Tool. The historical plugin-side producer check recorded six fixed calls
+under the native Windows confinement runner exiting `0xC0000142`, and no public Host binary workspace
+write. Its acceptance archive is not in the current package; the prior full bundle at Git commit
+`1089564f9345070b44fc9c36772d2ef80a7aca15` preserves that record. This is historical evidence only,
+not current native installation or visual validation.
 
 ## Files
 

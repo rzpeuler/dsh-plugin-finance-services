@@ -161,3 +161,31 @@ test('stale resource disables policy editing and foreign addresses never reach r
   assert.ok(controls.every(node => node.props.disabled), 'stale snapshots never leave editable policy controls')
   await f.dispose()
 })
+
+test('policy editor does not offer VERIFIED and explains the missing trusted reviewer identity', async () => {
+  const React = {
+    Fragment: 'fragment',
+    createElement(type, props, ...children) { return { type, props: { ...(props ?? {}), children: children.flat(Infinity).filter(value => value != null) } } },
+    useState(initial) { return [initial, () => {}] },
+    useRef(current) { return { current } },
+    useId() { return 'reviewer-test' },
+  }
+  const f = fixture({}, React)
+  const tree = f.client.Panel({
+    useResource(address) {
+      if (address === ADDRESS) return { status: 'live', value: snapshot() }
+      return { status: 'live', value: { agents: [{ id: 'finance-test-reader', writer: false, allowedMcpServers: [] }], workers: [] } }
+    },
+    dataT: key => key,
+    updateDataPolicy: f.props.updateDataPolicy,
+  })
+  const descendants = node => node == null ? [] : Array.isArray(node) ? node.flatMap(descendants) : typeof node === 'object'
+    ? [node, ...descendants(node.props?.children)] : []
+  const nodes = descendants(tree)
+  const assessment = nodes.find(node => node.type === 'select' && node.props.id === 'reviewer-test-assessmentStatus')
+  assert.ok(assessment)
+  const optionValues = descendants(assessment).filter(node => node.type === 'option').map(node => node.props.value)
+  assert.ok(!optionValues.includes('VERIFIED'))
+  assert.ok(nodes.some(node => node.type === 'p' && node.props.children.includes('dataPermissions')))
+  await f.dispose()
+})

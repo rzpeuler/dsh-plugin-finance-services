@@ -4,7 +4,7 @@
 
 当前策略域为独立的 `financial_data_current`，初始为空。旧 `financial_data` 域中可能留存的授权记录不会迁移、读取、继承或用作回退，保持惰性；本次收敛不删除这些持久记录。
 
-本数据边界不是通用 MCP Manager。当前没有已注册或获授权的 Provider；候选 Reader 均为 `TEST_ONLY`、未注册，默认没有证券符号授权或任何许可。不得据此宣称商业数据源已连接、获得许可或完成金融业务 E2E。
+本数据边界不是通用 MCP Manager。当前没有已注册或获授权的 Provider；三个 CNEquity Reader factory 为 `TEST_ONLY`、未注册，三个 FPROV-01 A-share Adapter 为 `UNASSESSED`、未注册。默认证券 allowlist 与来源 binding 为空。不得据此宣称商业数据源已连接、获得许可或完成金融业务 E2E。
 
 ## 契约与公开服务
 
@@ -30,15 +30,15 @@ Query 明确要求 capability、实体、市场、字段、period、asOf、purpo
 
 当前策略保存在独立原生 `financial_data_current` 域，首次状态为空（revision 0、零 bindings）。旧 MCP binding 仍受原角色 `allowedMcpServers` 约束；新增 A-share 来源采用独立 `sourceId` grant，不读取/写入 MCP allowlist，并严格交集 exact role/scope、adapter/source、capability、market、purpose、temporal mode。不能由模型、Adapter 注册、状态 READY、凭据配置或公开端点创建或扩大授权。**无 binding 即拒绝**。
 
-直接金融来源 grant 每次使用都由 Host 检查版本化 `LicenseAssessment`：source/capability/purpose 必须匹配，自动访问、模型处理和会话日志许可需明确为 true，且证据有效、未过期。缺失/未知/需审核返回 `LICENSE_REVIEW_REQUIRED`，限制冲突/拒绝返回 `LICENSE_USE_NOT_AUTHORIZED`，过期 assessment 明确阻断。旧 MCP binding 继续使用 Adapter `validate()` 的三项布尔兼容检查；direct source grant 不接受 Adapter 自报布尔值。`NONE` 认证仅表示无需登录，不表示合法授权。
+直接金融来源 grant 每次使用都由 Host 检查版本化 `LicenseAssessment`：source/capability/purpose 必须匹配，自动访问、模型处理和会话日志许可需明确为 true，且证据有效、未过期。**当前 Host 没有可信审核者身份/来源约束 API**：Client的`VERIFIED`、证据URI、权限勾选和时间戳不能代表供应商授权；Remote写入`VERIFIED`会以`LICENSE_REVIEW_REQUIRED`拒绝，先前持久化的此类source claim只在内存视图降为`REVIEW_REQUIRED`且不自动改写原记录。用户输入保留为未核验声明；当前所有生产source权限仍未建立。只有显式可信Host审核流程未来可生成生产`VERIFIED`；测试中的模拟验证不能用于外部数据授权。缺失/未知/需审核返回`LICENSE_REVIEW_REQUIRED`，限制冲突/拒绝返回`LICENSE_USE_NOT_AUTHORIZED`，过期assessment明确阻断。旧 MCP binding 继续使用 Adapter `validate()` 的三项布尔兼容检查；direct source grant 不接受 Adapter 自报布尔值。`NONE`认证仅表示无需登录，不表示合法授权。
 
 旧 `financial_data` 域及其 grant 不复制到 `financial_data_current`，也不会由当前代码读取；升级不会复制、继承或隐式授权旧策略。原始 Provider payload 不持久化；获准的模型可见结果仍遵循 DSH 原生日志规则。
 
 ## 证据与历史边界
 
-历史 acceptance 记录与审计文档保留以供溯源；可运行的旧契约、Registry、Policy、Normalizer、角色查询与 Adapter fixtures 已移除。旧 API 名称仅在明确标注的历史记录中出现，不表示它们仍可调用，也不证明 A 股来源已验证。MCP transport、真实金融桥接、商业许可及 GUI 视觉验证边界见[MCP 兼容边界](MCP_COMPATIBILITY.md)和[P3 预设标准](../acceptance/P3.md)。
+P0–P6历史 acceptance 归档不在当前包中；上游原始验收提交仍可从Git历史`1089564f9345070b44fc9c36772d2ef80a7aca15`追溯。旧 API 名称仅在明确标注的历史记录中出现，不表示它们仍可调用，也不证明 A 股来源已验证。当前MCP、商业许可与GUI边界见[MCP兼容边界](MCP_COMPATIBILITY.md)及[FINANCE-3A-FPROV整合报告](../acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md)。
 
-当前运行路径使用统一 schemas、normalizer、fail-closed source policy/registry、独立持久策略域、Host/Remote、A-share-only `finance_data_query` 与 Data Sources UI。`src/data/cnequity-reader.js` 及独立 `examples/ashare-adapters/` 均为未注册候选；后者包含 Eastmoney daily OHLC、THS annual consensus EPS、TDX local daily-package parser 的独立 Adapter definitions，默认没有 ordinary-share allowlist，使用 `UNASSESSED` license 与 `CURRENT_OBSERVED` PIT。Eastmoney/THS/TDX 的数据使用、自动访问、模型处理和会话日志许可仍须逐源核实；未安装、未查询真实数据、未完成 GUI E2E。
+当前运行路径使用统一 schemas、normalizer、fail-closed source policy/registry、独立持久策略域、Host/Remote、A-share-only `finance_data_query` 与 Data Sources UI。`src/data/cnequity-reader.js` 的三个factory是未注册`TEST_ONLY`候选；独立 `examples/ashare-adapters/` 的Eastmoney daily OHLC、THS annual consensus EPS、TDX local daily-package parser也未注册，默认allowlist为空，使用`UNASSESSED` license与`CURRENT_OBSERVED` PIT。Eastmoney/THS/TDX的数据使用、自动访问、模型处理、会话日志和redistribution权利未建立；Host没有审核者身份API，生产查询仍被阻止。未安装、未查询真实数据、未完成GUI E2E。
 
 ## 历史标识
 

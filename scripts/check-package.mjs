@@ -32,6 +32,10 @@ for (const selected of ['assets/runtime-manifest.json', 'assets/runtime-scope.js
   assert.ok(pkg.files.includes(selected), `Required selected asset is missing from package.files: ${selected}`)
 }
 assert.ok(pkg.files.includes('lib/host.js') && pkg.files.includes('lib/client.js'));
+for (const currentEvidence of ['acceptance/FINANCE-3A-FPROV-BASELINE.md',
+  'acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md', 'acceptance/FINANCE-3A-FPROV-EVIDENCE/**/*']) {
+  assert.ok(pkg.files.includes(currentEvidence), `Current integration evidence is absent from package.files: ${currentEvidence}`);
+}
 assert.equal(pkg.exports['.'], './lib/host.js');
 assert.equal(pkg.exports['./data'], './lib/data.js');
 assert.equal(pkg.exports['./data-runtime'], undefined);

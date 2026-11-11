@@ -10,6 +10,16 @@ import { SourceBindings } from './policy.js'
 import { createDataRemoteContract } from './remote.js'
 
 const Policy = z.strictObject({ revision: z.number().int().min(0), bindings: SourceBindings })
+function demoteUntrustedPersistedReviews(policy) {
+  return { ...policy, bindings: policy.bindings.map(binding => {
+    const assessment = binding.sourceId ? binding.licenseAssessment : undefined
+    if (!assessment || assessment.assessmentStatus !== 'VERIFIED') return binding
+    // Earlier UI builds could persist a self-asserted VERIFIED status. The current
+    // Host has no trusted reviewer-principal API, so retain the evidence fields but
+    // fail closed until an authenticated Host review flow exists.
+    return { ...binding, licenseAssessment: { ...assessment, assessmentStatus: 'REVIEW_REQUIRED', reviewedAt: null } }
+  }) }
+}
 const registryKey = Symbol('financeDataRegistry')
 const authorityContextsKey = Symbol('financeDataAuthorityContexts')
 
@@ -57,7 +67,7 @@ export default class FinanceData extends TypertRemoteService {
       await domain.close()
     }
     const table = domain.table('policy')
-    const initialPolicy = Policy.parse(table.get('root') ?? { revision: 0, bindings: [] })
+    const initialPolicy = demoteUntrustedPersistedReviews(Policy.parse(table.get('root') ?? { revision: 0, bindings: [] }))
     this.table = table
     this[registryKey] = new FinancialDataRegistry({
       roles, ...this.config, initialPolicy: initialPolicy,
@@ -105,23 +115,25 @@ export default class FinanceData extends TypertRemoteService {
       let candidate
       try {
         const bindings = JSON.parse(input.bindingsJson)
-        const reviewedAt = registry.clockNow()
-        for (const binding of bindings) {
-          if (binding?.sourceId && binding.licenseAssessment?.assessmentStatus === 'VERIFIED') {
-            // Ignore a Client-supplied review clock; the Host stamps this trusted update.
-            binding.licenseAssessment.reviewedAt = reviewedAt
-          }
+        if (!Array.isArray(bindings)) throw new Error('Policy bindings must be an array')
+        if (bindings.some(binding => binding?.sourceId && binding.licenseAssessment?.assessmentStatus === 'VERIFIED')) {
+          // A Client-entered status, URI, permission flag or timestamp is not a
+          // trusted legal review. No Host reviewer identity API is available here.
+          throw Object.assign(new Error('Trusted Host review is unavailable'), { code: 'LICENSE_REVIEW_REQUIRED' })
         }
         candidate = registry.prepareBindings({ expectedRevision: input.expectedRevision, bindings })
       } catch (error) {
         const conflict = error.code === 'POLICY_CONFLICT'
         const disposed = error.code === 'REGISTRY_DISPOSED'
+        const reviewRequired = error.code === 'LICENSE_REVIEW_REQUIRED'
         return this.schemas.PolicyResult.parse({
           status: conflict ? 'CONFLICT' : disposed ? 'DISPOSED' : 'REJECTED',
           revision: registry.policyRevision,
-          error: { code: conflict ? 'POLICY_CONFLICT' : disposed ? 'REGISTRY_DISPOSED' : 'POLICY_INVALID',
+          error: { code: conflict ? 'POLICY_CONFLICT' : disposed ? 'REGISTRY_DISPOSED' :
+            reviewRequired ? 'LICENSE_REVIEW_REQUIRED' : 'POLICY_INVALID',
             message: conflict ? 'Source policy changed; read a fresh catalogue.' :
-              disposed ? 'Financial data service is not active.' :
+              disposed ? 'Financial data service is not active.' : reviewRequired ?
+                'No trusted Host reviewer identity is available; client-entered licensing claims cannot enable a source.' :
                 'Policy exceeds the source role, Session or capability constraints.' },
         })
       }

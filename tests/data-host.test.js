@@ -24,6 +24,20 @@ const binding = (scopeId, extra = {}) => ({
   allowTestOnly: true, ...extra,
 })
 const request = (expectedRevision, bindings) => ({ expectedRevision, bindingsJson: JSON.stringify(bindings) })
+const directVerifiedBinding = (scopeId, sourceId = 'test-source') => {
+  const value = binding(scopeId)
+  delete value.sourceAllowlistKey
+  value.sourceId = sourceId
+  value.licenseAssessment = {
+    version: 1, sourceId, assessmentStatus: 'VERIFIED',
+    evidenceRefs: [{ uri: 'https://example.invalid/terms', label: 'client-entered fixture, not verified' }],
+    allowedPurposes: ['research'], capabilityIds: ['financial.statements'],
+    automatedAccess: true, modelProcessing: true, sessionLogging: true,
+    retention: 'SESSION_ONLY', redistribution: 'PROHIBITED',
+    reviewedAt: '2099-01-01T00:00:00Z', expiresAt: null,
+  }
+  return value
+}
 const catalog = service => JSON.parse(service.catalog({}).catalogJson)
 const makeQuery = (overrides = {}) => ({
   capability: 'financial.statements', entity: { scheme: 'ticker', id: '600519.SH' }, market: 'CN',
@@ -189,6 +203,33 @@ test('Host mounts FinanceData and its isolated durable policy domain', async t =
   assert.throws(() => f.storage.specs.get('financial_data_current').tables.policy.valueSchema.parse({
     unexpected: true, ...persisted,
   }))
+})
+
+test('Client-entered VERIFIED claims are rejected before persistence and never enable a source', async t => {
+  const f = await fixture(t), agent = f.agent()
+  const candidate = provider(f.service)
+  const submitted = directVerifiedBinding(agent.id)
+  const rejected = await f.service.setBindings(request(0, [submitted]))
+  assert.equal(rejected.status, 'REJECTED')
+  assert.equal(rejected.error.code, 'LICENSE_REVIEW_REQUIRED')
+  assert.match(rejected.error.message, /No trusted Host reviewer identity/)
+  assert.equal(f.storage.domains.get('financial_data_current').puts.length, 0)
+  assert.deepEqual(catalog(f.service).bindings, [])
+  const denied = await f.service.queryForAgent(agent, makeQuery())
+  assert.equal(denied.status, 'NOT_AUTHORIZED')
+  assert.equal(candidate.calls.query.length, 0, 'rejected client claims must not authorize provider I/O')
+})
+
+test('persisted Client VERIFIED claims are demoted in memory without rewriting user data', async t => {
+  const oldClaim = directVerifiedBinding('historical-session')
+  const saved = { revision: 4, bindings: [oldClaim] }
+  const f = await fixture(t, { initialPolicy: saved })
+  const current = catalog(f.service)
+  assert.equal(current.bindings[0].licenseAssessment.assessmentStatus, 'REVIEW_REQUIRED')
+  assert.equal(current.bindings[0].licenseAssessment.reviewedAt, null)
+  assert.equal(f.storage.domains.get('financial_data_current').puts.length, 0)
+  assert.equal(f.storage.domains.get('financial_data_current').saved.bindings[0].licenseAssessment.assessmentStatus, 'VERIFIED',
+    'the Host presents a fail-closed in-memory view but does not rewrite the stored user record')
 })
 
 test('Host serializes CAS, persists before commit, and save failure preserves grants', async t => {

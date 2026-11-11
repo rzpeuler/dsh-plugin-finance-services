@@ -64,7 +64,7 @@ P2的0.2.2正常角色导出为`role-numeric-1`。早期0.3.0-alpha.2 Preset 曾
 
 ## 查询与不可信内容
 
-仅在非writer且角色结构有效时注册活动工具 `finance_data_query`；FinanceData 直接来源 grants 与 `allowedMcpServers` 独立，旧 MCP allowlist 仅约束 legacy MCP bindings。当前只允许 A 股股票边界：`market=CN`、六位 `.SH/.SZ/.BJ` ticker；ticker 形状不证明普通股资格，Adapter 还须匹配显式普通股 allowlist。工具用 `describe/query + capability + query_json` 发现严格请求结构、TEST_ONLY例子、运行时限制及仅本Session明确授权的Provider字段/市场/用途，再提交有界查询。sourceIds仅选择、不赋权。执行前及await后均重验exact-Agent文件/权限grant；FinanceData服务逐请求检查角色、Session、能力、源许可和显式 binding。Remote 的 `catalog`、`setBindings`、`follow` 只服务于 UI；当前策略保存在隔离的 `financial_data_current` 域，来源 allowlists 和 policy 初始为空，未绑定即拒绝。旧 `financial_data` grants 保持惰性，不迁移、不读取、不用于授权。writer仍无查询工具；无Backend/Provider或授权不全时明确NOT_CONFIGURED/NOT_AUTHORIZED，不猜数字或联网替代。历史版本化工具与 dispatcher/fallback 检查见[33项检查](../acceptance/P3-role-native-pass-002.json)，仅为审计证据，不表示当前有 Provider 授权或商业MCP/金融E2E。
+仅在非writer且角色结构有效时注册活动工具 `finance_data_query`；FinanceData 直接来源 grants 与 `allowedMcpServers` 独立，旧 MCP allowlist 仅约束 legacy MCP bindings。当前只允许 A 股股票边界：`market=CN`、六位 `.SH/.SZ/.BJ` ticker；ticker 形状不证明普通股资格，Adapter 还须匹配显式普通股 allowlist。工具用 `describe/query + capability + query_json` 发现严格请求结构、TEST_ONLY例子、运行时限制及仅本Session明确授权的Provider字段/市场/用途，再提交有界查询。sourceIds仅选择、不赋权。执行前及await后均重验exact-Agent文件/权限grant；FinanceData服务逐请求检查角色、Session、能力、源许可和显式 binding。Remote 的 `catalog`、`setBindings`、`follow` 只服务于 UI；当前策略保存在隔离的 `financial_data_current` 域，来源 allowlists 和 policy 初始为空，未绑定即拒绝。旧 `financial_data` grants 保持惰性，不迁移、不读取、不用于授权。writer仍无查询工具；无Backend/Provider或授权不全时明确NOT_CONFIGURED/NOT_AUTHORIZED，不猜数字或联网替代。旧版本化工具和dispatcher检查仅保留在 Git 历史提交 `388e310bd1c919ad3841e11de5f0418aa79a0483`，不是当前Provider/MCP验收。当前 direct-source UI拒绝Client提交的`VERIFIED`，既有未认证source claim只在内存中降为`REVIEW_REQUIRED`。
 
 文件文本、搜索命中和查询结果带 `UNTRUSTED_DATA`；角色 required runtime context 明确其不是工具权限或执行指令。工具参数没有动态 instruction/tool-definition 字段，文本“忽略规则”“调用写 API”等只能作为数据返回，不能修改工具集合、角色或允许源。原生 Skill 方法也不授予额外权限。
 
@@ -77,7 +77,7 @@ P2的0.2.2正常角色导出为`role-numeric-1`。早期0.3.0-alpha.2 Preset 曾
 - write/edit 字符输入最多 250000；文件最多 1 MiB，edit 按 native CRLF 恢复的保守上界提交前检查，NUL 在工具校验阶段拒绝。输出不回显完整修改文件，返回 path/hash/artifactDirectory。
 - 不支持通用 Shell/Python、Office 二进制生成、原件编辑、artifact 发布/交易/记账/客户通讯、工作目录迁移或任意父分配目录。Office 仍待 P4；固定纯数值计算不运行任何脚本；P5 确定性人审 Gate 也不在这里伪称完成。
 
-模型预算：新增每角色最多四个自有工具（main 三文件工具+查询，writer 三文件工具，reader按源更少），另复用原生技能/控制定义及一段 required runtime context。两计算角色以原生tokenMeter在相同范围测了前后SystemPrompt/header-tools：modeler增加61/214、builder增加68/221 tokens（总计275/289）。只属启发式header预算，不含pre-step Skill目录，不是完整首轮或provider usage；见[P2 token对照](../acceptance/P2-controlled-compute-token-comparison.json)。P3渐进式查询的[原生前后对照](../acceptance/P3-role-query-token-comparison.json)中，modeler工具header增加118、writer增加0；system样本差1token不宣称优化，总口径仍非完整首轮。
+上下文预算测量与其原始 acceptance 文件已从当前工作树移除，不能将旧估算当作当前运行时或完整首轮 token 结果。历史 P2/P3 测量可从 Git 提交 `6bc3f945ebe8da6dacea6c2707b0e45478338186` 与 `388e310bd1c919ad3841e11de5f0418aa79a0483` 追溯；本次只报告当前静态 manifest/build/test，不宣称模型端使用量或 token 优化。
 
 ## 已运行单测
 
@@ -85,8 +85,8 @@ P2的0.2.2正常角色导出为`role-numeric-1`。早期0.3.0-alpha.2 Preset 曾
 node --test tests/role*.test.js
 ```
 
-[role-filesystem.test.js](../tests/role-filesystem.test.js) 使用实际 40-role manifest 做权限/源 allowlist 检查，并使用真实独占临时目录测试路径、真实 junction、CAS/并发创建、artifact 目录、policy mode 和不可信文本。provider 是明确标注的 TEST_ONLY signature stub，不是真实 native provider 或 Host 沙箱。
+[role-filesystem.test.js](../tests/role-filesystem.test.js) 使用当前12-role manifest（3 mains + 9 Workers）做权限/源 allowlist 检查，并使用真实独占临时目录测试路径、junction、CAS/并发创建、artifact 目录、policy mode 和不可信文本。provider 是明确标注的 TEST_ONLY signature stub，不是真实 native provider 或 Host 沙箱。
 
 [role-runtime.test.js](../tests/role-runtime.test.js) 使用真实 Cordis 与 dsh-scope，替代 tools/FS/registry 服务做 actual-stub-dispatch、双 owner 清理、普通 Agent 不受影响、两个 retained revision、缺本地 native definition、root/role卸载以及真实独立 floor grant/hash 拒绝测试。native delegation backend 与 Loader 未被该 fixture 启动。
 
-原受限运行时局部 26 项均通过（13 文件/权限测试 + 13 Cordis/scope 生命周期测试）；Service facade 回归使用真实 Cordis Service，确认两个不同 facade 共享有效 grant 时允许执行，同时直接持有 executor 绕开 floor 仍会重验 grant/版本，root 关闭、替换或 source/prompt 漂移继续拒绝。另有[587原生能力](../acceptance/P2-live-host-pass-003.json)、[141原生计算补验](../acceptance/P2-controlled-compute-pass-003.json)、[12原生Client检查](../acceptance/P2-live-client-pass-004.json)及真实只读Worker模型的独立证据；004总IO失败仍保留。商业 MCP和Office金融业务E2E未运行，不将能力烟测记为业务交付。
+当前隔离回归覆盖同一受限文件/权限、Cordis/scope生命周期和Host FinanceData授权路径；可复验测试见[`role-filesystem.test.js`](../tests/role-filesystem.test.js)、[`role-runtime.test.js`](../tests/role-runtime.test.js)、[`data-host.test.js`](../tests/data-host.test.js)及[`role-data-query.test.js`](../tests/role-data-query.test.js)，本次完整命令与结果见[整合报告](../acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md)。旧原生能力烟测记录已从当前包裁剪，历史可在`10d482ec11d99b0b2d88153f195ee71edf1da2f3`与`388e310bd1c919ad3841e11de5f0418aa79a0483`追溯；它们不是当前商业MCP或Office金融业务E2E验收。

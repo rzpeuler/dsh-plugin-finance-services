@@ -1,28 +1,25 @@
-# 当前发行版MCP兼容边界（P3未验收）
+# MCP compatibility and current Host boundary
 
-核对对象：正在运行的DSH `0.2.1-rc.5`，不是远端HEAD或只读参照源码的未来接口。[实际只读调用记录](../acceptance/P3-mcp-release-check.json)明确区分人工转录与自动测试。
+**Current DSH runtime:** `0.2.2-rc.1` according to the installed runtime package manifest inspected for this integration. This records the runtime target; this task did not install or activate the bundle in a Profile and did not repeat a native MCP handshake.
 
-## 实际可用与未发现的内容
+## What the current Host exposes
 
-- 安装包确实包含原生`@deepseek-ai/dsh-mcp-client`。发行版[README](<C:/Users/Administrator/AppData/Local/Programs/DeepSeek Harness/resources/app.asar/dsh/node_modules/@deepseek-ai/dsh-mcp-client/README.md#L26-L69>)声明每entry一个server，支持stdio和streamable-http、连接重试及超时；工具登记到原生ctx.tools。不能据此说“DSH没有MCP”。
-- 最初预检的原生Config查询中，该client与`@deepseek-ai/dsh-mcp-manager`均无已挂entry（total=0）；后续TEST_ONLY连接期间client实际新增1条，收尾移除。前者仅表示没有启用的服务器，不表示包不存在。
-- 对安装包中`dsh-mcp-manager/package.json`的实际读取返回not found；当前未取得可用的公开动态register/connection/restart/probe/watch Manager服务合同。不能猜名字、调用私有connection supervisor或改Core来补出Manager。
-- 原生client的声明式配置不是一个可从金融UI声称已具备的管理API；现有env/header示例也不是已验证的原生credential引用/OAuth流程。
+The read-only Host Service inventory exposes `mcpResources.register(server, provider)` for scoped resources and a generic credential service (`resolve`, `describe`, `set`, `unset`, and record operations). The inspected service catalog did not expose a dynamic MCP Manager contract for registering a connection, probing/restarting/watching it, or authorizing a finance-specific bridge. Generic credential storage is not an OAuth grant or license approval.
 
-## 本项目不做的事
+The service catalog also does not expose a trusted financial-license reviewer principal/attestation API. `deepseekAccount.getDeviceIdentity()` is platform/device identity metadata, not a legal reviewer workflow, source scope, or vendor rights certificate. We do not repurpose it as one. Consequently the FinanceData UI cannot promote a source to `VERIFIED`; the Host rejects Client-submitted `VERIFIED` and direct-source queries remain blocked unless a future trusted Host review path is implemented.
 
-不另建第二个通用MCP Manager、不伪造OAuth、不把配置存在或工具列表存在当连接/授权成功，也不借全局MCP工具绕过金融角色的单调权限层。
+## Project guardrails
 
-两个测试Adapter只是不同原始接口风格：一个进程内`tools.call`形状，另一个包内HTTP形状JSON文件；均没有启动外部MCP进程、HTTP服务或商业连接。它们不能验收原生MCP真实连接。
+- Do not add a second general-purpose MCP Manager or invent OAuth/credential semantics.
+- Do not treat configuration presence, resource registration, a public response, or `READY` state as source permission.
+- Do not use global MCP tools to bypass exact role/scope grants, writer denial, the Host permission floor, or the Agent's own tool boundary.
+- Do not replace the initiating Agent, invoke a raw definition directly, or remove approval/sandbox checks to bridge finance data.
+- Direct source IDs remain disjoint from legacy `allowedMcpServers` / `sourceAllowlistKey` MCP policy.
 
-若接入已授权Provider，必须先取得该发行版实际公开的连接/状态/凭据接口或经支持的原生配置路径，再绑定窄capability、来源和exact Session授权。原生client会将server instructions记录进system prompt；不能因此给受限金融角色新增工具或执行权。
+## Historical P3 evidence (not current-runtime acceptance)
 
-## P3判定
+The previous P3 branch recorded seven native stdio transport checks, two unload checks, and separate dispatcher/role-boundary probes in Git history at `388e310bd1c919ad3841e11de5f0418aa79a0483`. Those checks targeted the then-installed `0.2.1-rc.5` release and are not evidence of this task's current runtime, a dynamic Manager, a finance-safe MCP bridge, OAuth, source licensing, or financial E2E. The historical acceptance files are intentionally not restored to the current package.
 
-P3-MCP-NATIVE现为`SUPPORTED_NATIVE_TRANSPORT_VERIFIED / MANAGER_AND_SAFE_BRIDGE_GAP`，不是整体PASS。新增[7项真实stdio检查](../acceptance/P3-native-mcp-pass-003.json)及[2项卸载审计](../acceptance/P3-native-mcp-unload-pass-003.json)：使用发行版原生Client实际握手、ping/读取同进程TOY财报、公开dispatcher守卫拒绝、错误后观察恢复、金融角色看不到也不能调用raw MCP、卸载后工具定义和schemas撤销。未注册假Harness工具，未触碰来源策略、凭据或模型。
+## Current P3 status
 
-最初两个探针分别误把源允许的限定`read`列为禁止、误认拒绝结果必含`error.info.code=UNKNOWN_TOOL`；[失败001](../acceptance/P3-native-mcp-failure-001.json)与[失败002](../acceptance/P3-native-mcp-failure-002.json)保留。重试只修测试：仍同时断言raw MCP schema/definition缺席、实际分派失败，未放宽产品权限。
-
-**尚不能完成金融Adapter的原生MCP桥接。** 真实金融角色的单调权限层会拒绝raw MCP；当前未取得能保留原Agent工具审批/沙箱边界的公开MCP Manager连接调用或委派契约。不能在Adapter中通过删去Agent、替换身份、直接调用definition.execute或私有连接来绕过。独立Host授权的连接测试不等于金融角色数据访问，更不是商业许可或OAuth。
-
-此前记录中的 V1/V2 契约、带版本后缀的 Adapter/模型工具标识及 Client 检查均为历史验证证据；这些标识已不用于当前 FinanceData API。它们不证明当前 A 股 Provider 已接入或授权；宿主接口缺口仍保留，不能据此宣称 P3 已完成。
+Native MCP transport compatibility remains **PARTIAL**. No dynamic Manager/finance bridge is available in the inspected public Host service catalog, no commercial MCP was configured, and no real finance source was queried. Current FinanceData policy is fail-closed and source permissions remain `UNASSESSED`. See the [Data Contract](DATA_CONTRACT.md) and [integration report](../acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md).

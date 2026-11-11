@@ -1,11 +1,12 @@
 {
   "schemaVersion": 3,
-  "sourceTreeSha256": "9e7552e0ec447868932a68fa3a3b30c8416b55956e765c4272ad43df2bd802ce",
+  "sourceTreeSha256": "91923c476b778879acf5958f93637819319948e6a58508c93017a424e4bcd6ca",
   "counts": {
     "mains": 3,
     "workers": 9,
     "skills": 22,
     "commands": 16,
+    "steering": 9,
     "capabilities": 15
   },
   "mains": [
@@ -477,8 +478,10 @@
   ],
   "candidateAdapters": {
     "cnequityReaderDefinitions": 3,
-    "registered": 0,
-    "authorized": 0,
+    "cnequityReaderRegistered": 0,
+    "fprovAshareDefinitions": 3,
+    "fprovAshareRegistered": 0,
+    "fprovAshareAuthorized": 0,
     "defaultSymbolAllowlistSize": 0,
     "defaultPermissionFlagsEnabled": 0
   }

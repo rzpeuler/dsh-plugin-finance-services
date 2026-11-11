@@ -1,0 +1,24 @@
+{
+  "evidenceVersion": 1,
+  "capturedDate": "2026-11-12",
+  "remote": "origin",
+  "fetchedRefsBeforePublication": {
+    "main": "1089564f9345070b44fc9c36772d2ef80a7aca15",
+    "featFinancialServices": "b9eeb079f9d5d4d51bc11a9299403bd7cf36e2b5"
+  },
+  "localIntegrationBranch": "codex/finance-3a-fprov-integration-001",
+  "localHeadAtFetch": "bf7e1011eeb20068f6a011bb9a416078fea0ddc9",
+  "ancestryAtFetch": {
+    "mainIsAncestorOfFprovBase": true,
+    "featBranchIsAncestorOfFprovBase": true,
+    "forcePushRequired": false
+  },
+  "publicationAtCapture": {
+    "integrationBranchPushed": false,
+    "mainFastForwarded": false,
+    "mainEligibleAtCapturedRefs": true,
+    "decision": "Only attempt normal non-force pushes after all software/package hard gates pass; re-fetch and recheck ancestry immediately before advancing main."
+  },
+  "originalDirtyCloneTouched": false,
+  "profileChanged": false
+}

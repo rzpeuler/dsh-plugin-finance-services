@@ -48,6 +48,25 @@ test('registry disposal cleans every subscription if one adapter cleanup throws'
   assert.doesNotThrow(() => value.dispose())
 })
 
+test('synchronous status notification that reenters dispose detaches the late subscription handle', () => {
+  const value = registry(), candidate = source('test-reentrant')
+  let attached = false, cleaned = 0
+  const definition = { ...candidate.definition, state: {
+    getSnapshot: () => ({ state: 'READY', verifiedAt: now }),
+    subscribe(listener) {
+      attached = true
+      listener()
+      return () => { attached = false; cleaned++ }
+    },
+  } }
+  value.subscribe(() => value.dispose())
+  assert.throws(() => value.registerAdapter(definition), { code: 'ADAPTER_ERROR' })
+  assert.equal(attached, false)
+  assert.equal(cleaned, 1)
+  assert.equal(value.catalog().adapters.length, 0)
+  assert.equal(value.catalog().diagnostics.disposalFailures, 0)
+})
+
 test('late callbacks from an old registration cannot invalidate its same-ID successor', () => {
   const value = registry(), old = source('test-same'), current = source('test-same')
   value.registerAdapter(old.definition)()

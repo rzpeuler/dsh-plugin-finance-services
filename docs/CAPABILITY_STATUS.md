@@ -1,7 +1,7 @@
 # 能力与角色映射（生成文件，请勿手改）
 
-- 唯一 FinanceData 契约；源树 `9e7552e0ec447868932a68fa3a3b30c8416b55956e765c4272ad43df2bd802ce`
-- 主 Agent 3、Worker 9、Skill 22、命令 16、数据能力 15
+- 唯一 FinanceData 契约；源树 `91923c476b778879acf5958f93637819319948e6a58508c93017a424e4bcd6ca`
+- 主 Agent 3、Worker 9、Skill 22、命令 16、steering样例 9、数据能力 15
 
 ## 主 Agent 与 Worker 归属
 
@@ -13,7 +13,7 @@
 
 ## 唯一 FinanceData 能力现状
 
-当前只有一套 FinanceData 能力契约。CNEquity Reader 有 3 个本地 TEST_ONLY 候选 Adapter factory；当前没有注册或授权，默认 A 股代码 allowlist 为空且三项权限均关闭。
+当前只有一套 FinanceData 能力契约。CNEquity Reader 有 3 个本地 TEST_ONLY factory；FPROV-01另有3个独立UNASSESSED A-share Adapter定义。两组均未注册/授权，默认代码allowlist为空，FPROV直接来源审核尚未建立。
 
 | FinanceData 能力 | 已有契约 | 已注册 Provider | 状态 |
 |---|---:|---:|---|
@@ -33,11 +33,12 @@
 | `compliance.screening` | yes | 0 | CONTRACT_ONLY |
 | `corporate.actions` | yes | 0 | CONTRACT_ONLY |
 
-## CNEquity Reader 候选状态
+## 未注册 A-share 候选状态
 
-| 候选定义 | 已注册 | 已授权 | 默认符号 allowlist | 默认开启权限标志 |
-|---:|---:|---:|---:|---:|
-| 3 | 0 | 0 | 0 | 0 |
+| 候选组 | 定义数 | 已注册 | 已授权 | 默认符号 allowlist | 默认权限标志 |
+|---|---:|---:|---:|---:|---:|
+| CNEquity Reader（TEST_ONLY） | 3 | 0 | 0 | 0 | 0 |
+| FPROV-01 A-share（UNASSESSED） | 3 | 0 | 0 | 0 | 0 |
 
 ## Skill 资产状态
 

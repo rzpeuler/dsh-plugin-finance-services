@@ -1,5 +1,7 @@
 # FPROV-01 baseline
 
+> Historical baseline captured 2026-11-11 from the original dirty local clone before FPROV-01. It is not the baseline for the current isolated integration branch; see [the isolated baseline](FINANCE-3A-FPROV-BASELINE.md) and [integration report](FINANCE-3A-FPROV-INTEGRATION-REPORT.md). The separate source-audit folder was outside the repository and is not bundled; its sanitized, bounded summary is in [the source matrix](../docs/FPROV01-SOURCE-MATRIX.md).
+
 - Captured: 2026-11-11 (Asia/Shanghai)
 - Repository: local `financial-services-bundle` checkout
 - Requested base: `origin/feat/financial-services`
@@ -21,7 +23,7 @@ The checkout was already dirty before this task: `git status --short` reported 1
 
 ## External audit evidence reviewed
 
-The [A-share source audit report](../../a_share_data_source_audit_001/reports/A-SHARE-DATA-SOURCE-LIVE-AUDIT-001-REPORT.md) reports bounded single-session smoke checks, not license or stability approval. THS anonymous EPS/consensus sample and hot-topic sample were observed; EastMoney quote/daily-bar, selected financial indicators/report/news endpoints were observed; TDX official daily package parsed for one date, while tested TDX TCP daily/minute calls failed and quote/tick calls returned no rows in the tested after-hours window. The report explicitly leaves use licenses, automation/model processing, logging, coverage and historical PIT unproven. The probe is not treated as current Provider registration or query authorization.
+The source audit was a bounded, single-session observation outside this repository; no audit payloads or evidence bundle were copied into the current package. It sampled anonymous Eastmoney/THS public responses and one dated TDX official package. It did not establish license, stability, automation/model-processing, logging/retention, broad coverage or historical PIT rights. This probe is not current Provider registration or query authorization; see the sanitized current [source matrix](../docs/FPROV01-SOURCE-MATRIX.md).
 
 ## Initial implementation plan
 

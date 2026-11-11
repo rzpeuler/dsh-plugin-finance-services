@@ -111,10 +111,9 @@ export function assessSource(metadata, query, role, bindings, scopeId, now = new
   const directBinding = scopedBindings.find(binding => binding.sourceId !== undefined)
   if (directBinding && !adapter.testOnly) {
     const assessment = directBinding.licenseAssessment
-    if (!assessment || ['UNKNOWN', 'REVIEW_REQUIRED'].includes(assessment.assessmentStatus)) {
-      return denied('LICENSE_REVIEW_REQUIRED')
-    }
+    if (!assessment) return denied('LICENSE_REVIEW_REQUIRED')
     if (['RESTRICTED', 'DENIED'].includes(assessment.assessmentStatus)) return denied('LICENSE_USE_NOT_AUTHORIZED')
+    if (assessment.assessmentStatus !== 'VERIFIED') return denied('LICENSE_REVIEW_REQUIRED')
     const nowEpoch = Date.parse(parsedNow.data)
     const expires = assessment.expiresAt === null ? null : Date.parse(assessment.expiresAt)
     const reviewed = assessment.reviewedAt === null ? null : Date.parse(assessment.reviewedAt)

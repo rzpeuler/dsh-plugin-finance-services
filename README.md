@@ -1,8 +1,8 @@
 # Financial Services for DSH
 
-独立、仓库外 Financial Services Bundle。当前版本 **0.4.0-alpha.2 / DSH 0.2.2-rc.1 适配候选，P3与P4均为PARTIAL**，不是完整金融移植产品。P0–P2关键验收通过；P3有217本地、33原生工具/生命周期、15真实Client、7原生MCP transport及独立模板检查，但Manager与安全MCP金融委派/凭据接口仍缺失。当前活动运行范围已收窄为3个主Agent、9个内部Worker、仅来自Financial Analysis与Equity Research垂直插件目录的22项Skill、16条命令和9条引导样例；历史全量审计资产仍保留作溯源，不进入活动目录。历史P4映射仍记载10条原业务线，但活动任务SDK只公开上述3个主Agent的模板；GL/LP本地数值检查库仍是独立技术模块，不构成Agent或商业金融E2E。尚无业务Worker运行或Office交付，原生Windows沙箱下固定`--version`即无法启动子进程，故Office链明确未通过。TEST_ONLY不是商业金融E2E。
+独立、仓库外 Financial Services Bundle。版本 **0.4.0-alpha.2 / DSH 0.2.2-rc.1 适配候选**，不是完整金融移植产品；P3/P4仍为PARTIAL，本次来源整合不重新判定其他阶段验收。当前活动范围是3个主Agent、9个内部Worker、22项Skill（Financial Analysis 13 + Equity Research 9）、16条命令和9条steering样例。更早的10-Agent/30-Worker全目录、GL/LP账务模块及其验收材料不在当前工作树或发布包内，历史版本仍可从 Git 提交 `1089564f9345070b44fc9c36772d2ef80a7aca15` 追溯，不在本次恢复范围。FPROV-01有三个独立 Adapter 候选定义，但当前均未在 Profile 注册、未配置来源 grant，Eastmoney/THS/TDX 权限均为`UNASSESSED`；无真实数据请求或商业金融 E2E。当前 Host 没有可信审核者身份接口，因此 Client 提交的`VERIFIED`会被拒绝，不能用证据 URI 或权限勾选证明供应商授权。原生 Plugin Manager 安装、实时 GUI 和 Office 交付仍未验证。
 
-> 阶段完成情况与证据索引见 [阶段完成报告](acceptance/COMPLETION_REPORT.md)；逐条追溯见 [TRACEABILITY.md](acceptance/TRACEABILITY.md)。FUX-01 + FRUN-01 的本地候选实现与未验收边界见 [本地验收记录](acceptance/FUX01-FRUN01.md)。
+> 本次隔离整合、范围核对、来源安全边界与验证证据见[FINANCE-3A-FPROV整合报告](acceptance/FINANCE-3A-FPROV-INTEGRATION-REPORT.md)；现行运行目录见[Active Runtime Scope](docs/RUNTIME_SCOPE.md)。较早阶段报告已从当前包中裁剪，历史提交与删减摘要在整合报告中列出。
 
 ## 当前范围
 
@@ -26,7 +26,7 @@
 要求 DSH `0.2.2-rc.1` 与 Node `>=24.9`。当前候选 `0.4.0-alpha.2` 的原生验收使用 DSH Plugin Manager 链接此源码目录；本地tarball可分发payload，但复制安装的fresh进程矩阵尚未执行，不能当作已验证的安装路线。开发构建使用Python 3（非PATH环境可设置 `FINANCE_BUILD_PYTHON` 为其可执行文件）与锁文件及以下脚本；构建的完整源ZIP补保pnpm默认忽略的两个.gitignore元数据：
 
 ```text
-pnpm install --ignore-scripts
+pnpm install --frozen-lockfile --ignore-scripts
 pnpm run build
 pnpm test
 pnpm run check:package
@@ -45,7 +45,7 @@ pnpm pack
 
 ## 凭据与数据源依赖
 
-本版不保存任何商业数据凭据：Source Policy 只记录 adapter/来源/作用域/能力，真实凭据由宿主 credential 服务负责（当前未接入）。商业 Provider 默认为 `NOT_CONFIGURED` 且不自动授权；三个隔离的 CNEquity Reader factory 仍为 `TEST_ONLY`/`current_only`、未注册，默认普通股 allowlist 为空、许可标志关闭，不代表商业数据或授权。MCP 侧只验证了发行版原生 client 的连接与卸载，Manager 与安全委派接口缺失，见[MCP兼容边界](docs/MCP_COMPATIBILITY.md)。
+本版不保存任何商业数据凭据：Source Policy 只记录 adapter/来源/作用域/能力；真实凭据与许可审核者身份均未接入。三个 CNEquity Reader factory 为 `TEST_ONLY`/`current_only`、未注册；三个 FPROV-01 A-share 候选 Adapter 为 `UNASSESSED`、未注册。所有候选的普通股 allowlist 与直接来源策略默认为空。Host拒绝Client侧`VERIFIED`写入，既有未认证声明在内存中降为`REVIEW_REQUIRED`；不代表任何供应商授权。MCP Manager与安全委派接口缺失，见[MCP兼容边界](docs/MCP_COMPATIBILITY.md)。
 
 ## Agent 能力目录
 
@@ -70,8 +70,8 @@ pnpm pack
 
 ## 来源和审计
 
-完整源码仓库的 SOURCE_INVENTORY、COMPATIBILITY_MATRIX、MIGRATION_MATRIX、SECURITY_MATRIX、TEST_REPORT 及 acceptance 目录保留每阶段标准和实际结果。根 LICENSE / NOTICE 与所有迁移资产的原始许可同时分发；完整来源文件保存在只读源归档，适配文件带修改标记。商业数据不因开源代码许可而自动获得使用权。
+当前包只保留选定资产的来源坐标、许可证声明和本次整合验收证据。旧的完整源码归档、重复目录与P0–P6历史 acceptance 记录已从当前工作树/包中移除；历史版本可在 `1089564f9345070b44fc9c36772d2ef80a7aca15` 追溯。未恢复任何删减内容。商业数据不因开源代码许可、公开可达或测试通过而自动获得使用权。
 
 ## English summary
 
-An independent out-of-tree DSH bundle. Version 0.4.0-alpha.2 targets DSH 0.2.2-rc.1 and covers P0–P2 accepted work plus partial P3–P6; P3, P4, P5 and P6 are explicitly **not** accepted as complete. The active runtime registers three main presets (earnings-reviewer, market-researcher, model-builder), nine owned Workers, 22 Skills sourced only from the Financial Analysis and Equity Research vertical-plugin directories, plus their scoped commands and steering examples. Broader historical source manifests remain packaged for provenance but are not active catalogues or presets. One unversioned FinanceData contract is active and the model query is A-share-only; the isolated `financial_data_current` policy and role source allowlists are empty, so queries fail closed. Former V1/V2 API identifiers and TEST_ONLY Adapter checks are historical evidence only, not active Providers; any persisted grants in the former `financial_data` domain remain inert. Required native Manager/credential and safe MCP delegation contracts remain unavailable. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. A deterministic review gate, durable review store, read model and read-only workbench are implemented and verified without model calls; commercial adapters and native Office delivery remain blocked. Native registration, static tests and business E2E are reported separately. Installation is user-requested only; disable/uninstall preserves user files and native history. Review policy never grants tool, sandbox or commercial data permissions.
+An independent out-of-tree DSH bundle. Version 0.4.0-alpha.2 targets DSH 0.2.2-rc.1. Its active runtime scope is three main Agents, nine Workers, 22 Skills (13 Financial Analysis and 9 Equity Research), 16 commands, and nine steering examples. Earlier 10-Agent/30-Worker, GL/LP and broad acceptance assets are not in the current package; Git history at `1089564f9345070b44fc9c36772d2ef80a7aca15` preserves the prior scope. One unversioned FinanceData contract is active and A-share-only; `financial_data_current` and role source allowlists start empty. Three FPROV-01 adapter candidates remain unregistered and `UNASSESSED`; no real source requests or licensed-source E2E occurred. The Host has no trusted reviewer identity API and rejects Client-entered `VERIFIED` assessments; anonymous reachability, terms URLs, and user-entered permission fields do not establish supplier rights. Required native Manager/credential and safe MCP delegation contracts remain unavailable. Source permissions are enforced by narrow provider-backed tools and a retained-revision permission floor; no general Shell is exposed. A deterministic review gate and read-only workbench do not grant tool, sandbox or commercial data permissions. This source integration does not re-adjudicate other stage acceptance. Native installation, current GUI validation, commercial adapters, and Office delivery remain unverified.

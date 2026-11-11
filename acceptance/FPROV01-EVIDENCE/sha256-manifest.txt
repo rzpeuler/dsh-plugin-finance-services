@@ -1,4 +1,4 @@
-SHA256 (uppercase, hex) for task-owned Adapter and fixture artifacts.
+Historical SHA256 capture for the earlier FPROV-01 worktree at commit bf7e1011eeb20068f6a011bb9a416078fea0ddc9. These hashes identify local code/fixture files at that capture time; they are not checksums of current integration files, third-party payloads, or legal evidence.
 
 E7025074FA17ECE2633580DF8E5B39BD550E2E9887C83465F29E1BA27BB780EC  examples/ashare-adapters/sources.js
 B38A567EDEC0081905D0DE24828DAFD023045B3F324E4962235D0F2D50B36B0C  examples/ashare-adapters/index.js
