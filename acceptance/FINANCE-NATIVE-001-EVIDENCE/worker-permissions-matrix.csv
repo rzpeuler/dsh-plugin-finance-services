@@ -1,0 +1,11 @@
+case,native_status,fixture_or_source_status,notes
+3x3 parentId and workerPresetIds,NOT_TESTED,PASS,"378 tests include runtime manifest/ownership checks; no live native preset registry inspected"
+Main Agent only calls own three Workers,NOT_TESTED,PASS,"source tests cover explicit worker allowlist and actual dispatch guards"
+Cross-parent Worker rejection,NOT_TESTED,PASS,"finite harness/source test; no native model execution"
+Worker re-delegation denial,NOT_TESTED,PASS,"source/harness coverage; no native E2E"
+Tool/skill/root/writer separation,NOT_TESTED,PASS,"filesystem and tool executor tests; no actual test Session"
+Reader cannot write/edit,NOT_TESTED,PASS,"source test only; no user files accessed"
+Leaf writer restricted to fresh own artifacts,NOT_TESTED,PASS,"fixture temp root test; no native Workspace validation"
+Permission revocation and old executor,NOT_TESTED,PASS,"fixture lifecycle tests; no native session or role revocation"
+Restart state isolation,NOT_TESTED,NOT_TESTED,"no DSH restart or native Session"
+Native Worker E2E,NATIVE_WORKER_E2E_NOT_RUN,NOT_TESTED,"No model/tool invocation"

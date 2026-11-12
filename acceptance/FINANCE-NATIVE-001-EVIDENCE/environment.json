@@ -1,0 +1,15 @@
+{
+  "capturedAt": "2026-11-12",
+  "timezone": "Asia/Shanghai",
+  "os": "Windows",
+  "dshVersion": "0.2.2-rc.1 (Plugin Manager installation catalog)",
+  "nodeVersion": "v24.16.0",
+  "pnpmVersion": "11.28.5",
+  "repository": "rzpeuler/dsh-plugin-finance-services",
+  "branch": "codex/finance-native-001-install-runtime-e2e",
+  "workspace": "independent clean clone in the session workspace",
+  "nativeProfileMutation": false,
+  "nativeProfileIsolation": "No separate test Profile selector/creator exposed by the current Plugin Manager inventory; current Profile had an already-installed linked bundle.",
+  "liveHostClientConnection": "Inspect tools answered on host and client; finance-specific Service keys were not present in the Host Service catalog. No claim of a finance-native active host is made.",
+  "sensitiveDataCollected": false
+}

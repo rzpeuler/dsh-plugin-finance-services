@@ -1,0 +1,21 @@
+{
+  "nativePluginManager": "Read-only Plugin Manager inventory",
+  "observedRuntimeCatalogVersion": "0.2.2-rc.1",
+  "preExistingFinancialServices": {
+    "name": "@local/dsh-financial-services",
+    "version": "0.4.0-alpha.2",
+    "enabled": true,
+    "installed": true,
+    "sourceKind": "link to pre-existing workspace checkout (path redacted)",
+    "result": "PREEXISTING_BASELINE_ONLY"
+  },
+  "unrelatedInstalledBundlesObserved": ["dsh-notify-me", "dsh-codex-subscription"],
+  "mainBundleInstalledThisRun": false,
+  "adapterBundleInstalledThisRun": false,
+  "disableEnableRestartUninstall": "NOT_RUN",
+  "reason": "No isolated test Profile was exposed. Reinstalling the same package could retarget or replace the existing active linked bundle; adapter installation would also change that Profile. Stopped before any mutation.",
+  "hostServices": "Cordis Inspect host Service catalog did not contain financeData/financeRuns/financeReview; exact lookups for those names returned no catalogued Service.",
+  "nativeApplicationResult": null,
+  "nativeInstallId": null,
+  "nativeScreenshots": []
+}

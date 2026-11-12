@@ -1,0 +1,9 @@
+{
+  "repository": "rzpeuler/dsh-plugin-finance-services",
+  "originMainAtFetch": "eb43a37a9c45718d4c3ab39d3344e1ebdc489fc6",
+  "baselineBranch": "main",
+  "workBranch": "codex/finance-native-001-install-runtime-e2e",
+  "branchStart": "eb43a37a9c45718d4c3ab39d3344e1ebdc489fc6",
+  "dirtyPreExistingCheckoutTouched": false,
+  "mergeToMain": false
+}

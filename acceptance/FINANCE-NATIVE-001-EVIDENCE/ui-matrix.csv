@@ -1,0 +1,12 @@
+item,native_status,source_or_test_status,observed_evidence,notes
+Agents page,BLOCKED,SOURCE_AND_FIXTURE_PASS,"pnpm test: 378/378; active native page not opened",Three main roles claimed only by runtime manifest/test assertions; no screenshot
+Skills page,BLOCKED,SOURCE_AND_FIXTURE_PASS,"runtime-scope generator/build; pnpm test",22 declared/tested; no live UI observation
+Runs page,BLOCKED,SOURCE_DECLARED_ONLY,"no test Session or Run created",Native Host service unavailable in inspection catalog
+Deliverables page,BLOCKED,SOURCE_DECLARED_ONLY,"no native UI access",No screenshot
+Review Queue page,BLOCKED,SOURCE_DECLARED_ONLY,"no native UI access",No screenshot
+Data Sources page,BLOCKED,SOURCE_DECLARED_ONLY,"no native UI access",Adapter bundle not installed
+Settings page,BLOCKED,SOURCE_DECLARED_ONLY,"no native UI access",No config edits
+Three main Agent entries,BLOCKED,TEST_PASS,"runtime manifest tests; 378/378",No live registry/UI roster
+Nine Worker entries,NOT_TESTED,TEST_PASS,"runtime ownership tests; 378/378",No native preset registry inspection
+22 Skills / 16 Commands / 9 steering,NOT_TESTED,TEST_PASS,"scope and inventory tests; 378/378",Counts are source/test evidence, not observed directory/UI counts
+Four details tabs per main,NOT_TESTED,SOURCE_DECLARED_ONLY,"no browser interaction",No screenshots

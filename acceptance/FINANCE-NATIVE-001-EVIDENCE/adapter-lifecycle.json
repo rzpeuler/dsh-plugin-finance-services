@@ -1,0 +1,15 @@
+{
+  "package": "@local/dsh-ashare-source-adapters@1.0.0",
+  "pluginManagerInstallUnitCount": 1,
+  "adapterIdentityCountDeclared": 3,
+  "declaredIds": ["ashare-eastmoney-price", "ashare-ths-consensus", "ashare-tdx-daily-package"],
+  "declaredDisposers": "index.js creates 3 adapters and registers each via financeData.registerAdapter; source/tests cover reverse cleanup and duplicate rollback",
+  "nativeInstallStatus": "NOT_INSTALLED_PROFILE_SAFETY_BLOCKED",
+  "nativeCatalogBeforeAfter": "NOT_OBSERVED",
+  "nativeDisableUninstallAndReinstall": "NOT_RUN",
+  "nativeMetadata": "SOURCE_DECLARED_ONLY: testOnly false, UNASSESSED; HTTP adapters use no credentials; TDX uses USER_FILE; current-observed PIT; configuration defaults are restrictive per source/test suite",
+  "networkQueries": 0,
+  "localTdxPackageRead": false,
+  "independentPluginManagerButtonsPerAdapter": false,
+  "granularity": "One Plugin Manager package, three adapter identities; not three independently installable packages."
+}

@@ -1,0 +1,33 @@
+{
+  "commands": [
+    {
+      "command": "pnpm install --frozen-lockfile --ignore-scripts",
+      "actualInvoker": "node <DSH runtime pnpm.mjs>",
+      "exitCode": 0,
+      "result": "Lockfile current; 14 packages linked from existing store; no lifecycle scripts run."
+    },
+    {
+      "command": "pnpm run build",
+      "exitCode": 0,
+      "result": "Build generated self-contained Host, role, floor, data exports and Client factory; validated selected scope: 3 main Agents, 9 Workers, 22 Skills, 16 commands, 9 steering examples."
+    },
+    {
+      "command": "pnpm test",
+      "exitCode": 0,
+      "result": "378 tests; 378 pass; 0 fail; 0 skipped."
+    },
+    {
+      "command": "pnpm run check:package",
+      "exitCode": 0,
+      "result": "PASS: manifest, exports, metadata, SVG safety, patch, Client syntax and source/build hashes."
+    },
+    {
+      "command": "pnpm pack --dry-run",
+      "exitCode": 0,
+      "result": "Tarball contents and package metadata inspected; generated local-dsh-financial-services-0.4.0-alpha.2.tgz dry-run only (no tarball published)."
+    }
+  ],
+  "externalDataQueries": 0,
+  "nativeLifecycleTest": false,
+  "note": "The package checker explicitly notes it does not test live Loader lifecycle, actual browser rendering, Workspace persistence, or financial data."
+}

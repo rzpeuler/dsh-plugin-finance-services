@@ -1,0 +1,15 @@
+{
+  "nativeFinanceDataQueryExecuted": false,
+  "realProviderHttpTcpRequestsInitiated": 0,
+  "userTdxFileOpened": false,
+  "nativeInvocationCounterAvailable": false,
+  "nativeQueryRefusal": "NOT_TESTED",
+  "clientVerifiedAttempt": "NOT_TESTED",
+  "sourcePolicyAndLicense": "UNASSESSED / direct grants were not inspected or modified in the active Profile; source declarations and unit tests retain strict default-deny behavior.",
+  "fixtureEvidence": {
+    "status": "MOCK_ONLY",
+    "testSuite": "pnpm test (378 passed)",
+    "examples": ["default permissions fail closed before fetch and report NOT_AUTHORIZED", "Client-entered VERIFIED claims are rejected before persistence", "REVIEW_REQUIRED and missing source binding tests block before mocked fetch"]
+  },
+  "interpretation": "Zero real requests is an execution fact for this acceptance run because no native query or adapter activation was attempted. The test suite used controlled fixtures; it does not prove native Host call-count instrumentation for a live Profile."
+}

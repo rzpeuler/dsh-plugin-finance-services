@@ -1,0 +1,12 @@
+{
+  "nativeStatus": "NOT_TESTED_PROFILE_SAFETY_BLOCKED",
+  "testWorkspaceCreated": false,
+  "draftsCreated": 0,
+  "messagesSubmitted": 0,
+  "financeRunsCreated": 0,
+  "nativeSessionPersistenceVerified": false,
+  "restartRecoveryVerified": false,
+  "modelExecution": "NOT_TESTED",
+  "reason": "No isolated test Profile or Workspace was available through the exposed supported controls. Existing user Sessions/Runs were not queried or modified.",
+  "resultLabels": ["MODEL_UNAVAILABLE_OR_NOT_TESTED", "NATIVE_E2E_NOT_RUN"]
+}
